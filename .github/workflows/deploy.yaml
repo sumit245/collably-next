@@ -30,6 +30,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            sudo su
             # Navigate to the project directory
             cd ${{ secrets.TARGET_DIR }}
             # Install project dependencies
