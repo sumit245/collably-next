@@ -1,0 +1,91 @@
+.main {
+  min-height: 100vh;
+  background-color: #E86C2C;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  color: white;
+}
+
+.logo {
+  font-size: 3rem;
+  font-weight: 500;
+  margin: 0rem;
+  font-family: cursive;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+  color: #fff;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.brandCircleWrapper {
+  margin: 3rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.brandCircleImage {
+  width: 240px;
+  height: 240px;
+  object-fit: contain;
+}
+
+.button {
+  background: white;
+  color: #E86C2C;
+  border: none;
+  border-radius: 25px;
+  padding: 1rem 3rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  width: 100%;
+  max-width: 300px;
+}
+
+.button:hover {
+  transform: scale(1.02);
+}
+
+@media (max-width: 600px) {
+  .logo {
+    font-size: 2.5rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .brandCircleImage {
+    width: 200px;
+    height: 200px;
+  }
+}
+
