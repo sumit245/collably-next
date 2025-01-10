@@ -1,41 +1,63 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { ArrowLeft } from 'lucide-react';
-import styles from './stylesform.module.css';
-import stylesShop from '../shop/StyleShop.module.css';
-import { LikeProvider } from '../actions/LikeContext';
-import Header from '@/app/components/HeaderShop';
-import Footer from '@/app/components/FooterShop';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
+import styles from "./stylesform.module.css";
+import stylesShop from "../shop/StyleShop.module.css";
+import { LikeProvider } from "../actions/LikeContext";
+import Header from "@/app/components/HeaderShop";
+import Footer from "@/app/components/FooterShop";
+import PincodeLookup from "india-pincode-lookup";
 
 export default function AddressForm() {
   const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    pincode: '',
-    address: '',
-    locality: '',
-    city: '',
-    state: '',
-    addressType: 'home',
-    isDefault: false
+    name: "",
+    phone: "",
+    pincode: "",
+    address: "",
+    locality: "",
+    city: "",
+    state: "",
+    addressType: "home",
+    isDefault: false,
   });
 
+  const [cityStateReadOnly, setCityStateReadOnly] = useState(false);
   const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
+
+    if (name === "pincode" && value.length === 6) {
+      fetchCityAndState(value);
+    }
+
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === "checkbox" ? checked : value,
     }));
+  };
+
+  const fetchCityAndState = (pincode) => {
+    const locations = PincodeLookup.lookup(pincode);
+
+    if (locations && locations.length > 0) {
+      setFormData((prevData) => ({
+        ...prevData,
+        city: locations[0].districtName || "",
+        state: locations[0].stateName || "",
+      }));
+      setCityStateReadOnly(true);
+    } else {
+      alert("No information available for this pincode.");
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem('userInfo', JSON.stringify(formData));
-    router.push('/payment');
+    localStorage.setItem("userInfo", JSON.stringify(formData));
+    router.push("/payment");
   };
 
   return (
@@ -43,12 +65,9 @@ export default function AddressForm() {
       <div className={stylesShop.bodyShop}>
         <div className={stylesShop.smartphoneContainer}>
           <Header />
-              
+
           <header className={styles.header}>
-            <button 
-              onClick={() => router.back()} 
-              className={styles.backButton}
-            >
+            <button onClick={() => router.back()} className={styles.backButton}>
               <ArrowLeft className={styles.backIcon} />
             </button>
             <h1 className={styles.title}>ADD NEW ADDRESS</h1>
@@ -67,11 +86,29 @@ export default function AddressForm() {
                   className={styles.input}
                   required
                 />
+
                 <input
                   type="tel"
                   name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
+                  value={
+                    formData.phone.startsWith("+91")
+                      ? formData.phone
+                      : "+91" + formData.phone
+                  }
+                  onChange={(e) => {
+                    let value = e.target.value;
+                    if (value.startsWith("+91")) {
+                      value = value.slice(3);
+                    }
+                   
+                    value = value.replace(/[^0-9]/g, "");
+                    if (value.length > 10) {
+                      value = value.slice(0, 10);
+                    }
+                    handleChange({
+                      target: { name: "phone", value: "+91" + value },
+                    });
+                  }}
                   placeholder="Mobile No*"
                   className={styles.input}
                   required
@@ -86,7 +123,14 @@ export default function AddressForm() {
                   type="text"
                   name="pincode"
                   value={formData.pincode}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/[^0-9]/g, "");
+                    if (value.length <= 6) {
+                      handleChange({
+                        target: { name: "pincode", value: value },
+                      });
+                    }
+                  }}
                   placeholder="Pin Code*"
                   className={styles.input}
                   required
@@ -118,6 +162,7 @@ export default function AddressForm() {
                     placeholder="City / District*"
                     className={styles.input}
                     required
+                    readOnly={cityStateReadOnly}
                   />
                   <input
                     type="text"
@@ -127,6 +172,7 @@ export default function AddressForm() {
                     placeholder="State*"
                     className={styles.input}
                     required
+                    readOnly={cityStateReadOnly}
                   />
                 </div>
               </div>
@@ -138,18 +184,22 @@ export default function AddressForm() {
                 <button
                   type="button"
                   className={`${styles.addressTypeButton} ${
-                    formData.addressType === 'home' ? styles.active : ''
+                    formData.addressType === "home" ? styles.active : ""
                   }`}
-                  onClick={() => setFormData(prev => ({ ...prev, addressType: 'home' }))}
+                  onClick={() =>
+                    setFormData((prev) => ({ ...prev, addressType: "home" }))
+                  }
                 >
                   Home
                 </button>
                 <button
                   type="button"
                   className={`${styles.addressTypeButton} ${
-                    formData.addressType === 'work' ? styles.active : ''
+                    formData.addressType === "work" ? styles.active : ""
                   }`}
-                  onClick={() => setFormData(prev => ({ ...prev, addressType: 'work' }))}
+                  onClick={() =>
+                    setFormData((prev) => ({ ...prev, addressType: "work" }))
+                  }
                 >
                   Work
                 </button>
@@ -170,11 +220,10 @@ export default function AddressForm() {
               ADD ADDRESS
             </button>
           </form>
-        
+
           <Footer />
         </div>
       </div>
     </LikeProvider>
   );
 }
-

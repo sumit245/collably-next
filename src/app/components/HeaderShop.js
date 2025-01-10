@@ -26,7 +26,9 @@ export default function Header() {
           <Image src="images/search-blue.svg" alt="Search" width={24} height={24} />
         </button>
         <button className={styles.iconBtnShop}>
+        <Link href="/product">
           <Image src="images/wishlist-blue.svg" alt="Wishlist" width={24} height={24} />
+          </Link>
           <span className={styles.counter}>{likeCount}</span>
         </button>
         <button className={styles.iconBtnShop}>
