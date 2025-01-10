@@ -14,7 +14,7 @@ export default function ProductGrid() {
     <div className={styles.productGrid}>
       {products.map((product, index) => (
         <div key={index} className={`product-card ${product.color}`}>
-          <Image src={product.image} alt={product.name} width={200} height={200} />
+          <Image className={styles.productCardImage} src={product.image} alt={product.name} width={200} height={200} />
         </div>
       ))}
     </div>

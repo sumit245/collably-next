@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { logout } from "../actions/auth";
 
 const HeaderComponent = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -11,9 +12,10 @@ const HeaderComponent = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const username = localStorage.getItem("username");
+    const avatar = localStorage.getItem("avatar");
 
     if (token && username) {
-      setUser({ username });
+      setUser({ username, avatar });
     }
   }, []);
 
@@ -21,8 +23,9 @@ const HeaderComponent = () => {
     const handleStorageChange = () => {
       const token = localStorage.getItem("token");
       const username = localStorage.getItem("username");
+      const avatar = localStorage.getItem("avatar");
       if (token && username) {
-        setUser({ username });
+        setUser({ username, avatar });
       } else {
         setUser(null);
       }
@@ -33,10 +36,8 @@ const HeaderComponent = () => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
+    logout();
     setUser(null);
-    window.dispatchEvent(new Event("storage")); 
   };
 
   return (
@@ -47,7 +48,7 @@ const HeaderComponent = () => {
             <span className="span-header">Follow Us :</span>
             <Link href="#"><i className="fa-brands fa-instagram"></i></Link>
             <Link href="#"><i className="fab fa-youtube ms-2"></i></Link>
-            <Link href="#"><i className="fa-solid fa-x ms-2"></i></Link>
+            <Link href="#"><i className="fab fa-x ms-2"></i></Link>
             <Link href="#"><i className="fab fa-facebook-f ms-2"></i></Link>
             <Link href="#"><i className="fab fa-discord ms-2"></i></Link>
           </div>
@@ -76,7 +77,7 @@ const HeaderComponent = () => {
         {user ? (
           <div className="user-info" onClick={handleLogout}>
             <Image
-              src="/images/banavt1.png"
+              src={user.avatar || "/images/banavt1.png"}
               alt="User Avatar"
               width={40}
               height={40}
@@ -103,4 +104,3 @@ const HeaderComponent = () => {
 };
 
 export default HeaderComponent;
-

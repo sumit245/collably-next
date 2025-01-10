@@ -1,35 +1,55 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { login, loginWithGoogle, handleGoogleRedirect } from "../actions/auth";
+import { useRouter } from 'next/navigation';
 
 const LoginComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkGoogleRedirect = async () => {
+      const result = await handleGoogleRedirect();
+      if (result.success) {
+        router.push('/');
+      } else if (result.error) {
+        setError(result.error);
+      }
+    };
+
+    if (window.location.search) {
+      checkGoogleRedirect();
+    }
+  }, [router]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true);
+    setError("");
+  
     try {
-      const mockApiResponse = new Promise((resolve, reject) => {
-        setTimeout(() => {
-          if (email === "1234@gmail.com" && password === "1234") {
-            resolve({ token: "mockToken123", username: "Dheeraj Yadav" });
-          } else {
-            reject("Invalid credentials");
-          }
-        }, 1000);
-      });
-
-      const { token, username } = await mockApiResponse;
-
-      localStorage.setItem("token", token);
-      localStorage.setItem("username", username);
-      window.dispatchEvent(new Event("storage")); 
-      window.location.href = "/";
+      const result = await login(email, password);
+      if (result.success) {
+        router.push('/');
+      } else {
+        setError(result.error);
+      }
     } catch (error) {
-      alert("Login failed. Check your credentials.");
+      setError(error.message || "An unexpected error occurred during login.");
+    } finally {
+      setIsLoading(false);
     }
+  };
+  
+  const handleGoogleLogin = () => {
+    setIsLoading(true);
+    setError("");
+    loginWithGoogle();
   };
 
   const togglePasswordVisibility = () => {
@@ -39,7 +59,6 @@ const LoginComponent = () => {
   return (
     <div className="login-container">
       <form className="form" onSubmit={handleLogin}>
-       
         <div className="back-icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -51,14 +70,13 @@ const LoginComponent = () => {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            onClick={() => (window.location.href = "/")}
+            onClick={() => router.push('/')}
             style={{ cursor: "pointer" }}
           >
             <polyline points="15 18 9 12 15 6"></polyline>
           </svg>
         </div>
 
-        
         <div className="headings">
           <img 
             src="/images/c-official-logo.png" 
@@ -67,6 +85,8 @@ const LoginComponent = () => {
           />
           <h2>Sign In to Continue</h2>
         </div>
+
+        {error && <div className="error-message">{error}</div>}
 
         <div className="flex-column">
           <label>Email</label>
@@ -131,8 +151,8 @@ const LoginComponent = () => {
           <span className="span">Forgot password?</span>
         </div>
 
-        <button className="button-submit" type="submit">
-          Sign In
+        <button className="button-submit" type="submit" disabled={isLoading}>
+          {isLoading ? "Signing In..." : "Sign In"}
         </button>
 
         <p className="p">
@@ -141,7 +161,7 @@ const LoginComponent = () => {
         <p className="p line">Or With</p>
 
         <div className="flex-row">
-          <button className="btn google">
+          <button className="btn google" type="button" onClick={handleGoogleLogin} disabled={isLoading}>
             <svg
               xmlSpace="preserve"
               style={{ enableBackground: "new 0 0 512 512" }}
@@ -168,9 +188,9 @@ const LoginComponent = () => {
                 style={{ fill: "#F14336" }}
               ></path>
             </svg>
-            Google
+            {isLoading ? "Connecting..." : "Google"}
           </button>
-          <button className="btn apple">Instagram</button>
+          <button className="btn-insta" type="button" disabled={isLoading}> <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="48px" height="25px"><radialGradient id="yOrnnhliCrdS2gy~4tD8ma" cx="19.38" cy="42.035" r="44.899" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#fd5"/><stop offset=".328" stopColor="#ff543f"/><stop offset=".348" stopColor="#fc5245"/><stop offset=".504" stopColor="#e64771"/><stop offset=".643" stopColor="#d53e91"/><stop offset=".761" stopColor="#cc39a4"/><stop offset=".841" stopColor="#c837ab"/></radialGradient><path fill="url(#yOrnnhliCrdS2gy~4tD8ma)" d="M34.017,41.99l-20,0.019c-4.4,0.004-8.003-3.592-8.008-7.992l-0.019-20	c-0.004-4.4,3.592-8.003,7.992-8.008l20-0.019c4.4-0.004,8.003,3.592,8.008,7.992l0.019,20	C42.014,38.383,38.417,41.986,34.017,41.99z"/><radialGradient id="yOrnnhliCrdS2gy~4tD8mb" cx="11.786" cy="5.54" r="29.813" gradientTransform="matrix(1 0 0 .6663 0 1.849)" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#4168c9"/><stop offset=".999" stopColor="#4168c9" stopOpacity="0"/></radialGradient><path fill="url(#yOrnnhliCrdS2gy~4tD8mb)" d="M34.017,41.99l-20,0.019c-4.4,0.004-8.003-3.592-8.008-7.992l-0.019-20	c-0.004-4.4,3.592-8.003,7.992-8.008l20-0.019c4.4-0.004,8.003,3.592,8.008,7.992l0.019,20	C42.014,38.383,38.417,41.986,34.017,41.99z"/><path fill="#fff" d="M24,31c-3.859,0-7-3.14-7-7s3.141-7,7-7s7,3.14,7,7S27.859,31,24,31z M24,19c-2.757,0-5,2.243-5,5	s2.243,5,5,5s5-2.243,5-5S26.757,19,24,19z"/><circle cx="31.5" cy="16.5" r="1.5" fill="#fff"/><path fill="#fff" d="M30,37H18c-3.859,0-7-3.14-7-7V18c0-3.86,3.141-7,7-7h12c3.859,0,7,3.14,7,7v12	C37,33.86,33.859,37,30,37z M18,13c-2.757,0-5,2.243-5,5v12c0,2.757,2.243,5,5,5h12c2.757,0,5-2.243,5-5V18c0-2.757-2.243-5-5-5H18z"/></svg> Instagram</button>
         </div>
       </form>
     </div>

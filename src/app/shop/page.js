@@ -18,8 +18,11 @@ import LatestCreators from '@/app/components/LatestCreatorsShop'
 import FreshDrops from '@/app/components/FreshDropsShop'
 import CreatorLeaderboard from '@/app/components/CreatorLeaderboardShop'
 import styles from '@/app/shop/StyleShop.module.css'
+import ChooseYouSection from '../components/ChooseYou'
+import { LikeProvider } from '../actions/LikeContext'
 export default function ShopPage() {
   return (
+    <LikeProvider>
     <div className={styles.bodyShop}>
     <div className={styles.smartphoneContainer}>
       <Header />
@@ -41,10 +44,12 @@ export default function ShopPage() {
         <LatestCreators />
         <FreshDrops />
         <CreatorLeaderboard />
+        <ChooseYouSection />
       </main>
       <Footer />
     </div>
     </div>
+    </LikeProvider>
   )
 }
 

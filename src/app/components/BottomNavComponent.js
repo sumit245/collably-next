@@ -6,9 +6,8 @@ export default function BottomNavComponent() {
     <nav className="bottom-nav">
      <div className="footer-content">
             <div className="nav-text">Become a Collably Creator today</div>
-            <a href="shopper.html" target="_blank" className="footer-button">
-              <span className="button-text">Get Started</span>
-            </a>
+            <Link className="footer-button" href="/creatorDashboardEntry">
+              <span className="button-text">Get Started</span></Link>
           </div>
     </nav>
   )

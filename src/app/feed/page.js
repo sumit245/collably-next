@@ -6,8 +6,11 @@ import BlogsCorner from '../components/BlogCorner'
 import TrendingCreators from '../components/TrendingCreators'
 import ProfileSection from '../components/ProfileSectionFeed'
 import styleshop from '@/app/shop/StyleShop.module.css'
+import { LikeProvider } from '../actions/LikeContext'
+
 export default function ShopPage() {
   return (
+    <LikeProvider>
     <div className={styleshop.bodyShop}>
     <div className={styleshop.smartphoneContainer}>
       <Header />
@@ -20,6 +23,7 @@ export default function ShopPage() {
       <Footer />
     </div>
     </div>
+    </LikeProvider>
   )
 }
 

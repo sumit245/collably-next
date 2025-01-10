@@ -1,67 +1,54 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../../shop/StyleShop.module.css';
 
-function VideoCarouselCard({ videos, title = "Scroll and Shop", subtitle = "From Your ❤ Creators & Brands" }) {
-  const carouselRef = useRef(null);
+const VideoCarouselCard = ({ videos, title = "Trending Today", subtitle }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const carousel = carouselRef.current;
-    if (!carousel) return;
-
-    const slides = carousel.querySelectorAll(`.${styles.videoSlide}`);
-    if (slides.length === 0) return; 
-
-    let currentIndex = 0;
-
-    const firstClone = slides[0]?.cloneNode(true);
-    const lastClone = slides[slides.length - 1]?.cloneNode(true);
-
-    if (firstClone) carousel.appendChild(firstClone);
-    if (lastClone) carousel.insertBefore(lastClone, slides[0]);
-
-    const totalSlides = slides.length + (firstClone ? 1 : 0) + (lastClone ? 1 : 0);
-    carousel.style.transform = `translateX(-${100 / totalSlides}%)`;
-
-    function nextSlide() {
-      currentIndex++;
-      carousel.style.transition = 'transform 0.5s ease';
-      carousel.style.transform = `translateX(-${(currentIndex + 1) * 100 / totalSlides}%)`;
-
-      if (currentIndex === slides.length) {
-        setTimeout(() => {
-          carousel.style.transition = 'none';
-          currentIndex = 0;
-          carousel.style.transform = `translateX(-${100 / totalSlides}%)`;
-        }, 500);
-      }
-    }
-
-    slides.forEach(slide => {
-      const video = slide.querySelector('video');
-      if (video) video.play();
-    });
-
-    const interval = setInterval(nextSlide, 2000);
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % videos.length);
+    }, 5000); // Increased to 5 seconds for slower rotation
 
     return () => clearInterval(interval);
-  }, [videos]);
+  }, [videos.length]);
+
+  const getVideoIndex = (index) => {
+    if (index < 0) return videos.length - 1;
+    if (index >= videos.length) return 0;
+    return index;
+  };
 
   return (
     <div className={styles.carouselContainer}>
-      <h4 className={styles.sectionTitleHero}>{title}</h4>
-      <h5 className={styles.subHeadingHero}>{subtitle}</h5>
-      <div className={styles.carousel} ref={carouselRef}>
-        {videos.map((video, index) => (
-          <div key={index} className={styles.videoSlide}>
-            <video src={video.src} muted loop></video>
-          </div>
-        ))}
+      <h2 className={styles.sectionTitleHero}>{title}</h2>
+      {subtitle && <h3 className={styles.subHeadingHero}>{subtitle}</h3>}
+      <div className={styles.carousel}>
+        {[-1, 0, 1].map((offset) => {
+          const videoIndex = getVideoIndex(currentIndex + offset);
+          return (
+            <div
+              key={videoIndex}
+              className={`${styles.carouselItem} ${offset === 0 ? styles.active : ''} ${
+                offset === -1 ? styles.prev : offset === 1 ? styles.next : ''
+              }`}
+            >
+              <video
+                src={videos[videoIndex].src}
+                poster={videos[videoIndex].poster}
+                muted
+                loop
+                playsInline
+                autoPlay
+              />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
-}
+};
 
 export default VideoCarouselCard;
 
