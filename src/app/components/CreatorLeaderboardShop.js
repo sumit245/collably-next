@@ -45,7 +45,7 @@ export default function CreatorLeaderboard() {
             </div>
             <div className={styles.badge}>
               <TrendingUp className={styles.badgeIcon} />
-              <span className={styles.badgeName}>Trendsetter</span>
+              <span className={styles.badgeName}>Trend setter</span>
             </div>
           </div>
         </div>
