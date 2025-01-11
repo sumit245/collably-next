@@ -1,36 +1,8 @@
 import Image from 'next/image'
+import {blogs} from '../utils.faker'
 
 export default function BlogsCorner({ styles }) {
-  const blogs = [
-    {
-      id: 1,
-      author: 'Sakshi Kapoor',
-      title: 'Collably Welcomes AJIO FASHION to Our Recommend Affiliate Program!',
-      image: '/images/blog-card.webp',
-      date: 'Aug 12',
-      readTime: '7 min read',
-      likes: 1
-    },
-    {
-      id: 2,
-      author: 'Sakshi Kapoor',
-      title: 'Sukhbir singh – From Bhangra Beats to Fashion Feats – A Merchandise Journey',
-      image: '/images/blog-card2.webp',
-      date: 'Apr 18',
-      readTime: '7 min read',
-      likes: 1
-    },
-    {
-      id: 3,
-      author: 'Sakshi Kapoor',
-      title: "Celebrating SUKHBIR SINGH'S Timeless Music: From Bhangra Beats to Love Ballads",
-      image: '/images/blog-card3.webp',
-      date: 'Mar 10',
-      readTime: '7 min read',
-      likes: 1
-    }
-  ]
-
+  
   return (
     <div className={styles.mx4}>
       <div className={styles.header}>

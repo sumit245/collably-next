@@ -2,17 +2,12 @@
 
 import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
+import {images} from '../utils.faker'
 
 export default function ImageRotationComponent() {
   const trackRef = useRef(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const images = [
-    "/images/bannerScreen2.png", 
-    "/images/bannerScreen2.png", 
-    "/images/bannerScreen2.png", 
-    "/images/bannerScreen2.png", 
-    "/images/bannerScreen2.png"
-  ];
+
 
   useEffect(() => {
     const imageTrack = trackRef.current;

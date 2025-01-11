@@ -1,8 +1,8 @@
-import Header from '@/app/components/HeaderShop'
-import Footer from '@/app/components/FooterShop'
+import Header from '../components/HeaderShop'
+import Footer from '../components/FooterShop'
 
 
-import styles from '@/app/shop/StyleShop.module.css'
+import styles from '../shop/StyleShop.module.css'
 import { ViewLikedProduct } from '../components/ViewLikedProduct'
 import { LikeProvider } from '../actions/LikeContext'
 

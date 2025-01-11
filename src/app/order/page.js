@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import styles from './stylesOrder.module.css';
 import stylesShop from '../shop/StyleShop.module.css';
-import Header from '@/app/components/HeaderShop';
-import Footer from '@/app/components/FooterShop';
+import Header from '../components/HeaderShop';
+import Footer from '../components/FooterShop';
 import { LikeProvider } from '../actions/LikeContext';
 
 export default function OrderConfirmation() {

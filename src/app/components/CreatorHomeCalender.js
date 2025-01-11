@@ -4,40 +4,13 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { ChevronLeft, ChevronRight, Info } from 'lucide-react'
 import styles from '../CreatorHome/stylescreator.module.css'
+import {salesHome} from '../utils.faker'
 
 export default function SaleCalendar() {
   const [showAllSales, setShowAllSales] = useState(false)
 
-  const sales = [
-   
-    {
-      brand: 'Ajio',
-      logo: '/images/ajio-icon.jpg',
-      title: 'Giant Fashion Sale',
-      date: 'Ends on 12 Jan'
-    },
-    {
-      brand: 'H&M',
-      logo: '/images/hm_icon.png',
-      title: 'Winter Sale: Upto 70% off',
-      date: 'Ends on 19 Jan'
-    },
-    {
-      brand: 'Myntra',
-      logo: '/images/myntra_icon.png',
-      title: 'Right to Fashion Sale',
-      subtitle: 'Myntra - Fashion Shopping App',
-      date: '15 Jan - 21 Jan'
-    },
-    {
-      brand: 'NykaaFashion',
-      logo: '/images/nykaa_icon.png',
-      title: 'EOSS: Upto 75% off',
-      date: 'Live now'
-    }
-  ]
-
-  const displayedSales = showAllSales ? sales : [sales[0]]
+ 
+  const displayedSales = showAllSales ? salesHome : [salesHome[0]]
 
   return (
    

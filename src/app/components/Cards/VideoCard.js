@@ -9,7 +9,7 @@ const VideoCarouselCard = ({ videos, title = "Trending Today", subtitle }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % videos.length);
-    }, 5000); // Increased to 5 seconds for slower rotation
+    }, 5000); 
 
     return () => clearInterval(interval);
   }, [videos.length]);

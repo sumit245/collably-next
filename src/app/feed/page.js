@@ -1,11 +1,11 @@
-import Header from '@/app/components/HeaderShop'
-import Footer from '@/app/components/FooterShop'
+import Header from '../components/HeaderShop'
+import Footer from '../components/FooterShop'
 import styles from './stylesfeed.module.css'
 import StoryContainer from '../components/StoryContainer'
 import BlogsCorner from '../components/BlogCorner'
 import TrendingCreators from '../components/TrendingCreators'
 import ProfileSection from '../components/ProfileSectionFeed'
-import styleshop from '@/app/shop/StyleShop.module.css'
+import styleshop from '../shop/StyleShop.module.css'
 import { LikeProvider } from '../actions/LikeContext'
 
 export default function ShopPage() {

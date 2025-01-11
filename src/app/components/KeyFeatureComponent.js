@@ -2,44 +2,13 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import {items} from '../utils.faker'
 
 export default function KeyFeaturesComponent() {
   const trackRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemWidth = 200;
-  const items = [
-    {
-      title: 'Brand Collaborations',
-      description: 'Connect with brands for exciting partnerships and sponsorships.',
-      image: '/images/keyftr1.png',
-    },
-    {
-      title: 'Smart Affiliate Links',
-      description: 'Generate and manage affiliate links to monetize your content effectively.',
-      image: '/images/keyftr1.png',
-    },
-    {
-      title: 'Studio Bookings',
-      description: 'Find and book studios for your content creation needs.',
-      image: '/images/keyftr1.png',
-    },
-    {
-      title: 'Brand Collaborations',
-      description: 'Connect with brands for exciting partnerships and sponsorships.',
-      image: '/images/keyftr1.png',
-    },
-    {
-      title: 'Smart Affiliate Links',
-      description: 'Generate and manage affiliate links to monetize your content effectively.',
-      image: '/images/keyftr1.png',
-    },
-    {
-      title: 'Studio Bookings',
-      description: 'Find and book studios for your content creation needs.',
-      image: '/images/keyftr1.png',
-    },
-   
-  ];
+ 
 
   useEffect(() => {
     const interval = setInterval(() => {

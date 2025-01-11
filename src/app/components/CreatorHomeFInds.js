@@ -3,41 +3,9 @@
 import Image from 'next/image'
 import styles from '../CreatorHome/stylescreator.module.css'
 import { Clock, ArrowRight } from 'lucide-react'
+import {FINDS_DATA} from '../utils.faker'
 
-const FINDS_DATA = [
-  {
-    id: 1,
-    title: 'Trendy Winter Wear on Sale',
-    image: '/images/creator-product-1.jpg',
-    imageIcon: '/images/myntra-logo-small.png',
-    products: 60,
-    uploadDate: '17 Dec'
-  },
-  {
-    id: 2,
-    title: 'End of Season Sale Finds',
-    image: '/images/creator-product-2.webp',
-    imageIcon: '/images/savana_icon.png',
-    products: 59,
-    uploadDate: '03 Mar'
-  },
-  {
-    id: 3,
-    title: 'Trendy Winter Wear on Sale',
-    image: '/images/creator-product-3.webp',
-    imageIcon: '/images/flipkart-icon.png',
-    products: 60,
-    uploadDate: '10 Feb'
-  },
-  {
-    id: 4,
-    title: 'End of Season Sale Finds',
-    image: '/images/creator-product-4.avif',
-    imageIcon: '/images/nykaa_icon.png',
-    products: 59,
-    uploadDate: '07 Jan'
-  }
-]
+
 
 export default function FindsOfTheDay() {
   return (

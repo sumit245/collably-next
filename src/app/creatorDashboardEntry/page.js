@@ -27,7 +27,7 @@ export default function Home() {
             />
           </div>
 
-          <button className={styles.button}><Link href="/creatorDashboardVerify">Get Started</Link></button>
+          <Link href="/creatorDashboardVerify"> <button className={styles.button}>Get Started</button></Link>
         </div>
       </div>
     </main>

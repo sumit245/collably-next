@@ -1,14 +1,10 @@
 import Image from 'next/image'
 import styles from '../shop/StyleShop.module.css'
+import {products} from '../utils.faker'
 
 export default function ProductGrid() {
   
-  const products = [
-    { name: 'Kurta Collection', image: '/images/image9.webp', color: 'pink' },
-    { name: 'Dresses Collection', image: '/images/image10.webp', color: 'purple' },
-    { name: 'T-Shirt Collection', image: '/images/image11.webp', color: 'blue' },
-    { name: 'Bottom Wear Collection', image: '/images/image12.webp', color: 'cyan' },
-  ]
+ 
 
   return (
     <div className={styles.productGrid}>

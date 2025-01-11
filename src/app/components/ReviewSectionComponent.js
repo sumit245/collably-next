@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import {reviewData} from '../utils.faker'
+
 
 export default function ReviewSectionComponent() {
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
@@ -74,66 +76,25 @@ export default function ReviewSectionComponent() {
           </div>
 
           <div className="col-right">
-           
-            <div className="review_block" ref={el => reviewBlocks.current[0] = el}>
-              <div className="coustomer_info">
-                <div className="avatar">
-                  <Image src="/images/banavt1.png" alt="Avatar 1" width={50} height={50} />
-                  <div className="text">
-                    <h3>John Doe</h3>
-                    <span>Fashion Influencer</span>
+            {reviewData.map((review, index) => (
+              <div className="review_block" ref={el => reviewBlocks.current[index] = el} key={index}>
+                <div className="coustomer_info">
+                  <div className="avatar">
+                    <Image src={review.avatar} alt={`Avatar ${index + 1}`} width={50} height={50} />
+                    <div className="text">
+                      <h3>{review.name}</h3>
+                      <span>{review.role}</span>
+                    </div>
+                  </div>
+                  <div className="star2">
+                    {Array.from({ length: review.rating }).map((_, starIndex) => (
+                      <span key={starIndex}>⭐</span>
+                    ))}
                   </div>
                 </div>
-                <div className="star2">
-                  <span>⭐</span>
-                  <span>⭐</span>
-                  <span>⭐</span>
-                  <span>⭐</span>
-                  <span>⭐</span>
-                </div>
+                <p>"{review.review}"</p>
               </div>
-              <p>"Collably has revolutionized the way I collaborate with brands. It's user-friendly and efficient!"</p>
-            </div>
-
-            <div className="review_block" ref={el => reviewBlocks.current[1] = el}>
-              <div className="coustomer_info">
-                <div className="avatar">
-                  <Image src="/images/banavt2.png" alt="Avatar 2" width={50} height={50} />
-                  <div className="text">
-                    <h3>Jane Smith</h3>
-                    <span>Beauty Vlogger</span>
-                  </div>
-                </div>
-                <div className="star2">
-                  <span>⭐</span>
-                  <span>⭐</span>
-                  <span>⭐</span>
-                  <span>⭐</span>
-                  <span>⭐</span>
-                </div>
-              </div>
-              <p>"The affiliate link feature has significantly boosted my earnings. Highly recommended for all creators!"</p>
-            </div>
-
-            <div className="review_block" ref={el => reviewBlocks.current[2] = el}>
-              <div className="coustomer_info">
-                <div className="avatar">
-                  <Image src="/images/banavt3.png" alt="Avatar 3" width={50} height={50} />
-                  <div className="text">
-                    <h3>Maria</h3>
-                    <span>Company Inc</span>
-                  </div>
-                </div>
-                <div className="star2">
-                  <span>⭐</span>
-                  <span>⭐</span>
-                  <span>⭐</span>
-                  <span>⭐</span>
-                  <span>⭐</span>
-                </div>
-              </div>
-              <p>"The affiliate link feature has significantly boosted my earnings. Highly recommended for all creators!"</p>
-            </div>
+            ))}
           </div>
         </div>
       </div>

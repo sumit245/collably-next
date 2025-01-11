@@ -1,25 +1,21 @@
-import Header from '@/app/components/HeaderShop'
-import Footer from '@/app/components/FooterShop'
-import HeroCarousel from '@/app/components/HeroCaraouselShop'
-import TopCreators from '@/app/components/TopCreatorShop'
-import TrendingCarousel from '@/app/components/TrendingcarouselShop'
-import ProductCategories from '@/app/components/ProductCategoriesShop'
-import TopBrands from '@/app/components/TopBrandShop'
-import ShopTheLook from '@/app/components/ShopTheLookShop'
-import FashionReels from '@/app/components/FashionReelsShop'
-import BeautyReels from '@/app/components/BeautyReelsShop'
-import GenZStyle from '@/app/components/GenZStyleShop'
-import ProductGrid from '@/app/components/ProductGridShop'
-import FeaturedCreators from '@/app/components/FeaturedCreatorShop'
-import TrendingBrands from '@/app/components/TrendingBrandsShop'
- import TrendingProducts from '@/app/components/TrendingProductShop'
-import MostLoved from '@/app/components/MostLovedShop'
-import LatestCreators from '@/app/components/LatestCreatorsShop'
-import FreshDrops from '@/app/components/FreshDropsShop'
-import CreatorLeaderboard from '@/app/components/CreatorLeaderboardShop'
-import styles from '@/app/shop/StyleShop.module.css'
+import Header from '../components/HeaderShop'
+import Footer from '../components/FooterShop'
+import HeroCarousel from '../components/HeroCaraouselShop'
+import TopCreators from '../components/TopCreatorShop'
+import ProductCategories from '../components/ProductCategoriesShop'
+import TopBrands from '../components/TopBrandShop'
+import ReelsSection from '../components/ReelsSection'
+import ProductGrid from '../components/ProductGridShop'
+import FeaturedCreators from '../components/FeaturedCreatorShop'
+import TrendingBrands from '../components/TrendingBrandsShop'
+import CreatorLeaderboard from '../components/CreatorLeaderboardShop'
+import styles from '../shop/StyleShop.module.css'
 import ChooseYouSection from '../components/ChooseYou'
 import { LikeProvider } from '../actions/LikeContext'
+import {videoData1} from '../utils.faker'
+import {videoData2} from '../utils.faker'
+import {creators1} from '../utils.faker'
+
 export default function ShopPage() {
   return (
     <LikeProvider>
@@ -27,22 +23,30 @@ export default function ShopPage() {
     <div className={styles.smartphoneContainer}>
       <Header />
       <main>
-        <HeroCarousel />
+        <HeroCarousel  data={videoData1}/>
         <TopCreators />
-        <TrendingCarousel />
+        <HeroCarousel  data={videoData2}/>
         <ProductCategories /> 
        <TopBrands />
-        <ShopTheLook />
-        <FashionReels />
-        <BeautyReels />
-        <GenZStyle />
+        <ReelsSection   creators={creators1} 
+        sectionTitle="Shop the Look" />
+         <ReelsSection   creators={creators1} 
+        sectionTitle="Fashion Reels" />
+         <ReelsSection   creators={creators1} 
+        sectionTitle="Beauty Reels" />
+         <ReelsSection   creators={creators1} 
+        sectionTitle="Genz Style" />
         <ProductGrid /> 
        <FeaturedCreators />
          <TrendingBrands />
-        <TrendingProducts />
-        <MostLoved />
-        <LatestCreators />
-        <FreshDrops />
+         <ReelsSection   creators={creators1} 
+        sectionTitle="Trending Products" />
+         <ReelsSection   creators={creators1} 
+        sectionTitle="Most Loved" />
+         <ReelsSection   creators={creators1} 
+        sectionTitle="Latest from creators" />
+         <ReelsSection   creators={creators1} 
+        sectionTitle="Fresh Drops" />
         <CreatorLeaderboard />
         <ChooseYouSection />
       </main>
