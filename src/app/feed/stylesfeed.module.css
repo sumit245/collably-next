@@ -1,6 +1,4 @@
-:root {
-    --primary-pink: #FF69B4;
-  }
+
   
   .smartphoneContainer {
     max-width: 450px;
@@ -53,7 +51,7 @@
     position: absolute;
     top: -5px;
     right: -5px;
-    background-color: var(--primary-pink);
+    background-color: #FF69B4;
     color: white;
     font-size: 10px;
     padding: 2px 5px;
@@ -267,7 +265,7 @@
     border-width: 1px;
     box-shadow: 2px 2px 0px #592ebf;
     color: white;
-    background-color: var(--primary-pink);
+    background-color: #FF69B4;
     height: 24px;
     width: 94px;
   }
@@ -774,7 +772,7 @@
   }
   
   .btnFollow {
-    background-color: var(--primary-pink);
+    background-color: #FF69B4;
     color: white;
     border: 1px solid #592EBF;
     box-shadow: 2px 2px 0 0 #AB1AA1, 2px 2px 20px 5px rgba(255, 255, 255, 0.6);
@@ -804,7 +802,7 @@
   }
   
   .navItem.active {
-    color: var(--primary-pink);
+    color: #FF69B4;
   }
   
   .navItem span {
