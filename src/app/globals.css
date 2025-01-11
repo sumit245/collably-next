@@ -591,11 +591,7 @@ i {
   padding: 15px;
 }
 
-@media (min-width: 768px) {
-  .feature_item {
-    flex: 0 0 33.333%;
-  }
-}
+
 
 .image-rotation-section {
   padding: 40px 0;
@@ -648,24 +644,11 @@ i {
   border-radius: 40px;
 }
 
-/* Media Queries */
-@media (max-width: 1024px) {
-  .image-item {
-    flex: 0 0 25%;
-  }
-}
 
-@media (max-width: 768px) {
-  .image-item {
-    flex: 0 0 33.333%;
-  }
-}
 
-@media (max-width: 480px) {
-  .image-item {
-    flex: 0 0 50%;
-  }
-}
+
+
+
 
 
 .scroller-center-image {
@@ -967,28 +950,10 @@ footer h3 {
   height: auto;
 }
 
-@media (max-width: 992px) {
-  .client-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
 
-@media (max-width: 768px) {
-  .client-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
 
-  .section-title h2 {
-    font-size: var(--font-size-xl);
-  }
-}
 
-@media (max-width: 480px) {
-  .client-grid {
-    grid-template-columns: 1fr;
-  }
-}
+
 
 .row {
   display: flex;
@@ -1416,15 +1381,7 @@ h2 {
   font-size: var(--font-size-card-text);
 }
 
-@media (max-width: 768px) {
-  .card {
-    min-width: 100%;
-  }
 
-  h2 {
-    font-size: var(--font-size-2xl);
-  }
-}
 
 .review_section {
   padding: 100px 0;
@@ -1575,20 +1532,7 @@ h2 {
   }
 }
 
-@media (max-width: 768px) {
-  .col-left,
-  .col-right {
-    flex: 0 0 100%;
-  }
 
-  .col-left {
-    position: static;
-  }
-
-  .section_title h2 {
-    font-size: var(--font-size-2xl);
-  }
-}
 
 
 .coming-soon{
@@ -1598,40 +1542,7 @@ h2 {
 
 
 
-/* Responsive styles */
-@media screen and (max-width: 1024px) {
-  .nav-items {
-    display: none;
-  }
 
-  .navbar-button {
-    margin-left: auto;
-  }
-
-  .row {
-    flex-direction: row;
-  }
-
-  .banner_text, .used_app h3, .used_app pre {
-    text-align: center;
-    padding-right: 0;
-  }
-
-  .used_app ul {
-    justify-content: center;
-  }
-
-  .app_btn {
-    justify-content: center;
-  }
-
-  .hero-bg-image {
-    left: 0;
-    width: 100%;
-    height: auto;
-  }
-
-}
 .quick-easy-section {
   padding: 5rem 0;
   background-color: #f9fafb;
@@ -1671,11 +1582,7 @@ h2 {
   gap: 2rem;
 }
 
-@media (min-width: 768px) {
-  .steps-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
+
 
 .step-card {
   position: relative;
@@ -2208,6 +2115,51 @@ html, body {
   margin: 2px 0;
   transition: 0.4s ease-in-out;
 }
+
+
+/* Responsive styles */
+@media screen and (max-width: 1024px) {
+  .nav-items {
+    display: none;
+  }
+
+  .navbar-button {
+    margin-left: auto;
+  }
+
+  .row {
+    flex-direction: row;
+  }
+  .image-item {
+    flex: 0 0 25%;
+  }
+  .banner_text, .used_app h3, .used_app pre {
+    text-align: center;
+    padding-right: 0;
+  }
+
+  .used_app ul {
+    justify-content: center;
+  }
+
+  .app_btn {
+    justify-content: center;
+  }
+
+  .hero-bg-image {
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
+
+}
+
+@media (max-width: 992px) {
+  .client-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media screen and (max-width: 768px) {
   :root {
     --font-size-xs: 0.75rem;
@@ -2220,11 +2172,44 @@ html, body {
     --font-size-4xl: 2.5rem;
     --font-size-5xl: 3rem;
   }
+  .steps-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .card {
+    min-width: 100%;
+  }
+  .col-left,
+  .col-right {
+    flex: 0 0 100%;
+  }
 
+  .col-left {
+    position: static;
+  }
+
+  .section_title h2 {
+    font-size: var(--font-size-2xl);
+  }
+  h2 {
+    font-size: var(--font-size-2xl);
+  }
+  .feature_item {
+    flex: 0 0 33.333%;
+  }
   .hero-section {
     margin-top: 20px;
   }
+  .image-item {
+    flex: 0 0 33.333%;
+  }
+  .client-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
 
+  .section-title h2 {
+    font-size: var(--font-size-xl);
+  }
   .section-wrapper {
     height: 80px;
     margin-bottom: 40px;
@@ -2553,11 +2538,15 @@ display: none;
     --font-size-4xl: 2.5rem;
     --font-size-5xl: 3rem;
   }
-
+  .image-item {
+    flex: 0 0 50%;
+  }
   .hero-section {
     margin-top: 20px;
   }
-
+  .client-grid {
+    grid-template-columns: 1fr;
+  }
   .section-wrapper {
     height: 80px;
     margin-bottom: 40px;
