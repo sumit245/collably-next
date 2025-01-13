@@ -58,7 +58,7 @@ export default function FooterComponent() {
           <div className="footer-item">
             <div className='fi-2'>
             <div className="left-text">
-              <p>© 2023 Collably. All rights reserved.</p>
+              <p>Powered by Dashandots Technology</p>
             </div>
             <div className="right-text">
                      <p> Terms & Conditions</p>
