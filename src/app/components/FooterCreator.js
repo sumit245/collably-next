@@ -24,7 +24,7 @@ export default function Footer() {
         <span className={styles.navText}>MY SHOP</span>
       </Link>
 
-      <Link href="#" className={`${styles.navItem} ${pathname === '/admin' ? styles.active : ''}`}>
+      <Link href="CreatorAnalytics" className={`${styles.navItem} ${pathname === '/CreatorAnalytics' ? styles.active : ''}`}>
         <span className={styles.navIcon}>
           <FiBarChart2 size={20} />
         </span>
