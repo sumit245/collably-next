@@ -1346,7 +1346,7 @@ h2 {
     var(--community-subtitle-color),
     var(--community-subtitle-bg)
   );
-  -webkit-background-clip: text;
+   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
