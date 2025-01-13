@@ -1,0 +1,104 @@
+/* CommissionSplit.module.css */
+
+/* Wrapper container */
+.wrapper {
+    font-size: 5rem;
+  }
+  
+  /* Title and subtitle */
+  /* .titleContainer {
+    
+  } */
+
+  .container {
+    padding: 2rem;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+  
+  .subtitle {
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+  
+  /* Toggle Buttons */
+  .toggleButtons {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .toggleButton {
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .activeButton {
+    background-color: #fbcfe8;
+    color: #db2777;
+  }
+  
+  .inactiveButton {
+    background-color: #f3f4f6;
+    color: #4b5563;
+  }
+  
+  .inactiveButton:hover {
+    background-color: #e5e7eb;
+  }
+  
+  /* Donut Chart */
+  .donutChartContainer {
+    position: relative;
+    width: 100%;
+    max-width: 240px;
+    margin: 0 auto;
+    aspect-ratio: 1;
+  }
+  
+  .donutBackground {
+    fill: none;
+    stroke: #e5e7eb;
+    stroke-width: 10;
+    opacity: 0.2;
+  }
+  
+  .donutCenter {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .donutText {
+    display: flex;
+    align-items: baseline;
+  }
+  
+  .donutCurrency {
+    font-size: 1.125rem;
+  }
+  
+  .donutValue {
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+  
+  /* No Data Message */
+  .noDataMessage {
+    font-size: 0.875rem;
+    color: #6b7280;
+    text-align: center;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+  
