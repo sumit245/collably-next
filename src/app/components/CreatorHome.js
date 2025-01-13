@@ -4,36 +4,10 @@ import { Bell, Headphones, Menu, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../CreatorHome/stylescreator.module.css'
-
+import{stepsCreatorHome} from '../utils.faker'
 
 export default function CreatorHome() {
-  const steps = [
-    {
-      id: 1,
-      title: 'Connect Social Media',
-      description: 'Required to create Wishlinks',
-      icon: '/clipboard-icon.svg',
-      isActive: true
-    },
-    {
-      id: 2,
-      title: 'Create Your first Wishlink',
-      description: 'Get your unique commissionable links.',
-      isActive: false
-    },
-    {
-      id: 3,
-      title: 'Share Wishlinks & Earn',
-      description: 'Share on your stories, chats & description box to earn',
-      isActive: false
-    },
-    {
-      id: 4,
-      title: 'Activate Engage',
-      description: 'Automated DMs for your IG content',
-      isActive: false
-    }
-  ]
+
 
   return (
     <div >
@@ -68,7 +42,7 @@ export default function CreatorHome() {
       </header>
       <div className={styles.heroContainer}>
         <div className={styles.stepsContainer}>
-          {steps.map((step) => (
+          {stepsCreatorHome.map((step) => (
             <div key={step.id} className={`${styles.step} ${step.isActive ? styles.active : ''}`}>
               {step.icon && (
                 <Image

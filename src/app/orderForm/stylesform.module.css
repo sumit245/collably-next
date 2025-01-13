@@ -60,14 +60,21 @@
   }
   
   .input {
-    width: 90%;
+    width: 93%;
     padding: 12px;
     border: 1px solid #d4d5d9;
     border-radius: 4px;
     font-size: 14px;
     color: #282c3f;
   }
-  
+  .inputCity {
+    width: 85%;
+    padding: 12px;
+    border: 1px solid #d4d5d9;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #282c3f;
+  }
   .input::placeholder {
     color: #94969f;
   }

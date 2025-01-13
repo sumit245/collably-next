@@ -13,6 +13,8 @@ import CommunitySectionComponent from '../app/components/CommunitySectionCompone
 import FooterComponent from '../app/components/FooterComponent'
 import BottomNavComponent from '../app/components/BottomNavComponent'
 import LoginComponent from '../app/components/LoginComponent';
+import {scrollerData} from '../app/utils.faker'
+import {scrollerData2} from '../app/utils.faker'
 
 
 export default function HomePage() {
@@ -23,13 +25,13 @@ export default function HomePage() {
         <HeroSectionComponent />
         <KeyFeaturesComponent />
         <QuickEasyComponent />
-        <ScrollerComponent text="Why Choose Our App?" />
+        <ScrollerComponent scrollerData={scrollerData} />
         <CategoryGridComponent />
         <ImageRotationComponent />
         <ReviewSectionComponent />
         <SliderSectionComponent />
         <ClientSectionComponent />
-        <ScrollerComponent />
+        <ScrollerComponent scrollerData={scrollerData2} />
         <FAQSectionComponent />
         <CommunitySectionComponent />
       </main>

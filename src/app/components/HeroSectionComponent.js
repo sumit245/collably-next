@@ -4,17 +4,14 @@ import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Typed from 'typed.js'
+import { heroData } from '../utils.faker'
 
 export default function HeroSectionComponent() {
   const typedRef = useRef(null)
 
   useEffect(() => {
     const typed = new Typed(typedRef.current, {
-      strings: [
-        "Explore Brand Collaborations",
-        "Shop from your Favourite Creator",
-        "Create Smart Affiliate Links",
-      ],
+      strings: heroData.bannerTexts,
       typeSpeed: 50,
       backSpeed: 25,
       loop: true,
@@ -44,21 +41,17 @@ export default function HeroSectionComponent() {
 
           <div className="used_app">
             <ul>
-              <li><Image src="/images/banavt1.png" alt="image" width={80} height={80} /></li>
-              <li><Image src="/images/banavt2.png" alt="image" width={80} height={80} /></li>
-              <li><Image src="/images/banavt3.png" alt="image" width={80} height={80} /></li>
-              <li>
-                <Link
-                  href="#"
-                  className="popup-youtube play-button"
-                  data-url="https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&amp;mute=1"
-                  data-toggle="modal"
-                  data-target="#myModal"
-                  title="XJj2PbenIsU"
-                >
-                  <Image src="/images/play.png" alt="img" width={80} height={80} />
-                </Link>
-              </li>
+              {heroData.appImages.map((img, index) => (
+                <li key={index}>
+                  {img.isLink ? (
+                    <Link {...img.linkProps}>
+                      <Image src={img.src} alt={img.alt} width={img.width} height={img.height} />
+                    </Link>
+                  ) : (
+                    <Image src={img.src} alt={img.alt} width={img.width} height={img.height} />
+                  )}
+                </li>
+              ))}
             </ul>
             <h3>That &apos;One App&apos; for Creator Economy</h3>
             <pre>
@@ -80,8 +73,16 @@ export default function HeroSectionComponent() {
         <div className="col-lg-6 col-md-12">
           <div className="banner_slider">
             <div className="slider_frame">
-              <Image className="mobile-hero" src="/images/iphonescren.png" alt="iPhone screen" width={300} height={600} />
-              <Image className="hero-bg-image" src="/images/bannerScreen2.png" alt="" width={600} height={583} />
+              {heroData.heroImages.map((img, index) => (
+                <Image
+                  key={index}
+                  className={img.className}
+                  src={img.src}
+                  alt={img.alt}
+                  width={img.width}
+                  height={img.height}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -89,4 +90,3 @@ export default function HeroSectionComponent() {
     </section>
   )
 }
-

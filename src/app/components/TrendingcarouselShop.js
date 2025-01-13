@@ -1,4 +1,5 @@
 import VideoCarouselCard from './Cards/VideoCard';
+// import {videosCaraousel} from '../utils.faker'
 
 export default function TrendingCarousel() {
   const videos = [

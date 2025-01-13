@@ -1,6 +1,6 @@
-import Header from '@/app/components/HeaderComponents'
-import Footer from '@/app/components/FooterComponent'
-import ComingSoon from '@/app/components/ComingSoon'
+import Header from '../components/HeaderComponents'
+import Footer from '../components/FooterComponent'
+import ComingSoon from '../components/ComingSoon'
 
 
 export default function ShopPage() {

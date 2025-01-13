@@ -1,12 +1,8 @@
 import Image from 'next/image'
 import styles from '../shop/StyleShop.module.css'
+import {brands} from '../utils.faker'
 export default function TopBrands() {
-  const brands = [
-    { name: 'Navita', image: '/images/image29.webp' },
-    { name: 'Komal', image: '/images/image25.jpeg' },
-    { name: 'Dua', image: '/images/image24.webp' },
-    { name: 'Arya', image: '/images/image26.webp' },
-  ]
+
 
   return (
     <section className={styles.topBrandsSection}>

@@ -3,40 +3,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import styles from '../feed/stylesfeed.module.css';
+import {stories} from '../utils.faker'
 
-const stories = [
-    {
-        username: "Arcane by Mayuri Isame",
-        profile: [{ type: "image", url: "/images/product1.webp" }],
-        media: [
-            { type: "image", url: "/images/spotlight1.webp" },
-            { type: "video", url: "/images/playback.mp4" }
-        ]
-    },
-    {
-        username: "Loca Slopa",
-        profile: [{ type: "image", url: "/images/product2.webp" }],
-        media: [
-            { type: "image", url: "/images/spotlight2.webp" },
-            { type: "image", url: "/images/main.mp4" }
-        ]
-    },
-    {
-        username: "Starchild by Krissann Barretto",
-        profile: [{ type: "image", url: "/images/product3.webp" }],
-        media: [
-            { type: "image", url: "https://via.placeholder.com/1080x1920" },
-            { type: "image", url: "https://via.placeholder.com/1080x1920" }
-        ]
-    },
-    {
-        username: "Vaishnavi",
-        profile: [{ type: "image", url: "/images/product4.webp" }],
-        media: [
-            { type: "image", url: "https://via.placeholder.com/1080x1920" }
-        ]
-    }
-];
 
 const StoryViewer = () => {
     const [currentStoryIndex, setCurrentStoryIndex] = useState(0);

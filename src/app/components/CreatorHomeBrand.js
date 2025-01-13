@@ -3,24 +3,12 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import styles from '../CreatorHome/stylescreator.module.css'
+import {brandsHome} from '../utils.faker'
 
 export default function TopBrands() {
   const [isHovered, setIsHovered] = useState(false)
 
-  const brands = [
-    { name: 'Uniqlo', logo: '/images/uniqlo_icon.png' },
-    { name: 'Meesho', logo: '/images/meesho-icon.png' },
-    { name: 'Myntra', logo: '/images/myntra_icon.png' },
-    { name: 'Flipkart', logo: '/images/flipkart-icon.png' },
-    { name: 'Nykaa', logo: '/images/nykaa_icon.png' },
-    { name: 'H&M', logo: '/images/hm_icon.png' },
-    { name: 'Uniqlo', logo: '/images/uniqlo_icon.png' },
-    { name: 'Meesho', logo: '/images/meesho-icon.png' },
-    { name: 'Myntra', logo: '/images/myntra_icon.png' },
-    { name: 'Flipkart', logo: '/images/flipkart-icon.png' },
-    { name: 'Nykaa', logo: '/images/nykaa_icon.png' },
-    { name: 'H&M', logo: '/images/hm_icon.png' }
-  ]
+
 
   return (
     <div className={styles.topBrandsWrapper}>
@@ -32,7 +20,7 @@ export default function TopBrands() {
         onMouseLeave={() => setIsHovered(false)}
       >
         <div className={`${styles.topBrandsTrack} ${isHovered ? styles.topBrandsPaused : ''}`}>
-          {[...brands, ...brands].map((brand, index) => (
+          {[...brandsHome, ...brandsHome].map((brand, index) => (
             <div key={`${brand.name}-${index}`} className={styles.topBrandsTile}>
               <div className={styles.topBrandsLogoWrapper}>
                 <Image

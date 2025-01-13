@@ -1,16 +1,8 @@
 import Image from 'next/image'
 import styles from '../shop/StyleShop.module.css'
+import {categories} from '../utils.faker'
 export default function ProductCategories() {
-  const categories = [
-    { name: 'Dresses', image: '/images/dress.jpeg' },
-    { name: 'Dupatta', image: '/images/dupatta.jpeg' },
-    { name: 'Shirts', image: '/images/shirt.jpeg' },
-    { name: 'Sarees', image: '/images/saree.jpeg' },
-    { name: 'Earrings', image: '/images/earing.jpeg' },
-    { name: 'Bracelet', image: '/images/bracelet.jpeg' },
-    { name: 'Rings', image: '/images/ring.jpeg' },
-    { name: 'Necklace', image: '/images/necklace.jpeg' },
-  ]
+
 
   return (
     <section className={styles.productSection}>

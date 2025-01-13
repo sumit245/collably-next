@@ -1,18 +1,9 @@
 import Image from 'next/image'
 import styles from '../shop/StyleShop.module.css'
+import {TopBrands} from '../utils.faker'
 
 export default function TrendingBrands() {
-  const creators = [
-    { name: 'BareBasix', image: '/images/image21.webp' },
-    { name: 'Printopia', image: '/images/image22.webp' },
-    { name: 'Sukhbir', image: '/images/image23.webp' },
-    { name: 'The makeup Co.', image: '/images/image24.webp' },
-    { name: 'Starchild By Krissann Barretto', image: '/images/image25.jpeg' },
-    { name: 'Shyamalihazarika', image: '/images/image26.webp' },
-    { name: 'Urban Nommad', image: '/images/image27.webp' },
-    { name: 'Mayavi Doodle', image: '/images/image28.webp' },
-    { name: 'Neha Diwan', image: '/images/image29.webp' },
-  ]
+
 
   return (
     <section className={styles.featuredCreators}>
@@ -23,7 +14,7 @@ export default function TrendingBrands() {
         </a>
       </div>
       <div className={styles.fImg}>
-        {creators.map((creator, index) => (
+        {TopBrands.map((creator, index) => (
           <div key={index} className={styles.fImg1}>
             <Image src={creator.image} alt={creator.name} width={100} height={100} />
             <span className={styles.imgText}>{creator.name}</span>

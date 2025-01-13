@@ -6,8 +6,8 @@ import { ArrowLeft } from "lucide-react";
 import styles from "./stylesform.module.css";
 import stylesShop from "../shop/StyleShop.module.css";
 import { LikeProvider } from "../actions/LikeContext";
-import Header from "@/app/components/HeaderShop";
-import Footer from "@/app/components/FooterShop";
+import Header from "../components/HeaderShop";
+import Footer from "../components/FooterShop";
 import PincodeLookup from "india-pincode-lookup";
 
 export default function AddressForm() {
@@ -160,7 +160,7 @@ export default function AddressForm() {
                     value={formData.city}
                     onChange={handleChange}
                     placeholder="City / District*"
-                    className={styles.input}
+                    className={styles.inputCity}
                     required
                     readOnly={cityStateReadOnly}
                   />
@@ -170,7 +170,7 @@ export default function AddressForm() {
                     value={formData.state}
                     onChange={handleChange}
                     placeholder="State*"
-                    className={styles.input}
+                    className={styles.inputCity}
                     required
                     readOnly={cityStateReadOnly}
                   />

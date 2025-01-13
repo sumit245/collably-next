@@ -1,20 +1,12 @@
 import VideoCarouselCard from './Cards/VideoCard';
 
-export default function HeroCarousel() {
-  const videos = [
-    { src: "images/playback.mp4" },
-    { src: "images/playback.mp4" },
-    { src: "images/playback.mp4" },
-    { src: "images/playback.mp4" },
-    { src: "images/playback.mp4" },
-  ];
-
+export default function HeroCarousel({ data }) {
   return (
     <main>
       <VideoCarouselCard 
-        videos={videos} 
-        title="Scroll and Shop" 
-        subtitle="From Your ❤ Creators & Brands" 
+        videos={data.videos} 
+        title={data.title} 
+        subtitle={data.subtitle} 
       />
     </main>
   );

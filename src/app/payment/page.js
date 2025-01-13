@@ -6,8 +6,8 @@ import { ArrowLeft, CreditCard, Wallet, Building2, Smartphone } from 'lucide-rea
 import styles from './stylespayment.module.css';
 import stylesShop from '../shop/StyleShop.module.css';
 import { LikeProvider } from '../actions/LikeContext';
-import Header from '@/app/components/HeaderShop';
-import Footer from '@/app/components/FooterShop';
+import Header from '../components/HeaderShop';
+import Footer from '../components/FooterShop';
 
 export default function Payment() {
   const router = useRouter();
