@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { ArrowLeft, Headphones } from 'lucide-react'
-import styles from '../CreatorShop/styles.creatorShop.module.css'
+import styles from '../CreatorAnalytics/stylesanalytics.module.css'
 import Image from 'next/image'
 import InsightsTab from './InsightsTab'
 import PayoutsTab from './PayoutsTab'

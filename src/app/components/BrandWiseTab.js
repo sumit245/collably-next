@@ -16,7 +16,7 @@ export default function BrandWiseTab() {
       </div>
       
       <p className={styles.emptyMessage}>
-        * You don't have any commissions in the selected time period. Share Wishlinks and earn
+        * You don't have any commissions in the selected time period. Share Collablys and earn
       </p>
     </div>
   )

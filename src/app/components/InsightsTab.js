@@ -1,9 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import styles from '../CreatorShop/styles.creatorShop.module.css'
+import styles from '../CreatorAnalytics/stylesanalytics.module.css'
 import { Calendar } from 'lucide-react'
 import DatePicker from './DatePicker'
+import Image from 'next/image'
+import ContentAnalytics from '../components/CreatorInsights'
+import CommissionSplit from '../components/CommisionSplit'
 
 export default function InsightsTab() {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false)
@@ -47,14 +50,28 @@ export default function InsightsTab() {
           <div className={styles.analyticsMainMetrics}>
             <div className={styles.analyticsMetric}>
                 <div className={styles.analyticsMetricIcon2}>
-              <span className={styles.analyticsMetricIcon}>👛</span>
+              <span className={styles.analyticsMetricIcon}>
+              <Image 
+            src="/images/totalearnings.png"
+            alt="coin"
+            width={25}
+            height={25}
+          />
+              </span>
               <div className={styles.analyticsMetricValue}>₹ 0</div></div>
-              <div className={styles.analyticsMetricLabel}>Ordered Commissions</div>
+              <div className={styles.analyticsMetricLabel1}>Ordered Commissions</div>
             </div>
             
             <div className={styles.analyticsMetric}>
-            <div className={styles.analyticsMetricIcon2}>
-              <span className={styles.analyticsMetricIcon}>🎯</span>
+            <div className={styles.analyticsMetricIcon3}>
+              <span className={styles.analyticsMetricIcon}>
+              <Image 
+            src="/images/total-sale.png"
+            alt="coin"
+            width={25}
+            height={25}
+          />
+              </span>
               <div className={styles.analyticsMetricValue}>₹ 0</div> </div>
               <div className={styles.analyticsMetricLabel}>Ordered Amount</div>
             </div>
@@ -88,7 +105,7 @@ export default function InsightsTab() {
         <div className={styles.analyticsChartArea}>
           <div className={styles.analyticsNotebookLines}>
             <div className={styles.analyticsEmptyMessage}>
-              Share Wishlinks & start earning!
+              Share Collably's Links & start earning!
             </div>
           </div>
         </div>
@@ -120,7 +137,8 @@ export default function InsightsTab() {
             setIsDatePickerOpen(false)
           }}
         />
+        <CommissionSplit />
+        <ContentAnalytics />
     </div>
   )
 }
-

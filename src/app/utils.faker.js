@@ -293,19 +293,19 @@ export  const creatorsFeed = [
     {
       id: 1,
       title: 'Connect Social Media',
-      description: 'Required to create Wishlinks',
+      description: 'Required to create Collablys',
       icon: '/clipboard-icon.svg',
       isActive: true
     },
     {
       id: 2,
-      title: 'Create Your first Wishlink',
+      title: 'Create Your first Collably',
       description: 'Get your unique commissionable links.',
       isActive: false
     },
     {
       id: 3,
-      title: 'Share Wishlinks & Earn',
+      title: 'Share Collablys & Earn',
       description: 'Share on your stories, chats & description box to earn',
       isActive: false
     },

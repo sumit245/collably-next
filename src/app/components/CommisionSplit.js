@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import styles from '../CreatorShop/styles.creatorShop.module.css'
+import styles from '../CreatorAnalytics/stylesanalytics.module.css'
 import BrandWiseTab from './BrandWiseTab'
 import ChannelWiseTab from './ChannelWiseTab'
 

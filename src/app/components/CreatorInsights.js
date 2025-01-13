@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import styles from '../CreatorShop/styles.creatorShop.module.css'
+import styles from '../CreatorAnalytics/stylesanalytics.module.css'
 import { ArrowUpDown, SlidersHorizontal } from 'lucide-react'
 import PostsTab from './postsTab'
 import CollectionsTab from './collectionsTab'
