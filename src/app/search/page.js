@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import styles from "./SearchSection.module.css";
+import styles from "../search/stylesSearch.module.css";
 import Header from "../components/HeaderShop";
 import Footer from "../components/FooterShop";
 import { LikeProvider } from "../actions/LikeContext";

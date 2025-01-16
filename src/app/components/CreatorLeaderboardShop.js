@@ -4,7 +4,7 @@ import { Crown } from 'lucide-react'
 import React, { useState } from "react"
 import styles from '../shop/StyleShop.module.css';
 
-export default function TrendingUsers() {
+export default function TrendingUsersLeaderBoard() {
   const [activeTab, setActiveTab] = useState('Today');
 
   const users = {
@@ -85,4 +85,3 @@ export default function TrendingUsers() {
     </div>
   );
 }
-

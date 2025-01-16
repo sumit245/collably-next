@@ -1,8 +1,7 @@
 import stylesShop from '../shop/StyleShop.module.css';
 import FooterCreator from '../components/FooterCreator'
 import InsightsDashboard from '../components/AnalyticsHead'
-import ContentAnalytics from '../components/CreatorInsights'
-import CommissionSplit from '../components/CommisionSplit'
+import PoweredByFooter from '../components/CreatorBottomFooter'
 
 
 export default function HomePage() {
@@ -13,9 +12,9 @@ export default function HomePage() {
    
       <main>
       <InsightsDashboard />
-       <ContentAnalytics />
-       <CommissionSplit />
-       
+      
+      
+      <PoweredByFooter />
       
       </main>
       <FooterCreator />
