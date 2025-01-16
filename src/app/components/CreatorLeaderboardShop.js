@@ -1,81 +1,88 @@
-"use client"
+'use client'
 
-import React from 'react';
-import { Star, Users, ShoppingBag, TrendingUp, Crown } from 'lucide-react';
+import { Crown } from 'lucide-react'
+import React, { useState } from "react"
 import styles from '../shop/StyleShop.module.css';
 
-export default function CreatorLeaderboard() {
+export default function TrendingUsers() {
+  const [activeTab, setActiveTab] = useState('Today');
+
+  const users = {
+    Today: [
+      { id: 1, name: 'Arya', rank: 1, type: 'heart', image: 'images/image24.webp' },
+      { id: 2, name: 'Avi', rank: 2, type: 'heart', image: 'images/image25.jpeg' },
+      { id: 3, name: 'Nya', rank: 1, type: 'heart', image: 'images/image26.webp' },
+      { id: 4, name: 'Leo', rank: 2, type: 'star', image: 'images/image27.webp' },
+    ],
+    Weekly: [
+      { id: 3, name: 'Nya', rank: 1, type: 'heart', image: 'images/image26.webp' },
+      { id: 4, name: 'Leo', rank: 2, type: 'star', image: 'images/image27.webp' },
+    ],
+    Monthly: [
+      { id: 5, name: 'Sam', rank: 1, type: 'crown', image: 'images/image28.webp' },
+      { id: 6, name: 'Olivia', rank: 2, type: 'heart', image: 'images/image29.webp' },
+    ]
+  };
+
+  const tabs = ['Today', 'Weekly', 'Monthly'];
+
   return (
-    <section className={styles.leaderboardSection}>
-      <div className={styles.leaderboard}>
-        <div className={styles.leaderboardHeader}>
-          <div className={styles.headerTop}>
-            <div>
-              <div className={styles.levelTitle}>Creator Level: Accomplished</div>
-              <div className={styles.streak}>Daily Streak: 15 days 🔥</div>
-            </div>
-            <div className={styles.leagueRank}>
-              <div>League Rank: #28</div>
-              <div className={styles.streak}>Weekly Points: 2450</div>
-            </div>
-          </div>
-          <div className={styles.progressBar}>
-            <div className={styles.progress}></div>
-          </div>
-          <div className={styles.xpText}>
-            <span>7580 XP</span>
-            <span>10000 XP</span>
-          </div>
-        </div>
-
-        <div className={styles.badges}>
-          <h2 className={styles.leaderboardSectionTitle}>Earned Badges</h2>
-          <div className={styles.badgesGrid}>
-            <div className={styles.badge}>
-              <Star className={styles.badgeIcon} />
-              <span className={styles.badgeName}>Early Creator</span>
-            </div>
-            <div className={styles.badge}>
-              <Users className={styles.badgeIcon} />
-              <span className={styles.badgeName}>10k Club</span>
-            </div>
-            <div className={styles.badge}>
-              <ShoppingBag className={styles.badgeIcon} />
-              <span className={styles.badgeName}>Sales Pro</span>
-            </div>
-            <div className={styles.badge}>
-              <TrendingUp className={styles.badgeIcon} />
-              <span className={styles.badgeName}>Trend setter</span>
-            </div>
-          </div>
-        </div>
-
-        <div className={styles.rankProgression}>
-          <h2 className={styles.leaderboardSectionTitle}>Rank Progression</h2>
-          <div className={styles.rankItem}>
-            <div className={styles.rankName}>
-              <Crown className={styles.crownIcon} />
-              Rookie
-            </div>
-            <div className={styles.xpValue}>1,000 XP</div>
-          </div>
-          <div className={styles.rankItem}>
-            <div className={styles.rankName}>
-              <Crown className={styles.crownIcon} />
-              Challenger
-            </div>
-            <div className={styles.xpValue}>2,500 XP</div>
-          </div>
-          <div className={styles.rankItem}>
-            <div className={styles.rankName}>
-              <Crown className={styles.crownIcon} />
-              Proven
-            </div>
-            <div className={styles.xpValue}>5,000 XP</div>
-          </div>
-        </div>
+    <div className={styles.container}>
+      {/* Header */}
+      <div className={styles.header2}>
+        <Crown className={styles.crown} />
+        <h2 className={styles.title}>WHO'S TRENDING?</h2>
       </div>
-    </section>
+
+      {/* Tabs */}
+      <div className={styles.tabContainer}>
+        {tabs.map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`${styles.tab} ${
+              activeTab === tab ? styles.tabActive : styles.tabInactive
+            }`}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
+
+      {/* User List */}
+      <div className={styles.userList}>
+        {users[activeTab].map((user) => (
+          <div key={user.id} className={styles.userItem}>
+            {/* Rank Badge */}
+            <div
+              className={`${styles.rankBadge} ${
+                user.type === 'heart'
+                  ? styles.rankBadgeHeart
+                  : user.type === 'star'
+                  ? styles.rankBadgeHeart
+                  : user.type === 'crown'
+                  ? styles.rankBadgeHeart
+                  : ''
+              }`}
+            >
+              {user.rank}
+            </div>
+
+            {/* Profile Picture */}
+            <div className={styles.profilePic}>
+              <img
+                src={user.image}
+                alt={`${user.name}'s profile`}
+                className={styles.profileImage}
+              />
+            </div>
+
+            {/* User Name */}
+            <span className={styles.userName}>{user.name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
