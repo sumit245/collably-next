@@ -575,95 +575,128 @@ export  const creatorsFeed = [
       };
 
 
-    export  const reelsData = [
-        {
-          id: 1,
-          videoUrl: '/images/main.mp4',
-          username: 'cartoonaddict_',
-          profilePic: '/images/banavt2.png', 
-          caption: 'Vibe to hai 💀 ☠️ | share with friends 💝',
-          likes: '155K',
-          comments: '1,265',
-          shares: '237K',
-          song: 'Prajapati • Aalu Ki Barat'
-        },
-        {
-          id: 2,
-          videoUrl: '/images/playback.mp4',
-          username: 'cartoonaddict_',
-          profilePic: '/images/banavt3.png',
-          caption: 'Bilkul hai bhai 💀 ☠️ ',
-          likes: '155K',
-          comments: '1,265',
-          shares: '237K',
-          song: 'Prajapati • Aalu Ki Barat'
-        },
-        {
-          id: 3,
-          videoUrl: '/images/main.mp4',
-          username: 'anotheruser',
-          profilePic: '/images/banavt2.png', 
-          caption: 'Another reel caption',
-          likes: '100K',
-          comments: '500',
-          shares: '100K',
-          song: 'Another song'
-        },
-        {
-          id: 4,
-          videoUrl: '/images/playback.mp4',
-          username: 'yetanotheruser',
-          profilePic: '/images/banavt3.png',
-          caption: 'Yet another reel caption',
-          likes: '75K',
-          comments: '300',
-          shares: '75K',
-          song: 'Yet another song'
-        },
-        {
-          id: 5,
-          videoUrl: '/images/main.mp4',
-          username: 'cartoonaddict_',
-          profilePic: '/images/banavt2.png', 
-          caption: 'Vibe to hai 💀 ☠️ | share with friends 💝',
-          likes: '155K',
-          comments: '1,265',
-          shares: '237K',
-          song: 'Prajapati • Aalu Ki Barat'
-        },
-        {
-          id: 6,
-          videoUrl: '/images/playback.mp4',
-          username: 'cartoonaddict_',
-          profilePic: '/images/banavt3.png',
-          caption: 'Bilkul hai bhai 💀 ☠️ ',
-          likes: '155K',
-          comments: '1,265',
-          shares: '237K',
-          song: 'Prajapati • Aalu Ki Barat'
-        },
-        {
-          id: 7,
-          videoUrl: '/images/main.mp4',
-          username: 'anotheruser',
-          profilePic: '/images/banavt2.png', 
-          caption: 'Another reel caption',
-          likes: '100K',
-          comments: '500',
-          shares: '100K',
-          song: 'Another song'
-        },
-        {
-          id: 8,
-          videoUrl: '/images/playback.mp4',
-          username: 'yetanotheruser',
-          profilePic: '/images/banavt3.png',
-          caption: 'Yet another reel caption',
-          likes: '75K',
-          comments: '300',
-          shares: '75K',
-          song: 'Yet another song'
-        },
+    export  const reelsDataSource = [
+      {
+        id: 1,
+        videoUrl: '/images/main.mp4',
+        username: 'cartoonaddict_',
+        profilePic: '/images/banavt2.png', 
+        caption: 'Vibe to hai 💀 ☠️ | share with friends 💝',
+        likes: 155,
+        comments: [
+          { id: 1, username: 'Aman', text: 'Great video!' },
+          { id: 2, username: 'Piyush', text: 'Love it!' }
+        ],
+        shares: 237,
+        song: 'Prajapati • Aalu Ki Barat',
+        isLiked: false
+      },
+      {
+        id: 2,
+        videoUrl: '/images/playback.mp4',
+        username: 'cartoonaddict_',
+        profilePic: '/images/banavt3.png',
+        caption: 'Bilkul hai bhai 💀 ☠️ ',
+        likes: 134,
+        comments: [
+          { id: 1, username: 'Piyush', text: 'Great video!' },
+          { id: 2, username: 'Aman', text: 'Love it!' }
+        ],
+        shares: 7000,
+        song: 'Prajapati • Aalu Ki Barat',
+        isLiked: false
+      },
+      {
+        id: 3,
+        videoUrl: '/images/main.mp4',
+        username: 'anotheruser',
+        profilePic: '/images/banavt2.png', 
+        caption: 'Another reel caption',
+        likes: 492,
+        comments: [
+          { id: 1, username: 'Aman', text: 'Great video!' },
+          { id: 2, username: 'Piyush', text: 'Love it!' }
+        ],
+        shares: 2300,
+        song: 'Prajapati • Aalu Ki Barat',
+        isLiked: false
+      },
+      {
+        id: 4,
+        videoUrl: '/images/playback.mp4',
+        username: 'yetanotheruser',
+        profilePic: '/images/banavt3.png',
+        caption: 'Yet another reel caption',
+        likes: 1208,
+        comments: [
+          { id: 1, username: 'Piyush', text: 'Great video!' },
+          { id: 2, username: 'Aman', text: 'Love it!' }
+        ],
+        shares: 200,
+        song: 'Prajapati • Aalu Ki Barat',
+        isLiked: false
+      },
+      {
+        id: 5,
+        videoUrl: '/images/main.mp4',
+        username: 'cartoonaddict_',
+        profilePic: '/images/banavt2.png', 
+        caption: 'Vibe to hai 💀 ☠️ | share with friends 💝',
+        likes: 238,
+        comments: [
+          { id: 1, username: 'Aman', text: 'Great video!' },
+          { id: 2, username: 'Piyush', text: 'Love it!' }
+        ],
+        shares: 9000,
+        song: 'Prajapati • Aalu Ki Barat',
+        isLiked: false
+      },
+      {
+        id: 6,
+        videoUrl: '/images/playback.mp4',
+        username: 'cartoonaddict_',
+        profilePic: '/images/banavt3.png',
+        caption: 'Bilkul hai bhai 💀 ☠️ ',
+        likes: 317,
+        comments: [
+          { id: 1, username: 'Piyush', text: 'Great video!' },
+          { id: 2, username: 'Aman', text: 'Love it!' }
+        ],
+        shares: 17000,
+        song: 'Prajapati • Aalu Ki Barat',
+        isLiked: false
+      },
+      {
+        id: 7,
+        videoUrl: '/images/main.mp4',
+        username: 'anotheruser',
+        profilePic: '/images/banavt2.png', 
+        caption: 'Another reel caption',
+        likes: 783,
+        comments: [
+          { id: 1, username: 'Aman', text: 'Great video!' },
+          { id: 2, username: 'Piyush', text: 'Love it!' }
+        ],
+        shares: 4000,
+        song: 'Prajapati • Aalu Ki Barat',
+        isLiked: false
+      },
+      {
+        id: 8,
+        videoUrl: '/images/playback.mp4',
+        username: 'yetanotheruser',
+        profilePic: '/images/banavt3.png',
+        caption: 'Yet another reel caption',
+        likes: 955,
+        comments: [
+          { id: 1, username: 'Piyush', text: 'Great video!' },
+          { id: 2, username: 'Aman', text: 'Love it!' }
+        ],
+        shares: 190,
+        song: 'Prajapati • Aalu Ki Barat',
+        isLiked: false
+      },
+  
       ]
       
       
