@@ -8,7 +8,7 @@ import ReelsSection from '../components/ReelsSection'
 import ProductGrid from '../components/ProductGridShop'
 import FeaturedCreators from '../components/FeaturedCreatorShop'
 import TrendingBrands from '../components/TrendingBrandsShop'
-import CreatorLeaderboard from '../components/CreatorLeaderboardShop'
+import TrendingUsersLeaderBoard from '../components/CreatorLeaderboardShop'
 import styles from '../shop/StyleShop.module.css'
 import ChooseYouSection from '../components/ChooseYou'
 import { LikeProvider } from '../actions/LikeContext'
@@ -47,7 +47,7 @@ export default function ShopPage() {
         sectionTitle="Latest from creators" />
          <ReelsSection   creators={creators1} 
         sectionTitle="Fresh Drops" />
-        <CreatorLeaderboard />
+        <TrendingUsersLeaderBoard />
         <ChooseYouSection />
       </main>
       <Footer />

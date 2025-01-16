@@ -1,0 +1,129 @@
+.container {
+    max-width: 450px;
+    margin: 0 auto;
+    background-color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+  }
+  
+  .searchBar {
+    padding: 0.75rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .searchInput {
+    width: 87%;
+    padding: 0.5rem 1rem 0.5rem 2.25rem;
+    border-radius: 9999px;
+    background-color: #f3f4f6;
+    border: none;
+    font-size: 0.9rem;
+  }
+  
+  .searchInput:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  }
+  
+  .searchIcon {
+    position: absolute;
+    left: 0.75rem;
+    top: 0.625rem;
+    width: 1rem;
+    height: 1rem;
+    color: #6b7280;
+  }
+  
+  .filtersContainer {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    overflow-x: auto;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .filterButton,
+  .filterSelect {
+    display: flex;
+    align-items: center;
+    padding: 0.4rem 0.75rem;
+    border-radius: 9999px;
+    border: 1px solid #d1d5db;
+    background-color: white;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+  
+  .contentGrid {
+    flex: 1;
+    overflow: auto;
+    padding: 0.5rem;
+  }
+  
+  .gridContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.125rem;
+    grid-auto-rows: 200px; /* Default row height */
+  }
+  
+  .gridItem {
+    background-color: #e5e7eb;
+    overflow: hidden;
+    position: relative;
+    border-radius: 8px;
+  }
+  
+  /* Images adjust their aspect ratio automatically */
+  .gridImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .bottomNav {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0.75rem;
+    border-top: 1px solid #e5e7eb;
+    background-color: white;
+  }
+  
+  .navButton {
+    padding: 0.5rem;
+  }
+  
+  .navIcon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #6b7280;
+  }
+  
+  .tabsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    margin: 20px 0;
+    border-bottom: 1px solid gainsboro;
+  }
+  
+  .tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    color: grey;
+    font-weight: 600;
+    text-align: center;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    margin: 0 10px;
+  }
+  
+  .activeTab {
+    color: black;
+    font-weight: bold;
+  }

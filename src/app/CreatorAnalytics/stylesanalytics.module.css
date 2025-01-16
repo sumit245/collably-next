@@ -988,5 +988,8 @@
     font-size: 1.125rem;
     font-weight: 600;
   }
-  
+  .passwordToggle{
+border: none;
+background-color: white;
+  }
   

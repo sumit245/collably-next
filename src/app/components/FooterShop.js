@@ -1,29 +1,39 @@
+'use client'
+
+import React from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
+import { usePathname } from 'next/navigation'
+import { Home, Rss, ShoppingBag, Search, User } from 'lucide-react'
 import styles from '../shop/StyleShop.module.css'
 
-export default function Footer() {
+const navItems = [
+  { name: 'Home', href: '/shop', icon: Home },
+  { name: 'Feed', href: '/feed', icon: Rss },
+  { name: 'My Items', href: '/login', icon: ShoppingBag },
+  { name: 'Search', href: '/search', icon: Search },
+  { name: 'Me', href: '/login', icon: User },
+]
+
+export default function FooterShop() {
+  const pathname = usePathname()
+
   return (
-    <footer>
-      <nav className={styles.bottomNavShop}>
-        <Link href="/shop" className={styles.navItemShop}>
-          <Image src="/images/new-nav-icon-home-active.svg" alt="Home" width={24} height={24} />
-          <span>Home</span>
+    
+    <footer className={styles.bottomNavShop}>
+      {navItems.map((item) => (
+        <Link 
+          key={item.name}
+          href={item.href} 
+          className={`${styles.navItemShop} ${
+            pathname === item.href ? styles.activeShop : ''
+          }`}
+        >
+          <item.icon className={styles.icon} />
+          <span>{item.name}</span>
         </Link>
-        <Link href="/feed" className={styles.navItemShop}>
-          <Image src="/images/new-nav-icon-feed-inactive.svg" alt="Feed" width={24} height={24} />
-          <span>Feed</span>
-        </Link>
-        <Link href="/login" className={styles.navItemShop}>
-          <Image src="/images/new-nav-icon-item-inactive.svg" alt="My Items" width={24} height={24} />
-          <span>My Items</span>
-        </Link>
-        <Link href="/login" className={styles.navItemShop}>
-          <Image src="/images/new-nav-icon-me-inactive.svg" alt="Me" width={24} height={24} />
-          <span>Me</span>
-        </Link>
-      </nav>
+      ))}
     </footer>
+
   )
 }
 

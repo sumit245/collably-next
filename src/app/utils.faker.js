@@ -573,3 +573,97 @@ export  const creatorsFeed = [
           { src: "images/playback.mp4" },
         ],
       };
+
+
+    export  const reelsData = [
+        {
+          id: 1,
+          videoUrl: '/images/main.mp4',
+          username: 'cartoonaddict_',
+          profilePic: '/images/banavt2.png', 
+          caption: 'Vibe to hai 💀 ☠️ | share with friends 💝',
+          likes: '155K',
+          comments: '1,265',
+          shares: '237K',
+          song: 'Prajapati • Aalu Ki Barat'
+        },
+        {
+          id: 2,
+          videoUrl: '/images/playback.mp4',
+          username: 'cartoonaddict_',
+          profilePic: '/images/banavt3.png',
+          caption: 'Bilkul hai bhai 💀 ☠️ ',
+          likes: '155K',
+          comments: '1,265',
+          shares: '237K',
+          song: 'Prajapati • Aalu Ki Barat'
+        },
+        {
+          id: 3,
+          videoUrl: '/images/main.mp4',
+          username: 'anotheruser',
+          profilePic: '/images/banavt2.png', 
+          caption: 'Another reel caption',
+          likes: '100K',
+          comments: '500',
+          shares: '100K',
+          song: 'Another song'
+        },
+        {
+          id: 4,
+          videoUrl: '/images/playback.mp4',
+          username: 'yetanotheruser',
+          profilePic: '/images/banavt3.png',
+          caption: 'Yet another reel caption',
+          likes: '75K',
+          comments: '300',
+          shares: '75K',
+          song: 'Yet another song'
+        },
+        {
+          id: 5,
+          videoUrl: '/images/main.mp4',
+          username: 'cartoonaddict_',
+          profilePic: '/images/banavt2.png', 
+          caption: 'Vibe to hai 💀 ☠️ | share with friends 💝',
+          likes: '155K',
+          comments: '1,265',
+          shares: '237K',
+          song: 'Prajapati • Aalu Ki Barat'
+        },
+        {
+          id: 6,
+          videoUrl: '/images/playback.mp4',
+          username: 'cartoonaddict_',
+          profilePic: '/images/banavt3.png',
+          caption: 'Bilkul hai bhai 💀 ☠️ ',
+          likes: '155K',
+          comments: '1,265',
+          shares: '237K',
+          song: 'Prajapati • Aalu Ki Barat'
+        },
+        {
+          id: 7,
+          videoUrl: '/images/main.mp4',
+          username: 'anotheruser',
+          profilePic: '/images/banavt2.png', 
+          caption: 'Another reel caption',
+          likes: '100K',
+          comments: '500',
+          shares: '100K',
+          song: 'Another song'
+        },
+        {
+          id: 8,
+          videoUrl: '/images/playback.mp4',
+          username: 'yetanotheruser',
+          profilePic: '/images/banavt3.png',
+          caption: 'Yet another reel caption',
+          likes: '75K',
+          comments: '300',
+          shares: '75K',
+          song: 'Yet another song'
+        },
+      ]
+      
+      

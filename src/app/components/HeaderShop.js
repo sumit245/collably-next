@@ -5,17 +5,14 @@ import Image from 'next/image';
 import { useContext } from 'react';
 import styles from '../shop/StyleShop.module.css';
 import { LikeContext } from '../actions/LikeContext'; 
+import { DropdownMenu } from '../components/DropdownMenu'
 
 export default function Header() {
-  const { likeCount, cartCount } = useContext(LikeContext); // Accessing like count
+  const { likeCount, cartCount } = useContext(LikeContext); 
 
   return (
     <header className={styles.header}>
-      <button className={styles.menuBtn}>
-        <Link href="/">
-          <Image src="/images/hamburger.svg" alt="Menu" width={24} height={24} />
-        </Link>
-      </button>
+    <DropdownMenu />
       <div className={styles.logo}>
         <Link href="/shop">
           <Image src="/images/c-official-logo.png" alt="logo" width={90} height={40} />
