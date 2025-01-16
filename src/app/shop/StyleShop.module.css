@@ -842,3 +842,216 @@
 .tab, .tabActive, .tabInactive {
   transition: all 0.3s ease;
 }
+
+
+
+/* Hamburger Menu Styles */
+/* Container for the hamburger menu */
+/* Container for the hamburger menu */
+.containerHamburger {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  transition: left 0.3s ease-in-out;
+  z-index: 9999;
+}
+
+/* Active state for the menu (opens the menu) */
+.containerHamburger.open {
+  left: 0;
+}
+
+/* The overlay to close the menu when clicked */
+.menuOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+/* Menu content styling */
+.menuContent {
+  position: absolute;
+  top: 0;
+  left: 155px;
+  width: 32%;
+  height: 82%;
+  background-color: #fff;
+  padding: 2rem 1rem;
+  display: flex
+;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 3;
+  transition: transform .3s ease-in-out;
+}
+
+/* Header in the hamburger menu */
+.menuHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Greeting text in the header */
+.userGreeting {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Navigation inside the hamburger menu */
+.menuNav {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+/* Styling for each menu item */
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1rem;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.menuItem:hover {
+  color: #1f72d2; /* Change color on hover */
+}
+
+.menuItem svg {
+  color: #555;
+}
+
+/* Social media links section */
+.socialLinks {
+  margin-top: auto;
+}
+
+.socialLinks h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.socialIcons {
+  display: flex;
+  gap: 1rem;
+}
+
+.socialIcons a {
+  color: #555;
+  font-size: 1.5rem;
+}
+
+.socialIcons a:hover {
+  color: #1f72d2; /* Change color on hover */
+}
+
+/* Logout button styling */
+.logoutButton {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  background-color: #f3f4f6;
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.logoutButton:hover {
+  background-color: #e0e0e0;
+}
+
+.logoutButton svg {
+  color: #1f72d2;
+}
+
+/* Hamburger menu button */
+.menuBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background-color: white;
+  border-bottom: 1px solid #e5e7eb;
+  position: relative;
+}
+
+.headerIconsShop {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.iconBtnShop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.counter {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #f53d3d;
+  color: white;
+  border-radius: 50%;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.logo img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Container for the main screen */
+.smartphoneContainer {
+  width: 100%;
+  max-width: 450px; /* Adjusting max-width as per your design */
+  height: 100vh; /* Full viewport height */
+  overflow-y: auto; /* Enable scrolling if content exceeds the height */
+  background: #f0f8ff; /* Light, soft blue background */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Soft shadow for floating effect */
+  position: relative;
+  padding: 1rem;
+  border-radius: 16px; /* Rounded corners for modern look */
+  scrollbar-width: none; /* Remove scrollbar visibility in Firefox */
+  -ms-overflow-style: none; /* Remove scrollbar visibility in IE */
+}
+
+.smartphoneContainer::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for a cleaner look */
+}
