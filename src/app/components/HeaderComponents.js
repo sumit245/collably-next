@@ -1,43 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
 import Image from "next/image";
 import { logout } from "../actions/auth";
 
 const HeaderComponent = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
 
+  const user = useSelector((state) => state.auth.user);
+  
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const username = localStorage.getItem("username");
-    const avatar = localStorage.getItem("avatar");
-
-    if (token && username) {
-      setUser({ username, avatar });
-    }
-  }, []);
-
-  useEffect(() => {
-    const handleStorageChange = () => {
-      const token = localStorage.getItem("token");
-      const username = localStorage.getItem("username");
-      const avatar = localStorage.getItem("avatar");
-      if (token && username) {
-        setUser({ username, avatar });
-      } else {
-        setUser(null);
-      }
-    };
-
-    window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
-  }, []);
+    console.log("User state inside useEffect:", user);
+  }, [user]);
+  console.log("Current user in HeaderComponent:", user);
 
   const handleLogout = () => {
-    logout();
-    setUser(null);
+    dispatch(logout());
   };
 
   return (
@@ -46,15 +27,29 @@ const HeaderComponent = () => {
         <div className="container1">
           <div className="nav-item-1">
             <span className="span-header">Follow Us :</span>
-            <Link href="#"><i className="fa-brands fa-instagram"></i></Link>
-            <Link href="#"><i className="fab fa-youtube ms-2"></i></Link>
-            <Link href="#"><i className="fab fa-x ms-2"></i></Link>
-            <Link href="#"><i className="fab fa-facebook-f ms-2"></i></Link>
-            <Link href="#"><i className="fab fa-discord ms-2"></i></Link>
+            <Link href="#">
+              <i className="fa-brands fa-instagram"></i>
+            </Link>
+            <Link href="#">
+              <i className="fab fa-youtube ms-2"></i>
+            </Link>
+            <Link href="#">
+              <i className="fab fa-x ms-2"></i>
+            </Link>
+            <Link href="#">
+              <i className="fab fa-facebook-f ms-2"></i>
+            </Link>
+            <Link href="#">
+              <i className="fab fa-discord ms-2"></i>
+            </Link>
           </div>
           <div className="nav-item-2">
             <div className="nav-link">
-              <Link href="/login">Login/SignUp</Link>
+              {user ? (
+                <Link href="#" onClick={handleLogout}>Logout</Link>
+              ) : (
+                <Link href="/login">Login/SignUp</Link>
+              )}
               <Link href="#" className="link">Careers</Link>
               <Link href="#" className="link">Faq</Link>
             </div>
@@ -74,8 +69,10 @@ const HeaderComponent = () => {
             <Image src="/images/c-official-logo.png" alt="logo" width={220} height={100} />
           </Link>
         </div>
+
+       
         {user ? (
-          <div className="user-info" onClick={handleLogout}>
+          <div className="user-info">
             <Image
               src={user.avatar || "/images/banavt1.png"}
               alt="User Avatar"
@@ -83,7 +80,7 @@ const HeaderComponent = () => {
               height={40}
               className="avatar-circle"
             />
-            <span className="username">{user.username}</span>
+            <span className="username">{user.user.username}</span> 
           </div>
         ) : (
           <div className="navbar-button">

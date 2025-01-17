@@ -1,78 +1,52 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://collably-backend.vercel.app';
+import { loginUser, loginWithGoogleAsync, handleGoogleRedirectAsync, logoutUser } from '../store/authslice';
 
-async function fetchWithAuth(url, options = {}) {
-  const response = await fetch(`${BASE_URL}${url}`, {
-    ...options,
-    headers: {
-      ...options.headers,
-      'Content-Type': 'application/json',
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-
-  return response.json();
-}
-
-export async function login(email, password) {
+export const login = (email, password) => async (dispatch) => {
   try {
-    const data = await fetchWithAuth('/api/login', {
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
-    });
-
-    const { token, username } = data;
-
-    localStorage.setItem('token', token);
-    localStorage.setItem('username', username);
-
-    window.dispatchEvent(new Event('storage'));
-
-    return { success: true, username };
-  } catch (error) {
-    return { success: false, error: error.message || 'An unexpected error occurred during login.' };
-  }
-}
-
-export function loginWithGoogle() {
-  const googleAuthUrl = new URL(`${BASE_URL}/api/auth/google`);
-  googleAuthUrl.searchParams.append('prompt', 'select_account');
-  googleAuthUrl.searchParams.append('approval_prompt', 'force');
-  window.location.href = googleAuthUrl.toString();
-}
-
-export async function handleGoogleRedirect() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const token = urlParams.get('token');
-  const username = urlParams.get('username');
-  const avatar = urlParams.get('avatar');
-  const error = urlParams.get('error');
-
-  console.log('Google redirect params:', { token, username, avatar, error });
-
-  if (error) {
-    return { success: false, error };
-  }
-
-  if (token && username) {
-    localStorage.setItem('token', token);
-    localStorage.setItem('username', username);
-    if (avatar) {
-      localStorage.setItem('avatar', avatar);
+    const result = await dispatch(loginUser({ email, password }));
+    if (loginUser.fulfilled.match(result)) {
+      return { success: true, username: result.payload.username };
+    } else {
+      return { success: false, error: result.error.message };
     }
-    window.dispatchEvent(new Event('storage'));
-    return { success: true, username, avatar };
+  } catch (error) {
+    console.error('Login error:', error);
+    return {
+      success: false,
+      error: error.message || 'An unexpected error occurred during login.',
+    };
   }
+};
 
-  return { success: false, error: 'No authentication data received' };
-}
+export const loginWithGoogle = () => async (dispatch) => {
+  try {
+    const result = await dispatch(loginWithGoogleAsync());
+    if (loginWithGoogleAsync.fulfilled.match(result)) {
+      window.location.href = result.payload.authUrl;
+    }
+  } catch (error) {
+    console.error('Google login error:', error);
+  }
+};
 
-export function logout() {
-  localStorage.removeItem('token');
-  localStorage.removeItem('username');
-  localStorage.removeItem('avatar');
-  window.dispatchEvent(new Event('storage'));
-}
+export const handleGoogleRedirect = () => async (dispatch) => {
+  try {
+    const result = await dispatch(handleGoogleRedirectAsync());
+    if (handleGoogleRedirectAsync.fulfilled.match(result)) {
+      return { success: true, username: result.payload.username, avatar: result.payload.avatar };
+    } else {
+      return { success: false, error: result.error.message };
+    }
+  } catch (error) {
+    console.error('Google redirect error:', error);
+    return { success: false, error: 'An unexpected error occurred during Google login.' };
+  }
+};
+
+export const logout = () => async (dispatch) => {
+  try {
+    await dispatch(logoutUser());
+  } catch (error) {
+    console.error('Logout error:', error);
+  }
+};
 
