@@ -15,6 +15,7 @@ import { LikeProvider } from '../actions/LikeContext'
 import {videoData1} from '../utils.faker'
 import {videoData2} from '../utils.faker'
 import {creators1} from '../utils.faker'
+import ReelsSec2 from '../components/reelSec2'
 
 export default function ShopPage() {
   return (
@@ -28,6 +29,8 @@ export default function ShopPage() {
         <HeroCarousel  data={videoData2}/>
         <ProductCategories /> 
        <TopBrands />
+       <ReelsSec2   creators={creators1} 
+        sectionTitle="order Product testing" />
         <ReelsSection   creators={creators1} 
         sectionTitle="Shop the Look" />
          <ReelsSection   creators={creators1} 

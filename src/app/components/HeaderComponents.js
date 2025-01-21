@@ -1,25 +1,19 @@
-"use client";
+"use client"
 
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import Link from "next/link";
-import Image from "next/image";
-import { logout } from "../actions/auth";
+import { useState, useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import Link from "next/link"
+import Image from "next/image"
+import { logout } from "../actions/auth"
 
 const HeaderComponent = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const dispatch = useDispatch();
-
-  const user = useSelector((state) => state.auth.user);
-  
-  useEffect(() => {
-    console.log("User state inside useEffect:", user);
-  }, [user]);
-  console.log("Current user in HeaderComponent:", user);
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const dispatch = useDispatch()
+  const user = useSelector((state) => state.auth.user)
 
   const handleLogout = () => {
-    dispatch(logout());
-  };
+    dispatch(logout())
+  }
 
   return (
     <header>
@@ -46,18 +40,23 @@ const HeaderComponent = () => {
           <div className="nav-item-2">
             <div className="nav-link">
               {user ? (
-                <Link href="#" onClick={handleLogout}>Logout</Link>
+                <Link href="#" onClick={handleLogout}>
+                  Logout
+                </Link>
               ) : (
                 <Link href="/login">Login/SignUp</Link>
               )}
-              <Link href="#" className="link">Careers</Link>
-              <Link href="#" className="link">Faq</Link>
+              <Link href="#" className="link">
+                Careers
+              </Link>
+              <Link href="#" className="link">
+                Faq
+              </Link>
             </div>
           </div>
         </div>
       </div>
       <hr className="styled-line" />
-
       <div className="navbar container1 content">
         <div className="hamburger" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           <span></span>
@@ -69,8 +68,6 @@ const HeaderComponent = () => {
             <Image src="/images/c-official-logo.png" alt="logo" width={220} height={100} />
           </Link>
         </div>
-
-       
         {user ? (
           <div className="user-info">
             <Image
@@ -80,7 +77,7 @@ const HeaderComponent = () => {
               height={40}
               className="avatar-circle"
             />
-            <span className="username">{user.user.username}</span> 
+            <span className="username">{user.user.username}</span>
           </div>
         ) : (
           <div className="navbar-button">
@@ -97,7 +94,8 @@ const HeaderComponent = () => {
         <Link href="/form">Contact</Link>
       </nav>
     </header>
-  );
-};
+  )
+}
 
-export default HeaderComponent;
+export default HeaderComponent
+

@@ -422,11 +422,18 @@
     border: none;
     box-shadow: 2px 2px #ab1aa1;
 }
-.buttonContainer{
+.buttonContainer ,.buttonContainer2{
   display: flex;
   flex-direction: row;
   gap: 0.3rem;
   }
+.buttonContainer1 {
+  display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    flex-direction: row;
+    gap: .3rem;
+}
+  
   .buttonContainer img{
     width: 30px;
     height: 40px;

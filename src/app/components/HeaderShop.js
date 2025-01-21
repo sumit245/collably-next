@@ -1,18 +1,20 @@
-'use client';
+"use client"
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { useContext } from 'react';
-import styles from '../shop/StyleShop.module.css';
-import { LikeContext } from '../actions/LikeContext'; 
-import { DropdownMenu } from '../components/DropdownMenu'
+import Link from "next/link"
+import Image from "next/image"
+import { useContext } from "react"
+import { useSelector } from "react-redux"
+import styles from "../shop/StyleShop.module.css"
+import { LikeContext } from "../actions/LikeContext"
+import { DropdownMenu } from "../components/DropdownMenu"
 
 export default function Header() {
-  const { likeCount, cartCount } = useContext(LikeContext); 
+  const { likeCount, cartCount } = useContext(LikeContext)
+  const user = useSelector((state) => state.auth.user)
 
   return (
     <header className={styles.header}>
-    <DropdownMenu />
+      <DropdownMenu />
       <div className={styles.logo}>
         <Link href="/shop">
           <Image src="/images/c-official-logo.png" alt="logo" width={90} height={40} />
@@ -23,8 +25,8 @@ export default function Header() {
           <Image src="images/search-blue.svg" alt="Search" width={24} height={24} />
         </button>
         <button className={styles.iconBtnShop}>
-        <Link href="/product">
-          <Image src="images/wishlist-blue.svg" alt="Wishlist" width={24} height={24} />
+          <Link href="/product">
+            <Image src="images/wishlist-blue.svg" alt="Wishlist" width={24} height={24} />
           </Link>
           <span className={styles.counter}>{likeCount}</span>
         </button>
@@ -34,7 +36,20 @@ export default function Header() {
           </Link>
           <span className={styles.counter}>{cartCount}</span>
         </button>
+        {user && (
+          <div className={styles.userInfo}>
+            <Image
+              src={user.avatar || "/images/banavt1.png"}
+              alt="User Avatar"
+              width={30}
+              height={30}
+              className={styles.avatarCircle}
+            />
+            <span className={styles.username}>{user.username}</span>
+          </div>
+        )}
       </div>
     </header>
-  );
+  )
 }
+

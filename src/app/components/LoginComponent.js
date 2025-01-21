@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { login, loginWithGoogle, handleGoogleRedirect } from "../actions/auth";
@@ -142,9 +143,11 @@ const LoginComponent = () => {
         </button>
 
         <p className="p">
-          Don't have an account? <span className="span">Sign Up</span>
-        </p>
-        <p className="p line">Or With</p>
+  Don't have an account?{' '}
+  <Link href="/registration">
+    <span className="span" style={{ cursor: 'pointer' }}>Sign Up</span>
+  </Link>
+</p>
 
         <div className="flex-row">
           <button className="btn google" type="button" onClick={handleGoogleLogin} disabled={isLoading}>
