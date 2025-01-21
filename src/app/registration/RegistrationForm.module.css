@@ -31,6 +31,21 @@
     border-color: #ff0055;
     box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
   }
+  .image{
+    height: 50px;
+    width: 150px;
+    position: relative;
+    top: -52px;
+    left: 57px;
+  }
+  .rHeading{
+    font-size: 18px;
+    color: #666;
+    margin: -23px 0 -26px;
+    position: relative;
+    top: -20px;
+    left: 102px;
+  }
   
   .button {
     width: 100%;

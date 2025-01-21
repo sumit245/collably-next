@@ -10,9 +10,9 @@ export const fetchProducts = createAsyncThunk("products/fetchProducts", async (_
   }
 })
 
-export const fetchProductById = createAsyncThunk("products/fetchProductById", async (id, { rejectWithValue }) => {
+export const fetchProductById = createAsyncThunk("products/fetchProductById", async (_id, { rejectWithValue }) => {
   try {
-    const response = await productService.getProductById(id)
+    const response = await productService.getProductById(_id)
     return response
   } catch (error) {
     return rejectWithValue(error.message)

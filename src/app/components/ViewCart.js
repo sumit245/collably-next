@@ -37,9 +37,9 @@ export function ViewCart() {
       <div className={styles.cartContainer}>
         <div className={styles.itemList}>
           {items.length > 0 ? (
-            items.map((item) => (
+            items.map((item, index) => (
               <CartItem
-                key={item.id} 
+                key={item.id || index} // Fallback to index if id is not available
                 item={item}
                 onUpdateQuantity={updateQuantity}
                 onRemove={removeItem}
@@ -55,16 +55,14 @@ export function ViewCart() {
             <span className={styles.totalAmount}>₹{total.toFixed(2)}</span>
           </div>
           <button
-  className={styles.placeOrderButton}
-  onClick={() => {
-   
-    router.push(`/orderForm?total=${total}`);
-  }}
-  disabled={items.length === 0}
->
-  Proceed to Checkout
-</button>
-
+            className={styles.placeOrderButton}
+            onClick={() => {
+              router.push(`/orderForm?total=${total}`);
+            }}
+            disabled={items.length === 0}
+          >
+            Proceed to Checkout
+          </button>
         </div>
       </div>
     </div>

@@ -1,19 +1,20 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
 export const addToCart = createAsyncThunk("cart/addToCart", async (item, { getState }) => {
-  const { cart } = getState()
-  const updatedItems = [...cart.items]
-  const existingItemIndex = updatedItems.findIndex((i) => i.id === item.id)
-
-  if (existingItemIndex !== -1) {
-    updatedItems[existingItemIndex].quantity += item.quantity
-  } else {
-    updatedItems.push(item)
-  }
-
-  localStorage.setItem("cart", JSON.stringify(updatedItems))
-  return updatedItems
-})
+    const { cart } = getState();
+    const updatedItems = [...cart.items];
+    const existingItemIndex = updatedItems.findIndex((i) => i.id === item.id);
+  
+    if (existingItemIndex !== -1) {
+      updatedItems[existingItemIndex].quantity += 1; 
+    } else {
+      updatedItems.push({ ...item, quantity: 1 }); 
+    }
+  
+    localStorage.setItem("cart", JSON.stringify(updatedItems));
+    return updatedItems;
+  });
+  
 
 export const loadCart = createAsyncThunk("cart/loadCart", async () => {
   const cartItems = JSON.parse(localStorage.getItem("cart")) || []
