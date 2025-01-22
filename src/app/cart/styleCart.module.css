@@ -1,3 +1,57 @@
+.skeletonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+}
+
+.skeletonTitle,
+.skeletonSubtitle {
+  width: 60%;
+  height: 20px;
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeletonVideos {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.skeletonVideo {
+  width: 120px;
+  height: 200px;
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #f0f0f0;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
 .cartItem {
     display: flex;
     align-items: center;
