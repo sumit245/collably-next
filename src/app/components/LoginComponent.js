@@ -1,55 +1,42 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { login, loginWithGoogle, handleGoogleRedirect } from "../actions/auth";
+import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation';
+import { login, loginWithGoogle, handleGoogleRedirect } from "../actions/auth";
 
 const LoginComponent = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
+  const dispatch = useDispatch();
+  const { isLoading, error } = useSelector((state) => state.auth);
   const router = useRouter();
 
   useEffect(() => {
     const checkGoogleRedirect = async () => {
-      const result = await handleGoogleRedirect();
+      const result = await dispatch(handleGoogleRedirect());
       if (result.success) {
         router.push('/');
-      } else if (result.error) {
-        setError(result.error);
       }
     };
 
     if (window.location.search) {
       checkGoogleRedirect();
     }
-  }, [router]);
+  }, [dispatch, router]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    setError("");
-  
-    try {
-      const result = await login(email, password);
-      if (result.success) {
-        router.push('/');
-      } else {
-        setError(result.error);
-      }
-    } catch (error) {
-      setError(error.message || "An unexpected error occurred during login.");
-    } finally {
-      setIsLoading(false);
+    const result = await dispatch(login(email, password));
+    if (result.success) {
+      router.push('/');
     }
   };
   
   const handleGoogleLogin = () => {
-    setIsLoading(true);
-    setError("");
-    loginWithGoogle();
+    dispatch(loginWithGoogle());
   };
 
   const togglePasswordVisibility = () => {
@@ -156,9 +143,11 @@ const LoginComponent = () => {
         </button>
 
         <p className="p">
-          Don't have an account? <span className="span">Sign Up</span>
-        </p>
-        <p className="p line">Or With</p>
+  Don't have an account?{' '}
+  <Link href="/registration">
+    <span className="span" style={{ cursor: 'pointer' }}>Sign Up</span>
+  </Link>
+</p>
 
         <div className="flex-row">
           <button className="btn google" type="button" onClick={handleGoogleLogin} disabled={isLoading}>
@@ -198,3 +187,4 @@ const LoginComponent = () => {
 };
 
 export default LoginComponent;
+

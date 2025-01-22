@@ -16,7 +16,9 @@ import LoginComponent from '../app/components/LoginComponent';
 import {scrollerData} from '../app/utils.faker'
 import {scrollerData2} from '../app/utils.faker'
 
-
+export const handleLoginSuccess = (userData) => {
+  setUser(userData);
+};
 export default function HomePage() {
   return (
     <>

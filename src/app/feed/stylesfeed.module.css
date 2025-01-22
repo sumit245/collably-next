@@ -10,7 +10,6 @@
   scrollbar-width: none; 
 }
 
-
 @media screen and (max-width: 480px) {
   .reelsContainer {
     width: 100%;
@@ -23,8 +22,6 @@
   display: none;
 }
 
-
-
 .reelWrapper {
   height: 100vh;
   width: 100%;
@@ -33,7 +30,6 @@
   position: relative;
   overflow: hidden;
 }
-
 
 .reelContainer {
   position: relative;
@@ -58,7 +54,7 @@
 .actions {
   position: absolute;
   right: 16px;
-  top: 220;
+  top: 220px;
   bottom: 150px;
   display: flex;
   flex-direction: column;
@@ -141,7 +137,6 @@
 }
 
 .followButton {
-
   background: transparent;
   border: 1px solid white;
   color: white;
@@ -167,5 +162,136 @@
   gap: 8px;
   color: white;
   font-size: 14px;
+}
+
+.commentSection {
+  position: absolute;
+  bottom: 64px;
+  left: 0;
+  right: 0;
+  background: #000000;
+  padding: 16px;
+  z-index: 20;
+}
+
+.comments {
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 12px;
+}
+
+.comment {
+  color: white;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.commentForm {
+  display: flex;
+  gap: 8px;
+}
+
+.commentInput {
+  flex-grow: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  padding: 8px 12px;
+  color: white;
+  border-radius: 20px;
+}
+
+.commentSubmit {
+  background: #0095f6;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: black;
+  padding: 24px;
+  border-radius: 12px;
+  width: 60%;
+  max-width: 400px;
+}
+
+.modalTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-align: center;
+  color: white;
+}
+
+.shareOptions {
+  display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+}
+.shareIconName{
+  color: white;
+}
+.shareOption {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.shareOption:hover {
+  background-color: #ff0055;
+}
+
+.shareIcon {
+  font-size: 24px;
+}
+
+.closeButton {
+  width: 100%;
+  padding: 12px;
+  background: #ff0055;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  margin-top: 16px;
+  cursor: pointer;
+}
+.closeButtonComment{
+  width: 8%;
+  position: relative;
+  background: none;
+  left: 373px;
+  top: -10px;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.copySuccess {
+  text-align: center;
+  color: #4caf50;
+  margin-top: 16px;
 }
 

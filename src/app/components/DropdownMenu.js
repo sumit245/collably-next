@@ -3,7 +3,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { ChevronRight, Megaphone, GraduationCap, Bot, MessageSquare, Trophy, Users, Star, HelpCircle, Instagram, Youtube, Phone, LogOut } from 'lucide-react'
-import styles from '../shop/Stylemenu.module.css'
+import styles from '../shop/StyleShop.module.css'
 
 export function DropdownMenu() {
   const [isOpen, setIsOpen] = useState(false)
@@ -22,14 +22,15 @@ export function DropdownMenu() {
   ]
 
   const handleClick = (e) => {
+    e.stopPropagation() // Prevent event from bubbling up
     const rect = e.currentTarget.getBoundingClientRect()
     setPosition({ x: rect.left, y: rect.bottom })
-    setIsOpen(true)
+    setIsOpen((prevIsOpen) => !prevIsOpen)
   }
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
+      if (menuRef.current && !menuRef.current.contains(event.target) && !event.target.closest(`.${styles.menuTrigger}`)) {
         setIsOpen(false)
       }
     }

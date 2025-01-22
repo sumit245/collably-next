@@ -3,8 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../../shop/StyleShop.module.css';
 
+
 const VideoCarouselCard = ({ videos, title = "Trending Today", subtitle }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [creators, setCreators] = useState([]); 
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -12,6 +15,7 @@ const VideoCarouselCard = ({ videos, title = "Trending Today", subtitle }) => {
     }, 5000); 
 
     return () => clearInterval(interval);
+
   }, [videos.length]);
 
   const getVideoIndex = (index) => {
@@ -51,4 +55,3 @@ const VideoCarouselCard = ({ videos, title = "Trending Today", subtitle }) => {
 };
 
 export default VideoCarouselCard;
-
