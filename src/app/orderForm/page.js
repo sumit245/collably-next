@@ -1,14 +1,14 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
-import styles from "./stylesform.module.css";
-import stylesShop from "../shop/StyleShop.module.css";
-import { LikeProvider } from "../actions/LikeContext";
-import Header from "../components/HeaderShop";
-import Footer from "../components/FooterShop";
-import PincodeLookup from "india-pincode-lookup";
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { ArrowLeft } from "lucide-react"
+import styles from "./stylesform.module.css"
+import stylesShop from "../shop/StyleShop.module.css"
+import { LikeProvider } from "../actions/LikeContext"
+import Header from "../components/HeaderShop"
+import Footer from "../components/FooterShop"
+import PincodeLookup from "india-pincode-lookup"
 
 export default function AddressForm() {
   const [formData, setFormData] = useState({
@@ -21,44 +21,44 @@ export default function AddressForm() {
     state: "",
     addressType: "home",
     isDefault: false,
-  });
+  })
 
-  const [cityStateReadOnly, setCityStateReadOnly] = useState(false);
-  const router = useRouter();
+  const [cityStateReadOnly, setCityStateReadOnly] = useState(false)
+  const router = useRouter()
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value, type, checked } = e.target
 
     if (name === "pincode" && value.length === 6) {
-      fetchCityAndState(value);
+      fetchCityAndState(value)
     }
 
     setFormData((prevData) => ({
       ...prevData,
       [name]: type === "checkbox" ? checked : value,
-    }));
-  };
+    }))
+  }
 
   const fetchCityAndState = (pincode) => {
-    const locations = PincodeLookup.lookup(pincode);
+    const locations = PincodeLookup.lookup(pincode)
 
     if (locations && locations.length > 0) {
       setFormData((prevData) => ({
         ...prevData,
         city: locations[0].districtName || "",
         state: locations[0].stateName || "",
-      }));
-      setCityStateReadOnly(true);
+      }))
+      setCityStateReadOnly(true)
     } else {
-      alert("No information available for this pincode.");
+      alert("No information available for this pincode.")
     }
-  };
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    localStorage.setItem("userInfo", JSON.stringify(formData));
-    router.push("/payment");
-  };
+    e.preventDefault()
+    localStorage.setItem("userInfo", JSON.stringify(formData))
+    router.push("/payment")
+  }
 
   return (
     <LikeProvider>

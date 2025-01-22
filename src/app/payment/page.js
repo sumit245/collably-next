@@ -9,7 +9,7 @@ import stylesShop from "../shop/StyleShop.module.css"
 import { LikeProvider } from "../actions/LikeContext"
 import Header from "../components/HeaderShop"
 import Footer from "../components/FooterShop"
-import { createOrder } from "../store/orderSlice"
+import { createOrder, clearOrderError } from "../store/orderSlice"
 import { clearCart } from "../store/cartSlice"
 
 export default function Payment() {
@@ -18,33 +18,77 @@ export default function Payment() {
   const [selectedPayment, setSelectedPayment] = useState("cash")
   const { items, total } = useSelector((state) => state.cart)
   const user = useSelector((state) => state.auth.user)
+  const { error, isLoading } = useSelector((state) => state.orders)
+  const [localError, setLocalError] = useState(null)
+  const [formData, setFormData] = useState({})
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/login")
+      return
+    }
+
+    const data = localStorage.getItem("userInfo")
+    if (data) {
+      setFormData(JSON.parse(data))
+    }
+    return () => {
+      dispatch(clearOrderError())
+    }
+  }, [dispatch, user, router])
 
   const handlePaymentSubmit = async (e) => {
     e.preventDefault()
-    const orderData = JSON.parse(localStorage.getItem("orderData") || "{}")
+    setLocalError(null)
 
     if (!user) {
       router.push("/login")
       return
     }
 
+    const orderItems = items.map((item) => ({
+      product: item._id,
+      quantity: item.quantity,
+      price: item.price,
+    }))
+
+    const shippingAddress = `${formData.name}, ${formData.address}, ${formData.locality}, ${formData.city}, ${formData.state}, ${formData.pincode}`
+
     const order = {
-      ...orderData,
+      items: orderItems,
+      shippingAddress: shippingAddress,
+      totalAmount: total,
+      paymentStatus: "pending",
       paymentMethod: selectedPayment,
-      items: items,
-      total: total,
-      userId: user.id,
+      name: formData.name,
+      phone: formData.phone,
     }
 
     try {
-      await dispatch(createOrder(order)).unwrap()
+      console.log("Submitting order:", order)
+      const result = await dispatch(createOrder(order)).unwrap()
+      console.log("Order created successfully:", result)
+
+      // Store order data before clearing cart
+      localStorage.setItem(
+        "orderData",
+        JSON.stringify({
+          ...order,
+          orderId: result._id || Math.random().toString(36).substr(2, 9),
+        }),
+      )
+
       dispatch(clearCart())
-      localStorage.removeItem("orderData")
+      localStorage.removeItem("userInfo")
       router.push("/order")
     } catch (error) {
       console.error("Failed to create order:", error)
-      // Handle error (e.g., show error message to user)
+      setLocalError(error.message || "An unexpected error occurred")
     }
+  }
+
+  if (!user) {
+    return null 
   }
 
   return (
@@ -52,14 +96,14 @@ export default function Payment() {
       <div className={stylesShop.bodyShop}>
         <div className={stylesShop.smartphoneContainer}>
           <Header />
-          
+
           <header className={styles.header}>
-            
             <div className={styles.headerContent}>
               <h3 className={styles.title}>PAYMENT</h3>
-              
             </div>
           </header>
+
+          {(error || localError) && <div className={styles.errorMessage}>{error || localError}</div>}
 
           <div className={styles.paymentBanner}>
             <div>Secure Payments</div>
@@ -78,14 +122,14 @@ export default function Payment() {
           <form onSubmit={handlePaymentSubmit} className={styles.paymentForm}>
             <div className={styles.paymentOptions}>
               <h2 className={styles.sectionTitle}>ONLINE PAYMENT OPTIONS</h2>
-              
+
               <div className={styles.paymentMethod}>
                 <label className={styles.paymentLabel}>
                   <input
                     type="radio"
                     name="payment"
                     value="upi"
-                    checked={selectedPayment === 'upi'}
+                    checked={selectedPayment === "upi"}
                     onChange={(e) => setSelectedPayment(e.target.value)}
                   />
                   <Smartphone className={styles.paymentIcon} />
@@ -99,7 +143,7 @@ export default function Payment() {
                     type="radio"
                     name="payment"
                     value="card"
-                    checked={selectedPayment === 'card'}
+                    checked={selectedPayment === "card"}
                     onChange={(e) => setSelectedPayment(e.target.value)}
                   />
                   <CreditCard className={styles.paymentIcon} />
@@ -114,7 +158,7 @@ export default function Payment() {
                     type="radio"
                     name="payment"
                     value="wallet"
-                    checked={selectedPayment === 'wallet'}
+                    checked={selectedPayment === "wallet"}
                     onChange={(e) => setSelectedPayment(e.target.value)}
                   />
                   <Wallet className={styles.paymentIcon} />
@@ -129,7 +173,7 @@ export default function Payment() {
                     type="radio"
                     name="payment"
                     value="netbanking"
-                    checked={selectedPayment === 'netbanking'}
+                    checked={selectedPayment === "netbanking"}
                     onChange={(e) => setSelectedPayment(e.target.value)}
                   />
                   <Building2 className={styles.paymentIcon} />
@@ -146,7 +190,7 @@ export default function Payment() {
                     type="radio"
                     name="payment"
                     value="cash"
-                    checked={selectedPayment === 'cash'}
+                    checked={selectedPayment === "cash"}
                     onChange={(e) => setSelectedPayment(e.target.value)}
                   />
                   <span className={styles.paymentText}>Cash on Delivery</span>
@@ -157,10 +201,12 @@ export default function Payment() {
             <div className={styles.paymentFooter}>
               <div className={styles.priceDetails}>
                 <span>₹{total.toFixed(2)}</span>
-                <button type="button" className={styles.viewDetails}>VIEW DETAILS</button>
+                <button type="button" className={styles.viewDetails}>
+                  VIEW DETAILS
+                </button>
               </div>
-              <button type="submit" className={styles.payNowButton}>
-                PAY NOW
+              <button type="submit" className={styles.payNowButton} disabled={isLoading}>
+                {isLoading ? "Processing..." : "PAY NOW"}
               </button>
             </div>
           </form>
@@ -169,6 +215,6 @@ export default function Payment() {
         </div>
       </div>
     </LikeProvider>
-  );
+  )
 }
 

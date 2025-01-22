@@ -440,6 +440,92 @@
   margin-top: 0rem;
   padding: 5px;
 }
+
+.skeletonItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.skeletonImage {
+  width: 90px;
+  height: 90px;
+  background: #ccc;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeletonVideo {
+  width: 100%;
+  height: 100%;
+  background: #ccc;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeletonText {
+  width: 90px;
+  height: 23px;
+  background: #ccc;
+  position: relative;
+  top: 10px;
+  animation: 1.5s ease-in-out infinite StyleShop-module__KyyZDW__pulse;
+}
+
+.sectionTitleText{
+  background: #ccc;
+  animation: pulse 1.5s infinite ease-in-out;
+  margin-bottom: .8rem;
+  margin-top: 1rem;
+  width: 16rem;
+  height: 2rem;
+}
+
+.skeletonTextTitle {
+  display: flex;
+  justify-self: center;
+  background: #ccc;
+  animation: pulse 1.5s infinite ease-in-out;
+  width: 40%;
+  height: 35px;
+  margin-bottom: 10px;
+}
+
+.skeletonTextSubtitle {
+  display: flex;
+  justify-self: center;
+  background: #ccc;
+  animation: pulse 1.5s infinite ease-in-out;
+  width: 60%;
+  height: 25px;
+}
+
+.skeletonCard {
+  width: 300px;
+  height: 100px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.skeletonSection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+
+
+@keyframes pulse {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #f5f5f5;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
 .price {
   font-size: 1rem;
   font-weight: 600;

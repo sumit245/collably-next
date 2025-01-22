@@ -4,6 +4,8 @@ import * as authService from "../services/authService"
 export const loginUser = createAsyncThunk("auth/login", async ({ email, password }, { rejectWithValue }) => {
   try {
     const response = await authService.login(email, password)
+    localStorage.setItem("accessToken", response.access_token)
+    console.log(response.access_token)
     return response
   } catch (error) {
     return rejectWithValue(error.message)
@@ -15,6 +17,7 @@ export const registerUser = createAsyncThunk(
   async ({ fullname, username, email, password }, { rejectWithValue }) => {
     try {
       const response = await authService.register(fullname, username, email, password)
+      localStorage.setItem("accessToken", response.access_token)
       return response
     } catch (error) {
       return rejectWithValue(error.message)
@@ -25,6 +28,7 @@ export const registerUser = createAsyncThunk(
 export const loginWithGoogleAsync = createAsyncThunk("auth/loginWithGoogle", async (_, { rejectWithValue }) => {
   try {
     const response = await authService.loginWithGoogle()
+    localStorage.setItem("accessToken", response.access_token)
     return response
   } catch (error) {
     return rejectWithValue(error.message)
@@ -36,6 +40,7 @@ export const handleGoogleRedirectAsync = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await authService.handleGoogleRedirect()
+      localStorage.setItem("accessToken", response.access_token)
       return response
     } catch (error) {
       return rejectWithValue(error.message)
@@ -46,6 +51,7 @@ export const handleGoogleRedirectAsync = createAsyncThunk(
 export const logoutUser = createAsyncThunk("auth/logout", async (_, { rejectWithValue }) => {
   try {
     await authService.logout()
+    localStorage.removeItem("accessToken")
     return
   } catch (error) {
     return rejectWithValue(error.message)
