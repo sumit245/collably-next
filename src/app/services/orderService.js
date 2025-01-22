@@ -20,4 +20,3 @@ export const cancelOrder = (id) =>
   api.fetch(`/order/${id}/cancel`, {
     method: "PATCH",
   })
-

@@ -1,48 +1,69 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { CartItem } from './CartItem';
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useSelector, useDispatch } from "react-redux";
+import { CartItem } from "./CartItem";
+import { loadCart, updateQuantity, removeFromCart } from "../store/cartSlice";
 
-import styles from '../cart/styleCart.module.css';
+import styles from "../cart/styleCart.module.css";
 
 export function ViewCart() {
-  const [items, setItems] = useState([]);
   const router = useRouter();
+  const dispatch = useDispatch();
+  const { items, total } = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-    setItems(storedCart);
-  }, []);
+    try {
+      dispatch(loadCart());
+    } catch (error) {
+      console.error("Error loading cart:", error);
+    }
+  }, [dispatch]);
 
-  const updateQuantity = (id, newQuantity) => {
-    const updatedItems = items.map((item) =>
-      item.id === id ? { ...item, quantity: Math.max(1, newQuantity) } : item
-    );
-    setItems(updatedItems);
-    localStorage.setItem('cart', JSON.stringify(updatedItems));
+  const handleUpdateQuantity = (_id, newQuantity) => {
+    try {
+      if (newQuantity > 0) {
+        dispatch(updateQuantity({ _id, quantity: newQuantity }));
+      } else {
+        console.warn("Quantity must be greater than 0.");
+      }
+    } catch (error) {
+      console.error("Error updating quantity:", error);
+    }
   };
 
-  const removeItem = (id) => {
-    const updatedItems = items.filter((item) => item.id !== id);
-    setItems(updatedItems);
-    localStorage.setItem('cart', JSON.stringify(updatedItems));
+  const handleRemoveItem = (_id) => {
+    try {
+      dispatch(removeFromCart(_id));
+    } catch (error) {
+      console.error("Error removing item:", error);
+    }
   };
 
-  const total = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const handleCheckout = () => {
+    if (!user) {
+      router.push("/login");
+    } else if (total > 0) {
+      router.push(`/orderForm?total=${total}`);
+    } else {
+      console.warn("Cart is empty, cannot proceed to checkout.");
+    }
+  };
 
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Your Cart</h2>
       <div className={styles.cartContainer}>
         <div className={styles.itemList}>
-          {items.length > 0 ? (
-            items.map((item, index) => (
+          {items && items.length > 0 ? (
+            items.map((item) => (
               <CartItem
-                key={item.id || index} // Fallback to index if id is not available
+                key={item._id}
                 item={item}
-                onUpdateQuantity={updateQuantity}
-                onRemove={removeItem}
+                onUpdateQuantity={handleUpdateQuantity}
+                onRemove={handleRemoveItem}
               />
             ))
           ) : (
@@ -52,14 +73,12 @@ export function ViewCart() {
         <div className={styles.summary}>
           <div className={styles.totalRow}>
             <span className={styles.totalLabel}>Total:</span>
-            <span className={styles.totalAmount}>₹{total.toFixed(2)}</span>
+            <span className={styles.totalAmount}>₹{total?.toFixed(2) || "0.00"}</span>
           </div>
           <button
             className={styles.placeOrderButton}
-            onClick={() => {
-              router.push(`/orderForm?total=${total}`);
-            }}
-            disabled={items.length === 0}
+            onClick={handleCheckout}
+            disabled={!items || items.length === 0}
           >
             Proceed to Checkout
           </button>

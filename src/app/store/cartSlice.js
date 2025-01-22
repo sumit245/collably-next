@@ -1,54 +1,54 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-
-export const addToCart = createAsyncThunk("cart/addToCart", async (item, { getState }) => {
-    const { cart } = getState();
-    const updatedItems = [...cart.items];
-    const existingItemIndex = updatedItems.findIndex((i) => i.id === item.id);
-  
-    if (existingItemIndex !== -1) {
-      updatedItems[existingItemIndex].quantity += 1; 
-    } else {
-      updatedItems.push({ ...item, quantity: 1 }); 
-    }
-  
-    localStorage.setItem("cart", JSON.stringify(updatedItems));
-    return updatedItems;
-  });
-  
-
-export const loadCart = createAsyncThunk("cart/loadCart", async () => {
-  const cartItems = JSON.parse(localStorage.getItem("cart")) || []
-  return cartItems
-})
+import { createSlice } from "@reduxjs/toolkit"
 
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
     items: [],
-    isLoading: false,
-    error: null,
+    total: 0,
   },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(addToCart.pending, (state) => {
-        state.isLoading = true
-        state.error = null
-      })
-      .addCase(addToCart.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.items = action.payload
-        state.error = null
-      })
-      .addCase(addToCart.rejected, (state, action) => {
-        state.isLoading = false
-        state.error = action.error.message
-      })
-      .addCase(loadCart.fulfilled, (state, action) => {
-        state.items = action.payload
-      })
+  reducers: {
+    addToCart: (state, action) => {
+      const existingItem = state.items.find((item) => item._id === action.payload._id)
+      if (existingItem) {
+        existingItem.quantity += 1
+      } else {
+        state.items.push({ ...action.payload, quantity: 1 })
+      }
+      state.total = state.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+      localStorage.setItem("cart", JSON.stringify(state.items))
+      localStorage.setItem("cartTotal", state.total.toFixed(2))
+    },
+    removeFromCart: (state, action) => {
+      state.items = state.items.filter((item) => item._id !== action.payload)
+      state.total = state.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+      localStorage.setItem("cart", JSON.stringify(state.items))
+      localStorage.setItem("cartTotal", state.total.toFixed(2))
+    },
+    updateQuantity: (state, action) => {
+      const { _id, quantity } = action.payload
+      const item = state.items.find((item) => item._id === _id)
+      if (item) {
+        item.quantity = Math.max(1, quantity)
+        state.total = state.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+        localStorage.setItem("cart", JSON.stringify(state.items))
+        localStorage.setItem("cartTotal", state.total.toFixed(2))
+      }
+    },
+    clearCart: (state) => {
+      state.items = []
+      state.total = 0
+      localStorage.removeItem("cart")
+      localStorage.removeItem("cartTotal")
+    },
+    loadCart: (state) => {
+      const savedCart = JSON.parse(localStorage.getItem("cart")) || []
+      state.items = savedCart
+      state.total = savedCart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+    },
   },
 })
+
+export const { addToCart, removeFromCart, updateQuantity, clearCart, loadCart } = cartSlice.actions
 
 export default cartSlice.reducer
 

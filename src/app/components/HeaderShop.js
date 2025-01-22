@@ -36,7 +36,7 @@ export default function Header() {
           </Link>
           <span className={styles.counter}>{cartCount}</span>
         </button>
-        {user && (
+        {user ? (
           <div className={styles.userInfo}>
             <Image
               src={user.avatar || "/images/banavt1.png"}
@@ -47,6 +47,10 @@ export default function Header() {
             />
             <span className={styles.username}>{user.username}</span>
           </div>
+        ) : (
+          <Link href="/login" className={styles.loginButton}>
+            Login
+          </Link>
         )}
       </div>
     </header>

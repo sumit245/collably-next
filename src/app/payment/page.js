@@ -1,33 +1,51 @@
-'use client';
+"use client"
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { ArrowLeft, CreditCard, Wallet, Building2, Smartphone } from 'lucide-react';
-import styles from './stylespayment.module.css';
-import stylesShop from '../shop/StyleShop.module.css';
-import { LikeProvider } from '../actions/LikeContext';
-import Header from '../components/HeaderShop';
-import Footer from '../components/FooterShop';
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { useSelector, useDispatch } from "react-redux"
+import { ArrowLeft, CreditCard, Wallet, Building2, Smartphone } from "lucide-react"
+import styles from "./stylespayment.module.css"
+import stylesShop from "../shop/StyleShop.module.css"
+import { LikeProvider } from "../actions/LikeContext"
+import Header from "../components/HeaderShop"
+import Footer from "../components/FooterShop"
+import { createOrder } from "../store/orderSlice"
+import { clearCart } from "../store/cartSlice"
 
 export default function Payment() {
-  const router = useRouter();
-  const [selectedPayment, setSelectedPayment] = useState('cash');
-  const [total, setTotal] = useState(0);
+  const router = useRouter()
+  const dispatch = useDispatch()
+  const [selectedPayment, setSelectedPayment] = useState("cash")
+  const { items, total } = useSelector((state) => state.cart)
+  const user = useSelector((state) => state.auth.user)
 
-  useEffect(() => {
-    const storedTotal = parseFloat(localStorage.getItem('total')) || 0;
-    setTotal(storedTotal);
-  }, []);
+  const handlePaymentSubmit = async (e) => {
+    e.preventDefault()
+    const orderData = JSON.parse(localStorage.getItem("orderData") || "{}")
 
-  const handlePaymentSubmit = (e) => {
-    e.preventDefault();
-    const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
-    localStorage.setItem('userInfo', JSON.stringify({
-      ...userInfo,
-      payment: selectedPayment
-    }));
-    router.push('/order');
-  };
+    if (!user) {
+      router.push("/login")
+      return
+    }
+
+    const order = {
+      ...orderData,
+      paymentMethod: selectedPayment,
+      items: items,
+      total: total,
+      userId: user.id,
+    }
+
+    try {
+      await dispatch(createOrder(order)).unwrap()
+      dispatch(clearCart())
+      localStorage.removeItem("orderData")
+      router.push("/order")
+    } catch (error) {
+      console.error("Failed to create order:", error)
+      // Handle error (e.g., show error message to user)
+    }
+  }
 
   return (
     <LikeProvider>

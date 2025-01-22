@@ -1,48 +1,33 @@
-"use client";
+"use client"
 
-import { useState, useContext, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import styles from "../../shop/StyleShop.module.css";
-import { LikeContext } from "../../actions/LikeContext";
-import { addToCart, loadCart } from "../../store/cartSlice";
+import { useState, useContext } from "react"
+import { useDispatch } from "react-redux"
+import styles from "../../shop/StyleShop.module.css"
+import { LikeContext } from "../../actions/LikeContext"
+import { addToCart } from "../../store/cartSlice"
 
 export default function Creator2({ _id, videoSrc, posterSrc, name, productname, followers, price }) {
-  const [isLiked, setIsLiked] = useState(false);
-  const [notification, setNotification] = useState(null);
-  const { likeCount, setLikeCount, cartCount, setCartCount } = useContext(LikeContext);
-  const dispatch = useDispatch();
-  const cartItems = useSelector((state) => state.cart.items);
-
-  useEffect(() => {
-    dispatch(loadCart());
-  }, [dispatch]);
+  const [isLiked, setIsLiked] = useState(false)
+  const [notification, setNotification] = useState(null)
+  const { likeCount, setLikeCount } = useContext(LikeContext)
+  const dispatch = useDispatch()
 
   const toggleLike = () => {
-    setIsLiked(!isLiked);
-    setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
-  };
+    setIsLiked(!isLiked)
+    setLikeCount(isLiked ? likeCount - 1 : likeCount + 1)
+  }
 
   const handleAddToCart = () => {
-    const item = {
-      _id,
-      productname,
-      price,
-      quantity: 1,
-      image: posterSrc,
-    };
-
-   
-    dispatch(addToCart(item));
-    setCartCount(cartCount + 1); 
-    showNotification();
-  };
+    dispatch(addToCart({ _id, name, productname, price, image: posterSrc }))
+    showNotification()
+  }
 
   const showNotification = () => {
-    setNotification(true);
+    setNotification(true)
     setTimeout(() => {
-      setNotification(false);
-    }, 3000);
-  };
+      setNotification(false)
+    }, 3000)
+  }
 
   return (
     <>
@@ -89,11 +74,8 @@ export default function Creator2({ _id, videoSrc, posterSrc, name, productname, 
         </div>
       </div>
 
-      {notification && (
-        <div className={styles.notification}>
-          Item has been added to cart!
-        </div>
-      )}
+      {notification && <div className={styles.notification}>Item has been added to cart!</div>}
     </>
-  );
+  )
 }
+
