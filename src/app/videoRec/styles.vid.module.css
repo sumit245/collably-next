@@ -1,0 +1,202 @@
+.container {
+    height: 90vh;
+    background-color: black;
+    color: white;
+    position: relative;
+  }
+
+  .video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .error {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: rgba(239, 68, 68, 0.8);
+    padding: 1rem;
+    border-radius: 8px;
+  }
+ 
+
+  .topBar {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+  }
+  
+  .button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .buttonSecondary {
+    background-color: white;
+    color: black;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: .3rem;
+    cursor: pointer;
+  }
+  
+  .soundCard {
+    position: relative;
+    z-index: 10;
+    margin: 1rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .soundCardText {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .soundIcon {
+    width: 2rem;
+    height: 2rem;
+    background-color: #4b5563;
+    border-radius: 50%;
+  }
+  
+  .soundName {
+    font-size: 0.875rem;
+  }
+  
+  .soundArtist {
+    font-size: 0.75rem;
+    color: #9ca3af;
+  }
+  
+  .sideControls {
+    position: absolute;
+    right: 1rem;
+    bottom: 8rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    z-index: 10;
+  }
+  
+  .controlButton {
+    background-color: transparent;
+    border: none;
+    color: white;
+    padding: 0.5rem;
+  }
+  
+  .bottomControls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-bottom: 1rem;
+    z-index: 10;
+  }
+  
+  .recordButton {
+    width: 5rem;
+    height: 5rem;
+    border-radius: 50%;
+    border: 4px solid white;
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-self: center;
+
+  }
+  
+  .recording {
+    background-color: #e11d48;
+  }
+  
+  .recordingInner {
+    width: 3.5rem;
+    height: 3.7rem;
+    border-radius: 60%;
+    border: 4px solid #e11d48;
+    background-color: #e11d48;
+    transition: background-color .3s;
+    display: flex;
+    justify-self: center;
+    position: relative;
+    top: .1rem;
+    cursor: pointer;
+  }
+
+  .modeSelector {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+  
+  .modeButton {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+  
+  .modeSelected {
+    color: black;
+    border-radius: .5rem;
+  }
+  
+  .modeUnselected {
+    color: #6b7280;
+    border-radius: .5rem;
+  }
+  
+  .hintText {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.875rem;
+    color: #9ca3af;
+  }
+
+  .progressBarContainer {
+    width: 100%;
+    height: 8px;
+    background-color: #eee;
+    border-radius: 4px;
+    margin-top: 12px;
+  }
+  
+  .progressBar {
+    height: 100%;
+    background-color: #4caf50;
+    border-radius: 4px;
+    transition: width 0.1s ease;
+  }
+
+  
+  .progressBarContainer {
+    width: 100%;
+    height: 8px;
+    position: relative;
+    top: -461px;
+    background-color: #eee;
+    border-radius: 4px;
+    margin-top: 12px;
+  }
+  
+  .progressBar {
+    height: 100%;
+    background-color: #4caf50;
+    border-radius: 4px;
+    transition: width 0.1s ease;
+  }
