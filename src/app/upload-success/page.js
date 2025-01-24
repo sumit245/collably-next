@@ -1,11 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import styles from "../video-details/page.module.css"
 
 export default function UploadSuccess() {
   const router = useRouter();
 
   return (
+    <div className={styles.container}>
     <div style={{ minHeight: "100vh", backgroundColor: "black", color: "white", display: "flex", alignItems: "center", justifyContent: "center" }}>
       <div style={{ textAlign: "center" }}>
         <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>Video uploaded successfully!</h1>
@@ -13,6 +15,7 @@ export default function UploadSuccess() {
           Continue creating?
         </button>
       </div>
+    </div>
     </div>
   );
 }
