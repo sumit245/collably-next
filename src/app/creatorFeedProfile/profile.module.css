@@ -1,7 +1,7 @@
 .container {
   background-color: #000;
   color: #fff;
-  min-height: 85vh;
+  height: 90.99vh;
   position: relative;
   max-width: 480px;
   margin: 0 auto;
@@ -296,5 +296,16 @@
   gap: 5px;
   color: #fff;
   font-weight: 600;
+}
+
+.arrow{
+  background-color: #000;
+  border: none;
+}
+
+.arrowButton{
+  background-color:#000;
+  color: #fff;
+  cursor: pointer;
 }
 
