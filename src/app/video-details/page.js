@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import styles from "./page.module.css"
+import stylesShop from '../shop/StyleShop.module.css'
+import FooterCreator from '../components/FooterCreator'
 
 export default function VideoDetails() {
   const router = useRouter()
@@ -36,6 +38,8 @@ export default function VideoDetails() {
   }
 
   return (
+    <div className={stylesShop.bodyShop}>
+    <div className={stylesShop.smartphoneContainer}>
     <div className={styles.container}>
       <div className={styles.videoPreview}>
         {videoSrc && <video src={videoSrc} className={styles.video} controls />}
@@ -76,6 +80,9 @@ export default function VideoDetails() {
         </button>
       </div>
     </div>
+      <FooterCreator />
+        </div>
+        </div>
   )
 }
 

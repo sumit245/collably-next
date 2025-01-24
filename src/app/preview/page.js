@@ -3,7 +3,9 @@
 import { useRef, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import styles from "../videoRec/styles.vid.module.css"
+import stylesShop from '../shop/StyleShop.module.css'
 import { RotateCcw, Check } from "lucide-react"
+import FooterCreator from '../components/FooterCreator'
 
 export default function PreviewPage() {
   const router = useRouter()
@@ -26,6 +28,8 @@ export default function PreviewPage() {
   }
 
   return (
+    <div className={stylesShop.bodyShop}>
+    <div className={stylesShop.smartphoneContainer}>
     <div className={styles.container}>
       <video
         ref={videoRef}
@@ -47,6 +51,10 @@ export default function PreviewPage() {
           </button>
         </div>
       </div>
+      
+    </div>
+    <FooterCreator />
+    </div>
     </div>
   )
 }
