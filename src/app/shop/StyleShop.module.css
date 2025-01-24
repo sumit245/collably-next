@@ -363,9 +363,7 @@
 .creatorScroll {
   display: flex;
   gap: 0.75rem;
-  overflow-x: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  justify-self: center;
 }
 
 .creatorScroll::-webkit-scrollbar {
@@ -442,9 +440,9 @@
 }
 .buttonContainer1 {
   display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    flex-direction: row;
-    gap: .3rem;
+  grid-template-columns: repeat(1, 1fr);
+  flex-direction: row;
+  gap: 0.3rem;
 }
 .productDetails {
   display: flex;
@@ -467,14 +465,15 @@
   margin: 6px;
   background: #ccc;
   border-radius: 50%;
-  animation: pulse 1.5s infinite ease-in-out;
+  /* animation: pulse 1.5s infinite ease-in-out; */
 }
+
 .skeletonImage3 {
   width: 90px;
   height: 90px;
   margin: 6px;
   background: #ccc;
-border-radius: 10px;
+  border-radius: 10px;
   animation: pulse 1.5s infinite ease-in-out;
 }
 .skeletonVideo {
@@ -493,10 +492,10 @@ border-radius: 10px;
   animation: 1.5s ease-in-out infinite StyleShop-module__KyyZDW__pulse;
 }
 
-.sectionTitleText{
+.sectionTitleText {
   background: #ccc;
   animation: pulse 1.5s infinite ease-in-out;
-  margin-bottom: .8rem;
+  margin-bottom: 0.8rem;
   margin-top: 1rem;
   width: 16rem;
   height: 2rem;
@@ -534,7 +533,11 @@ border-radius: 10px;
   justify-content: flex-start;
 }
 
-
+.reel{
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
 
 @keyframes pulse {
   0% {
@@ -552,7 +555,7 @@ border-radius: 10px;
 .skeletonUserItem1 {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 48px;
   margin: 12px 0;
 }
 
@@ -575,8 +578,20 @@ border-radius: 10px;
 }
 
 .skeletonText1 {
-  width: 100px;
+  width: 185px;
   height: 20px;
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeletonText2 {
+  width: 130px;
+  height: 20px;
+  margin-block: .5rem;
+  border-radius: 5px;
+  background: #ccc;
+  animation: pulse 1.5s ease-in-out infinite;
 }
 
 @keyframes shimmer {
@@ -591,18 +606,13 @@ border-radius: 10px;
   }
 }
 
-
 .skeletonCreatorCard2 {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
   width: 110px;
   height: 220px;
   padding: 10px;
   background-color: #e0e0e0;
   border-radius: 10px;
-  animation: shimmer 1.5s infinite;
+  animation: pulse 1.5s infinite;
 }
 
 .skeletonImage2 {
@@ -610,15 +620,6 @@ border-radius: 10px;
   height: 100px;
   border-radius: 50%;
   background-color: #d0d0d0;
-}
-
-.skeletonText2 {
-  width: 100%;
-    position: relative;
-    top: 194px;
-    height: 20px;
-    background-color: #d0d0d0;
-    border-radius: 5px;
 }
 
 @keyframes shimmer {
@@ -637,12 +638,12 @@ border-radius: 10px;
   font-size: 1rem;
   font-weight: 600;
   text-align: right;
-  white-space: nowrap;
+  white-space: nowrap;
 }
-  .buttonContainer img{
-    width: 30px;
-    height: 40px;
-  }
+.buttonContainer img {
+  width: 30px;
+  height: 40px;
+}
 .shopIcon {
   width: 30px;
   height: 40px;
@@ -685,7 +686,6 @@ border-radius: 10px;
   overflow-x: auto;
   scrollbar-width: none;
   gap: 0.5rem;
-  padding: 0px 0px 5px 8px;
 }
 
 .fImg img {
@@ -929,6 +929,7 @@ border-radius: 10px;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  margin-inline: auto;
 }
 
 .userItem {
@@ -1179,11 +1180,13 @@ border-radius: 10px;
 
 .skeletonText {
   width: 90px;
-  height: 14px;
+  height: 18px;
   margin-block: 0.5rem;
   border-radius: 0.1rem;
   background: #ccc;
   animation: pulse 1.5s infinite ease-in-out;
+  display: flex;
+  justify-self: center;
 }
 
 .sectionTitleText {

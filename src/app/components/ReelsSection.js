@@ -16,9 +16,9 @@ export default function ReelsSection() {
         <h4 className={styles.sectionTitleShop}>{sectionTitle}</h4>
         <div className={styles.creatorScroll}>
           {Array.from({ length: 3 }).map((_, index) => (
-            <div key={index} className={styles.skeletonCreatorCard2}>
-  
-              <div className={styles.skeletonText2}></div>
+            <div className={styles.reel}>
+            <div key={index} className={styles.skeletonCreatorCard2}></div>
+            <div className={styles.skeletonText2}></div>
             </div>
           ))}
         </div>
