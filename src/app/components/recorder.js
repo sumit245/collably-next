@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { X, Check, Music2, Instagram, Youtube } from 'lucide-react'
+import { X, RotateCcw, Check, Music2, Instagram, Youtube } from "lucide-react"
 import { useRouter } from "next/navigation"
 import styles from "../videoRec/styles.vid.module.css"
 
@@ -189,55 +189,64 @@ function VideoRecorder() {
         <div className="text-white">{recordingTime}s</div>
       </div>
 
-      {isPreviewMode && (
-        <div className={styles.previewContainer}>
-          <video src={recordedVideo} className={styles.previewVideo} controls />
-          <div className={styles.previewControls}>
-            <button className={`${styles.previewButton} ${styles.rejectButton}`} onClick={handleDiscard}>
-              <X className="h-6 w-6" />
-            </button>
-            <button className={`${styles.previewButton} ${styles.approveButton}`} onClick={handleConfirm}>
-              <Check className="h-6 w-6" />
-            </button>
-          </div>
-        </div>
-      )}
-
       <div className={styles.bottomControls}>
-        <div className={styles.controlsRow}>
-          <input
-            type="file"
-            accept="video/*"
-            ref={fileInputRef}
-            onChange={handleFileUpload}
-            style={{ display: "none" }}
-          />
-          <button className={styles.addButton} onClick={() => fileInputRef.current?.click()}>
-            <div className={styles.addButtonPreview}>
-              {selectedFile && <video src={URL.createObjectURL(selectedFile)} className={styles.previewThumbnail} />}
+        {isPreviewMode ? (
+          <>
+            <div className={styles.previewContainer}>
+              <video ref={videoRef} className={styles.previewVideo} controls loop src={recordedVideo} />
             </div>
-          </button>
-          <button
-            className={`${styles.recordButton} ${isRecording ? styles.recording : ""}`}
-            onClick={() => (isRecording ? stopRecording() : startRecording())}
-            disabled={!hasPermission}
-          >
-            <div className={styles.recordingInner} />
-          </button>
-        </div>
-        <div className={styles.syncButtons}>
-          <button className={styles.syncButton}>
-            <Instagram className="h-6 w-6" />
-            Sync to Instagram
-          </button>
-          <button className={styles.syncButton}>
-            <Youtube className="h-6 w-6" />
-            Sync to Youtube
-          </button>
-        </div>
+            <div className={styles.previewControls}>
+              
+              <button className={styles.previewButton} onClick={handleDiscard}>
+                <RotateCcw className="h-6 w-6" />
+              </button>
+              <button className={`${styles.previewButton} ${styles.confirmButton}`} onClick={handleConfirm}>
+                <Check className="h-6 w-6" />
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className={styles.controlsRow}>
+              <input
+                type="file"
+                accept="video/*"
+                ref={fileInputRef}
+                onChange={handleFileUpload}
+                style={{ display: "none" }}
+              />
+              <button className={styles.addButton} onClick={() => fileInputRef.current?.click()}>
+                <div className={styles.addButtonPreview}>
+                  {selectedFile && (
+                    <video src={URL.createObjectURL(selectedFile)} className={styles.previewThumbnail} />
+                  )}
+                </div>
+                ADD
+              </button>
+              <button
+                className={`${styles.recordButton} ${isRecording ? styles.recording : ""}`}
+                onClick={() => (isRecording ? stopRecording() : startRecording())}
+                disabled={!hasPermission}
+              >
+                <div className={styles.recordingInner} />
+              </button>
+            </div>
+            <div className={styles.syncButtons}>
+              <button className={styles.syncButton}>
+                <Instagram className="h-6 w-6" />
+                Sync to Instagram
+              </button>
+              <button className={styles.syncButton}>
+                <Youtube className="h-6 w-6" />
+                Sync to Youtube
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   )
 }
 
 export default VideoRecorder
+
