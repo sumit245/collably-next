@@ -30,7 +30,7 @@ export default function ProductCategories() {
           {Array.from({ length: 8 }).map((_, index) => (
             <div key={index} className={styles.skeleton}>
               <div className={styles.skeletonImage}></div>
-              <div className={styles.skeletonText}></div>
+             
             </div>
           ))}
         </div>

@@ -88,7 +88,7 @@ export function DropdownMenu() {
         >
           <div className={styles.menuHeader}>
             <h2 className={styles.greeting}>
-              {user ? `Hello, ${user.user.username}!` : 'Hello Creator!'}
+              {user ? `Hello, ${user.user.username}!` : 'Hello User!'}
             </h2>
           </div>
 

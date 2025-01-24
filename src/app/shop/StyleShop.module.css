@@ -279,6 +279,7 @@
 
 .productGrid {
   display: grid;
+  /* grid-template-columns: repeat(4, 1fr); */
   gap: 0.5rem;
   padding: 0.5rem;
 }
@@ -463,11 +464,19 @@
 .skeletonImage {
   width: 90px;
   height: 90px;
+  margin: 6px;
   background: #ccc;
   border-radius: 50%;
   animation: pulse 1.5s infinite ease-in-out;
 }
-
+.skeletonImage3 {
+  width: 90px;
+  height: 90px;
+  margin: 6px;
+  background: #ccc;
+border-radius: 10px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
 .skeletonVideo {
   width: 100%;
   height: 100%;
@@ -538,6 +547,92 @@
     background-color: #e0e0e0;
   }
 }
+
+
+.skeletonUserItem1 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+}
+
+.skeletonRank1,
+.skeletonImage1,
+.skeletonText1 {
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeletonRank1 {
+  width: 40px;
+  height: 40px;
+}
+
+.skeletonImage1 {
+  width: 50px;
+  height: 50px;
+}
+
+.skeletonText1 {
+  width: 100px;
+  height: 20px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #f0f0f0;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
+
+
+.skeletonCreatorCard2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 110px;
+  height: 220px;
+  padding: 10px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  animation: shimmer 1.5s infinite;
+}
+
+.skeletonImage2 {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #d0d0d0;
+}
+
+.skeletonText2 {
+  width: 100%;
+    position: relative;
+    top: 194px;
+    height: 20px;
+    background-color: #d0d0d0;
+    border-radius: 5px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #f0f0f0;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
+
 .price {
   font-size: 1rem;
   font-weight: 600;

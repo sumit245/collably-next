@@ -1,0 +1,184 @@
+.container {
+  height: 87vh;
+  background-color: black;
+  color: white;
+  position: relative;
+}
+
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(239, 68, 68, 0.8);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.topBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.progressBarContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.3);
+  z-index: 20;
+}
+
+.progressBar {
+  height: 100%;
+  background-color: #ff0000;
+  transition: width 0.1s linear;
+}
+
+.bottomControls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+  gap: 1rem;
+}
+
+.recordButton {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 4px solid red;
+  background: none;
+  padding: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.recordingInner {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #ff0000;
+  transition: all 0.3s ease;
+}
+
+.recording .recordingInner {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+}
+
+.controlsRow {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  margin-bottom: 1rem;
+  position: relative;
+  right: 3rem;
+}
+
+.addButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+  color: #fff;
+  background: none;
+  border: none;
+  font-size: .875rem;
+}
+
+.addButtonPreview {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+  border-radius: 50%
+}
+
+.previewThumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.previewControls {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.previewButton {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.confirmButton {
+  background: white;
+  color: black;
+}
+
+.syncButtons {
+  display: flex;
+  gap: 1rem;
+}
+
+.syncButton {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  transition: background-color 0.2s;
+  border: 1px solid black;
+}
+
+.syncButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.sideButton {
+  color: white;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+

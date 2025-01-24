@@ -24,8 +24,8 @@ export default function ProductGrid() {
         <div className={styles.fImg}>
           {Array.from({ length: 4 }).map((_, index) => (
             <div key={index} className={styles}>
-              <div className={styles.skeletonImage}></div>
-              <div className={styles.skeletonText}></div>
+              <div className={styles.skeletonImage3}></div>
+              <div className={styles.skeletonText3}></div>
             </div>
           ))}
         </div>

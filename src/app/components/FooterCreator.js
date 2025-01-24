@@ -25,7 +25,7 @@ export default function Footer() {
         <span className={styles.navText}>MY SHOP</span>
       </Link>
 
-      <Link href="CreatorPostAdd" className={`${styles.navItem} ${pathname === '/CreatorShop' ? styles.active : ''}`}>
+      <Link href="/videoRec" className={`${styles.navItem} ${pathname === '/CreatorShop' ? styles.active : ''}`}>
         <span className={styles.navIcon}>
           <FaPlus size={20} />
         </span>
