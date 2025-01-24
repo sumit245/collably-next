@@ -69,3 +69,58 @@
     color: #fff;
     margin-bottom: 15px;
   }
+
+
+  .option {
+    display: block;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+    cursor: pointer;
+  }
+  
+  .option .radio {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  
+  .option.selected .radio {
+    background-color: #fff;
+    position: relative;
+  }
+  
+  .option.selected .radio::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background-color: #000;
+    border-radius: 50%;
+  }
+  
+  .option.selected {
+    background-color: #555;
+  }
+  .doneButton {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    color: white;
+    background-color: #ff0055;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .doneButton:hover {
+    background-color: #e6004c;
+    transform: translateY(-2px);
+  }

@@ -39,7 +39,7 @@ export default function Footer() {
         <span className={styles.navText}>ANALYTICS</span>
       </Link>
 
-      <Link href="" className={`${styles.navItem} ${pathname === '/CreatorShop' ? styles.active : ''}`}>
+      <Link href="/creatorFeedProfile" className={`${styles.navItem} ${pathname === '/CreatorShop' ? styles.active : ''}`}>
         <span className={styles.navIcon}>
           <FiShoppingCart size={20} />
         </span>

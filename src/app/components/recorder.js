@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react"
 import { X, RotateCcw, Check, Music2, Instagram, Youtube } from "lucide-react"
 import { useRouter } from "next/navigation"
 import styles from "../videoRec/styles.vid.module.css"
+import Link from 'next/link';
 
 function VideoRecorder() {
   const router = useRouter()
@@ -174,9 +175,9 @@ function VideoRecorder() {
       )}
 
       <div className={styles.topBar}>
-        <button className={styles.sideButton} onClick={handleUndo}>
+      <Link href="/CreatorHome" > <button className={styles.sideButton} onClick={handleUndo}>
           <X className="h-6 w-6" />
-        </button>
+        </button></Link>
         <button className={styles.sideButton}>
           <Music2 className="h-6 w-6" />
           <span className="ml-2">Add sound</span>
@@ -213,14 +214,14 @@ function VideoRecorder() {
           </button>
         </div>
         <div className={styles.syncButtons}>
-          <button className={styles.syncButton}>
+        <Link href="/instagramProfile" > <button className={styles.syncButton}>
             <Instagram className="h-6 w-6" />
            
-          </button>
-          <button className={styles.syncButton}>
+          </button></Link>
+          <Link href="/youtubeProfile" >  <button className={styles.syncButton}>
             <Youtube className="h-6 w-6" />
             
-          </button>
+          </button></Link>
         </div>
       </div>
     </div>

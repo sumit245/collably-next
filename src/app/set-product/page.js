@@ -1,15 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 import stylesShop from "../shop/StyleShop.module.css"; 
 import FooterCreator from "../components/FooterCreator";
 
-export default function SetVisibility() {
+export default function SetProduct() {
   const router = useRouter();
   const [selectedBrand, setSelectedBrand] = useState("");
   const [selectedProduct, setSelectedProduct] = useState("");
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('videoDetailsData')
+    if (storedData) {
+      const parsedData = JSON.parse(storedData)
+      setSelectedBrand(parsedData.brand || "")
+      setSelectedProduct(parsedData.product || "")
+    }
+  }, [])
 
   const brands = [
     { value: "brand1", label: "Brand 1" },
@@ -24,8 +33,11 @@ export default function SetVisibility() {
   ];
 
   const handleDone = () => {
-    console.log("Selected Brand:", selectedBrand);
-    console.log("Selected Product:", selectedProduct);
+    const storedData = localStorage.getItem('videoDetailsData')
+    const updatedData = storedData ? JSON.parse(storedData) : {}
+    updatedData.brand = selectedBrand
+    updatedData.product = selectedProduct
+    localStorage.setItem('videoDetailsData', JSON.stringify(updatedData))
     router.back(); 
   };
 
@@ -33,9 +45,7 @@ export default function SetVisibility() {
     <div className={stylesShop.bodyShop}>
       <div className={stylesShop.smartphoneContainer}>
         <div className={styles.container}>
-       
           <div className={styles.dropdownContainer}>
-            
             <div className={styles.searchableDropdown}>
               <label htmlFor="brand">Add Brand</label>
               <select
@@ -52,7 +62,6 @@ export default function SetVisibility() {
                 ))}
               </select>
             </div>
-
             
             <div className={styles.searchableDropdown}>
               <label htmlFor="product">Add Product</label>
@@ -72,7 +81,6 @@ export default function SetVisibility() {
             </div>
           </div>
 
-       
           <button className={styles.doneButton} onClick={handleDone}>
             Done
           </button>

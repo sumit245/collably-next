@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import styles from "./page.module.css"
-import stylesShop from '../shop/StyleShop.module.css'
-import FooterCreator from '../components/FooterCreator'
+import stylesShop from "../shop/StyleShop.module.css"
+import FooterCreator from "../components/FooterCreator"
+import { Package, Eye, Users } from "lucide-react"
 
 export default function VideoDetails() {
   const router = useRouter()
@@ -13,8 +14,8 @@ export default function VideoDetails() {
   const [formData, setFormData] = useState({
     brand: "",
     product: "",
-    visibility: "public",
-    audience: "not-for-kids",
+    visibility: "",
+    audience: "",
   })
 
   useEffect(() => {
@@ -24,10 +25,19 @@ export default function VideoDetails() {
     }
   }, [searchParams])
 
+  useEffect(() => {
+    const storedData = localStorage.getItem("videoDetailsData")
+    if (storedData) {
+      setFormData(JSON.parse(storedData))
+    }
+  }, [])
+
   const handleSubmit = async () => {
-    // Handle form submission
-    router.push("/upload-success")
+    if (formData.brand && formData.product && formData.visibility && formData.audience) {
+      router.push("/upload-success")
+    }
   }
+
   const handleproductClick = () => {
     router.push("/set-product")
   }
@@ -40,37 +50,44 @@ export default function VideoDetails() {
     router.push("/select-audience")
   }
 
+  const isFormComplete = formData.brand && formData.product && formData.visibility && formData.audience
+
   return (
     <div className={stylesShop.bodyShop}>
-    <div className={stylesShop.smartphoneContainer}>
-    <div className={styles.container}>
-      <div className={styles.videoPreview}>
-        {videoSrc && <video src={videoSrc} className={styles.video} />}
-      </div>
+      <div className={stylesShop.smartphoneContainer}>
+        <div className={styles.container}>
+          <div className={styles.videoPreview}>{videoSrc && <video src={videoSrc} className={styles.video} />}</div>
 
-      <div className={styles.form}>
-        <div className={styles.username}>Username</div>
+          <div className={styles.form}>
+            <div className={styles.username}>Username</div>
 
-        
-        <button className={styles.optionButton} onClick={handleproductClick}>
-          Add Product: {formData.visibility}
-        </button>
+            <button className={styles.optionButton} onClick={handleproductClick}>
+              <Package size={20} />
+              Add Product: {formData.brand ? `${formData.brand} - ${formData.product}` : "Not selected"}
+            </button>
 
-        <button className={styles.optionButton} onClick={handleVisibilityClick}>
-          Visibility: {formData.visibility}
-        </button>
+            <button className={styles.optionButton} onClick={handleVisibilityClick}>
+              <Eye size={20} />
+              Visibility: {formData.visibility || "Not set"}
+            </button>
 
-        <button className={styles.optionButton} onClick={handleAudienceClick}>
-          Select Audience : {formData.visibility}
-        </button>
+            <button className={styles.optionButton} onClick={handleAudienceClick}>
+              <Users size={20} />
+              Select Audience: {formData.audience || "Not selected"}
+            </button>
 
-        <button className={styles.doneButton} onClick={handleSubmit}>
-          Done
-        </button>
+            <button
+              className={`${styles.doneButton} ${!isFormComplete ? styles.disabledButton : ""}`}
+              onClick={handleSubmit}
+              disabled={!isFormComplete}
+            >
+              Done
+            </button>
+          </div>
+        </div>
+        <FooterCreator />
       </div>
     </div>
-      <FooterCreator />
-        </div>
-        </div>
   )
 }
+

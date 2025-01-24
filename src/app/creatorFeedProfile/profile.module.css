@@ -1,0 +1,310 @@
+.container {
+    background-color: #000;
+    color: #fff;
+    min-height: 85vh;
+    position: relative;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border-bottom: 1px solid gray;
+  }
+  
+  .headerLeft {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .username {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .headerRight {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .iconButton {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 5px;
+  }
+  
+  .menuButton {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .profile {
+    display: flex;
+    justify-content: space-around;
+    gap: 2rem;
+  }
+  
+  .profileInfo {
+    padding: 20px 15px;
+  }
+  
+  .profileImageContainer {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+  }
+  
+  .profileImage {
+    border-radius: 50%;
+    height: 75px;
+    width: 75px;
+    border: 2px solid #262626;
+  }
+  
+  .musicTag {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  
+  .addButton {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #0095f6;
+    border: none;
+    color: #fff;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .stats {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+    gap: 2rem;
+  }
+  
+  .statItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  
+  .statNumber {
+    font-weight: 600;
+    font-size: 16px;
+  }
+  
+  .statLabel {
+    color: #a8a8a8;
+    font-size: 14px;
+  }
+  
+  .bio {
+    margin: 15px 0;
+    font-size: 14px;
+  }
+  
+  .profileActions {
+    display: flex;
+    gap: 8px;
+    margin-top: 15px;
+  }
+  
+  .editButton,
+  .shareButton {
+    flex: 1;
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    background: #262626;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .addPeopleButton {
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+    background: #262626;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .suggestedSection {
+    padding: 20px 15px;
+  }
+  
+  .sectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .sectionHeader h2 {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .seeAll {
+    color: #0095f6;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .suggestionCard {
+    background: #262626;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .suggestionImage {
+    border-radius: 50%;
+    margin-bottom: 15px;
+  }
+  
+  .seeAllButton {
+    margin-top: 15px;
+    padding: 8px 20px;
+    border-radius: 8px;
+    border: none;
+    background: #363636;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  
+  .bottomNav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    background: #000;
+    border-top: 1px solid #262626;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+  
+  .navButton {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 8px;
+  }
+  
+  .active {
+    color: #0095f6;
+  }
+  
+  .profileThumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #fff;
+  }
+  
+  .captureMessage {
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 70px;
+  }
+  
+  .captureMessage h3 {
+    font-size: 24px;
+    font-weight: 600;
+  }
+  
+  /* New styles for posts grid */
+  .postsGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    padding: 8px
+  }
+  
+  .postItem {
+    position: relative;
+    aspect-ratio: 1 / 1;
+  }
+  
+  .postImageContainer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  
+  .postImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .postOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+  
+  .postItem:hover .postOverlay {
+    opacity: 1;
+  }
+  
+  .postStats {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .postStat {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .arrow{
+    background-color: #000;
+    border: none;
+  }
+  
+  .arrowButton{
+    background-color:#000;
+    color: #fff;
+    cursor: pointer;
+  }
