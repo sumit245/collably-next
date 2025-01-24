@@ -295,3 +295,331 @@
   margin-top: 16px;
 }
 
+
+.card {
+  width: 100%;
+  max-width: 28rem; 
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  animation: pulse-card 1.5s infinite ease-in-out;
+}
+
+
+.content {
+  position: relative;
+  width: 100%;
+  padding-top: 177.78%;
+  animation: pulse-content 1.5s infinite ease-in-out;
+}
+
+.imageSkeleton {
+  position: absolute;
+  inset: 0;
+  background-color: #e0e0e0; 
+  height: 92%;
+  width: 100%; 
+  animation: pulse-image 1.5s infinite ease-in-out;
+}
+
+.skeletonText {
+  height: 1rem;
+  width: 75%; 
+  background-color: #d0d0d0;
+  border-radius: 0.25rem;
+  animation: pulse-text 1.5s infinite ease-in-out;
+  margin-bottom: 0.5rem;
+}
+
+.skeletonTextSmall {
+  height: 1rem;
+  width: 50%;
+  background-color: #e0e0e0;
+  border-radius: 0.25rem;
+  animation: pulse-text-small 1.5s infinite ease-in-out;
+}
+
+.engagement {
+  position: absolute;
+  right: 1rem;
+  top: 28rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: pulse-engagement 1.5s infinite ease-in-out;
+}
+
+
+.engagementItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  animation: pulse-engagement-item 1.5s infinite ease-in-out;
+}
+
+
+.roundedCircle {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  background-color: #c0c0c0; 
+  animation: pulse-rounded-circle 1.5s infinite ease-in-out;
+}
+
+.textSmall {
+  height: 0.75rem;
+  width: 2rem;
+  background-color: #e0e0e0; 
+  border-radius: 0.25rem;
+  animation: pulse-text-small-engagement 1.5s infinite ease-in-out;
+}
+
+
+.userInfo {
+  position: absolute;
+  left: 2rem;
+  bottom: 11rem; 
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  animation: pulse-user-info 1.5s infinite ease-in-out;
+}
+
+
+.userAvatar {
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 50%;
+  background-color: #c0c0c0; 
+  animation: pulse-avatar 1.5s infinite ease-in-out;
+}
+
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
+  animation: pulse-user-details 1.5s infinite ease-in-out;
+}
+
+
+.userName {
+  height: 1rem;
+  width: 6rem;
+  background-color: #d0d0d0;
+  border-radius: 0.25rem;
+  animation: pulse-user-name 1.5s infinite ease-in-out;
+  margin-bottom: 0.25rem;
+}
+
+
+.userRole {
+  height: 0.75rem;
+  width: 4rem;
+  background-color: #e0e0e0; 
+  border-radius: 0.25rem;
+  animation: pulse-user-role 1.5s infinite ease-in-out;
+}
+
+
+.ctaButton {
+  margin-left: auto;
+  height: 2rem;
+  width: 5rem;
+  background-color: #e0e0e0;
+  border-radius: 0.25rem;
+  animation: pulse-cta-button 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-card {
+  0% {
+    background-color: #f5f5f5;
+  }
+  50% {
+    background-color: #e0e0e0;
+  }
+  100% {
+    background-color: #f5f5f5;
+  }
+}
+
+@keyframes pulse-content {
+  0% {
+    background-color: #f5f5f5;
+  }
+  50% {
+    background-color: #e0e0e0;
+  }
+  100% {
+    background-color: #f5f5f5;
+  }
+}
+
+@keyframes pulse-image {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #c0c0c0;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
+
+@keyframes pulse-bottom {
+  0% {
+    background-color: #f5f5f5;
+  }
+  50% {
+    background-color: #e0e0e0;
+  }
+  100% {
+    background-color: #f5f5f5;
+  }
+}
+
+@keyframes pulse-text {
+  0% {
+    background-color: #d0d0d0;
+  }
+  50% {
+    background-color: #b0b0b0;
+  }
+  100% {
+    background-color: #d0d0d0;
+  }
+}
+
+@keyframes pulse-text-small {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #c0c0c0;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
+
+@keyframes pulse-engagement {
+  0% {
+    background-color: #f5f5f5;
+  }
+  50% {
+    background-color: #e0e0e0;
+  }
+  100% {
+    background-color: #f5f5f5;
+  }
+}
+
+@keyframes pulse-engagement-item {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #c0c0c0;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
+
+@keyframes pulse-rounded-circle {
+  0% {
+    background-color: #c0c0c0;
+  }
+  50% {
+    background-color: #a0a0a0;
+  }
+  100% {
+    background-color: #c0c0c0;
+  }
+}
+
+@keyframes pulse-text-small-engagement {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #c0c0c0;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
+
+@keyframes pulse-user-info {
+  0% {
+    background-color: #f5f5f5;
+  }
+  50% {
+    background-color: #e0e0e0;
+  }
+  100% {
+    background-color: #f5f5f5;
+  }
+}
+
+@keyframes pulse-avatar {
+  0% {
+    background-color: #c0c0c0;
+  }
+  50% {
+    background-color: #a0a0a0;
+  }
+  100% {
+    background-color: #c0c0c0;
+  }
+}
+
+@keyframes pulse-user-details {
+  0% {
+    background-color: #f5f5f5;
+  }
+  50% {
+    background-color: #e0e0e0;
+  }
+  100% {
+    background-color: #f5f5f5;
+  }
+}
+
+@keyframes pulse-user-name {
+  0% {
+    background-color: #d0d0d0;
+  }
+  50% {
+    background-color: #b0b0b0;
+  }
+  100% {
+    background-color: #d0d0d0;
+  }
+}
+
+@keyframes pulse-user-role {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #c0c0c0;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
+
+@keyframes pulse-cta-button {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #c0c0c0;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
