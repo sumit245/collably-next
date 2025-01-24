@@ -1,0 +1,53 @@
+.container {
+    background-color: #000;
+    min-height: 100vh;
+    color: #fff;
+    padding: 20px;
+  }
+  
+  .title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .option {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    padding: 15px;
+    border: none;
+    color: #fff;
+    text-align: left;
+  }
+  
+  .radio {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+  
+  .optionContent {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .optionContent h3 {
+    margin: 0;
+    font-size: 18px;
+  }
+  
+  .optionContent p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #aaa;
+  }
+  
+  

@@ -1,0 +1,67 @@
+.container {
+    background-color: #000;
+    min-height: 100vh;
+    color: #fff;
+    padding: 20px;
+  }
+  
+  .title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .question {
+    margin-bottom: 20px;
+  }
+  
+  .question h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .question p {
+    font-size: 14px;
+    color: #aaa;
+  }
+  
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .option {
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    padding: 15px;
+    border: none;
+    color: #fff;
+    text-align: left;
+  }
+  
+  .radio {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    margin-right: 15px;
+  }
+  
+  .ageRestriction {
+    margin-top: 30px;
+  }
+  
+  .ageRestriction h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .ageRestriction p {
+    font-size: 14px;
+    color: #aaa;
+    margin-bottom: 15px;
+  }
+  
+  
