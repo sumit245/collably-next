@@ -1,0 +1,42 @@
+/* UploadingVideo.module.css */
+.container {
+    background-color: #000;
+    min-height: 100vh;
+    color: #fff;
+    padding: 20px;
+    width: 100%;
+    max-width: 450px;
+    justify-self: center;
+  }
+  
+  .textContainer {
+    text-align: center;
+    display: grid;
+    justify-items: center;
+    position: relative;
+    top: 20rem;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .progressBarWrapper {
+    width: 16rem;
+    height: 0.5rem;
+    background-color: #2d2d2d;
+    border-radius: 9999px;
+    overflow: hidden;
+  }
+  
+  .progressBar {
+    height: 100%;
+    background-color: #3b82f6; /* Blue */
+    transition: all 0.5s;
+  }
+  
+  .progressText {
+    margin-top: 0.5rem;
+  }
+  

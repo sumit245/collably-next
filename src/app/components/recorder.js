@@ -138,7 +138,18 @@ function VideoRecorder() {
   }
 
   const handleConfirm = () => {
-    router.push("/video-details")
+    if (recordedVideo) {
+      const videoDetails = {
+        videoSrc: recordedVideo,
+        duration: recordingTime,
+        mode: selectedMode,
+      }
+      router.push(`/video-details?${new URLSearchParams(videoDetails).toString()}`)
+    }
+  }
+
+  const handleDiscard = () => {
+    handleUndo()
   }
 
   const setupCamera = async () => {
@@ -181,12 +192,42 @@ function VideoRecorder() {
       <div className={styles.bottomControls}>
         {isPreviewMode ? (
           <>
+            <div className={styles.previewContainer}>
+              <video ref={videoRef} className={styles.previewVideo} controls loop src={recordedVideo} />
+            </div>
             <div className={styles.previewControls}>
-              <button className={styles.previewButton} onClick={handleUndo}>
+              
+              <button className={styles.previewButton} onClick={handleDiscard}>
                 <RotateCcw className="h-6 w-6" />
               </button>
               <button className={`${styles.previewButton} ${styles.confirmButton}`} onClick={handleConfirm}>
                 <Check className="h-6 w-6" />
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className={styles.controlsRow}>
+              <input
+                type="file"
+                accept="video/*"
+                ref={fileInputRef}
+                onChange={handleFileUpload}
+                style={{ display: "none" }}
+              />
+              <button className={styles.addButton} onClick={() => fileInputRef.current?.click()}>
+                <div className={styles.addButtonPreview}>
+                  {selectedFile && (
+                    <video src={URL.createObjectURL(selectedFile)} className={styles.previewThumbnail} />
+                  )}
+                </div>
+              </button>
+              <button
+                className={`${styles.recordButton} ${isRecording ? styles.recording : ""}`}
+                onClick={() => (isRecording ? stopRecording() : startRecording())}
+                disabled={!hasPermission}
+              >
+                <div className={styles.recordingInner} />
               </button>
             </div>
             <div className={styles.syncButtons}>
@@ -200,28 +241,6 @@ function VideoRecorder() {
               </button>
             </div>
           </>
-        ) : (
-          <div className={styles.controlsRow}>
-            <input
-              type="file"
-              accept="video/*"
-              ref={fileInputRef}
-              onChange={handleFileUpload}
-              style={{ display: "none" }}
-            />
-            <button className={styles.addButton} onClick={() => fileInputRef.current?.click()}>
-              <div className={styles.addButtonPreview}>
-                {selectedFile && <video src={URL.createObjectURL(selectedFile)} className={styles.previewThumbnail} />}
-              </div>
-            </button>
-            <button
-              className={`${styles.recordButton} ${isRecording ? styles.recording : ""}`}
-              onClick={() => (isRecording ? stopRecording() : startRecording())}
-              disabled={!hasPermission}
-            >
-              <div className={styles.recordingInner} />
-            </button>
-          </div>
         )}
       </div>
     </div>

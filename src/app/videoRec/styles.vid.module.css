@@ -60,6 +60,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 1rem;
   z-index: 10;
   gap: 1rem;
 }
@@ -95,10 +96,10 @@
 .controlsRow {
   display: flex;
   align-items: center;
-  gap: 3rem;
+  gap: 5.5rem;
   margin-bottom: 1rem;
   position: relative;
-  right: 3rem;
+  right: 4.5rem;
 }
 
 .addButton {
@@ -133,6 +134,10 @@
   gap: 3rem;
 }
 
+.previewVideo{
+  
+}
+
 .previewButton {
   width: 48px;
   height: 48px;
@@ -154,13 +159,13 @@
 .syncButtons {
   display: flex;
   gap: 1rem;
+  margin-top: 1rem; /* Added margin-top */
 }
 
 .syncButton {
   display: flex;
   align-items: center;
   padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.2);
   border-radius: 999px;
   font-size: 0.875rem;
   transition: background-color 0.2s;
