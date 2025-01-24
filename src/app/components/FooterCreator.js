@@ -29,7 +29,7 @@ export default function Footer() {
         <span className={styles.navIcon}>
           <FaPlus size={20} />
         </span>
-        <span className={styles.navText}></span>
+        <span className={styles.navText}>CREATE</span>
       </Link>
 
       <Link href="/CreatorAnalytics" className={`${styles.navItem} ${pathname === '/CreatorAnalytics' ? styles.active : ''}`}>
@@ -43,7 +43,7 @@ export default function Footer() {
         <span className={styles.navIcon}>
           <FiShoppingCart size={20} />
         </span>
-        <span className={styles.navText}>FEED</span>
+        <span className={styles.navText}> MY FEED</span>
       </Link>
     </nav>
   );

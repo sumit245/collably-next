@@ -24,7 +24,7 @@ export default function VideoDetails() {
 
   const handleSubmit = async () => {
     // Handle form submission
-    router.push("/upload-video")
+    router.push("/upload-success")
   }
 
   const handleVisibilityClick = () => {
