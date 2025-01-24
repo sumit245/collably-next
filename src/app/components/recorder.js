@@ -13,7 +13,6 @@ function VideoRecorder() {
   const [error, setError] = useState(null)
   const [recordingTime, setRecordingTime] = useState(0)
   const [recordedVideo, setRecordedVideo] = useState(null)
-  const [isPreviewMode, setIsPreviewMode] = useState(false)
   const [selectedFile, setSelectedFile] = useState(null)
 
   const videoRef = useRef(null)
@@ -69,11 +68,6 @@ function VideoRecorder() {
       const blob = new Blob(chunksRef.current, { type: "video/webm" })
       const url = URL.createObjectURL(blob)
       setRecordedVideo(url)
-      setIsPreviewMode(true)
-      if (videoRef.current) {
-        videoRef.current.src = url
-        videoRef.current.play()
-      }
     }
 
     mediaRecorder.start()
@@ -106,21 +100,16 @@ function VideoRecorder() {
       if (progressIntervalRef.current) {
         clearInterval(progressIntervalRef.current)
       }
-      setIsPreviewMode(true)
     }
   }
 
   const handleFileUpload = (event) => {
     const file = event.target.files?.[0]
     if (file) {
+      const fileURL = URL.createObjectURL(file)
       setSelectedFile(file)
-      const url = URL.createObjectURL(file)
-      setRecordedVideo(url)
-      setIsPreviewMode(true)
-      if (videoRef.current) {
-        videoRef.current.src = url
-        videoRef.current.play()
-      }
+      setRecordedVideo(fileURL)
+      handleConfirm()
     }
   }
 
@@ -129,7 +118,6 @@ function VideoRecorder() {
       URL.revokeObjectURL(recordedVideo)
     }
     setRecordedVideo(null)
-    setIsPreviewMode(false)
     setSelectedFile(null)
     if (videoRef.current) {
       videoRef.current.srcObject = null
@@ -138,13 +126,14 @@ function VideoRecorder() {
   }
 
   const handleConfirm = () => {
-    if (recordedVideo) {
+    if (recordedVideo || selectedFile) {
+      const videoSrc = selectedFile ? URL.createObjectURL(selectedFile) : recordedVideo
       const videoDetails = {
-        videoSrc: recordedVideo,
-        duration: recordingTime,
+        videoSrc: videoSrc,
+        duration: selectedFile ? 0 : recordingTime, // Set duration to 0 for uploaded files
         mode: selectedMode,
       }
-      router.push(`/video-details?${new URLSearchParams(videoDetails).toString()}`)
+      router.push(`/preview?${new URLSearchParams(videoDetails).toString()}`)
     }
   }
 
@@ -166,9 +155,15 @@ function VideoRecorder() {
     }
   }
 
+  useEffect(() => {
+    if (!isRecording && (recordedVideo || selectedFile)) {
+      handleConfirm()
+    }
+  }, [isRecording, recordedVideo, selectedFile])
+
   return (
     <div className={styles.container}>
-      <video ref={videoRef} autoPlay playsInline muted={!isPreviewMode} className={styles.video} loop={isPreviewMode} />
+      <video ref={videoRef} autoPlay playsInline muted className={styles.video} />
 
       {error && <div className={styles.error}>{error}</div>}
 
@@ -190,58 +185,43 @@ function VideoRecorder() {
       </div>
 
       <div className={styles.bottomControls}>
-        {isPreviewMode ? (
-          <>
-            <div className={styles.previewContainer}>
-              <video ref={videoRef} className={styles.previewVideo} controls loop src={recordedVideo} />
+        <div className={styles.controlsRow}>
+          <input
+            type="file"
+            accept="video/*"
+            ref={fileInputRef}
+            onChange={handleFileUpload}
+            style={{ display: "none" }}
+          />
+          <button className={styles.addButton} onClick={() => fileInputRef.current?.click()}>
+            <div className={styles.addButtonPreview}>
+              {(selectedFile || recordedVideo) && (
+                <video
+                  src={selectedFile ? URL.createObjectURL(selectedFile) : recordedVideo}
+                  className={styles.previewThumbnail}
+                />
+              )}
             </div>
-            <div className={styles.previewControls}>
-              
-              <button className={styles.previewButton} onClick={handleDiscard}>
-                <RotateCcw className="h-6 w-6" />
-              </button>
-              <button className={`${styles.previewButton} ${styles.confirmButton}`} onClick={handleConfirm}>
-                <Check className="h-6 w-6" />
-              </button>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className={styles.controlsRow}>
-              <input
-                type="file"
-                accept="video/*"
-                ref={fileInputRef}
-                onChange={handleFileUpload}
-                style={{ display: "none" }}
-              />
-              <button className={styles.addButton} onClick={() => fileInputRef.current?.click()}>
-                <div className={styles.addButtonPreview}>
-                  {selectedFile && (
-                    <video src={URL.createObjectURL(selectedFile)} className={styles.previewThumbnail} />
-                  )}
-                </div>
-              </button>
-              <button
-                className={`${styles.recordButton} ${isRecording ? styles.recording : ""}`}
-                onClick={() => (isRecording ? stopRecording() : startRecording())}
-                disabled={!hasPermission}
-              >
-                <div className={styles.recordingInner} />
-              </button>
-            </div>
-            <div className={styles.syncButtons}>
-              <button className={styles.syncButton}>
-                <Instagram className="h-6 w-6" />
-                Sync to Instagram
-              </button>
-              <button className={styles.syncButton}>
-                <Youtube className="h-6 w-6" />
-                Sync to Youtube
-              </button>
-            </div>
-          </>
-        )}
+            ADD
+          </button>
+          <button
+            className={`${styles.recordButton} ${isRecording ? styles.recording : ""}`}
+            onClick={() => (isRecording ? stopRecording() : startRecording())}
+            disabled={!hasPermission}
+          >
+            <div className={styles.recordingInner} />
+          </button>
+        </div>
+        <div className={styles.syncButtons}>
+          <button className={styles.syncButton}>
+            <Instagram className="h-6 w-6" />
+           
+          </button>
+          <button className={styles.syncButton}>
+            <Youtube className="h-6 w-6" />
+            
+          </button>
+        </div>
       </div>
     </div>
   )

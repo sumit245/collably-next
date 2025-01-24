@@ -19,3 +19,4 @@ const UploadingVideo = ({ progress }) => {
 };
 
 export default UploadingVideo;
+

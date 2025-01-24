@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation"
 import styles from "./page.module.css"
+import stylesShop from '../shop/StyleShop.module.css'
+import FooterCreator from '../components/FooterCreator'
 
 export default function SetVisibility() {
   const router = useRouter()
@@ -12,6 +14,8 @@ export default function SetVisibility() {
   }
 
   return (
+    <div className={stylesShop.bodyShop}>
+    <div className={stylesShop.smartphoneContainer}>
     <div className={styles.container}>
       <h1 className={styles.title}>Set visibility</h1>
 
@@ -41,6 +45,9 @@ export default function SetVisibility() {
         </button>
       </div>
     </div>
+         <FooterCreator />
+                    </div>
+                    </div>
   )
 }
 

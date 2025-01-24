@@ -2,6 +2,8 @@
 
 import { useRouter } from "next/navigation"
 import styles from "./page.module.css"
+import stylesShop from '../shop/StyleShop.module.css'
+import FooterCreator from '../components/FooterCreator'
 
 export default function SelectAudience() {
   const router = useRouter()
@@ -12,6 +14,8 @@ export default function SelectAudience() {
   }
 
   return (
+    <div className={stylesShop.bodyShop}>
+    <div className={stylesShop.smartphoneContainer}>
     <div className={styles.container}>
       <h1 className={styles.title}>Select audience</h1>
 
@@ -52,6 +56,9 @@ export default function SelectAudience() {
         </div>
       </div>
     </div>
+     <FooterCreator />
+                </div>
+                </div>
   )
 }
 

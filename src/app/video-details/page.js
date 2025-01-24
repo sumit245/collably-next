@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import styles from "./page.module.css"
+import stylesShop from '../shop/StyleShop.module.css'
+import FooterCreator from '../components/FooterCreator'
 
 export default function VideoDetails() {
   const router = useRouter()
@@ -24,7 +26,10 @@ export default function VideoDetails() {
 
   const handleSubmit = async () => {
     // Handle form submission
-    router.push("/upload-video")
+    router.push("/upload-success")
+  }
+  const handleproductClick = () => {
+    router.push("/set-product")
   }
 
   const handleVisibilityClick = () => {
@@ -36,39 +41,27 @@ export default function VideoDetails() {
   }
 
   return (
+    <div className={stylesShop.bodyShop}>
+    <div className={stylesShop.smartphoneContainer}>
     <div className={styles.container}>
       <div className={styles.videoPreview}>
-        {videoSrc && <video src={videoSrc} className={styles.video} controls />}
+        {videoSrc && <video src={videoSrc} className={styles.video} />}
       </div>
 
       <div className={styles.form}>
         <div className={styles.username}>Username</div>
 
-        <div className={styles.productSection}>
-          <div className={styles.dropdown}>
-            <input
-              type="text"
-              placeholder="Add brand"
-              value={formData.brand}
-              onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
-            />
-          </div>
-          <div className={styles.dropdown}>
-            <input
-              type="text"
-              placeholder="Add product"
-              value={formData.product}
-              onChange={(e) => setFormData({ ...formData, product: e.target.value })}
-            />
-          </div>
-        </div>
+        
+        <button className={styles.optionButton} onClick={handleproductClick}>
+          Add Product: {formData.visibility}
+        </button>
 
         <button className={styles.optionButton} onClick={handleVisibilityClick}>
           Visibility: {formData.visibility}
         </button>
 
         <button className={styles.optionButton} onClick={handleAudienceClick}>
-          Select Audience
+          Select Audience : {formData.visibility}
         </button>
 
         <button className={styles.doneButton} onClick={handleSubmit}>
@@ -76,6 +69,9 @@ export default function VideoDetails() {
         </button>
       </div>
     </div>
+      <FooterCreator />
+        </div>
+        </div>
   )
 }
 

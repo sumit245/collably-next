@@ -22,7 +22,7 @@ export default function PostDetails({ videoUrl }) {
 
       {/* Video Preview */}
       <div className="aspect-[9/16] w-full bg-gray-900">
-        <video src={videoUrl} className="w-full h-full object-contain" controls />
+        <video src={videoUrl} className="w-full h-full object-contain" autoPlay />
       </div>
 
       {/* Details Form */}
