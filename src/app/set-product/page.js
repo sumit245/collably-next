@@ -3,14 +3,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
-import stylesShop from "../shop/StyleShop.module.css";
+import stylesShop from "../shop/StyleShop.module.css"; 
 import FooterCreator from "../components/FooterCreator";
-import Select from "react-select";
 
 export default function SetVisibility() {
   const router = useRouter();
-  const [selectedBrand, setSelectedBrand] = useState(null);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [selectedBrand, setSelectedBrand] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState("");
 
   const brands = [
     { value: "brand1", label: "Brand 1" },
@@ -25,42 +24,55 @@ export default function SetVisibility() {
   ];
 
   const handleDone = () => {
-    // Handle submission
     console.log("Selected Brand:", selectedBrand);
     console.log("Selected Product:", selectedProduct);
-    router.back(); // Navigate back
+    router.back(); 
   };
 
   return (
     <div className={stylesShop.bodyShop}>
       <div className={stylesShop.smartphoneContainer}>
         <div className={styles.container}>
-        
-
+       
           <div className={styles.dropdownContainer}>
+            
             <div className={styles.searchableDropdown}>
               <label htmlFor="brand">Add Brand</label>
-              <Select
+              <select
                 id="brand"
-                options={brands}
                 value={selectedBrand}
-                onChange={setSelectedBrand}
-                placeholder="Search brand..."
-              />
+                onChange={(e) => setSelectedBrand(e.target.value)}
+                className={styles.dropdown}
+              >
+                <option value="">Select a brand...</option>
+                {brands.map((brand) => (
+                  <option key={brand.value} value={brand.value}>
+                    {brand.label}
+                  </option>
+                ))}
+              </select>
             </div>
 
+            
             <div className={styles.searchableDropdown}>
               <label htmlFor="product">Add Product</label>
-              <Select
+              <select
                 id="product"
-                options={products}
                 value={selectedProduct}
-                onChange={setSelectedProduct}
-                placeholder="Search product..."
-              />
+                onChange={(e) => setSelectedProduct(e.target.value)}
+                className={styles.dropdown}
+              >
+                <option value="">Select a product...</option>
+                {products.map((product) => (
+                  <option key={product.value} value={product.value}>
+                    {product.label}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
+       
           <button className={styles.doneButton} onClick={handleDone}>
             Done
           </button>

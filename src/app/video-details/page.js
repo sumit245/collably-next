@@ -45,7 +45,7 @@ export default function VideoDetails() {
     <div className={stylesShop.smartphoneContainer}>
     <div className={styles.container}>
       <div className={styles.videoPreview}>
-        {videoSrc && <video src={videoSrc} className={styles.video} controls />}
+        {videoSrc && <video src={videoSrc} className={styles.video} />}
       </div>
 
       <div className={styles.form}>
@@ -74,4 +74,3 @@ export default function VideoDetails() {
         </div>
   )
 }
-
