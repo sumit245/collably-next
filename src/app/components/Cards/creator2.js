@@ -1,42 +1,26 @@
 "use client";
 
-import { useState, useContext } from "react";
-import styles from "../../shop/StyleShop.module.css";
-import { LikeContext } from "../../actions/LikeContext";
+import { useState, useContext } from "react"
+import { useDispatch } from "react-redux"
+import styles from "../../shop/StyleShop.module.css"
+import { LikeContext } from "../../actions/LikeContext"
+import { addToCart } from "../../store/cartSlice"
 
-export default function CreatorCard({
-  id,
-  videoSrc,
-  posterSrc,
-  name,
-  followers,
-  productname,
-  price,
-}) {
-  const [isLiked, setIsLiked] = useState(false);
-  const [notification, setNotification] = useState(false);
-  const { likeCount, setLikeCount, cartCount, setCartCount } =
-    useContext(LikeContext);
+export default function Creator2({ _id, videoSrc, posterSrc, name, productname, followers, price }) {
+  const [isLiked, setIsLiked] = useState(false)
+  const [notification, setNotification] = useState(null)
+  const { likeCount, setLikeCount } = useContext(LikeContext)
+  const dispatch = useDispatch()
 
   const toggleLike = () => {
-    setIsLiked(!isLiked);
-    setLikeCount(isLiked ? likeCount - 1 : likeCount + 1);
-  };
+    setIsLiked(!isLiked)
+    setLikeCount(isLiked ? likeCount - 1 : likeCount + 1)
+  }
 
-  const addToCart = () => {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const itemIndex = cart.findIndex((item) => item.id === id);
-
-    if (itemIndex > -1) {
-      cart[itemIndex].quantity += 1;
-    } else {
-      cart.push({ id, name, price, quantity: 1, image: posterSrc });
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-    setCartCount(cartCount + 1);
-    showNotification();
-  };
+  const handleAddToCart = () => {
+    dispatch(addToCart({ _id, name, productname, price, image: posterSrc }))
+    showNotification()
+  }
 
   const showNotification = () => {
     setNotification(true);
@@ -64,11 +48,13 @@ export default function CreatorCard({
             <div className={styles.followerCount}>{followers} Followers</div>
           </div>
         </div>
+
         <div className={styles.buttonContainer1}>
           <div className={styles.productDetails}>
-            <span className={styles.price}>Product: {productname}</span>
-            <span className={styles.price}>Price: ₹{price}</span>
+            <span className={styles.price}>{productname}</span>
+            <span className={styles.price}>₹{price}</span>
           </div>
+
           <div className={styles.buttonContainer2}>
             <button onClick={toggleLike} className={styles.wishlistButton}>
               <svg
@@ -86,16 +72,16 @@ export default function CreatorCard({
                 />
               </svg>
             </button>
-            <button className={styles.shopButton} onClick={addToCart}>
+
+            <button className={styles.shopButton} onClick={handleAddToCart}>
               <span>Add to Cart</span>
             </button>
           </div>
         </div>
       </div>
 
-      {notification && (
-        <div className={styles.notification}>Item has been added to cart!</div>
-      )}
+      {notification && <div className={styles.notification}>Item has been added to cart!</div>}
     </>
   );
 }
+

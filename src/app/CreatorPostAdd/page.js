@@ -1,25 +1,22 @@
 import stylesShop from '../shop/StyleShop.module.css';
 import FooterCreator from '../components/FooterCreator'
-import CreatorShop from '../components/CreatorShop'
-
-
+import CreateWith from '../components/CreateWith'
 
 export default function HomePage() {
   return (
-    <>
     <div className={stylesShop.bodyShop}>
         <div className={stylesShop.smartphoneContainer}>
-    
+    <>
    
       <main>
-       <CreatorShop />
+      
+       <CreateWith/>
       </main>
       <FooterCreator />
-  
+      
+    </>
      </div>
      </div>
-
-</>
   )
 }
 

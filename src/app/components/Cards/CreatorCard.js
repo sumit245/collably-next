@@ -8,7 +8,7 @@ import { LikeContext } from '../../actions/LikeContext';
 export default function CreatorCard({ id, videoSrc, posterSrc, name, followers, price }) {
   const [isLiked, setIsLiked] = useState(false);
   const [notification, setNotification] = useState(false);
-  const { likeCount, setLikeCount, cartCount, setCartCount } = useContext(LikeContext); // Accessing like count and setter
+  const { likeCount, setLikeCount, cartCount, setCartCount } = useContext(LikeContext);
 
   const toggleLike = () => {
     setIsLiked(!isLiked);

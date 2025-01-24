@@ -8,6 +8,7 @@ import SaleCalendar from '../components/CreatorHomeCalender'
 import FindsOfTheDay from '../components/CreatorHomeFInds'
 import ToDo from '../components/CreatorHomeToDo'
 import PoweredByFooter from '../components/CreatorBottomFooter'
+import CreateWith from '../components/CreateWith'
 
 export default function HomePage() {
   return (
