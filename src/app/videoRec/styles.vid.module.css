@@ -60,7 +60,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem; /* Updated gap value */
   z-index: 10;
 }
 
@@ -151,6 +151,7 @@
 .syncButtons {
   display: flex;
   gap: 1rem;
+  margin-top: 1rem; /* Added margin-top */
 }
 
 .syncButton {

@@ -1,17 +1,26 @@
 "use client"
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useState, useEffect } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import styles from "./page.module.css"
 
 export default function VideoDetails() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const [videoSrc, setVideoSrc] = useState("")
   const [formData, setFormData] = useState({
     brand: "",
     product: "",
     visibility: "public",
     audience: "not-for-kids",
   })
+
+  useEffect(() => {
+    const src = searchParams.get("videoSrc")
+    if (src) {
+      setVideoSrc(src)
+    }
+  }, [searchParams])
 
   const handleSubmit = async () => {
     // Handle form submission
@@ -28,7 +37,9 @@ export default function VideoDetails() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.videoPreview}>{/* Video preview will be here */}</div>
+      <div className={styles.videoPreview}>
+        {videoSrc && <video src={videoSrc} className={styles.video} controls />}
+      </div>
 
       <div className={styles.form}>
         <div className={styles.username}>Username</div>
