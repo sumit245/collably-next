@@ -28,6 +28,9 @@ export default function VideoDetails() {
     // Handle form submission
     router.push("/upload-success")
   }
+  const handleproductClick = () => {
+    router.push("/set-product")
+  }
 
   const handleVisibilityClick = () => {
     router.push("/set-visibility")
@@ -48,31 +51,17 @@ export default function VideoDetails() {
       <div className={styles.form}>
         <div className={styles.username}>Username</div>
 
-        <div className={styles.productSection}>
-          <div className={styles.dropdown}>
-            <input
-              type="text"
-              placeholder="Add brand"
-              value={formData.brand}
-              onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
-            />
-          </div>
-          <div className={styles.dropdown}>
-            <input
-              type="text"
-              placeholder="Add product"
-              value={formData.product}
-              onChange={(e) => setFormData({ ...formData, product: e.target.value })}
-            />
-          </div>
-        </div>
+        
+        <button className={styles.optionButton} onClick={handleproductClick}>
+          Add Product: {formData.visibility}
+        </button>
 
         <button className={styles.optionButton} onClick={handleVisibilityClick}>
           Visibility: {formData.visibility}
         </button>
 
         <button className={styles.optionButton} onClick={handleAudienceClick}>
-          Select Audience
+          Select Audience : {formData.visibility}
         </button>
 
         <button className={styles.doneButton} onClick={handleSubmit}>

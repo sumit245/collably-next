@@ -1,0 +1,48 @@
+.container {
+    height: 87vh;
+    background-color: #ffffff;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 2rem;
+    border-radius: 12px;
+  }
+  
+  .title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #ff0055;
+  }
+  
+  .dropdownContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+  }
+  
+  .searchableDropdown {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+  
+  .doneButton {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    color: white;
+    background-color: #ff0055;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .doneButton:hover {
+    background-color: #e6004c;
+  }
+  

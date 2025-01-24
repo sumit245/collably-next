@@ -106,7 +106,9 @@ function VideoRecorder() {
   const handleFileUpload = (event) => {
     const file = event.target.files?.[0]
     if (file) {
+      const fileURL = URL.createObjectURL(file)
       setSelectedFile(file)
+      setRecordedVideo(fileURL)
       handleConfirm()
     }
   }
@@ -128,7 +130,7 @@ function VideoRecorder() {
       const videoSrc = selectedFile ? URL.createObjectURL(selectedFile) : recordedVideo
       const videoDetails = {
         videoSrc: videoSrc,
-        duration: recordingTime,
+        duration: selectedFile ? 0 : recordingTime, // Set duration to 0 for uploaded files
         mode: selectedMode,
       }
       router.push(`/preview?${new URLSearchParams(videoDetails).toString()}`)
@@ -154,10 +156,10 @@ function VideoRecorder() {
   }
 
   useEffect(() => {
-    if (!isRecording && recordedVideo) {
+    if (!isRecording && (recordedVideo || selectedFile)) {
       handleConfirm()
     }
-  }, [isRecording, recordedVideo])
+  }, [isRecording, recordedVideo, selectedFile])
 
   return (
     <div className={styles.container}>
@@ -193,7 +195,12 @@ function VideoRecorder() {
           />
           <button className={styles.addButton} onClick={() => fileInputRef.current?.click()}>
             <div className={styles.addButtonPreview}>
-              {selectedFile && <video src={URL.createObjectURL(selectedFile)} className={styles.previewThumbnail} />}
+              {(selectedFile || recordedVideo) && (
+                <video
+                  src={selectedFile ? URL.createObjectURL(selectedFile) : recordedVideo}
+                  className={styles.previewThumbnail}
+                />
+              )}
             </div>
             ADD
           </button>
@@ -208,11 +215,11 @@ function VideoRecorder() {
         <div className={styles.syncButtons}>
           <button className={styles.syncButton}>
             <Instagram className="h-6 w-6" />
-            Sync to Instagram
+           
           </button>
           <button className={styles.syncButton}>
             <Youtube className="h-6 w-6" />
-            Sync to Youtube
+            
           </button>
         </div>
       </div>
