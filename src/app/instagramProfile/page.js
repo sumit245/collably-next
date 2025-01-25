@@ -10,6 +10,7 @@ import {
   MessageCircle,
   ArrowLeft,
 } from "lucide-react";
+import React from 'react'; 
 import styles from "../creatorFeedProfile/profile.module.css";
 import stylesShop from "../shop/StyleShop.module.css";
 import Image from "next/image";
@@ -50,12 +51,14 @@ export default function Profile() {
     },
   ];
 
+   const [activeTab, setActiveTab] = React.useState('posts');
+
   return (
     <div className={stylesShop.bodyShop}>
       <div className={stylesShop.smartphoneContainer}>
         <div className={styles.container}>
           {/* Profile Header */}
-          <header className={styles.header}>
+          <header className={styles.header1}>
             <div className={styles.headerLeft}>
             <Link href="/videoRec">
               <button className={styles.arrow}>
@@ -67,7 +70,7 @@ export default function Profile() {
           </header>
 
           {/* Profile Info */}
-          <section className={styles.profileInfo}>
+          <section className={styles.profileInfo1}>
             <div className={styles.profile}>
               <div className={styles.profileImageContainer}>
                 <Image
@@ -82,19 +85,35 @@ export default function Profile() {
 
               <div className={styles.stats}>
                 <div className={styles.statItem}>
-                  <span className={styles.statNumber}>5</span>
+                  <span className={styles.statNumber}>1.1K</span>
                   <span className={styles.statLabel}>posts</span>
                 </div>
                 <div className={styles.statItem}>
-                  <span className={styles.statNumber}>2</span>
+                  <span className={styles.statNumber}>2.2M</span>
                   <span className={styles.statLabel}>followers</span>
                 </div>
                 <div className={styles.statItem}>
-                  <span className={styles.statNumber}>145</span>
+                  <span className={styles.statNumber}>45</span>
                   <span className={styles.statLabel}>following</span>
                 </div>
               </div>
             </div>
+          </section>
+
+           {/* Tabs for Posts, Reels, Tagged */}
+           <section className={styles.tabNavigation}>
+            <button
+              className={activeTab === 'posts' ? styles.activeTab : styles.tab}
+              onClick={() => setActiveTab('posts')}
+            >
+              Posts
+            </button>
+            <button
+              className={activeTab === 'reels' ? styles.activeTab : styles.tab}
+              onClick={() => setActiveTab('reels')}
+            >
+              Reels
+            </button>
           </section>
 
           {/* Posts Grid */}

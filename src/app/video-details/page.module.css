@@ -1,80 +1,128 @@
 .container {
-    min-height: 85vh;
-    color: #000;
-    background-color: black;
-    padding: 20px;
-    width: 91%;
-    max-width: 450px;
-    display: flex;
-    justify-self: center;
-    flex-direction: column;
-    }
-    
-    .videoPreview {
-      width: 98.3%;
-      height: 300px;
-      background-color: #333;
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      border-radius: 5px;
-    }
-    
-    .video {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-    }
-    
-    .form {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    
-    .username {
-      font-size: 18px;
-      font-weight: bold;
-    }
-    
-    .productSection {
-      display: flex;
-      gap: 10px;
-    }
-    
-    .dropdown {
-      flex: 1;
-    }
-    
-    .dropdown input {
-      width: 95%;
-      padding: 10px;
-      background-color: #333;
-      border: none;
-      color: #fff;
-      border-radius: 5px;
-    }
-    
-    .optionButton {
-      background-color: #333;
-      padding: 10px;
-      display: flex;
-      gap: 10px;
-      text-align: left;
-      border: none;
-      color: #fff;
-      border-radius: 5px;
-    }
-    
-    .doneButton {
-      background-color: #ff0055;
-      color: #fff;
-      padding: 10px;
-      width: 25%;
-      border: none;
-      align-self: anchor-center;
-      font-weight: bold;
-      border-radius: 5px;
-    }
+  min-height: 85vh;
+  color: #000;
+  background-color: black;
+  padding: 20px;
+  width: 91%;
+  max-width: 450px;
+  display: flex;
+  justify-self: center;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.mediaPreview {
+  width: 100%;
+  height: auto;
+  background-color: #333;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 10px;
+  position: relative;
+}
+
+.mediaPreview img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.mediaPreview video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.username {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
+.productSection {
+  display: flex;
+  gap: 10px;
+}
+
+.dropdown {
+  flex: 1;
+}
+
+.dropdown input {
+  width: 100%;
+  padding: 10px;
+  background-color: #333;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.optionButton {
+  background-color: #333;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.optionButton:hover {
+  background-color: #444;
+}
+
+.doneButton {
+  background-color: #ff0055;
+  color: #fff;
+  padding: 12px;
+  width: 100%;
+  text-align: center;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.doneButton:hover {
+  background-color: #e6004f;
+}
+
+.disabledButton {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 15px;
+    width: 95%;
+  }
+
+  .optionButton {
+    padding: 10px;
+    font-size: 12px;
+  }
+
+  .doneButton {
+    padding: 10px;
+    font-size: 14px;
+  }
+}

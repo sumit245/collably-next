@@ -1,18 +1,18 @@
-"use client";
+"use client"
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import styles from "./page.module.css";
-import stylesShop from "../shop/StyleShop.module.css"; 
-import FooterCreator from "../components/FooterCreator";
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import styles from "./page.module.css"
+import stylesShop from "../shop/StyleShop.module.css"
+import FooterCreator from "../components/FooterCreator"
 
 export default function SetProduct() {
-  const router = useRouter();
-  const [selectedBrand, setSelectedBrand] = useState("");
-  const [selectedProduct, setSelectedProduct] = useState("");
+  const router = useRouter()
+  const [selectedBrand, setSelectedBrand] = useState("")
+  const [selectedProduct, setSelectedProduct] = useState("")
 
   useEffect(() => {
-    const storedData = localStorage.getItem('videoDetailsData')
+    const storedData = localStorage.getItem("videoDetailsData")
     if (storedData) {
       const parsedData = JSON.parse(storedData)
       setSelectedBrand(parsedData.brand || "")
@@ -24,22 +24,22 @@ export default function SetProduct() {
     { value: "brand1", label: "Brand 1" },
     { value: "brand2", label: "Brand 2" },
     { value: "brand3", label: "Brand 3" },
-  ];
+  ]
 
   const products = [
     { value: "product1", label: "Product 1" },
     { value: "product2", label: "Product 2" },
     { value: "product3", label: "Product 3" },
-  ];
+  ]
 
   const handleDone = () => {
-    const storedData = localStorage.getItem('videoDetailsData')
+    const storedData = localStorage.getItem("videoDetailsData")
     const updatedData = storedData ? JSON.parse(storedData) : {}
     updatedData.brand = selectedBrand
     updatedData.product = selectedProduct
-    localStorage.setItem('videoDetailsData', JSON.stringify(updatedData))
-    router.back(); 
-  };
+    localStorage.setItem("videoDetailsData", JSON.stringify(updatedData))
+    router.back()
+  }
 
   return (
     <div className={stylesShop.bodyShop}>
@@ -62,7 +62,7 @@ export default function SetProduct() {
                 ))}
               </select>
             </div>
-            
+
             <div className={styles.searchableDropdown}>
               <label htmlFor="product">Add Product</label>
               <select
@@ -88,5 +88,6 @@ export default function SetProduct() {
         <FooterCreator />
       </div>
     </div>
-  );
+  )
 }
+

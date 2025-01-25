@@ -35,7 +35,7 @@ export default function SetVisibility() {
 
           <div className={styles.options}>
             <button
-              className={`${styles.option} ${selectedVisibility === "public" ? styles.selected : ""}`}
+              className={`${styles.option} ${selectedVisibility === "Public" ? styles.selected : ""}`}
               onClick={() => handleSelect("Public")}
             >
               <div className={styles.radio} />
@@ -46,7 +46,7 @@ export default function SetVisibility() {
             </button>
 
             <button
-              className={`${styles.option} ${selectedVisibility === "unlisted" ? styles.selected : ""}`}
+              className={`${styles.option} ${selectedVisibility === "Unlisted" ? styles.selected : ""}`}
               onClick={() => handleSelect("Unlisted")}
             >
               <div className={styles.radio} />
@@ -57,7 +57,7 @@ export default function SetVisibility() {
             </button>
 
             <button
-              className={`${styles.option} ${selectedVisibility === "private" ? styles.selected : ""}`}
+              className={`${styles.option} ${selectedVisibility === "Private" ? styles.selected : ""}`}
               onClick={() => handleSelect("Private")}
             >
               <div className={styles.radio} />
@@ -73,4 +73,3 @@ export default function SetVisibility() {
     </div>
   )
 }
-
