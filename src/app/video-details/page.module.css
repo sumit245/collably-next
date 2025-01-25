@@ -110,6 +110,39 @@
   cursor: not-allowed;
 }
 
+.referralLinkContainer {
+  position: relative;
+}
+
+
+
+.referralLinkInput {
+  width: 87%;
+  padding: 12px;
+  padding-right: 40px;
+  background-color: #333;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.copyButton {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: #fff;
+}
+
+.copyButton:hover {
+  color: #ff0055;
+}
+
 @media screen and (max-width: 480px) {
   .container {
     padding: 15px;
@@ -124,5 +157,15 @@
   .doneButton {
     padding: 10px;
     font-size: 14px;
+  }
+
+  .referralLinkInput {
+    padding: 10px;
+    padding-right: 35px;
+    font-size: 12px;
+  }
+
+  .copyButton {
+    padding: 6px;
   }
 }

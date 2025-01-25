@@ -1,14 +1,27 @@
 "use client"
 
-import { Bell, Headphones, Menu, ChevronRight } from "lucide-react"
+import { useEffect } from "react"
+import { Bell, Headphones, Menu } from "lucide-react"
 import Image from "next/image"
-import Link from "next/link"
 import { useSelector } from "react-redux"
+import { useRouter } from "next/navigation"
 import styles from "../CreatorHome/stylescreator.module.css"
 import { stepsCreatorHome } from "../utils.faker"
 
 export default function CreatorHome() {
   const user = useSelector((state) => state.auth.user)
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!user) {
+      
+      router.push(`/login?redirect=${encodeURIComponent("/CreatorHome")}`)
+    }
+  }, [user, router])
+
+  if (!user) {
+    return null // or a loading spinner
+  }
 
   return (
     <div>
@@ -19,7 +32,7 @@ export default function CreatorHome() {
           </button>
 
           <Image
-            src={user ? user.avatar || "/images/banavt1.png" : "/images/banavt1.png"}
+            src={user.avatar || "/images/banavt1.png"}
             alt="User avatar"
             width={40}
             height={40}
@@ -27,13 +40,7 @@ export default function CreatorHome() {
           />
           <div className={styles.userText}>
             <span className={styles.greeting}>Hello</span>
-            {user ? (
-              <span className={styles.username}>{user.user.username}</span>
-            ) : (
-              <Link href="/login" className={styles.username}>
-                Login
-              </Link>
-            )}
+            <span className={styles.username}>{user.user.fullname || user.user.username}</span>
           </div>
         </div>
 

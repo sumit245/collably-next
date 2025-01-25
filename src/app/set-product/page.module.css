@@ -1,67 +1,286 @@
 .container {
-    height: 83vh;
-    background-color: #000;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 1rem;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  min-height: 85vh;
+  color: #fff;
+  background-color: black;
+  padding: 20px;
+  width: 91%;
+  max-width: 450px;
+  display: flex;
+  justify-self: center;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.dropdownContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.customDropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.customDropdown label {
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.dropdownHeader {
+  background-color: #333;
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #444;
+}
+
+.dropdownHeader:hover {
+  background-color: #444;
+}
+
+.dropdownList {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #333;
+  border-radius: 8px;
+  margin-top: 4px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 10;
+  border: 1px solid #444;
+}
+
+.dropdownItem {
+  padding: 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #444;
+}
+
+.dropdownItem:last-child {
+  border-bottom: none;
+}
+
+.dropdownItem:hover {
+  background-color: #444;
+}
+
+.dropdownItem.selected {
+  background-color: #555;
+}
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.itemName {
+  font-weight: 500;
+  color: #fff;
+}
+
+.itemDescription {
+  font-size: 12px;
+  color: #aaa;
+}
+
+.itemLogo {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.itemPrice {
+  font-weight: 500;
+  color: #fff;
+  margin-left: 12px;
+}
+
+.placeholder {
+  color: #888;
+}
+
+.selectedItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.productDetails {
+  background-color: #ff0055;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 20px;
+}
+
+.productName {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 12px;
+}
+
+.productImage {
+  width: 30%;
+  height: 30%;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+.prodimageandnames{
+  display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+.productDescription {
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.productInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.productPrice {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.productStock {
+  font-size: 14px;
+  color: #aaa;
+}
+
+.doneButton {
+  background-color: #ff0055;
+  color: #fff;
+  padding: 12px;
+  width: 100%;
+  text-align: center;
+  border: none;
+  font-weight: bold;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+}
+
+.doneButton:hover {
+  background-color: #e6004f;
+}
+
+.doneButton:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+/* Scrollbar Styling */
+.dropdownList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dropdownList::-webkit-scrollbar-track {
+  background: #222;
+  border-radius: 4px;
+}
+
+.dropdownList::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+.dropdownList::-webkit-scrollbar-thumb:hover {
+  background: #666;
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 15px;
+    width: 95%;
   }
-  
-  
-  .dropdownContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    width: 100%;
+
+  .title {
+    font-size: 20px;
   }
-  
-  
-  .searchableDropdown {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    width: 100%;
+
+  .dropdownHeader,
+  .dropdownItem {
+    padding: 10px;
   }
-  
-  
-  .dropdown {
-    padding: 0.8rem;
-    font-size: 1rem;
-    color: #333;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: border-color 0.3s ease;
+
+  .itemName {
+    font-size: 14px;
   }
-  
-  .dropdown:focus {
-    outline: none;
-    border-color: #ff0055;
+
+  .itemDescription {
+    font-size: 11px;
   }
-  
-  .dropdown option {
-    padding: 0.5rem;
-    background-color: #ffffff;
-    color: #333;
+
+  .productName {
+    font-size: 18px;
   }
-  
-  
+
+  .productDescription {
+    font-size: 12px;
+  }
+
+  .productPrice {
+    font-size: 16px;
+  }
+
   .doneButton {
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
-    color: white;
-    background-color: #ff0055;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    padding: 10px;
+    font-size: 14px;
   }
-  
-  .doneButton:hover {
-    background-color: #e6004c;
-    transform: translateY(-2px);
-  }
+}
+
+.searchInputWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 8px;
+  top: 40%;
+  transform: translateY(-50%);
+  color: #ffffff;
+}
+
+.searchInput {
+  width: 89%;
+  background: #333;
+  color: white;
+  padding: 8px 8px 8px 32px;
+  margin-bottom: 8px;
+  /* border: 1px solid #ccc; */
+  border-radius: 22px;
+}

@@ -43,9 +43,12 @@ export function ViewCart() {
   };
 
   const handleCheckout = () => {
-    if (!user) {
-      router.push("/login");
-    } else if (total > 0) {
+    
+      if (!user) {
+        
+        router.push(`/login?redirect=${encodeURIComponent("/CreatorHome")}`)
+      }
+     else if (total > 0) {
       router.push(`/orderForm?total=${total}`);
     } else {
       console.warn("Cart is empty, cannot proceed to checkout.");

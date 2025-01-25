@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import { useSelector } from "react-redux"
 import styles from "./page.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import FooterCreator from "../components/FooterCreator"
-import { Package, Eye, Users } from 'lucide-react'
+import { Package, Eye, Users, Copy } from "lucide-react"
 
 export default function MediaDetails() {
   const router = useRouter()
@@ -18,7 +19,10 @@ export default function MediaDetails() {
     visibility: "",
     audience: "",
     ageRestriction: "",
+    referralLink: "",
   })
+
+  const user = useSelector((state) => state.auth.user)
 
   useEffect(() => {
     const src = searchParams.get("mediaSrc")
@@ -38,8 +42,7 @@ export default function MediaDetails() {
       setMediaType(type)
     }
 
-    // Retrieve form data from localStorage
-    const storedFormData = localStorage.getItem('videoDetailsData')
+    const storedFormData = localStorage.getItem("videoDetailsData")
     if (storedFormData) {
       setFormData(JSON.parse(storedFormData))
     }
@@ -47,8 +50,7 @@ export default function MediaDetails() {
 
   const handleSubmit = async () => {
     if (formData.brand && formData.product && formData.visibility && formData.audience) {
-      // Clear the form data from localStorage
-      localStorage.removeItem('videoDetailsData')
+      localStorage.removeItem("videoDetailsData")
       router.push("/upload-success")
     }
   }
@@ -63,6 +65,13 @@ export default function MediaDetails() {
 
   const handleAudienceClick = () => {
     router.push("/select-audience")
+  }
+
+  const copyReferralLink = () => {
+    if (formData.referralLink) {
+      navigator.clipboard.writeText(formData.referralLink)
+      alert("Referral link copied to clipboard!")
+    }
   }
 
   const isFormComplete = formData.brand && formData.product && formData.visibility && formData.audience
@@ -80,11 +89,12 @@ export default function MediaDetails() {
           </div>
 
           <div className={styles.form}>
-            <div className={styles.username}>Username</div>
+            <div className={styles.username}>{user?.username || user?.user?.username || "Username"}</div>
 
             <button className={styles.optionButton} onClick={handleproductClick}>
               <Package size={20} />
-              Add Product: {formData.brand && formData.product ? `${formData.brand} - ${formData.product}` : "Not selected"}
+              Add Product:{" "}
+              {formData.brand && formData.product ? `${formData.brand} - ${formData.product}` : "Not selected"}
             </button>
 
             <button className={styles.optionButton} onClick={handleVisibilityClick}>
@@ -94,8 +104,20 @@ export default function MediaDetails() {
 
             <button className={styles.optionButton} onClick={handleAudienceClick}>
               <Users size={20} />
-              Select Audience: {formData.audience ? `${formData.audience}${formData.ageRestriction ? ` (${formData.ageRestriction})` : ''}` : "Not selected"}
+              Select Audience:{" "}
+              {formData.audience
+                ? `${formData.audience}${formData.ageRestriction ? ` (${formData.ageRestriction})` : ""}`
+                : "Not selected"}
             </button>
+
+            {formData.referralLink && (
+              <div className={styles.referralLinkContainer}>
+                <input type="text" value={formData.referralLink} readOnly className={styles.referralLinkInput} />
+                <button className={styles.copyButton} onClick={copyReferralLink}>
+                  <Copy size={20} />
+                </button>
+              </div>
+            )}
 
             <button
               className={`${styles.doneButton} ${!isFormComplete ? styles.disabledButton : ""}`}
@@ -111,3 +133,4 @@ export default function MediaDetails() {
     </div>
   )
 }
+
