@@ -1,6 +1,7 @@
 "use client";
 
-import { Search, Home, Plus, Video, User, Heart, MessageCircle,ArrowLeft} from 'lucide-react';
+import React, {useState,useEffect} from 'react'; 
+import { Search, Home, Plus, Video, User, Heart, MessageCircle, ArrowLeft } from 'lucide-react';
 import styles from "../creatorFeedProfile/profile.module.css";
 import stylesShop from "../shop/StyleShop.module.css";
 import Image from "next/image";
@@ -41,24 +42,26 @@ export default function Profile() {
     },
   ];
 
+  const [activeTab, setActiveTab] = React.useState('posts');
+
   return (
     <div className={stylesShop.bodyShop}>
       <div className={stylesShop.smartphoneContainer}>
         <div className={styles.container}>
           {/* Profile Header */}
-          <header className={styles.header}>
+          <header className={styles.header1}>
             <div className={styles.headerLeft}>
-            <Link href="/videoRec">
-              <button className={styles.arrow}>
-              <ArrowLeft size={24} className={styles.arrowButton}/>
-              </button>
-            </Link>
+              <Link href="/videoRec">
+                <button className={styles.arrow}>
+                  <ArrowLeft size={24} className={styles.arrowButton} />
+                </button>
+              </Link>
               <span className={styles.username}>Fetch From YouTube</span>
             </div>
           </header>
 
           {/* Profile Info */}
-          <section className={styles.profileInfo}>
+          <section className={styles.profileInfo1}>
             <div className={styles.profile}>
               <div className={styles.profileImageContainer}>
                 <Image
@@ -73,24 +76,40 @@ export default function Profile() {
 
               <div className={styles.stats}>
                 <div className={styles.statItem}>
-                  <span className={styles.statNumber}>5</span>
+                  <span className={styles.statNumber}>100</span>
                   <span className={styles.statLabel}>posts</span>
                 </div>
                 <div className={styles.statItem}>
-                  <span className={styles.statNumber}>2</span>
-                  <span className={styles.statLabel}>followers</span>
+                  <span className={styles.statNumber}>1M</span>
+                  <span className={styles.statLabel}>Subscribers</span>
                 </div>
                 <div className={styles.statItem}>
-                  <span className={styles.statNumber}>145</span>
-                  <span className={styles.statLabel}>following</span>
+                  <span className={styles.statNumber}>80</span>
+                  <span className={styles.statLabel}>Subscriptions</span>
                 </div>
               </div>
             </div>
           </section>
 
+          {/* Tabs for Posts, Reels, Tagged */}
+          <section className={styles.tabNavigation}>
+            <button
+              className={activeTab === 'posts' ? styles.activeTab : styles.tab}
+              onClick={() => setActiveTab('posts')}
+            >
+              Posts
+            </button>
+            <button
+              className={activeTab === 'reels' ? styles.activeTab : styles.tab}
+              onClick={() => setActiveTab('reels')}
+            >
+              Reels
+            </button>
+          </section>
+
           {/* Posts Grid */}
           <div className={styles.postsGrid}>
-            {posts.map((post) => (
+            {activeTab === 'posts' && posts.map((post) => (
               <div key={post.id} className={styles.postItem}>
                 <div className={styles.postImageContainer}>
                   <Image
@@ -113,6 +132,7 @@ export default function Profile() {
                 </div>
               </div>
             ))}
+            {/* Reels and Tagged content can be added here later */}
           </div>
         </div>
         <FooterCreator />

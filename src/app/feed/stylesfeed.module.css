@@ -347,7 +347,6 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  animation: pulse-engagement 1.5s infinite ease-in-out;
 }
 
 
@@ -365,7 +364,7 @@
   width: 2rem;
   border-radius: 50%;
   background-color: #c0c0c0; 
-  animation: pulse-rounded-circle 1.5s infinite ease-in-out;
+  animation: pulse-user-info 1.5s infinite ease-in-out;
 }
 
 .textSmall {
@@ -373,7 +372,7 @@
   width: 2rem;
   background-color: #e0e0e0; 
   border-radius: 0.25rem;
-  animation: pulse-text-small-engagement 1.5s infinite ease-in-out;
+  animation: pulse-user-info 1.5s infinite ease-in-out;
 }
 
 
@@ -384,7 +383,6 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  animation: pulse-user-info 1.5s infinite ease-in-out;
 }
 
 
@@ -393,14 +391,13 @@
   width: 2.5rem;
   border-radius: 50%;
   background-color: #c0c0c0; 
-  animation: pulse-avatar 1.5s infinite ease-in-out;
+  animation: pulse-user-info 1.5s infinite ease-in-out;
 }
 
 
 .userDetails {
   display: flex;
   flex-direction: column;
-  animation: pulse-user-details 1.5s infinite ease-in-out;
 }
 
 
@@ -419,7 +416,7 @@
   width: 4rem;
   background-color: #e0e0e0; 
   border-radius: 0.25rem;
-  animation: pulse-user-role 1.5s infinite ease-in-out;
+  animation: pulse-user-info 1.5s infinite ease-in-out;
 }
 
 
@@ -429,20 +426,21 @@
   width: 5rem;
   background-color: #e0e0e0;
   border-radius: 0.25rem;
-  animation: pulse-cta-button 1.5s infinite ease-in-out;
+  animation: pulse-user-info 1.5s infinite ease-in-out;
 }
 
 @keyframes pulse-card {
   0% {
-    background-color: #f5f5f5;
+    background-color: #d3d3d3;
   }
   50% {
-    background-color: #e0e0e0;
+    background-color: #a9a9a9;
   }
   100% {
-    background-color: #f5f5f5;
+    background-color: #d3d3d3;
   }
 }
+
 
 @keyframes pulse-content {
   0% {
@@ -554,15 +552,16 @@
 
 @keyframes pulse-user-info {
   0% {
-    background-color: #f5f5f5;
+    background-color: #d3d3d3;
   }
   50% {
-    background-color: #e0e0e0;
+    background-color: #a9a9a9; 
   }
   100% {
-    background-color: #f5f5f5;
+    background-color: #d3d3d3;
   }
 }
+
 
 @keyframes pulse-avatar {
   0% {
