@@ -1,0 +1,149 @@
+.main {
+    min-height: 100vh;
+    background-color: white;
+    padding: 1rem;
+  }
+  
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .backButton {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: #666;
+  }
+  
+  .logo {
+    width: 150px;
+    height: 50px;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  
+  .title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+  }
+  
+  .subtitle {
+    color: #666;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  
+  .socialSection {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1rem;
+    color: #333;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  
+  .required {
+    color: #ff4d4f;
+  }
+  
+  .sectionSubtitle {
+    color: #666;
+    margin: 0;
+    font-size: 0.85rem;
+  }
+  
+  .inputGroup {
+    margin-bottom: 0.5rem;
+  }
+  
+  .inputWithIcon {
+    position: relative;
+  }
+  
+  .inputIcon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    width: 20px;
+    height: 20px;
+  }
+  
+  .input {
+    width: 84%;
+    padding: 1rem;
+    padding-left: 3rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  
+  .input::placeholder {
+    color: #999;
+  }
+  
+  .input:focus {
+    border-color: #E86C2C;
+  }
+  
+  .submitButton {
+    background-color: #FFB6C1;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 1rem;
+    font-size: 1rem;
+    cursor: not-allowed;
+    opacity: 0.7;
+    transition: all 0.2s;
+    margin-top: 1rem;
+  }
+  
+  .submitButton.active {
+    background-color: #FF69B4;
+    cursor: pointer;
+    opacity: 1;
+  }
+  
+  .submitButton.active:hover {
+    transform: translateY(-1px);
+  }
+  
+  @media (max-width: 600px) {
+    .main {
+      padding: 1rem;
+    }
+  
+    .title {
+      font-size: 1.5rem;
+    }
+  
+    .input {
+      font-size: 1rem;
+    }
+  }
+  
+  
