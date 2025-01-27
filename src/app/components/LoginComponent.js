@@ -1,47 +1,55 @@
-"use client";
+"use client"
 
-import React, { useState, useEffect } from "react";
-import Link from 'next/link';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/navigation';
-import { login, loginWithGoogle, handleGoogleRedirect } from "../actions/auth";
+import React, { useState, useEffect } from "react"
+import Link from "next/link"
+import { useDispatch, useSelector } from "react-redux"
+import { useRouter, useSearchParams } from "next/navigation"
+import { login, loginWithGoogle, handleGoogleRedirect } from "../actions/auth"
 
 const LoginComponent = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const dispatch = useDispatch();
-  const { isLoading, error } = useSelector((state) => state.auth);
-  const router = useRouter();
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
+  const dispatch = useDispatch()
+  const { isLoading, error } = useSelector((state) => state.auth)
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  const [redirectUrl, setRedirectUrl] = useState("/")
 
   useEffect(() => {
-    const checkGoogleRedirect = async () => {
-      const result = await dispatch(handleGoogleRedirect());
-      if (result.success) {
-        router.push('/');
-      }
-    };
-
-    if (window.location.search) {
-      checkGoogleRedirect();
+    const redirect = searchParams.get("redirect")
+    if (redirect) {
+      setRedirectUrl(redirect)
     }
-  }, [dispatch, router]);
+
+    const checkGoogleRedirect = async () => {
+      const result = await dispatch(handleGoogleRedirect())
+      if (result.success) {
+        router.push(redirectUrl)
+      }
+    }
+
+    if (window.location.search.includes("code=")) {
+      checkGoogleRedirect()
+    }
+  }, [dispatch, router, redirectUrl, searchParams])
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    const result = await dispatch(login(email, password));
+    e.preventDefault()
+    const result = await dispatch(login(email, password))
     if (result.success) {
-      router.push('/');
+      router.push(redirectUrl)
     }
-  };
-  
+  }
+
   const handleGoogleLogin = () => {
-    dispatch(loginWithGoogle());
-  };
+    dispatch(loginWithGoogle())
+  }
 
   const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
+    setShowPassword(!showPassword)
+  }
 
   return (
     <div className="login-container">
@@ -57,7 +65,7 @@ const LoginComponent = () => {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            onClick={() => router.push('/')}
+            onClick={() => router.back()}
             style={{ cursor: "pointer" }}
           >
             <polyline points="15 18 9 12 15 6"></polyline>
@@ -65,11 +73,7 @@ const LoginComponent = () => {
         </div>
 
         <div className="headings">
-          <img 
-            src="/images/c-official-logo.png" 
-            alt="Collably Logo" 
-            className="logo-form" 
-          />
+          <img src="/images/c-official-logo.png" alt="Collably Logo" className="logo-form" />
           <h2>Sign In to Continue</h2>
         </div>
 
@@ -117,12 +121,32 @@ const LoginComponent = () => {
             aria-label={showPassword ? "Hide password" : "Show password"}
           >
             {showPassword ? (
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
                 <line x1="1" y1="1" x2="23" y2="23"></line>
               </svg>
             ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                 <circle cx="12" cy="12" r="3"></circle>
               </svg>
@@ -143,11 +167,13 @@ const LoginComponent = () => {
         </button>
 
         <p className="p">
-  Don't have an account?{' '}
-  <Link href="/registration">
-    <span className="span" style={{ cursor: 'pointer' }}>Sign Up</span>
-  </Link>
-</p>
+          Don't have an account?{" "}
+          <Link href="/registration">
+            <span className="span" style={{ cursor: "pointer" }}>
+              Sign Up
+            </span>
+          </Link>
+        </p>
 
         <div className="flex-row">
           <button className="btn google" type="button" onClick={handleGoogleLogin} disabled={isLoading}>
@@ -163,7 +189,10 @@ const LoginComponent = () => {
               width="20"
               version="1.1"
             >
-              <path d="M113.47,309.408L95.648,375.94l-65.139,1.378C11.042,341.211,0,299.9,0,256 c0-42.451,10.324-82.483,28.624-117.732h0.014l57.992,10.632l25.404,57.644c-5.317,15.501-8.215,32.141-8.215,49.456 C103.821,274.792,107.225,292.797,113.47,309.408z" style={{ fill: "#FBBB00" }}></path>
+              <path
+                d="M113.47,309.408L95.648,375.94l-65.139,1.378C11.042,341.211,0,299.9,0,256 c0-42.451,10.324-82.483,28.624-117.732h0.014l57.992,10.632l25.404,57.644c-5.317,15.501-8.215,32.141-8.215,49.456 C103.821,274.792,107.225,292.797,113.47,309.408z"
+                style={{ fill: "#FBBB00" }}
+              ></path>
               <path
                 d="M507.527,208.176C510.467,223.662,512,239.655,512,256c0,18.328-1.927,36.206-5.598,53.451 c-12.462,58.683-45.025,109.925-90.134,146.187l-0.014-0.014l-73.044-3.727l-10.338-64.535 c29.932-17.554,53.324-45.025,65.646-77.911h-136.89V208.176h138.887L507.527,208.176L507.527,208.176z"
                 style={{ fill: "#518EF8" }}
@@ -179,12 +208,60 @@ const LoginComponent = () => {
             </svg>
             {isLoading ? "Connecting..." : "Google"}
           </button>
-          <button className="btn-insta" type="button" disabled={isLoading}> <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="48px" height="25px"><radialGradient id="yOrnnhliCrdS2gy~4tD8ma" cx="19.38" cy="42.035" r="44.899" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#fd5"/><stop offset=".328" stopColor="#ff543f"/><stop offset=".348" stopColor="#fc5245"/><stop offset=".504" stopColor="#e64771"/><stop offset=".643" stopColor="#d53e91"/><stop offset=".761" stopColor="#cc39a4"/><stop offset=".841" stopColor="#c837ab"/></radialGradient><path fill="url(#yOrnnhliCrdS2gy~4tD8ma)" d="M34.017,41.99l-20,0.019c-4.4,0.004-8.003-3.592-8.008-7.992l-0.019-20	c-0.004-4.4,3.592-8.003,7.992-8.008l20-0.019c4.4-0.004,8.003,3.592,8.008,7.992l0.019,20	C42.014,38.383,38.417,41.986,34.017,41.99z"/><radialGradient id="yOrnnhliCrdS2gy~4tD8mb" cx="11.786" cy="5.54" r="29.813" gradientTransform="matrix(1 0 0 .6663 0 1.849)" gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#4168c9"/><stop offset=".999" stopColor="#4168c9" stopOpacity="0"/></radialGradient><path fill="url(#yOrnnhliCrdS2gy~4tD8mb)" d="M34.017,41.99l-20,0.019c-4.4,0.004-8.003-3.592-8.008-7.992l-0.019-20	c-0.004-4.4,3.592-8.003,7.992-8.008l20-0.019c4.4-0.004,8.003,3.592,8.008,7.992l0.019,20	C42.014,38.383,38.417,41.986,34.017,41.99z"/><path fill="#fff" d="M24,31c-3.859,0-7-3.14-7-7s3.141-7,7-7s7,3.14,7,7S27.859,31,24,31z M24,19c-2.757,0-5,2.243-5,5	s2.243,5,5,5s5-2.243,5-5S26.757,19,24,19z"/><circle cx="31.5" cy="16.5" r="1.5" fill="#fff"/><path fill="#fff" d="M30,37H18c-3.859,0-7-3.14-7-7V18c0-3.86,3.141-7,7-7h12c3.859,0,7,3.14,7,7v12	C37,33.86,33.859,37,30,37z M18,13c-2.757,0-5,2.243-5,5v12c0,2.757,2.243,5,5,5h12c2.757,0,5-2.243,5-5V18c0-2.757-2.243-5-5-5H18z"/></svg> Instagram</button>
+          <button className="btn-insta" type="button" disabled={isLoading}>
+            {" "}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="25px">
+              <radialGradient
+                id="yOrnnhliCrdS2gy~4tD8ma"
+                cx="19.38"
+                cy="42.035"
+                r="44.899"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop offset="0" stopColor="#fd5" />
+                <stop offset=".328" stopColor="#ff543f" />
+                <stop offset=".348" stopColor="#fc5245" />
+                <stop offset=".504" stopColor="#e64771" />
+                <stop offset=".643" stopColor="#d53e91" />
+                <stop offset=".761" stopColor="#cc39a4" />
+                <stop offset=".841" stopColor="#c837ab" />
+              </radialGradient>
+              <path
+                fill="url(#yOrnnhliCrdS2gy~4tD8ma)"
+                d="M34.017,41.99l-20,0.019c-4.4,0.004-8.003-3.592-8.008-7.992l-0.019-20	c-0.004-4.4,3.592-8.003,7.992-8.008l20-0.019c4.4-0.004,8.003,3.592,8.008,7.992l0.019,20	C42.014,38.383,38.417,41.986,34.017,41.99z"
+              />
+              <radialGradient
+                id="yOrnnhliCrdS2gy~4tD8mb"
+                cx="11.786"
+                cy="5.54"
+                r="29.813"
+                gradientTransform="matrix(1 0 0 .6663 0 1.849)"
+                gradientUnits="userSpaceOnUse"
+              >
+                <stop offset="0" stopColor="#4168c9" />
+                <stop offset=".999" stopColor="#4168c9" stopOpacity="0" />
+              </radialGradient>
+              <path
+                fill="url(#yOrnnhliCrdS2gy~4tD8mb)"
+                d="M34.017,41.99l-20,0.019c-4.4,0.004-8.003-3.592-8.008-7.992l-0.019-20	c-0.004-4.4,3.592-8.003,7.992-8.008l20-0.019c4.4-0.004,8.003,3.592,8.008,7.992l0.019,20	C42.014,38.383,38.417,41.986,34.017,41.99z"
+              />
+              <path
+                fill="#fff"
+                d="M24,31c-3.859,0-7-3.14-7-7s3.141-7,7-7s7,3.14,7,7S27.859,31,24,31z M24,19c-2.757,0-5,2.243-5,5	s2.243,5,5,5s5-2.243,5-5S26.757,19,24,19z"
+              />
+              <circle cx="31.5" cy="16.5" r="1.5" fill="#fff" />
+              <path
+                fill="#fff"
+                d="M30,37H18c-3.859,0-7-3.14-7-7V18c0-3.86,3.141-7,7-7h12c3.859,0,7,3.14,7,7v12	C37,33.86,33.859,37,30,37z M18,13c-2.757,0-5,2.243-5,5v12c0,2.757,2.243,5,5,5h12c2.757,0,5-2.243,5-5V18c0-2.757-2.243-5-5-5H18z"
+              />
+            </svg>{" "}
+            Instagram
+          </button>
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default LoginComponent;
+export default LoginComponent
 

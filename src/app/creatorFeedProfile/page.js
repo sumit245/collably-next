@@ -18,7 +18,7 @@ export default function Profile() {
       image: "/images/image22.webp",
       likes: 124,
       comments: 12,
-      caption: "Beautiful day at the beach! 🌊☀️",
+      caption: "Beautiful day at the beach! 🌊☀",
       user: {
         username: "collably_creator",
         avatar: "/images/image26.webp",

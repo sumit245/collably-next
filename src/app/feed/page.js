@@ -6,6 +6,7 @@ import ShareModal from "../components/ShareModal";
 import styles from "./stylesfeed.module.css";
 import styleshop from "../shop/StyleShop.module.css";
 import Footer from "../components/FooterShop";
+// import { reelsDataSource } from '../utils.faker'
 
 const parseLikes = (likes) => {
   if (typeof likes === "string") {

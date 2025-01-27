@@ -3,6 +3,7 @@
   background-color: black;
   color: white;
   position: relative;
+  overflow: hidden;
 }
 
 .video {
@@ -61,6 +62,7 @@
   flex-direction: column;
   align-items: center;
   gap: 1rem;
+  gap: 1rem;
   z-index: 10;
   gap: 1rem;
 }
@@ -79,12 +81,20 @@
   cursor: pointer;
 }
 
+.photoButton {
+  border-color: #e0e0e0;
+}
+
 .recordingInner {
   width: 56px;
   height: 56px;
   border-radius: 50%;
   background-color: #ff0000;
   transition: all 0.3s ease;
+}
+
+.photoButton .recordingInner {
+  background-color: #e0e0e0;
 }
 
 .recording .recordingInner {
@@ -99,7 +109,7 @@
   top: 157px;
   left: -77px;
   align-items: center;
-  gap: 7rem;
+  gap: 2rem;
   margin-bottom: 1rem;
 }
 
@@ -132,7 +142,9 @@
 .previewControls {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 3rem;
+  padding: 1rem;
 }
 
 .previewButton {
@@ -140,7 +152,7 @@
   height: 48px;
   border-radius: 50%;
   border: none;
-  background: rgba(255, 255, 255, 0.2);
+  background: #ff0055;
   color: white;
   display: flex;
   align-items: center;
@@ -149,8 +161,8 @@
 }
 
 .confirmButton {
-  background: white;
-  color: black;
+  background: #ff0055;
+  color: white;
 }
 
 .syncButtons {
@@ -184,6 +196,53 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.modeSelector {
+  display: flex;
+  gap: 1rem;
+}
+
+.modeButton {
+  padding: 0.5rem 1rem;
+  border-radius: 1rem;
+  background: transparent;
+  color: white;
+  border: none;
+  opacity: 0.7;
+}
+
+.activeMode {
+  opacity: 1;
+  font-weight: bold;
+}
+
+.previewContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.mediaWrapper {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: black;
+}
+
+.previewMedia {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.loading {
+  color: white;
+  font-size: 1.2rem;
+  text-align: center;
 }
 
 @media (max-width: 768px) {
@@ -252,6 +311,7 @@
     width: 36px;
     height: 36px;
   }
+
   .controlsRow {
     top: 128px;
   }
@@ -260,6 +320,7 @@
   .controlsRow {
     gap: 4.9rem;
   }
+
   .syncButton {
     left: 135px;
     top: 5px;

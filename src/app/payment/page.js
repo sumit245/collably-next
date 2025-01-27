@@ -24,8 +24,8 @@ export default function Payment() {
 
   useEffect(() => {
     if (!user) {
-      router.push("/login")
-      return
+      
+      router.push(`/login?redirect=${encodeURIComponent("/CreatorHome")}`)
     }
 
     const data = localStorage.getItem("userInfo")
@@ -42,8 +42,8 @@ export default function Payment() {
     setLocalError(null)
 
     if (!user) {
-      router.push("/login")
-      return
+      
+      router.push(`/login?redirect=${encodeURIComponent("/CreatorHome")}`)
     }
 
     const orderItems = items.map((item) => ({

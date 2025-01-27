@@ -25,7 +25,7 @@ export default function Footer() {
         <span className={styles.navText}>MY SHOP</span>
       </Link>
 
-      <Link href="/videoRec" className={`${styles.navItem} ${pathname === '/CreatorShop' ? styles.active : ''}`}>
+      <Link href="/videoRec" className={`${styles.navItem} ${pathname === '/videoRec' ? styles.active : ''}`}>
         <span className={styles.navIcon}>
           <FaPlus size={20} />
         </span>
@@ -39,7 +39,7 @@ export default function Footer() {
         <span className={styles.navText}>ANALYTICS</span>
       </Link>
 
-      <Link href="/creatorFeedProfile" className={`${styles.navItem} ${pathname === '/CreatorShop' ? styles.active : ''}`}>
+      <Link href="/creatorFeedProfile" className={`${styles.navItem} ${pathname === '/creatorFeedProfile' ? styles.active : ''}`}>
         <span className={styles.navIcon}>
           <FiShoppingCart size={20} />
         </span>
