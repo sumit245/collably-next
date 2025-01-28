@@ -1,16 +1,30 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import Image from "next/image"
-import { useContext } from "react"
-import { useSelector } from "react-redux"
-import styles from "../shop/StyleShop.module.css"
-import { LikeContext } from "../actions/LikeContext"
-import { DropdownMenu } from "../components/DropdownMenu"
+import Link from "next/link";
+import Image from "next/image";
+import { useContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation"; 
+import styles from "../shop/StyleShop.module.css";
+import { LikeContext } from "../actions/LikeContext";
+import { DropdownMenu } from "../components/DropdownMenu";
 
 export default function Header() {
-  const { likeCount, cartCount } = useContext(LikeContext)
-  const user = useSelector((state) => state.auth.user)
+  const { likeCount, cartCount } = useContext(LikeContext);
+  const user = useSelector((state) => state.auth.user);
+  const router = useRouter();
+  const [isMounted, setIsMounted] = useState(false);
+
+  
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) return null;
+
+  const handleLoginRedirect = () => {
+    router.push(`/login?redirect=${encodeURIComponent("/shop")}`);
+  };
 
   return (
     <header className={styles.header}>
@@ -48,12 +62,11 @@ export default function Header() {
             <span className={styles.username}>{user.username}</span>
           </div>
         ) : (
-          <Link href="/login" className={styles.loginButton}>
+          <button className={styles.loginButton} onClick={handleLoginRedirect}>
             Login
-          </Link>
+          </button>
         )}
       </div>
     </header>
-  )
+  );
 }
-

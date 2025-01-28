@@ -106,10 +106,10 @@
 .controlsRow {
   display: flex;
   position: relative;
-  top: 157px;
-  left: -77px;
+  top: 133px;
+  right: 66px;
   align-items: center;
-  gap: 2rem;
+  gap: 6rem;
   margin-bottom: 1rem;
 }
 
@@ -168,8 +168,10 @@
 .syncButtons {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 1.3rem;
   margin-top: 1rem;
+  position: relative;
+  bottom: 3rem;
 }
 
 .syncButton {

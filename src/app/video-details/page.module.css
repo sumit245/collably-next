@@ -170,3 +170,11 @@
     padding: 6px;
   }
 }
+
+.backButton{
+  width: 53px;
+  margin-bottom: .5rem;
+  cursor: pointer;
+  background-color: black;
+  border: none;
+}

@@ -1,13 +1,13 @@
-"use client"; // Mark this as a client component
+"use client";
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation'; // Use usePathname
+import { usePathname } from 'next/navigation';
 import { FiHome, FiShoppingCart, FiBarChart2 } from 'react-icons/fi'; 
-import { FaPlus } from 'react-icons/fa'; // Only import FaPlus from 'react-icons/fa'
+import { FaPlus } from 'react-icons/fa'; 
 import styles from '../CreatorHome/stylescreator.module.css';
 
 export default function Footer() {
-  const pathname = usePathname(); // Get the current path
+  const pathname = usePathname(); 
 
   return (
     <nav className={styles.navigation}>

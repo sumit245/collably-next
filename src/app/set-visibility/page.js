@@ -5,6 +5,8 @@ import { useEffect, useState } from "react"
 import styles from "./page.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import FooterCreator from "../components/FooterCreator"
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 
 export default function SetVisibility() {
   const router = useRouter()
@@ -31,8 +33,15 @@ export default function SetVisibility() {
     <div className={stylesShop.bodyShop}>
       <div className={stylesShop.smartphoneContainer}>
         <div className={styles.container}>
+          <div className={styles.header}>
+        <Link href="/video-details">
+        <button className={styles.backButton}>
+          <ArrowLeft size={24} color="white" />
+        </button>
+        </Link>
+        
           <h1 className={styles.title}>Set visibility</h1>
-
+          </div>
           <div className={styles.options}>
             <button
               className={`${styles.option} ${selectedVisibility === "Public" ? styles.selected : ""}`}

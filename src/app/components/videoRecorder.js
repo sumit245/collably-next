@@ -1,26 +1,31 @@
 "use client"
 
 import { useState, useRef, useEffect, useCallback } from "react"
-import { X, Camera, Instagram, Youtube } from "lucide-react"
+import { X, Video, Instagram, Youtube } from "lucide-react"
 import { useRouter } from "next/navigation"
 import styles from "../videoRec/styles.vid.module.css"
 import Link from "next/link"
 
-function ImageCapture() {
+function VideoRecorder() {
   const router = useRouter()
+  const [isRecording, setIsRecording] = useState(false)
   const [hasPermission, setHasPermission] = useState(false)
   const [error, setError] = useState(null)
-  const [capturedPhoto, setCapturedPhoto] = useState(null)
+  const [recordingTime, setRecordingTime] = useState(0)
+  const [recordedVideo, setRecordedVideo] = useState(null)
   const [selectedFile, setSelectedFile] = useState(null)
 
   const videoRef = useRef(null)
-  const canvasRef = useRef(null)
+  const mediaRecorderRef = useRef(null)
+  const chunksRef = useRef([])
+  const progressIntervalRef = useRef(null)
   const fileInputRef = useRef(null)
 
   const setupCamera = useCallback(async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
+        audio: true,
       })
 
       if (videoRef.current) {
@@ -41,6 +46,9 @@ function ImageCapture() {
       if (videoRef.current?.srcObject) {
         videoRef.current.srcObject.getTracks().forEach((track) => track.stop())
       }
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current)
+      }
     }
   }, [setupCamera])
 
@@ -50,25 +58,65 @@ function ImageCapture() {
       sessionStorage.setItem(`media_${mediaId}`, mediaSrc)
       const mediaDetails = {
         mediaId,
-        mediaType: "photo",
-        mode: "post",
+        mediaType: "video",
+        duration: recordingTime,
+        mode: "video",
       }
       router.push(`/preview?${new URLSearchParams(mediaDetails).toString()}`)
     },
-    [router],
+    [recordingTime, router],
   )
 
-  const capturePhoto = useCallback(() => {
-    if (videoRef.current && canvasRef.current) {
-      const context = canvasRef.current.getContext("2d")
-      canvasRef.current.width = videoRef.current.videoWidth
-      canvasRef.current.height = videoRef.current.videoHeight
-      context.drawImage(videoRef.current, 0, 0)
-      const photoDataUrl = canvasRef.current.toDataURL("image/jpeg")
-      setCapturedPhoto(photoDataUrl)
-      handleMediaCapture(photoDataUrl)
+  const startRecording = useCallback(() => {
+    if (!videoRef.current?.srcObject) return
+
+    chunksRef.current = []
+    const recorder = new window.MediaRecorder(videoRef.current.srcObject)
+
+    recorder.ondataavailable = (event) => {
+      if (event.data.size > 0) {
+        chunksRef.current.push(event.data)
+      }
     }
-  }, [handleMediaCapture])
+
+    recorder.onstop = () => {
+      const blob = new Blob(chunksRef.current, { type: "video/webm" })
+      const url = URL.createObjectURL(blob)
+      setRecordedVideo(url)
+      handleMediaCapture(url)
+    }
+
+    recorder.start()
+    mediaRecorderRef.current = recorder
+    setIsRecording(true)
+    setRecordingTime(0)
+
+    progressIntervalRef.current = setInterval(() => {
+      setRecordingTime((prev) => {
+        if (prev >= 30) {
+          stopRecording()
+          return 30
+        }
+        return prev + 1
+      })
+    }, 1000)
+
+    setTimeout(() => {
+      if (mediaRecorderRef.current && isRecording) {
+        stopRecording()
+      }
+    }, 30000)
+  }, [isRecording, handleMediaCapture])
+
+  const stopRecording = useCallback(() => {
+    if (mediaRecorderRef.current && isRecording) {
+      mediaRecorderRef.current.stop()
+      setIsRecording(false)
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current)
+      }
+    }
+  }, [isRecording])
 
   const handleFileUpload = useCallback(
     (event) => {
@@ -87,23 +135,32 @@ function ImageCapture() {
   )
 
   const handleUndo = useCallback(() => {
-    if (capturedPhoto) {
-      URL.revokeObjectURL(capturedPhoto)
+    if (recordedVideo) {
+      URL.revokeObjectURL(recordedVideo)
     }
-    setCapturedPhoto(null)
+    setRecordedVideo(null)
     setSelectedFile(null)
     if (videoRef.current) {
       videoRef.current.srcObject = null
       setupCamera()
     }
-  }, [capturedPhoto, setupCamera])
+  }, [recordedVideo, setupCamera])
+
+  const handleVideoCapture = useCallback(() => {
+    isRecording ? stopRecording() : startRecording()
+  }, [isRecording, stopRecording, startRecording])
 
   return (
     <div className={styles.container}>
       <video ref={videoRef} autoPlay playsInline muted className={styles.video} />
-      <canvas ref={canvasRef} style={{ display: "none" }} />
 
       {error && <div className={styles.error}>{error}</div>}
+
+      {isRecording && (
+        <div className={styles.progressBarContainer}>
+          <div className={styles.progressBar} style={{ width: `${(recordingTime / 30) * 100}%` }} />
+        </div>
+      )}
 
       <div className={styles.topBar}>
         <Link href="/CreatorShop">
@@ -117,7 +174,7 @@ function ImageCapture() {
         <div className={styles.controlsRow}>
           <input
             type="file"
-            accept="image/*"
+            accept="video/*"
             ref={fileInputRef}
             onChange={handleFileUpload}
             style={{ display: "none" }}
@@ -125,17 +182,13 @@ function ImageCapture() {
           <button className={styles.addButton} onClick={() => fileInputRef.current?.click()}>
             <div className={styles.addButtonPreview}>
               {selectedFile && (
-                <img
-                  src={URL.createObjectURL(selectedFile) || "/placeholder.svg"}
-                  alt="Preview"
-                  className={styles.previewThumbnail}
-                />
+                <video src={URL.createObjectURL(selectedFile)} className={styles.previewThumbnail} />
               )}
             </div>
           </button>
           <button
-            className={`${styles.recordButton} ${styles.photoButton}`}
-            onClick={capturePhoto}
+            className={`${styles.recordButton} ${isRecording ? styles.recording : ""}`}
+            onClick={handleVideoCapture}
             disabled={!hasPermission}
           >
             <div className={styles.recordingInner} />
@@ -159,4 +212,4 @@ function ImageCapture() {
   )
 }
 
-export default ImageCapture
+export default VideoRecorder

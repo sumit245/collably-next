@@ -4,12 +4,13 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useDispatch, useSelector } from "react-redux"
 import Image from "next/image"
-import { ChevronDown, ChevronUp, Search } from 'lucide-react'
+import { ChevronDown, ChevronUp, Search, ArrowLeft } from 'lucide-react'
 import styles from "./page.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import FooterCreator from "../components/FooterCreator"
 import { fetchBrands, fetchProductsByBrand, createReferralLink } from "../store/brandSlice"
 import ProductDetails from "./ProductDetails"
+import Link from 'next/link'
 
 export default function SetProduct() {
   const router = useRouter()
@@ -38,7 +39,7 @@ export default function SetProduct() {
 
   useEffect(() => {
     if (!user) {
-      router.push("/login")
+      router.push(`/login?redirect=${encodeURIComponent("/set-product")}`)
     }
   }, [user, router])
 
@@ -60,7 +61,7 @@ export default function SetProduct() {
   const handleDone = async () => {
     if (!user) {
       console.error("User is not logged in")
-      router.push("/login")
+      router.push(`/login?redirect=${encodeURIComponent("/set-product")}`)
       return
     }
 
@@ -113,6 +114,11 @@ export default function SetProduct() {
     <div className={stylesShop.bodyShop}>
       <div className={stylesShop.smartphoneContainer}>
         <div className={styles.container}>
+        <Link href="/video-details">
+        <button className={styles.backButton}>
+          <ArrowLeft size={24} color="white" />
+        </button>
+        </Link>
           <h1 className={styles.title}>Select Product</h1>
           <div className={styles.dropdownContainer}>
             {/* Brand Dropdown */}
@@ -249,4 +255,3 @@ export default function SetProduct() {
     </div>
   )
 }
-

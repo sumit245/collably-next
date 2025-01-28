@@ -6,7 +6,8 @@ import { useSelector } from "react-redux"
 import styles from "./page.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import FooterCreator from "../components/FooterCreator"
-import { Package, Eye, Users, Copy } from "lucide-react"
+import { Package, Eye, Users, Copy, ArrowLeft} from "lucide-react"
+import Link from 'next/link'
 
 export default function MediaDetails() {
   const router = useRouter()
@@ -80,6 +81,11 @@ export default function MediaDetails() {
     <div className={stylesShop.bodyShop}>
       <div className={stylesShop.smartphoneContainer}>
         <div className={styles.container}>
+        <Link href="/preview">
+        <button className={styles.backButton}>
+          <ArrowLeft size={24} color="white" />
+        </button>
+        </Link>
           <div className={styles.mediaPreview}>
             {mediaType === "photo" ? (
               <img src={mediaSrc || "/placeholder.svg"} alt="Preview" className={styles.media} />
@@ -133,4 +139,3 @@ export default function MediaDetails() {
     </div>
   )
 }
-

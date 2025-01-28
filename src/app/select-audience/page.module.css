@@ -1,126 +1,149 @@
 .container {
+<<<<<<< HEAD
     background-color: #000;
     min-height: 88vh;
     color: #fff;
     padding: 20px;
   }
+=======
+  background-color: #000;
+  min-height: 100vh;
+  color: #fff;
+  padding: 20px;
+}
+
+.title {
+  font-size: 25px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.question {
+  margin-bottom: 20px;
+>>>>>>> 97c15e4d10188e3a963102b5b4f1d248de79666e
   
-  .title {
-    font-size: 25px;
-    margin-bottom: 20px;
-    font-weight: 700;
-  }
+}
+
+.question h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.question p {
+  font-size: 14px;
+  color: #fff;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
   
-  .question {
-    margin-bottom: 20px;
-    
-  }
-  
-  .question h2 {
-    font-size: 18px;
-    margin-bottom: 10px;
-    color: #fff;
-  }
-  
-  .question p {
-    font-size: 14px;
-    color: #fff;
-  }
-  
-  .options {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-    
-  }
-  
-  .option {
-    display: flex;
-    align-items: center;
-    background-color: #333;
-    padding: 15px;
-    border: none;
-    color: #ffeded;
-    text-align: left;
-    border-radius: 5px;
-  }
-  
-  .radio {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #fff;
-    border-radius: 50%;
-    margin-right: 15px;
-  }
-  
-  .ageRestriction {
-    margin-top: 30px;
-  }
-  
-  .ageRestriction h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
-    color: #fff;
-  }
-  
-  .ageRestriction p {
-    font-size: 14px;
-    color: #fff;
-    margin-bottom: 15px;
-  }
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  background-color: #333;
+  padding: 15px;
+  border: none;
+  color: #ffeded;
+  text-align: left;
+  border-radius: 5px;
+}
+
+.radio {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.ageRestriction {
+  margin-top: 30px;
+}
+
+.ageRestriction h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.ageRestriction p {
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 15px;
+}
 
 
-  .option {
-    display: block;
-    padding: 10px;
-    border: 1px solid #ccc;
-    margin-bottom: 5px;
-    cursor: pointer;
-  }
-  
-  .option .radio {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 1px solid #ccc;
-    border-radius: 50%;
-    margin-right: 10px;
-    vertical-align: middle;
-  }
-  
-  .option.selected .radio {
-    background-color: #fff;
-    position: relative;
-  }
-  
-  .option.selected .radio::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 10px;
-    height: 10px;
-    background-color: #000;
-    border-radius: 50%;
-  }
-  
-  .option.selected {
-    background-color: #555;
-  }
-  .doneButton {
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
-    color: white;
-    background-color: #ff0055;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-  }
-  
-  .doneButton:hover {
-    background-color: #e6004c;
-    transform: translateY(-2px);
-  }
+.option {
+  display: block;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.option .radio {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.option.selected .radio {
+  background-color: #fff;
+  position: relative;
+}
+
+.option.selected .radio::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  background-color: #000;
+  border-radius: 50%;
+}
+
+.option.selected {
+  background-color: #555;
+}
+.doneButton {
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  color: white;
+  background-color: #ff0055;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.doneButton:hover {
+  background-color: #e6004c;
+  transform: translateY(-2px);
+}
+
+.backButton{
+  width: 53px;
+  margin-bottom: .5rem;
+  cursor: pointer;
+  background-color: black;
+  border: none;
+  position: relative;
+  right: 1rem;
+}
+
+.header{
+  display: flex;
+  align-items: baseline;
+}

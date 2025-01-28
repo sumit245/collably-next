@@ -5,6 +5,8 @@ import { useEffect, useState } from "react"
 import styles from "./page.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import FooterCreator from "../components/FooterCreator"
+import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
 
 export default function SelectAudience() {
   const router = useRouter()
@@ -44,8 +46,14 @@ export default function SelectAudience() {
     <div className={stylesShop.bodyShop}>
       <div className={stylesShop.smartphoneContainer}>
         <div className={styles.container}>
-          <h1 className={styles.title}>Select audience</h1>
-
+         < div className={styles.header}>
+        <Link href="/video-details">
+        <button className={styles.backButton}>
+          <ArrowLeft size={24} color="white" />
+        </button>
+        </Link>
+        <h1 className={styles.title}>Select audience</h1> 
+        </div>
           <div className={styles.question}>
             <h2>Is this video Made for Kids?</h2>
             <p>
@@ -105,4 +113,3 @@ export default function SelectAudience() {
     </div>
   )
 }
-

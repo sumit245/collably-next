@@ -6,17 +6,33 @@ import styles from '../CreatorShop/styles.creatorShop.module.css'
 import { Menu, ChevronDown } from 'lucide-react'
 import Link from 'next/link'
 import PostsTab from './postsTab'
+import ReelsTab from './ReelsTab'
 import CollectionsTab from './collectionsTab'
-import DraftsTab from './DraftsTab'
 import SingleProductLinksTab from './singleProductTab'
+import { useSelector } from 'react-redux' 
+import { useRouter } from 'next/navigation' 
 
 export default function Shop() {
   const [activeTab, setActiveTab] = useState('posts')
   const [activeCount, setActiveCount] = useState(0)
-  
+  const user = useSelector((state) => state.auth.user)
+  const router = useRouter()
+
+ 
+  useEffect(() => {
+    if (!user) {
+      router.push(`/login?redirect=${encodeURIComponent("/CreatorShop")}`)
+    }
+  }, [user, router])
+
+ 
+  if (!user) {
+    return null
+  }
+
   const tabs = [
-    { id: 'drafts', label: 'Drafts', count: 0, disabled: true },
     { id: 'posts', label: 'Posts', count: 0 },
+    { id: 'reels', label: 'Reels', count: 0 },
     { id: 'collections', label: 'Collections', count: 0 },
     { id: 'links', label: 'Single Product Links', count: 0 }
   ]
@@ -27,18 +43,17 @@ export default function Shop() {
   }, [activeTab])
 
   const handleTabClick = (tabId) => {
-    if (tabId === 'drafts') return 
     setActiveTab(tabId)
   }
-  
+
   const renderTabContent = () => {
     switch (activeTab) {
       case 'posts':
         return <PostsTab />
+      case 'reels':
+        return <ReelsTab />
       case 'collections':
         return <CollectionsTab />
-      case 'drafts':
-        return <DraftsTab />
       case 'links':
         return <SingleProductLinksTab />
       default:
@@ -52,26 +67,28 @@ export default function Shop() {
         <button className={styles.menuButton}>
           <Menu size={24} />
         </button>
-        
+
         <div className={styles.profileSection}>
-          <Image 
-            src="/images/banavt1.png"
+          <Image
+            src={user.avatar || "/images/banavt1.png"} 
             alt="Shop profile"
             width={36}
             height={36}
             className={styles.profileImage}
           />
-          
+
           <div className={styles.shopInfo}>
             <h1 className={styles.shopName}>My Shop</h1>
-            <p className={styles.username}>dheeraj861</p>
+            <p className={styles.username}>
+              {user.user?.fullname || user.user?.username || "User"} 
+            </p>
           </div>
         </div>
 
         <div className={styles.actionButtons}>
           <Link href="/creatorDashboardVerify">
             <button className={styles.iconButton}>
-              <Image 
+              <Image
                 src="/images/eye-v2.svg"
                 alt="View"
                 width={16}
@@ -83,7 +100,7 @@ export default function Shop() {
 
           <Link href="/creatorDashboardVerify">
             <button className={styles.iconButton}>
-              <Image 
+              <Image
                 src="/images/share-v2.svg"
                 alt="Share"
                 width={16}
@@ -112,9 +129,9 @@ export default function Shop() {
 
       <ul className={styles.tabList}>
         {tabs.map(tab => (
-          <li 
+          <li
             key={tab.id}
-            className={`${styles.tabItem} ${tab.disabled ? styles.tabDisabled : ''}`}
+            className={`${styles.tabItem}`}
             data-active={activeTab === tab.id}
             onClick={() => handleTabClick(tab.id)}
           >
@@ -130,4 +147,3 @@ export default function Shop() {
     </div>
   )
 }
-

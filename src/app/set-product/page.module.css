@@ -270,16 +270,25 @@
 .searchIcon {
   position: absolute;
   left: 8px;
-  top: 40%;
+  top: 50%;
   transform: translateY(-50%);
   color: #ffffff;
 }
 
 .searchInput {
   width: 89%;
-  background: #333;
+  background: black;
   color: white;
   padding: 8px 8px 8px 32px;
   margin-block: 8px;
   border-radius: 22px;
+  border: 1px solid white;
+}
+
+.backButton{
+  width: 53px;
+  margin-bottom: .5rem;
+  cursor: pointer;
+  background-color: black;
+  border: none;
 }
