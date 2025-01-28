@@ -1,6 +1,6 @@
 import stylesShop from '../shop/StyleShop.module.css';
 import FooterCreator from '../components/FooterCreator'
-import CreateWith from '../components/videoRecorder'
+import CreateWith from '../components/recorder'
 
 export default function HomePage() {
   return (

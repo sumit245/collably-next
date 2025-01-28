@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import styles from '../CreatorShop/styles.creatorShop.module.css'
 
-export default function EmptyState({ type, title, description, buttonText }) {
+export default function EmptyState({ type, title, description, buttonText, onButtonClick }) {
   return (
     <div className={styles.emptyState}>
       <Image
@@ -15,10 +15,9 @@ export default function EmptyState({ type, title, description, buttonText }) {
       <p className={styles.emptyStateText}>
         {description}
       </p>
-      <button className={styles.addButton}>
+      <button className={styles.addButton} onClick={onButtonClick}>
         {buttonText} <ArrowRight size={20} />
       </button>
     </div>
   )
 }
-
