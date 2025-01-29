@@ -47,7 +47,7 @@ function ImageCapture() {
   const handleMediaCapture = useCallback(
     (mediaSrc) => {
       const mediaId = Date.now().toString()
-      sessionStorage.setItem(`media_${mediaId}`, mediaSrc)
+      sessionStorage.setItem(`media_${mediaId}, mediaSrc`)
       const mediaDetails = {
         mediaId,
         mediaType: "photo",
@@ -106,7 +106,7 @@ function ImageCapture() {
       {error && <div className={styles.error}>{error}</div>}
 
       <div className={styles.topBar}>
-        <Link href="/CreatorHome">
+        <Link href="/CreatorShop">
           <button className={styles.sideButton} onClick={handleUndo}>
             <X className="h-6 w-6" />
           </button>
@@ -132,7 +132,6 @@ function ImageCapture() {
                 />
               )}
             </div>
-            ADD
           </button>
           <button
             className={`${styles.recordButton} ${styles.photoButton}`}

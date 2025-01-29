@@ -8,6 +8,7 @@ import SaleCalendar from '../components/CreatorHomeCalender'
 import FindsOfTheDay from '../components/CreatorHomeFInds'
 import ToDo from '../components/CreatorHomeToDo'
 import PoweredByFooter from '../components/CreatorBottomFooter'
+import TopCreators from '../components/TopCreatorShop'
 
 export default function HomePage() {
   return (
@@ -18,9 +19,10 @@ export default function HomePage() {
       <main>
        <CreatorHome />
        <SuggestedActions />
-       <ExclusiveFeatures />
+       {/* <ExclusiveFeatures /> */}
        <TopBrands />
        <SaleCalendar />
+       <TopCreators />
        <FindsOfTheDay />
        <ToDo />
        <PoweredByFooter />
