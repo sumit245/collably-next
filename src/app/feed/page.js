@@ -6,6 +6,7 @@ import ShareModal from "../components/ShareModal";
 import styles from "./stylesfeed.module.css";
 import styleshop from "../shop/StyleShop.module.css";
 import Footer from "../components/FooterShop";
+import TopBrands from "../components/TopBrandShop";
 // import { reelsDataSource } from '../utils.faker'
 
 const parseLikes = (likes) => {
@@ -101,7 +102,7 @@ export default function ReelsPage() {
           <div className={styles.card}>
             {Array.from({ length: 1 }).map((_, index) => (
               <div key={index} className={styles.content}>
-                <div className={styles.imageSkeleton}></div>
+                <div className={styles.imageSkeleton}><div className="productCard"><TopBrands /></div></div>
                   <div className={styles.skeletonText}></div>
                   <div className={styles.skeletonTextSmall}></div>
 
@@ -130,8 +131,10 @@ export default function ReelsPage() {
                   </div>
                   <div className={styles.ctaButton}></div>
                 </div>
+                
               </div>
             ))}
+            
           </div>
         ) : (
           <div ref={containerRef} className={styles.reelsContainer}>

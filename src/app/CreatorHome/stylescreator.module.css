@@ -42,7 +42,7 @@
     position: sticky;
     top: 0;
     z-index: 1000;
-    background-color: rgb(64, 132, 203);
+    background-color: #ff0055;
     padding: 1rem;
     display: flex;
     align-items: center;
@@ -97,12 +97,12 @@
     gap: 1.5rem;
   }
   .heroContainer{
-background-color: rgb(64, 132, 203);
+    background-color: #ff0055;
 
 padding: 15px;
   }
   .stepsContainer {
-    background-color: #E3F2FD;
+    background-color: #f1c2d2;
     padding: 1rem;
   }
   
@@ -224,7 +224,7 @@ padding: 15px;
   
   
   .containerExclusive {
-    background-color: rgba(64, 132, 203, 0.2);
+    background-color: #f1c2d2;
     border-radius: 12px;
     padding: 1.25rem;
     border: 1px solid blue;
@@ -396,7 +396,7 @@ padding: 15px;
   
   
   .saleCalendarWrapper {
-    background-color: #4084cb;
+    background-color: #ff0055;
     background-image: url(/images/winter-border-1.png);
     background-size: contain;
     background-repeat: no-repeat;
@@ -601,7 +601,7 @@ padding: 15px;
   }
   
   .cardFind {
-    background: #4084cb;
+    background: #ff0055;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

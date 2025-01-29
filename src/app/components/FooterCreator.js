@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FiHome, FiShoppingCart, FiBarChart2 } from 'react-icons/fi'; 
-import { FaPlus } from 'react-icons/fa'; 
+import { FaLink } from "react-icons/fa6";
 import styles from '../CreatorHome/stylescreator.module.css';
 
 export default function Footer() {
@@ -25,11 +25,11 @@ export default function Footer() {
         <span className={styles.navText}>MY SHOP</span>
       </Link>
 
-      <Link href="/videoRec" className={`${styles.navItem} ${pathname === '/videoRec' ? styles.active : ''}`}>
+      <Link href="/linkCreate" className={`${styles.navItem} ${pathname === 'linkCreate' ? styles.active : ''}`}>
         <span className={styles.navIcon}>
-          <FaPlus size={20} />
+        <FaLink size={20}/>
         </span>
-        <span className={styles.navText}>CREATE</span>
+        <span className={styles.navText}>LINK</span>
       </Link>
 
       <Link href="/CreatorAnalytics" className={`${styles.navItem} ${pathname === '/CreatorAnalytics' ? styles.active : ''}`}>

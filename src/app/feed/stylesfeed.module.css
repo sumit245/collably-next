@@ -343,7 +343,7 @@
 .engagement {
   position: absolute;
   right: 1rem;
-  top: 28rem;
+  top: 20rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -379,10 +379,10 @@
 .userInfo {
   position: absolute;
   left: 2rem;
-  bottom: 11rem; 
   display: flex;
   align-items: center;
   gap: 1rem;
+  top:3rem
 }
 
 
@@ -621,4 +621,9 @@
   100% {
     background-color: #e0e0e0;
   }
+}
+
+.productCard{
+ position: relative;
+ top: 30rem;
 }
