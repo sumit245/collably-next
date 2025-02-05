@@ -11,19 +11,19 @@ const TrendingBrands = () => {
       id: 1,
       name: "Walmart Affiliate Program",
       percentage: "7.28%",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/images/image14.webp",
     },
     {
       id: 2,
       name: "Target Affiliate Program",
       percentage: "5.5%",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/images/image15.webp",
     },
     {
       id: 3,
       name: "Amazon Affiliate Program",
       percentage: "4.8%",
-      image: "/placeholder.svg?height=400&width=600",
+      image: "/images/image16.webp",
     },
   ]
 

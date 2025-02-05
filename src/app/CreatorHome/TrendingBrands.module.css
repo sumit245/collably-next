@@ -31,17 +31,14 @@
     color: #1F2937;
   }
   
-  /* Horizontal scrolling container for cards */
   .gridWrapper {
-    display: flex; /* Align the cards horizontally */
-    gap: 24px;
-    overflow-x: auto; /* Enable horizontal scrolling */
-    padding-bottom: 16px; /* Optional bottom padding */
-    scroll-snap-type: x mandatory; /* Smooth snap scrolling */
-    scroll-padding: 8px; /* Add padding to prevent cards from sticking to edges */
-    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on mobile */
-    width: 100%; /* Ensure the container uses full width available */
-    max-width: 100%; /* Ensure it does not exceed the screen width */
+    display: flex;
+    gap: 8px;
+    overflow-x: auto; 
+    padding-bottom: 16px; 
+    width: 100%;
+    max-width: 100%;
+    height: 260px;
   }
   
   .card {
@@ -56,20 +53,16 @@
     overflow: hidden; /* Ensure content is contained within the card */
   }
   
-  .card:hover {
-    transform: translateY(-8px); /* Slight lift effect on hover */
-  }
-  
   .cardImage {
     object-fit: cover;
     border-radius: 12px;
     width: 100%;
-    height: 200px; /* Fixed height for card image */
+    height: 200px;
     transition: transform 0.3s ease-in-out;
   }
   
   .card:hover .cardImage {
-    transform: scale(1.05); /* Scale effect on hover */
+    transform: scale(1.05); 
   }
   
   .overlay {
@@ -85,8 +78,7 @@
     padding: 16px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    z-index: 1; /* Ensure content is above the overlay */
+    z-index: 1;
   }
   
   .textWrapper {
@@ -98,12 +90,14 @@
     font-weight: 700;
     color: #ffffff;
     line-height: 1.2;
+    margin: 0px;
   }
   
   .cardPercentage {
     font-size: 1.25rem;
     font-weight: 700;
     color: #ffffff;
+    margin-top: 0.5rem;
   }
   
   .createLinkButton {
@@ -117,6 +111,8 @@
     transition: background-color 0.2s;
     margin-top: 16px;
     text-align: center;
+    border: 1px solid black;
+    cursor: pointer;
   }
   
   .createLinkButton:hover {
