@@ -53,7 +53,7 @@ export default function CreatorHome() {
           </button>
         </div>
       </header>
-      <div className={styles.heroContainer}>
+      {/* <div className={styles.heroContainer}>
         <div className={styles.stepsContainer}>
           {stepsCreatorHome.map((step) => (
             <div key={step.id} className={`${styles.step} ${step.isActive ? styles.active : ""}`}>
@@ -78,7 +78,7 @@ export default function CreatorHome() {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

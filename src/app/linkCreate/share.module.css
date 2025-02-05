@@ -1,0 +1,182 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 50;
+  }
+  
+  .modal {
+    position: fixed;
+    bottom: 64px;
+    /* left: 0; */
+    right: 450px;
+    width: 400px;
+    z-index: 50;
+    background-color: #18181b;
+    padding: 1.5rem;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+    transform: translateY(100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .modalOpen {
+    transform: translateY(0);
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  
+  .title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: white;
+  }
+  
+  .closeButton {
+    padding: 0.5rem;
+    border-radius: 9999px;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  
+  .closeButton:hover {
+    background-color: #27272a;
+  }
+  
+  .closeIcon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: white;
+  }
+  
+  .content {
+    margin-bottom: 1.5rem;
+  }
+  
+  .commission {
+    font-size: 0.875rem;
+    color: #9ca3af;
+    margin-bottom: 0.5rem;
+  }
+  
+  .productName {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: white;
+    margin-bottom: 1rem;
+  }
+  
+  .productLink {
+    font-size: 0.875rem;
+    color: #9ca3af;
+  }
+  
+  .socialButtons {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .socialButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .iconWrapper {
+    padding: 0.75rem;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: white;
+  }
+  
+  .platformName {
+    font-size: 0.75rem;
+    color: white;
+  }
+  
+  .copyButton {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background-color: #ff0055;
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    cursor: pointer;
+  }
+  
+  .copyButton:hover {
+    background-color: #e5004d;
+  }
+  
+  .copyIcon {
+    width: 1rem;
+    height: 1rem;
+  }
+  
+  .actionButtons {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .actionButton {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background-color: #27272a;
+    border: 1px solid #3f3f46;
+    border-radius: 0.375rem;
+    color: white;
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+  
+  .actionButton:hover {
+    background-color: #3f3f46;
+  }
+  
+  .actionIcon {
+    width: 1rem;
+    height: 1rem;
+  }
+  
+  .smartphoneContainer {
+    width: 100%;
+    max-width: 450px;
+    height: 100vh;
+    overflow-y: auto;
+    background: #fff0f0;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    position: relative;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  } 

@@ -1,11 +1,4 @@
 .container {
-<<<<<<< HEAD
-    background-color: #000;
-    min-height: 88vh;
-    color: #fff;
-    padding: 20px;
-  }
-=======
   background-color: #000;
   min-height: 100vh;
   color: #fff;
@@ -20,7 +13,6 @@
 
 .question {
   margin-bottom: 20px;
->>>>>>> 97c15e4d10188e3a963102b5b4f1d248de79666e
   
 }
 

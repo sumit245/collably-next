@@ -2,27 +2,41 @@
 
 import { useState } from "react"
 import styles from "./page.module.css"
-import FooterCreator from '../components/FooterCreator'
-import stylesShop from '../shop/StyleShop.module.css';
+import FooterCreator from "../components/FooterCreator"
+import stylesShop from "../shop/StyleShop.module.css"
+import ShareModal from "./modalLink"
 
 export default function LinksPage() {
   const [activeTab, setActiveTab] = useState("my-links")
-  const [inputText, setInputText] = useState("") 
+  const [inputText, setInputText] = useState("")
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const handleInputChange = (e) => {
     setInputText(e.target.value)
   }
 
   const handlePasteClick = async () => {
-    try {
-      const clipboardText = await navigator.clipboard.readText()
-      setInputText(clipboardText) 
-    } catch (err) {
-      console.error("Failed to read clipboard contents: ", err)
+    if (inputText) {
+      // If there's text and button shows "Create", open the modal
+      setIsModalOpen(true)
+    } else {
+      // If no text and button shows "Paste", try to paste from clipboard
+      try {
+        const clipboardText = await navigator.clipboard.readText()
+        setInputText(clipboardText)
+      } catch (err) {
+        console.error("Failed to read clipboard contents: ", err)
+      }
     }
   }
 
   const buttonLabel = inputText ? "Create" : "Paste"
+
+  // Example product data - in a real app this would come from your backend
+  const productData = {
+    name: "Eucerin Anti-Pigment Dual Serum With Thiamidol & Hyaluronic Acid, Reduces Dark Spots & Rejuvenates",
+    link: "https://collab.ly/QALSdo",
+  }
 
   return (
     <div className={stylesShop.bodyShop}>
@@ -52,13 +66,10 @@ export default function LinksPage() {
                 type="text"
                 placeholder="Paste URL here..."
                 className={styles.input}
-                value={inputText} 
-                onChange={handleInputChange} 
+                value={inputText}
+                onChange={handleInputChange}
               />
-              <button 
-                className={styles.button} 
-                onClick={handlePasteClick}
-              >
+              <button className={styles.button} onClick={handlePasteClick}>
                 {buttonLabel}
               </button>
             </div>
@@ -86,10 +97,17 @@ export default function LinksPage() {
           ) : (
             <div className={styles.metricsText}>Link Folders content goes here</div>
           )}
-
         </div>
         <FooterCreator />
+
+        <ShareModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          productName={productData.name}
+          productLink={productData.link}
+        />
       </div>
     </div>
   )
 }
+
