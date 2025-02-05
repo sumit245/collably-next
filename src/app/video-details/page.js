@@ -99,7 +99,7 @@ export default function MediaDetails() {
 
             <button className={styles.optionButton} onClick={handleproductClick}>
               <Package size={20} />
-              Add Product:{" "}
+              Add Product Link:{" "}
               {formData.brand && formData.product ? `${formData.brand} - ${formData.product}` : "Not selected"}
             </button>
 

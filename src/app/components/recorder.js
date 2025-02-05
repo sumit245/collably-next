@@ -47,7 +47,7 @@ function ImageCapture() {
   const handleMediaCapture = useCallback(
     (mediaSrc) => {
       const mediaId = Date.now().toString()
-      sessionStorage.setItem(`media_${mediaId}, mediaSrc`)
+      sessionStorage.setItem(`media_${mediaId}`, mediaSrc);
       const mediaDetails = {
         mediaId,
         mediaType: "photo",

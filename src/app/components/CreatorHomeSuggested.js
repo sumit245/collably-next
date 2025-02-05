@@ -37,6 +37,56 @@ export default function SuggestedActions() {
             </div>
             <ChevronRight size={20} className={styles.chevron} />
           </button>
+          <button className={styles.actionCard}>
+            <div className={styles.actionContent}>
+              <Image
+                src="/images/profile_v1.svg"
+                alt=""
+                width={40}
+                height={40}
+                className={styles.actionIcon}
+              />
+              <div className={styles.actionText}>
+                <h3 className={styles.actionTitle}>Connect Social Media</h3>
+                <p className={styles.actionDescription}>Required to create Collablys</p>
+              </div>
+            </div>
+            <ChevronRight size={20} className={styles.chevron} />
+          </button>
+
+          <button className={styles.actionCard}>
+            <div className={styles.actionContent}>
+              <Image
+                src="/images/profile_v1.svg"
+                alt=""
+                width={40}
+                height={40}
+                className={styles.actionIcon}
+              />
+              <div className={styles.actionText}>
+                <h3 className={styles.actionTitle}>Create Your first Collably</h3>
+                <p className={styles.actionDescription}>Get your unique commissionable links.</p>
+              </div>
+            </div>
+            <ChevronRight size={20} className={styles.chevron} />
+          </button>
+
+          <button className={styles.actionCard}>
+            <div className={styles.actionContent}>
+              <Image
+                src="/images/profile_v1.svg"
+                alt=""
+                width={40}
+                height={40}
+                className={styles.actionIcon}
+              />
+              <div className={styles.actionText}>
+                <h3 className={styles.actionTitle}>Share Collablys & Earn</h3>
+                <p className={styles.actionDescription}>Share on your stories, chats & description box to earn</p>
+              </div>
+            </div>
+            <ChevronRight size={20} className={styles.chevron} />
+          </button>
         </div>
       </main>
 
