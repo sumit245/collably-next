@@ -1,0 +1,154 @@
+.container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+  
+  .headingWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  
+  .heading {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  
+  .viewAllLink {
+    font-size: 1.25rem;
+    color: #6B7280;
+    transition: color 0.2s;
+  }
+  
+  .viewAllLink:hover {
+    color: #1F2937;
+  }
+  
+  /* Horizontal scrolling container for cards */
+  .gridWrapper {
+    display: flex; /* Align the cards horizontally */
+    gap: 24px;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    padding-bottom: 16px; /* Optional bottom padding */
+    scroll-snap-type: x mandatory; /* Smooth snap scrolling */
+    scroll-padding: 8px; /* Add padding to prevent cards from sticking to edges */
+    -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on mobile */
+    width: 100%; /* Ensure the container uses full width available */
+    max-width: 100%; /* Ensure it does not exceed the screen width */
+  }
+  
+  .card {
+    flex-shrink: 0;
+    width: 300px; /* Fixed width for each card */
+    position: relative;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    transition: transform 0.3s ease-in-out;
+    scroll-snap-align: start; /* Ensures each card is aligned when scrolling */
+    overflow: hidden; /* Ensure content is contained within the card */
+  }
+  
+  .card:hover {
+    transform: translateY(-8px); /* Slight lift effect on hover */
+  }
+  
+  .cardImage {
+    object-fit: cover;
+    border-radius: 12px;
+    width: 100%;
+    height: 200px; /* Fixed height for card image */
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .card:hover .cardImage {
+    transform: scale(1.05); /* Scale effect on hover */
+  }
+  
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+    border-radius: 12px;
+  }
+  
+  .contentWrapper {
+    position: absolute;
+    inset: 0;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 1; /* Ensure content is above the overlay */
+  }
+  
+  .textWrapper {
+    margin-bottom: 16px;
+  }
+  
+  .cardTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.2;
+  }
+  
+  .cardPercentage {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+  
+  .createLinkButton {
+    width: 100%;
+    max-width: 220px; /* Slightly wider for better visibility */
+    background-color: #ffffff;
+    color: #000000;
+    padding: 12px 32px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: background-color 0.2s;
+    margin-top: 16px;
+    text-align: center;
+  }
+  
+  .createLinkButton:hover {
+    background-color: #f3f4f6;
+  }
+  
+  /* Custom scrollbar styles */
+  .gridWrapper::-webkit-scrollbar {
+    height: 8px; /* Adjust the height of the scrollbar */
+  }
+  
+  .gridWrapper::-webkit-scrollbar-thumb {
+    background-color: #a0aec0;
+    border-radius: 10px;
+  }
+  
+  .gridWrapper::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* For mobile or small screen responsiveness */
+  @media (max-width: 768px) {
+    .gridWrapper {
+      gap: 16px; /* Smaller gap on mobile screens */
+    }
+  
+    .card {
+      width: 250px; /* Reduce card width on smaller screens */
+    }
+  
+    .cardImage {
+      height: 150px; /* Adjust image height for mobile */
+    }
+  }
+  

@@ -13,6 +13,7 @@ import TopCreators from '../components/TopCreatorShop'
 import FeaturedCreators from "../components/CategoriesCreatorHome"
 import  ReferralProgram from "../components/ReferralProgram"
 import TopPerformers from "../components/TopPerformers"
+import TrendingBrands from '../components/CreatorTrendingBrands';
 
 export default function HomePage() {
   return (
@@ -30,6 +31,7 @@ export default function HomePage() {
        <TopBrands />
        <SaleCalendar />
        <TopCreators />
+       <TrendingBrands />
        <FindsOfTheDay />
        <FeaturedCreators />
        <ReferralProgram />
