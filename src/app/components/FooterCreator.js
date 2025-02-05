@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FiHome, FiShoppingCart, FiBarChart2 } from 'react-icons/fi'; 
+import { FaPlus } from 'react-icons/fa'; 
 import { FaLink } from "react-icons/fa6";
 import styles from '../CreatorHome/stylescreator.module.css';
 
@@ -48,3 +49,4 @@ export default function Footer() {
     </nav>
   );
 }
+

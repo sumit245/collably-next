@@ -9,7 +9,10 @@ import FindsOfTheDay from '../components/CreatorHomeFInds'
 import ToDo from '../components/CreatorHomeToDo'
 import PoweredByFooter from '../components/CreatorBottomFooter'
 import CreateWith from '../components/CreateWith'
-// import TopBrands from "../components/TopBrandShop";
+import TopCreators from '../components/TopCreatorShop'
+import FeaturedCreators from "../components/CategoriesCreatorHome"
+import  ReferralProgram from "../components/ReferralProgram"
+import TopPerformers from "../components/TopPerformers"
 
 export default function HomePage() {
   return (
@@ -23,8 +26,14 @@ export default function HomePage() {
        <SuggestedActions />
        <ExclusiveFeatures />
        {/* <TopBrands /> */}
+       {/* <ExclusiveFeatures /> */}
+       <TopBrands />
        <SaleCalendar />
+       <TopCreators />
        <FindsOfTheDay />
+       <FeaturedCreators />
+       <ReferralProgram />
+       <TopPerformers />
        <ToDo />
        <PoweredByFooter />
       </main>

@@ -1,0 +1,55 @@
+
+.section {
+    margin-bottom: .1rem;
+    margin-inline: .5rem;
+  }
+  
+  .header {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .heading {
+    font-size: 1.25rem;
+    color: #e61f93;
+  }
+  
+  .viewButton {
+    font-size: 0.875rem;
+    color: #000;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  
+  .gallery {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+    scrollbar-width: none;
+  }
+  
+  .avatar {
+    height: 4rem;
+    width: 4rem;
+    flex-shrink: 0;
+    border-radius: 9999px;
+    background-color: #2f343f;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+
+  @keyframes pulse {
+    0% {
+      background-color: #e0e0e0;
+    }
+    50% {
+      background-color: #f5f5f5;
+    }
+    100% {
+      background-color: #e0e0e0;
+    }
+  }
+  

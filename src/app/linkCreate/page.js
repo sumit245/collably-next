@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import styles from "../linkCreate/LinksPage.module.css"
+import styles from "./page.module.css"
 import FooterCreator from '../components/FooterCreator'
 import stylesShop from '../shop/StyleShop.module.css';
 

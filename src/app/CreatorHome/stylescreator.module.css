@@ -8,18 +8,19 @@
     bottom: 0;
     z-index: 1000;
   }
+
   
   .navItem {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-decoration: none;
-    color: #666;
+    color: #000;
     gap: 0.25rem;
   }
   
   .navItem.active {
-    color: #4A90E2;
+    color: #f61f93;
   }
   
   .navIcon {
@@ -95,15 +96,19 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    background-color: #fff0f0;
   }
   .heroContainer{
     background-color: #ff0055;
+background-color:#ff0055;
 
 padding: 15px;
   }
   .stepsContainer {
     background-color: #f1c2d2;
+    background-color: #fde3e7;
     padding: 1rem;
+    border-radius: 30px;
   }
   
   .step {
@@ -309,12 +314,13 @@ padding: 15px;
 
   .topBrandsWrapper {
     padding: 1.5rem 0;
+    background-color: #fff0f0;
   }
   
   .topBrandsTitle {
     font-size: 1rem;
     font-weight: 600;
-    color: #333;
+    color: #e61f93;
     margin: 0 0 1rem 1rem;
   }
   
@@ -571,7 +577,7 @@ padding: 15px;
   
   .containerFind {
     padding: 16px;
-    background-color: #f0f8ff;
+    background-color: #fff0f0;
   }
   
   .headerFind {
@@ -584,7 +590,7 @@ padding: 15px;
   .titleFind {
     font-size: 24px;
     font-weight: bolder;
-    color: #4084cb;
+    color: #e61f93;
   }
   
   .seeMoreFind {
@@ -608,7 +614,7 @@ padding: 15px;
   }
   
   .cardTopFind {
-    background: #4084cb;
+    background: #ff0055;
     height: 24px;
     position: relative;
     background-image: url(/images/winter-border-1.png);
@@ -624,7 +630,7 @@ padding: 15px;
     left: 0;
     right: 0;
     height: 10px;
-    background: #4084cb;
+    background: #ff0055;
     clip-path: polygon(0 0, 100% 0, 50% 100%);
   }
   

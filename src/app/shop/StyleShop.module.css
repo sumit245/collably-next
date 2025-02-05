@@ -14,7 +14,7 @@
   max-width: 450px;
   height: 100vh;
   overflow-y: auto;
-  background: aliceblue;
+  background: #fff0f0;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   position: relative;
   scrollbar-width: none;
@@ -343,7 +343,7 @@
 }
 
 .sectionTitleShop {
-  margin-bottom: 0.8rem;
+  margin-top: 32rem;
   font-weight: 700;
   color: #e61f93;
   font-size: 1.3rem;

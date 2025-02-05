@@ -55,7 +55,7 @@ function VideoRecorder() {
   const handleMediaCapture = useCallback(
     (mediaSrc) => {
       const mediaId = Date.now().toString()
-      sessionStorage.setItem(`media_${mediaId}`, mediaSrc)
+      sessionStorage.setItem(`media_${mediaId}, mediaSrc`)
       const mediaDetails = {
         mediaId,
         mediaType: "video",
@@ -158,7 +158,7 @@ function VideoRecorder() {
 
       {isRecording && (
         <div className={styles.progressBarContainer}>
-          <div className={styles.progressBar} style={{ width: `${(recordingTime / 30) * 100}%` }} />
+          <div className={styles.progressBar} style={`{ width: ${(recordingTime / 30) * 100}% }`} />
         </div>
       )}
 
