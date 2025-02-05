@@ -24,7 +24,7 @@ const fetchCreators = async () => {
     if (!response.ok) throw new Error("Failed to fetch creators");
     return await response.json();
   } catch (error) {
-    console.log("Error fetching creators:", error);
+    console.error("Error fetching creators:", error);
     return [];
   }
 };
