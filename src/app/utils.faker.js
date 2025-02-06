@@ -579,8 +579,8 @@ export  const creatorsFeed = [
       {
         id: 1,
         videoUrl: '/images/main.mp4',
-        username: 'cartoonaddict_',
-        profilePic: '/images/banavt2.png', 
+        username: 'dheerajyadav1208',
+        profilePic: '/images/banavt1.png', 
         caption: 'Vibe to hai 💀 ☠️ | share with friends 💝',
         likes: 155,
         comments: [

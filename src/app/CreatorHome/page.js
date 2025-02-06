@@ -25,14 +25,14 @@ export default function HomePage() {
        <CreatorHome />
        {/* <TopBrands /> */}
        <SuggestedActions />
-       <ExclusiveFeatures />
+       {/* <ExclusiveFeatures /> */}
        {/* <TopBrands /> */}
        {/* <ExclusiveFeatures /> */}
        <TopBrands />
-       <SaleCalendar />
+       {/* <SaleCalendar /> */}
        <TopCreators />
        <TrendingBrands />
-       <FindsOfTheDay />
+       {/* <FindsOfTheDay /> */}
        <FeaturedCreators />
        <ReferralProgram />
        <TopPerformers />

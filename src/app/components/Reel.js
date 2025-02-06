@@ -98,7 +98,7 @@ export default function Reel({
             Follow
           </button>
         </div>
-        <div className={styles.caption}>
+        {/* <div className={styles.caption}>
           {caption}
         </div>
         <div className={styles.songInfo}>
@@ -108,7 +108,14 @@ export default function Reel({
             <circle cx="18" cy="16" r="3"/>
           </svg>
           <span>{song}</span>
-        </div>
+        </div> */}
+       <div className={styles.productButton} onClick={() => window.location.href = "https://www.nykaa.com/eucerin-anti-pigment-dual-serum-with-thiamidol-hyaluronic-acid/p/17487559?transaction_id=155f48f3f1da972f3eda3ccf841dde01&intcmp=nykaa:hp:desktop-homepage:default:Brand_Gold_Takeover_Widget:SLIDING_WIDGET_V2:8:Eucerin:68499:155f48f3f1da972f3eda3ccf841dde01"}>
+  <img src="/images/demo-product1.avif" alt="Product" className={styles.productImage} />
+  <div className={styles.productInfo}>
+    <span className={styles.productPrice}>₹3591</span>
+    <span className={styles.productRating}>5% off</span>
+  </div>
+</div>
       </div>
 
       {isCommenting && (

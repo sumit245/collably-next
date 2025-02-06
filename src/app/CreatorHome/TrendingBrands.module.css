@@ -4,8 +4,8 @@
     margin-right: auto;
     padding-left: 16px;
     padding-right: 16px;
-    padding-top: 32px;
-    padding-bottom: 32px;
+    padding-top: 15px;
+    padding-bottom: 0px;
   }
   
   .headingWrapper {
@@ -16,15 +16,19 @@
   }
   
   .heading {
-    font-size: 2rem;
+    /* margin-top: 1rem; */
     font-weight: 700;
-    letter-spacing: -0.5px;
+    color: #e61f93;
+    font-size: 1.3rem;
+    padding-left: 5px;
   }
   
   .viewAllLink {
-    font-size: 1.25rem;
-    color: #6B7280;
-    transition: color 0.2s;
+    font-size: .875rem;
+    color: #000;
+    border: none;
+    background: none;
+    cursor: pointer;
   }
   
   .viewAllLink:hover {
