@@ -2001,12 +2001,41 @@ left: 350px;
   background-color: #ff0055;
   color: #fff;
   border: none;
+  margin-bottom: 10px;
   padding: 10px;
   font-size: 16px;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
+/* Add these styles to your existing CSS file */
+
+.login-method-toggle {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.toggle-btn {
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-btn.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.inputForm svg {
+  width: 20px;
+  height: 20px;
+}
+
+
 
 .login-container .button-submit:hover {
   background-color: #ff0055;
