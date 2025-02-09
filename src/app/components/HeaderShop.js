@@ -1,30 +1,29 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import Image from "next/image";
-import { useContext, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useRouter } from "next/navigation"; 
-import styles from "../shop/StyleShop.module.css";
-import { LikeContext } from "../actions/LikeContext";
-import { DropdownMenu } from "../components/DropdownMenu";
+import Link from "next/link"
+import Image from "next/image"
+import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import { useRouter } from "next/navigation"
+import styles from "../shop/StyleShop.module.css"
+import { DropdownMenu } from "./DropdownMenu"
 
 export default function Header() {
-  const { likeCount, cartCount } = useContext(LikeContext);
-  const user = useSelector((state) => state.auth.user);
-  const router = useRouter();
-  const [isMounted, setIsMounted] = useState(false);
+  const likeCount = useSelector((state) => state.likedProducts.count)
+  const cartCount = useSelector((state) => state.cart.count)
+  const user = useSelector((state) => state.auth.user)
+  const router = useRouter()
+  const [isMounted, setIsMounted] = useState(false)
 
-  
   useEffect(() => {
-    setIsMounted(true);
-  }, []);
+    setIsMounted(true)
+  }, [])
 
-  if (!isMounted) return null;
+  if (!isMounted) return null
 
   const handleLoginRedirect = () => {
-    router.push(`/login?redirect=${encodeURIComponent("/shop")}`);
-  };
+    router.push(`/login?redirect=${encodeURIComponent("/shop")}`)
+  }
 
   return (
     <header className={styles.header}>
@@ -36,17 +35,17 @@ export default function Header() {
       </div>
       <div className={styles.headerIconsShop}>
         <button className={styles.iconBtnShop}>
-          <Image src="images/search-blue.svg" alt="Search" width={24} height={24} />
+          <Image src="/images/search-blue.svg" alt="Search" width={24} height={24} />
         </button>
         <button className={styles.iconBtnShop}>
           <Link href="/product">
-            <Image src="images/wishlist-blue.svg" alt="Wishlist" width={24} height={24} />
+            <Image src="/images/wishlist-blue.svg" alt="Wishlist" width={24} height={24} />
           </Link>
           <span className={styles.counter}>{likeCount}</span>
         </button>
         <button className={styles.iconBtnShop}>
           <Link href="/cart">
-            <Image src="images/cart-blue.svg" alt="Cart" width={24} height={24} />
+            <Image src="/images/cart-blue.svg" alt="Cart" width={24} height={24} />
           </Link>
           <span className={styles.counter}>{cartCount}</span>
         </button>
@@ -68,5 +67,6 @@ export default function Header() {
         )}
       </div>
     </header>
-  );
+  )
 }
+
