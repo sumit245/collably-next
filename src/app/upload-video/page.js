@@ -1,22 +1,31 @@
-import React from 'react';
-import styles from './UploadingVideo.module.css';
+// page.js
 
-const UploadingVideo = ({ progress }) => {
+"use client"
+import React, { useEffect, useState } from 'react';
+import UploadingVideo from './UploadingVideo'; // Adjust path as necessary
+
+const Page = () => {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((prevProgress) => {
+        if (prevProgress < 100) {
+          return prevProgress + 10;
+        }
+        clearInterval(interval);
+        return 100; // Stop the progress at 100%
+      });
+    }, 500); // Progress increases by 10% every 500ms
+
+    return () => clearInterval(interval); // Clean up interval on component unmount
+  }, []);
+
   return (
-    <div className={styles.container}>
-      <div className={styles.textContainer}>
-        <h1 className={styles.title}>Uploading video...</h1>
-        <div className={styles.progressBarWrapper}>
-          <div
-            className={styles.progressBar}
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-        <p className={styles.progressText}>{progress}%</p>
-      </div>
+    <div>
+      <UploadingVideo progress={progress} />
     </div>
   );
 };
 
-export default UploadingVideo;
-
+export default Page;

@@ -1,45 +1,63 @@
-"use client";
+"use client"
 
-import { useState, useContext } from "react"
-import { useDispatch } from "react-redux"
+import { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import styles from "../../shop/StyleShop.module.css"
-import { LikeContext } from "../../actions/LikeContext"
-import { addToCart } from "../../store/cartSlice"
+import { useLikeContext } from "../../actions/LikeContext"
+import { addToCart, updateQuantity } from "../../store/cartSlice"
+import { toggleLikeProduct, loadLikedProducts } from "../../store/likedproductSlice"
 
 export default function Creator2({ _id, videoSrc, posterSrc, name, productname, followers, price }) {
-  const [isLiked, setIsLiked] = useState(false)
-  const [notification, setNotification] = useState(null)
-  const { likeCount, setLikeCount } = useContext(LikeContext)
   const dispatch = useDispatch()
+  const cartItems = useSelector((state) => state.cart.items)
+  const likedProducts = useSelector((state) => state.likedProducts.items)
+  const { cartCount, setCartCount } = useLikeContext()
+  const [notification, setNotification] = useState(null)
+
+
+  useEffect(() => {
+    dispatch(loadLikedProducts())
+  }, [dispatch])
+  const isLiked = likedProducts.some((item) => item._id === _id)
 
   const toggleLike = () => {
-    setIsLiked(!isLiked)
-    setLikeCount(isLiked ? likeCount - 1 : likeCount + 1)
+    dispatch(toggleLikeProduct({ _id, name, productname, price, image: posterSrc }))
   }
 
   const handleAddToCart = () => {
-    dispatch(addToCart({ _id, name, productname, price, image: posterSrc }))
+    const existingItem = cartItems.find((item) => item._id === _id)
+
+    if (existingItem) {
+      dispatch(updateQuantity({ _id, quantity: existingItem.quantity + 1 }))
+    } else {
+      dispatch(
+        addToCart({
+          _id,
+          name,
+          productname,
+          price,
+          image: posterSrc,
+          quantity: 1,
+        }),
+      )
+    }
+    setCartCount(cartCount + 1)
     showNotification()
   }
 
   const showNotification = () => {
-    setNotification(true);
+    setNotification(true)
     setTimeout(() => {
-      setNotification(false);
-    }, 3000);
-  };
+      setNotification(false)
+    }, 3000)
+  }
+
 
   return (
     <>
       <div className={styles.creatorCard}>
         <div className={styles.videoContainer}>
-          <video
-            className={styles.creatorVideo}
-            playsInline
-            loop
-            preload="none"
-            poster={posterSrc}
-          >
+          <video className={styles.creatorVideo} playsInline loop preload="none" poster={posterSrc}>
             <source src={videoSrc} type="video/mp4" />
           </video>
           <div className={styles.gradientOverlay}></div>
@@ -82,6 +100,6 @@ export default function Creator2({ _id, videoSrc, posterSrc, name, productname, 
 
       {notification && <div className={styles.notification}>Item has been added to cart!</div>}
     </>
-  );
+  )
 }
 

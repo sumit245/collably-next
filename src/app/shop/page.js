@@ -1,52 +1,48 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
-import Header from "../components/HeaderShop";
-import Footer from "../components/FooterShop";
-import HeroCarousel from "../components/HeroCaraouselShop";
-import TopCreators from "../components/TopCreatorShop";
-import ProductCategories from "../components/ProductCategoriesShop";
-import TopBrands from "../components/TopBrandShop";
-import ReelsSection from "../components/ReelsSection";
-import ProductGrid from "../components/ProductGridShop";
-import FeaturedCreators from "../components/FeaturedCreatorShop";
-import TrendingBrands from "../components/TrendingBrandsShop";
-import TrendingUsersLeaderBoard from "../components/CreatorLeaderboardShop";
-import styles from "../shop/StyleShop.module.css";
-import ChooseYouSection from "../components/ChooseYou";
-import { LikeProvider } from "../actions/LikeContext";
-import { videoData1, videoData2, creators1 } from "../utils.faker";
-import ReelsSec2 from "../components/reelSec2";
-
-const fetchCreators = async () => {
-  try {
-    const response = await fetch("/api/creators");
-    if (!response.ok) throw new Error("Failed to fetch creators");
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching creators:", error);
-    return [];
-  }
-};
+import { useState } from "react"
+import { useSelector } from "react-redux"
+import Header from "../components/HeaderShop"
+import Footer from "../components/FooterShop"
+import HeroCarousel from "../components/HeroCaraouselShop"
+import TopCreators from "../components/TopCreatorShop"
+import ProductCategories from "../components/ProductCategoriesShop"
+import TopBrands from "../components/TopBrandShop"
+import ProductGrid from "../components/ProductGridShop"
+import FeaturedCreators from "../components/FeaturedCreatorShop"
+import TrendingBrands from "../components/TrendingBrandsShop"
+import TrendingUsersLeaderBoard from "../components/CreatorLeaderboardShop"
+import styles from "../shop/StyleShop.module.css"
+import ChooseYouSection from "../components/ChooseYou"
+import { LikeProvider } from "../actions/LikeContext"
+import { videoData1, videoData2 } from "../utils.faker"
+import ReelsSec2 from "../components/reelSec2"
 
 export default function ShopPage() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [creators, setCreators] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
+  const [creators, setCreators] = useState([])
+  const searchQuery = useSelector((state) => state.search.query)
 
-  useEffect(() => {
-    const getCreators = async () => {
-      try {
-        const data = await fetchCreators();
-        setCreators(data);
-      } catch (error) {
-        console.error("Error fetching creators", error);
-      } finally {
-        setIsLoading(false);
+  const filterComponentsBySearch = (Component) => {
+    return (props) => {
+      if (!searchQuery) return <Component {...props} />
+
+      const searchableContent = Component.searchableProps ? Component.searchableProps(props) : []
+
+      if (searchableContent.some((content) => content.toLowerCase().includes(searchQuery.toLowerCase()))) {
+        return <Component {...props} />
       }
-    };
+      return null
+    }
+  }
 
-    getCreators();
-  }, []);
+  const FilteredTopCreators = filterComponentsBySearch(TopCreators)
+  const FilteredProductCategories = filterComponentsBySearch(ProductCategories)
+  const FilteredTopBrands = filterComponentsBySearch(TopBrands)
+  const FilteredProductGrid = filterComponentsBySearch(ProductGrid)
+  const FilteredFeaturedCreators = filterComponentsBySearch(FeaturedCreators)
+  const FilteredTrendingBrands = filterComponentsBySearch(TrendingBrands)
+  const FilteredTrendingUsersLeaderBoard = filterComponentsBySearch(TrendingUsersLeaderBoard)
 
   return (
     <LikeProvider>
@@ -55,28 +51,22 @@ export default function ShopPage() {
           <Header />
           <main>
             <HeroCarousel data={videoData1} />
-            <TopCreators />
+            <FilteredTopCreators />
             <HeroCarousel data={videoData2} />
-            <ProductCategories />
-            <TopBrands />
-            <ReelsSec2 creators={creators1} sectionTitle="Order Product Testing" />
-            <ReelsSection creators={creators} sectionTitle="Shop the Look" isLoading={isLoading} />
-            <ReelsSection creators={creators} sectionTitle="Fashion Reels" />
-            <ReelsSection creators={creators} sectionTitle="Beauty Reels" />
-            <ReelsSection creators={creators} sectionTitle="Genz Style" />
-            <ProductGrid />
-            <FeaturedCreators />
-            <TrendingBrands />
-            <ReelsSection creators={creators} sectionTitle="Trending Products" />
-            <ReelsSection creators={creators} sectionTitle="Most Loved" />
-            <ReelsSection creators={creators} sectionTitle="Latest from creators" />
-            <ReelsSection creators={creators} sectionTitle="Fresh Drops" />
-            <TrendingUsersLeaderBoard />
+            <FilteredProductCategories />
+            <FilteredTopBrands />
+            <ReelsSec2 sectionTitle="Electronics Products" category="Electronics" />
+            <ReelsSec2 sectionTitle="Beauty Products" category="Beauty" />
+            <FilteredProductGrid />
+            <FilteredFeaturedCreators />
+            <FilteredTrendingBrands />
+            <FilteredTrendingUsersLeaderBoard />
             <ChooseYouSection />
           </main>
           <Footer />
         </div>
       </div>
     </LikeProvider>
-  );
+  )
 }
+
