@@ -6,8 +6,9 @@ import styles from "../videoRec/styles.vid.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import { RotateCcw, Check } from "lucide-react"
 import FooterCreator from "../components/FooterCreator"
+import { Suspense } from 'react'
 
-export default function PreviewPage() {
+const PreviewPageContent = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const mediaType = searchParams.get("mediaType")
@@ -85,3 +86,10 @@ export default function PreviewPage() {
   )
 }
 
+export default function PreviewPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PreviewPageContent />
+    </Suspense>
+  )
+}

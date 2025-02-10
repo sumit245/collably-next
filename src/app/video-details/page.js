@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useSelector } from "react-redux"
 import styles from "./page.module.css"
@@ -9,7 +9,7 @@ import FooterCreator from "../components/FooterCreator"
 import { Package, Eye, Users, Copy, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 
-export default function MediaDetails() {
+const MediaDetailsContent = () => {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [mediaSrc, setMediaSrc] = useState("")
@@ -77,11 +77,11 @@ export default function MediaDetails() {
     <div className={stylesShop.bodyShop}>
       <div className={stylesShop.smartphoneContainer}>
         <div className={styles.container}>
-        <Link href="/preview">
-        <button className={styles.backButton}>
-          <ArrowLeft size={24} color="white" />
-        </button>
-        </Link>
+          <Link href="/preview">
+            <button className={styles.backButton}>
+              <ArrowLeft size={24} color="white" />
+            </button>
+          </Link>
           <div className={styles.mediaPreview}>
             {mediaType === "photo" ? (
               <img src={mediaSrc || "/placeholder.svg"} alt="Preview" className={styles.media} />
@@ -123,5 +123,13 @@ export default function MediaDetails() {
         <FooterCreator />
       </div>
     </div>
+  )
+}
+
+export default function MediaDetails() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <MediaDetailsContent />
+    </Suspense>
   )
 }

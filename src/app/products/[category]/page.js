@@ -1,64 +1,66 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { useParams } from "next/navigation"
-import { useDispatch, useSelector } from "react-redux"
-import { Search } from "lucide-react"
-import { fetchProducts } from "../../store/productSlice"
-import CreatorCard from "../../components/Cards/creator2"
-import Header from "../../components/HeaderShop"
-import Footer from "../../components/FooterShop"
-import styles from "./page.module.css"
-import styleshop from "../../shop/StyleShop.module.css"
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { Search } from "lucide-react";
+import { fetchProducts } from "../../store/productSlice";
+import CreatorCard from "../../components/Cards/creator2";
+import Header from "../../components/HeaderShop";
+import Footer from "../../components/FooterShop";
+import styles from "./page.module.css";
+import styleshop from "../../shop/StyleShop.module.css";
+import { LikeProvider } from "../../actions/LikeContext";  // Import LikeProvider
 
 export default function CategoryProducts() {
-  const params = useParams()
-  const dispatch = useDispatch()
-  const allProducts = useSelector((state) => state.products.items)
-  const [searchTerm, setSearchTerm] = useState("")
-  const category = params.category.charAt(0).toUpperCase() + params.category.slice(1)
+  const params = useParams();
+  const dispatch = useDispatch();
+  const allProducts = useSelector((state) => state.products.items);
+  const [searchTerm, setSearchTerm] = useState("");
+  const category = params.category.charAt(0).toUpperCase() + params.category.slice(1);
 
   useEffect(() => {
-    dispatch(fetchProducts())
-  }, [dispatch])
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
-  const categoryProducts = allProducts.filter((product) => product.category === category)
+  const categoryProducts = allProducts.filter((product) => product.category === category);
 
   const filteredProducts = categoryProducts.filter((product) =>
     product.productname.toLowerCase().includes(searchTerm.toLowerCase()),
-  )
+  );
 
   return (
-    <div className={styleshop.bodyShop}>
+    <LikeProvider> {/* Wrap with LikeProvider */}
+      <div className={styleshop.bodyShop}>
         <div className={styleshop.smartphoneContainer}>
-        <Header />
-    <div className={styles.categoryPage}>
-      <div className={styles.categoryHeader}>
-        <h1 className={styles.categoryTitle}>{category} Products</h1>
-        <div className={styles.searchContainer}>
-          <Search className={styles.searchIcon} />
-          <input
-            type="text"
-            placeholder="Search products..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className={styles.searchInput}
-          />
+          <Header />
+          <div className={styles.categoryPage}>
+            <div className={styles.categoryHeader}>
+              <h1 className={styles.categoryTitle}>{category} Products</h1>
+              <div className={styles.searchContainer}>
+                <Search className={styles.searchIcon} />
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className={styles.searchInput}
+                />
+              </div>
+            </div>
+            {filteredProducts.length === 0 ? (
+              <p className={styles.noProducts}>No products found</p>
+            ) : (
+              <div className={styles.productsGrid}>
+                {filteredProducts.map((product) => (
+                  <CreatorCard key={product._id} {...product} />
+                ))}
+              </div>
+            )}
+          </div>
+          <Footer />
         </div>
       </div>
-      {filteredProducts.length === 0 ? (
-        <p className={styles.noProducts}>No products found</p>
-      ) : (
-        <div className={styles.productsGrid}>
-          {filteredProducts.map((product) => (
-            <CreatorCard key={product._id} {...product} />
-          ))}
-        </div>
-      )}
-    </div>
-    <Footer />
-    </div>
-    </div>
-  )
+    </LikeProvider>
+  );
 }
-

@@ -1243,8 +1243,6 @@
     background-color: #e0e0e0;
   }
 }
-/* Add these new styles to your existing CSS */
-
 .sectionHeader {
   display: flex;
   justify-content: space-between;
