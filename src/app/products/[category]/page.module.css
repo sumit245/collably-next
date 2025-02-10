@@ -7,14 +7,16 @@
   .categoryHeader {
     display: flex;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: 2rem;
+    flex-direction: column;
   }
   
   .categoryTitle {
-    font-size: 2rem;
+    margin: 0px 0px 30px 0px; 
     font-weight: bold;
-    color: #333;
+    color: #e61f93;
+    font-size: 1.7rem;
+    padding-left: 5px;
   }
   
   .searchContainer {
@@ -23,6 +25,7 @@
     background-color: #f5f5f5;
     border-radius: 20px;
     padding: 0.5rem 1rem;
+    border: 1px solid black;
   }
   
   .searchIcon {
@@ -35,6 +38,7 @@
     background: transparent;
     outline: none;
     font-size: 1rem;
+    width: 100%;
   }
   
   .noProducts {
@@ -48,6 +52,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 2rem;
+    margin-bottom: 2rem;
   }
   
   /* Styles for CreatorCard component */

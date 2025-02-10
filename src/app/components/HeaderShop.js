@@ -7,7 +7,8 @@ import { useSelector, useDispatch } from "react-redux"
 import { useRouter } from "next/navigation"
 import styles from "../shop/StyleShop.module.css"
 import { DropdownMenu } from "./DropdownMenu"
-import { setSearchQuery } from "../store/searchSlice" // We'll create this slice
+import { IoIosLogIn } from "react-icons/io";
+import { setSearchQuery } from "../store/searchSlice"
 
 export default function Header() {
   const likeCount = useSelector((state) => state.likedProducts.count)
@@ -69,6 +70,7 @@ export default function Header() {
             </button>
           </form>
         )}
+
         <button className={styles.iconBtnShop}>
           <Link href="/product">
             <Image src="/images/wishlist-blue.svg" alt="Wishlist" width={24} height={24} />
@@ -94,7 +96,7 @@ export default function Header() {
           </div>
         ) : (
           <button className={styles.loginButton} onClick={handleLoginRedirect}>
-            Login
+            Login<IoIosLogIn />
           </button>
         )}
       </div>

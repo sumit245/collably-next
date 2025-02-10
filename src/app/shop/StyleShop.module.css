@@ -360,15 +360,6 @@
   border: none;
   background: none;
 }
-.creatorScroll {
-  display: flex;
-  gap: 0.75rem;
-  justify-self: center;
-}
-
-.creatorScroll::-webkit-scrollbar {
-  display: none;
-}
 
 .creatorCard {
   margin: 0.25rem;
@@ -1288,21 +1279,20 @@
 
 /* Update existing styles */
 .creatorScroll {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
   gap: 1rem;
-  overflow-x: hidden;
+ 
 }
 
-@media (max-width: 1024px) {
-  .creatorScroll {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 640px) {
-  .creatorScroll {
-    grid-template-columns: 1fr;
-  }
+.loginButton{
+  border: none;
+  display: flex;
+  align-items: center;
+  background-color: #ff0055;
+  color: #fff;
+  border-radius: .2rem;
+  cursor: pointer;
 }
 
