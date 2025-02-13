@@ -1,20 +1,49 @@
+// setLink.js
 "use client"
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { ChevronDown, ChevronUp, ArrowLeft } from 'lucide-react'
+import { useState, useEffect } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { useDispatch, useSelector } from "react-redux"
+import { ChevronDown, ChevronUp, ArrowLeft, Search } from 'lucide-react'
 import styles from "./page.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import FooterCreator from "../components/FooterCreator"
 import Link from "next/link"
+import { fetchAllReferrals } from "../store/brandSlice"
 
 export default function SetProduct() {
+  const dispatch = useDispatch()
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const linkUrl = "https://collab.ly/QALSdo"
+  const [searchTerm, setSearchTerm] = useState("")
+  const [selectedLink, setSelectedLink] = useState("")
+  
+  // Ensure referrals is always an array
+  const referrals = useSelector((state) => state.brands.referrals) || []
+
+  useEffect(() => {
+    dispatch(fetchAllReferrals())
+  }, [dispatch])
+
+  useEffect(() => {
+    const product = searchParams.get("product")
+    if (product) {
+      setSelectedLink(product)
+    }
+  }, [searchParams])
+
+  const filteredReferrals = referrals?.length
+    ? referrals.filter((referral) =>
+        referral.referralLink.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : []
 
   const handleDone = () => {
-    router.push(`/video-details?product=${encodeURIComponent(linkUrl)}`)
+    const currentFormData = JSON.parse(localStorage.getItem("videoDetailsData") || "{}")
+    const updatedFormData = { ...currentFormData, product: selectedLink }
+    localStorage.setItem("videoDetailsData", JSON.stringify(updatedFormData))
+    router.push(`/video-details?product=${encodeURIComponent(selectedLink)}`)
   }
 
   return (
@@ -31,19 +60,43 @@ export default function SetProduct() {
             <div className={styles.customDropdown}>
               <label htmlFor="link">Add Link</label>
               <div className={styles.dropdownHeader} onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-                <span className={styles.placeholder}>{linkUrl}</span>
+                <span className={styles.placeholder}>{selectedLink || "Select a link"}</span>
                 {isDropdownOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </div>
               {isDropdownOpen && (
                 <div className={styles.dropdownList}>
-                  <div className={styles.dropdownItem} onClick={() => setIsDropdownOpen(false)}>
-                    {linkUrl}
+                  <div className={styles.searchContainer}>
+                    <Search size={20} />
+                    <input
+                      type="text"
+                      placeholder="Search links..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className={styles.searchInput}
+                    />
                   </div>
+                  {filteredReferrals.length > 0 ? (
+  filteredReferrals.map((referral, index) => (
+    <div
+      key={referral.id || index} // Ensure unique key
+      className={styles.dropdownItem}
+      onClick={() => {
+        setSelectedLink(referral.referralLink)
+        setIsDropdownOpen(false)
+      }}
+    >
+      {referral.referralLink}
+    </div>
+  ))
+) : (
+  <p className={styles.noResults}>No referrals found</p>
+)}
+
                 </div>
               )}
             </div>
           </div>
-          <button className={styles.doneButton} onClick={handleDone}>
+          <button className={styles.doneButton} onClick={handleDone} disabled={!selectedLink}>
             Done
           </button>
         </div>
