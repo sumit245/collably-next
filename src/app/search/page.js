@@ -116,7 +116,6 @@ function SearchSection() {
         </div>
 
         {/* Tabs */}
-
         <div className={styles.tabsContainer}>
           {tabs.map((tab) => (
             <div
@@ -145,7 +144,6 @@ function SearchSection() {
             ))}
           </div>
         </div>
-
 
         {/* Bottom Navigation */}
         <div className={styles.bottomNav}>

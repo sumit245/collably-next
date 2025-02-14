@@ -1,15 +1,19 @@
-/* Global Styles */
+/* LoginForm.module.css */
+
+
 .container {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f9fafb;
+  display: flex;
+  justify-self: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  max-width: 450px;
   }
   
   .formContainer {
     max-width: 28rem;
     width: 100%;
+
     padding: 2rem;
     background-color: white;
     border-radius: 0.5rem;
@@ -88,9 +92,7 @@
     top: 50%;
     right: 0.75rem;
     transform: translateY(-50%);
-    border: none;
-    background: none;
-    cursor: pointer;
+    color: #d1d5db;
   }
   
   .button {
