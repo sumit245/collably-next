@@ -15,3 +15,8 @@ export const logout = () =>
     method: "POST",
   })
 
+  export const register = (fullname, username, email, password , contactNumber) =>
+    api.fetch("/register", {
+      method: "POST",
+      body: JSON.stringify({ fullname, username, email, password, contactNumber }),
+    })

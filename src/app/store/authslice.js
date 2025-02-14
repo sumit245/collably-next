@@ -16,9 +16,9 @@ export const loginWithPhoneAsync = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
   "auth/register",
-  async ({ fullname, username, email, password }, { rejectWithValue }) => {
+  async ({ fullname, username, email, password, contactNumber }, { rejectWithValue }) => {
     try {
-      const response = await authService.register(fullname, username, email, password)
+      const response = await authService.register(fullname, username, email, password, contactNumber)
       localStorage.setItem("accessToken", response.access_token)
       return response
     } catch (error) {
