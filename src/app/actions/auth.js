@@ -23,9 +23,9 @@ export const loginWithPhone = (contactNumber) => async (dispatch) => {
   }
 }
 
-export const register = (fullname, username, email, password) => async (dispatch) => {
+export const register = (fullname, username, email, password, contactNumber) => async (dispatch) => {
   try {
-    const result = await dispatch(registerUser({ fullname, username, email, password }))
+    const result = await dispatch(registerUser({ fullname, username, email, password, contactNumber}))
     if (registerUser.fulfilled.match(result)) {
       return { success: true, username: result.payload.username }
     } else {
@@ -72,4 +72,3 @@ export const logout = () => async (dispatch) => {
     console.error("Logout error:", error)
   }
 }
-
