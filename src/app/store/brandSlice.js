@@ -35,11 +35,11 @@ export const createReferralLink = createAsyncThunk(
   },
 )
 
-export const fetchAllReferrals = createAsyncThunk(
-  "brands/fetchAllReferrals",
-  async (_, { rejectWithValue }) => {
+export const fetchReferralsByUserId = createAsyncThunk(
+  "brands/fetchReferralsByUserId",
+  async (userId, { rejectWithValue }) => {
     try {
-      const response = await brandService.getAllReferrals()
+      const response = await brandService.getReferralsByUserId(userId)
       return response
     } catch (error) {
       return rejectWithValue(error.message)
@@ -52,9 +52,11 @@ const brandsSlice = createSlice({
     items: [],
     products: [],
     referralLink: null,
+    referrals: [],
     isLoading: false,
     error: null,
   },
+
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -95,15 +97,15 @@ const brandsSlice = createSlice({
         state.error = action.payload
       })
       builder
-      .addCase(fetchAllReferrals.pending, (state) => {
+      .addCase(fetchReferralsByUserId.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(fetchAllReferrals.fulfilled, (state, action) => {
+      .addCase(fetchReferralsByUserId.fulfilled, (state, action) => {
         state.isLoading = false
         state.referrals = action.payload
         state.error = null
       })
-      .addCase(fetchAllReferrals.rejected, (state, action) => {
+      .addCase(fetchReferralsByUserId.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload
       })

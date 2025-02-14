@@ -10,5 +10,5 @@ export const createReferralLink = (userId, productUrl) =>
     body: JSON.stringify({ userId, productUrl }),
   })
 
-  export const getAllReferrals = () => api.fetch("/referrals")
+  export const getReferralsByUserId = (userId) => api.fetch(`/referral/${userId}`)
 

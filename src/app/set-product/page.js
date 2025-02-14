@@ -9,7 +9,7 @@ import styles from "./page.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import FooterCreator from "../components/FooterCreator"
 import Link from "next/link"
-import { fetchAllReferrals } from "../store/brandSlice"
+import { fetchReferralsByUserId } from "../store/brandSlice"
 
 export default function SetProduct() {
   const dispatch = useDispatch()
@@ -18,13 +18,15 @@ export default function SetProduct() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedLink, setSelectedLink] = useState("")
-  
-  // Ensure referrals is always an array
-  const referrals = useSelector((state) => state.brands.referrals) || []
+  const referrals = useSelector((state) => state.brands.referrals || [])
+
+  const userId = useSelector((state) => state.auth.user?.user._id)
 
   useEffect(() => {
-    dispatch(fetchAllReferrals())
-  }, [dispatch])
+    if (userId) {
+      dispatch(fetchReferralsByUserId(userId))
+    }
+  }, [dispatch, userId])
 
   useEffect(() => {
     const product = searchParams.get("product")
@@ -33,11 +35,10 @@ export default function SetProduct() {
     }
   }, [searchParams])
 
-  const filteredReferrals = referrals?.length
-    ? referrals.filter((referral) =>
-        referral.referralLink.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    : []
+  const filteredReferrals = (referrals || []).filter((referral) =>
+    referral.referralLink.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+  
 
   const handleDone = () => {
     const currentFormData = JSON.parse(localStorage.getItem("videoDetailsData") || "{}")
@@ -75,28 +76,23 @@ export default function SetProduct() {
                       className={styles.searchInput}
                     />
                   </div>
-                  {filteredReferrals.length > 0 ? (
-  filteredReferrals.map((referral, index) => (
-    <div
-      key={referral.id || index} // Ensure unique key
-      className={styles.dropdownItem}
-      onClick={() => {
-        setSelectedLink(referral.referralLink)
-        setIsDropdownOpen(false)
-      }}
-    >
-      {referral.referralLink}
-    </div>
-  ))
-) : (
-  <p className={styles.noResults}>No referrals found</p>
-)}
-
+                  {filteredReferrals.map((referral) => (
+                    <div
+                      key={referral._id}
+                      className={styles.dropdownItem}
+                      onClick={() => {
+                        setSelectedLink(referral.referralLink)
+                        setIsDropdownOpen(false)
+                      }}
+                    >
+                      {referral.referralLink}
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
           </div>
-          <button className={styles.doneButton} onClick={handleDone} disabled={!selectedLink}>
+          <button className={styles.doneButton} onClick={handleDone}>
             Done
           </button>
         </div>
