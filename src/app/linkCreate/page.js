@@ -1,42 +1,47 @@
+// linkCreate.js
 "use client"
 
 import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import styles from "./page.module.css"
-import FooterCreator from "../components/FooterCreator"
 import stylesShop from "../shop/StyleShop.module.css"
+import FooterCreator from "../components/FooterCreator"
 import ShareModal from "./modalLink"
+import { createReferralLink } from "../store/brandSlice"
+import { toast } from "react-hot-toast"
 
 export default function LinksPage() {
+  const dispatch = useDispatch()
   const [activeTab, setActiveTab] = useState("my-links")
   const [inputText, setInputText] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false)
-
+  const userId = useSelector((state) => state.auth.user?.user._id)
+  const referralLink = useSelector((state) => state.brands.referralLink)
+console.log(userId)
   const handleInputChange = (e) => {
     setInputText(e.target.value)
   }
 
   const handlePasteClick = async () => {
     if (inputText) {
-      // If there's text and button shows "Create", open the modal
-      setIsModalOpen(true)
+      try {
+        await dispatch(createReferralLink({ userId, productUrl: inputText })).unwrap()
+        setIsModalOpen(true)
+      } catch (error) {
+        toast.error("Failed to create referral link")
+      }
     } else {
-      // If no text and button shows "Paste", try to paste from clipboard
       try {
         const clipboardText = await navigator.clipboard.readText()
         setInputText(clipboardText)
       } catch (err) {
         console.error("Failed to read clipboard contents: ", err)
+        toast.error("Failed to paste from clipboard")
       }
     }
   }
 
   const buttonLabel = inputText ? "Create" : "Paste"
-
-  // Example product data - in a real app this would come from your backend
-  const productData = {
-    name: "Eucerin Anti-Pigment Dual Serum With Thiamidol & Hyaluronic Acid, Reduces Dark Spots & Rejuvenates",
-    link: "https://collab.ly/QALSdo",
-  }
 
   return (
     <div className={stylesShop.bodyShop}>
@@ -103,11 +108,10 @@ export default function LinksPage() {
         <ShareModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          productName={productData.name}
-          productLink={productData.link}
+          productName="Product Name" // You might want to fetch this from the API response
+          productLink={referralLink}
         />
       </div>
     </div>
   )
 }
-

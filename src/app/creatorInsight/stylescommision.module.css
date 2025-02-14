@@ -64,7 +64,7 @@
   .donutBackground {
     fill: none;
     stroke: #e5e7eb;
-    stroke-width: 10;
+    strokeWidth: 10;
     opacity: 0.2;
   }
   

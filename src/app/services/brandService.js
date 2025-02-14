@@ -4,9 +4,11 @@ export const getAllBrands = () => api.fetch("/brands")
 
 export const getProductsByBrand = (brandId) => api.fetch(`/getallproducts?brandId=${brandId}`)
 
-export const createReferralLink = (userId, productId, brandId) =>
+export const createReferralLink = (userId, productUrl) =>
   api.fetch("/createreferral", {
     method: "POST",
-    body: JSON.stringify({ userId, productId, brandId }),
+    body: JSON.stringify({ userId, productUrl }),
   })
+
+  export const getReferralsByUserId = (userId) => api.fetch(`/referral/${userId}`)
 

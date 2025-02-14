@@ -1,68 +1,68 @@
-"use client";
+"use client"
 
-import React, { useState } from "react";
-import styles from "../search/stylesSearch.module.css";
-import Header from "../components/HeaderShop";
-import Footer from "../components/FooterShop";
-import { LikeProvider } from "../actions/LikeContext";
-import Image from 'next/image'
+import { useState } from "react"
+import styles from "./SearchSection.module.css"
+import Header from "../components/HeaderShop"
+import Footer from "../components/FooterShop"
+import { LikeProvider } from "../actions/LikeContext"
+import Image from "next/image"
+import { ChevronDown, Search } from "lucide-react"
 
 function SearchSection() {
-  const [activeTab, setActiveTab] = useState("reels");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [activeTab, setActiveTab] = useState("reels")
+  const [searchQuery, setSearchQuery] = useState("")
+  const [selectedCategory, setSelectedCategory] = useState("All Categories")
+  const [selectedGender, setSelectedGender] = useState("All")
 
   const tabs = [
     { id: "reels", label: "Reels" },
     { id: "collections", label: "Collections" },
     { id: "posts", label: "Posts" },
     { id: "videos", label: "Videos" },
-  ];
-
-  const images = [
-    { id: 1, height: 300 },
-    { id: 2, height: 400 },
-    { id: 3, height: 250 },
-    { id: 4, height: 350 },
-    { id: 5, height: 450 },
-    { id: 6, height: 300 },
-    { id: 7, height: 400 },
-    { id: 8, height: 250 },
-    { id: 9, height: 350 }
   ]
 
-  const categories = [
-    "All Categories",
-    "Fashion",
-    "Electronics",
-    "Home",
-    "Beauty",
-  ];
+  const categories = ["All Categories", "Fashion", "Electronics", "Home", "Beauty"]
 
-  const genders = ["All", "Men", "Women", "Unisex"];
+  const genders = ["All", "Men", "Women", "Unisex"]
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case "reels":
+        return (
+          <div className={styles.gridContainer}>
+            {[...Array(9)].map((_, i) => (
+              <div key={i} className={styles.gridItem}>
+                <Image
+                  src={`https://picsum.photos/300/300?random=${i}`}
+                  alt={`Content thumbnail ${i + 1}`}
+                  className={styles.gridImage}
+                  width={300}
+                  height={300}
+                />
+              </div>
+            ))}
+          </div>
+        )
+      case "collections":
+        return <div>Collections content</div>
+      case "posts":
+        return <div>Posts content</div>
+      case "videos":
+        return <div>Videos content</div>
+      default:
+        return null
+    }
+  }
 
   return (
     <LikeProvider>
       <div className={styles.container}>
         <Header />
+
         {/* Search Bar */}
         <div className={styles.searchBar}>
-          <div style={{ position: "relative" }}>
-            <div className={styles.searchIcon}>
-              <svg
-                width="14"
-                height="14"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </div>
+          <div className={styles.searchInputWrapper}>
+            <Search className={styles.searchIcon} />
             <input
               type="text"
               placeholder="Search for products, reels & creators"
@@ -96,23 +96,35 @@ function SearchSection() {
 
           <button className={styles.filterButton}>All Filters</button>
 
-          <select className={styles.filterSelect}>
-            <option value="">Categories</option>
-            {categories.map((category, index) => (
-              <option key={index} value={category.toLowerCase()}>
-                {category}
-              </option>
-            ))}
-          </select>
+          <div className={styles.customSelect}>
+            <select
+              className={styles.filterSelect}
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              {categories.map((category, index) => (
+                <option key={index} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className={styles.selectIcon} />
+          </div>
 
-          <select className={styles.filterSelect}>
-            <option value="">Gender</option>
-            {genders.map((gender, index) => (
-              <option key={index} value={gender.toLowerCase()}>
-                {gender}
-              </option>
-            ))}
-          </select>
+          <div className={styles.customSelect}>
+            <select
+              className={styles.filterSelect}
+              value={selectedGender}
+              onChange={(e) => setSelectedGender(e.target.value)}
+            >
+              {genders.map((gender, index) => (
+                <option className={styles.itemContainer} key={index} value={gender}>
+                  {gender}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className={styles.selectIcon} />
+          </div>
         </div>
 
         {/* Tabs */}
@@ -120,9 +132,7 @@ function SearchSection() {
           {tabs.map((tab) => (
             <div
               key={tab.id}
-              className={`${styles.tab} ${
-                activeTab === tab.id ? styles.activeTab : ""
-              }`}
+              className={`${styles.tab} ${activeTab === tab.id ? styles.activeTab : ""}`}
               onClick={() => setActiveTab(tab.id)}
             >
               {tab.label}
@@ -131,28 +141,13 @@ function SearchSection() {
         </div>
 
         {/* Content Grid */}
-        <div className={styles.contentGrid}>
-          <div className={styles.gridContainer}>
-            {[...Array(9)].map((_, i) => (
-              <div key={i} className={styles.gridItem}>
-                <img
-                  src={`https://picsum.photos/300/300?random=${i}`}
-                  alt={`Content thumbnail ${i + 1}`}
-                  className={styles.gridImage}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
+        <div className={styles.contentGrid}>{renderContent()}</div>
 
-        {/* Bottom Navigation */}
-        <div className={styles.bottomNav}>
-          {/* Bottom navigation buttons are commented out as per the last edit */}
-        </div>
         <Footer />
       </div>
     </LikeProvider>
-  );
+  )
 }
 
-export default SearchSection;
+export default SearchSection
+

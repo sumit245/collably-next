@@ -1,5 +1,4 @@
-/* Existing styles remain the same */
-
+/* Container Styles */
 .container {
   max-width: 450px;
   margin: 0 auto;
@@ -8,8 +7,6 @@
   display: flex;
   flex-direction: column;
   font-size: 14px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
 }
 
 .searchBar {
@@ -47,193 +44,159 @@
   color: #6b7280;
 }
 
-.filtersContainer {
-  display: flex;
-  gap: 1rem;
+/* Hamburger Menu Styles */
+.hamburgerMenu {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 80%;
+  height: 100%;
+  background-color: #fff;
+  transition: left 0.3s ease-in-out;
+  z-index: 1000;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.hamburgerMenu.open {
+  left: 0;
+}
+
+.menuHeader {
   padding: 1rem;
-  overflow-x: auto;
   border-bottom: 1px solid #e5e7eb;
-  background-color: #fafafa;
-  border-radius: 0 0 12px 12px;
-}
-
-.filterButton,
-.filterSelect {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 0.6rem 1rem;
-  border-radius: 9999px;
-  border: 1px solid #d1d5db;
-  background-color: #ffffff;
-  font-size: 0.9rem;
-  font-weight: 500;
-  white-space: nowrap;
-  position: relative;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  overflow: hidden;
 }
 
-.filterButton:hover,
-.filterSelect:hover {
-  background-color: #f3f4f6;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.filterSelect {
-  position: relative;
-  padding-right: 2.5rem;
-  transition: all 0.4s ease;
-  overflow: hidden;
-  max-height: 40px; /* Default height */
-  border: 1px solid #d1d5db;
-}
-
-.filterSelect.open {
-  max-height: 300px; /* Open dropdown height */
-  transition: max-height 0.5s ease-in-out;
-}
-
-.filterSelect:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
-  border-color: #3b82f6;
-}
-
-/* Added smooth animation for opening the dropdown */
-.filterSelect option {
-  padding: 0.75rem;
-  font-size: 1rem;
-  color: #4b5563;
-  background-color: white;
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-/* On focus, show options smoothly */
-.filterSelect.open option {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Hover effect for dropdown items */
-.filterSelect option:hover {
-  background-color: #f3f4f6;
-  color: #3b82f6;
-}
-
-.filterSelect::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: 1rem;
-  width: 0.6rem;
-  height: 0.6rem;
-  border-left: 0.2rem solid transparent;
-  border-right: 0.2rem solid transparent;
-  border-top: 0.4rem solid #6b7280;
-  transform: translateY(-50%) rotate(0deg);
-  transition: transform 0.3s ease;
-  pointer-events: none;
-}
-
-/* Rotate the dropdown arrow on focus */
-.filterSelect:focus::after {
-  transform: translateY(-50%) rotate(180deg);
-}
-
-.contentGrid {
-  flex: 1;
-  overflow: auto;
+.menuItems {
   padding: 1rem;
 }
 
-.gridContainer {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
-  grid-auto-rows: 200px; /* Default row height */
+.menuItem {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-.gridItem {
-  background-color: #e5e7eb;
-  overflow: hidden;
-  position: relative;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+.menuItem:last-child {
+  border-bottom: none;
 }
 
-.gridItem:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* Images adjust their aspect ratio automatically */
-.gridImage {
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 999;
 }
 
-.bottomNav {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 0.75rem;
-  border-top: 1px solid #e5e7eb;
-  background-color: #fafafa;
-  border-radius: 0 0 12px 12px;
+.overlay.open {
+  opacity: 1;
+  visibility: visible;
 }
 
 .navButton {
-  padding: 0.75rem;
-  transition: background-color 0.3s ease;
-}
-
-.navButton:hover {
-  background-color: #f3f4f6;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .navIcon {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: 2rem;
+  height: 2rem;
   color: #6b7280;
 }
 
-.tabsContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 12px;
-  margin: 20px 0;
-  border-bottom: 1px solid #d1d5db;
+/* Dropdown Styles */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-top: 1rem;
 }
 
-.tab {
-  padding: 12px 20px;
-  cursor: pointer;
-  font-size: 16px;
-  color: #6b7280;
-  font-weight: 600;
-  text-align: center;
-  transition: all 0.3s ease;
-  border-radius: 8px;
-  margin: 0 12px;
+.dropdownToggle {
   background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 150px;
+  transition: all 0.3s ease;
 }
 
-.tab:hover {
+.dropdownToggle:hover {
   background-color: #e5e7eb;
 }
 
-.activeTab {
-  color: black;
-  font-weight: bold;
-  background-color: #3b82f6;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 10px;
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  z-index: 10;
+  min-width: 150px;
+}
+
+.dropdownMenu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.dropdownItem {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dropdownItem:hover {
+  background-color: #f3f4f6;
+}
+
+.dropdownItem:first-child {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.dropdownItem:last-child {
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.chevronIcon {
+  transition: transform 0.3s ease;
+}
+
+.chevronIcon.open {
+  transform: rotate(180deg);
+}
+
+
+option{
+  background-color: #6b7280;
 }

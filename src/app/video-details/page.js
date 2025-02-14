@@ -1,3 +1,4 @@
+// post-details.js
 "use client"
 
 import { useState, useEffect, Suspense } from "react"
@@ -28,29 +29,46 @@ const MediaDetailsContent = () => {
     const type = searchParams.get("mediaType")
     const mediaId = searchParams.get("mediaId")
     const product = searchParams.get("product")
-
+  
     if (src) {
       setMediaSrc(src)
+      localStorage.setItem("savedMediaSrc", src) // Save it before navigation
     } else if (mediaId) {
       const storedMedia = sessionStorage.getItem(`media_${mediaId}`)
       if (storedMedia) {
         setMediaSrc(storedMedia)
+        localStorage.setItem("savedMediaSrc", storedMedia) // Save it before navigation
+      }
+    } else {
+      // Retrieve from localStorage if returning from another page
+      const savedSrc = localStorage.getItem("savedMediaSrc")
+      if (savedSrc) {
+        setMediaSrc(savedSrc)
       }
     }
-
+  
     if (type) {
       setMediaType(type)
+      localStorage.setItem("savedMediaType", type) // Save type as well
+    } else {
+      const savedType = localStorage.getItem("savedMediaType")
+      if (savedType) {
+        setMediaType(savedType)
+      }
     }
-
-    if (product) {
-      setFormData(prevState => ({ ...prevState, product }))
-    }
-
+  
     const storedFormData = localStorage.getItem("videoDetailsData")
     if (storedFormData) {
-      setFormData(prevState => ({ ...JSON.parse(storedFormData), product: product || prevState.product }))
+      const parsedFormData = JSON.parse(storedFormData)
+      setFormData(prevState => ({
+        ...parsedFormData,
+        product: product || parsedFormData.product || prevState.product
+      }))
+    } else if (product) {
+      setFormData(prevState => ({ ...prevState, product }))
     }
   }, [searchParams])
+  
 
   const handleSubmit = async () => {
     if (formData.product && formData.visibility && formData.audience) {
@@ -60,8 +78,12 @@ const MediaDetailsContent = () => {
   }
 
   const handleproductClick = () => {
+    if (mediaSrc) {
+      localStorage.setItem("savedMediaSrc", mediaSrc) 
+    }
     router.push("/set-product")
   }
+  
 
   const handleVisibilityClick = () => {
     router.push("/set-visibility")

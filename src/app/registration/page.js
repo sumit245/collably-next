@@ -10,6 +10,7 @@ const RegistrationForm = () => {
   const [fullname, setFullname] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const router = useRouter();
@@ -91,6 +92,20 @@ const RegistrationForm = () => {
           className={styles.input}
         />
       </div>
+      <div>
+  <label htmlFor="contactNumber" className={styles.label}>
+    Contact Number
+  </label>
+  <input
+    type="tel" 
+    id="contactNumber"
+    value={contactNumber}
+    onChange={(e) => setContactNumber(e.target.value)}
+    required
+    className={styles.input}
+  />
+</div>
+
       <div>
         <label htmlFor="password" className={styles.label}>
           Password

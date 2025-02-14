@@ -1,3 +1,4 @@
+// brandSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import * as brandService from "../services/brandService"
 
@@ -24,25 +25,38 @@ export const fetchProductsByBrand = createAsyncThunk(
 
 export const createReferralLink = createAsyncThunk(
   "brands/createReferralLink",
-  async ({ userId, productId, brandId }, { rejectWithValue }) => {
+  async ({ userId, productUrl }, { rejectWithValue }) => {
     try {
-      const response = await brandService.createReferralLink(userId, productId, brandId)
-      return response
+      const response = await brandService.createReferralLink(userId, productUrl)
+      return response.referralLink
     } catch (error) {
       return rejectWithValue(error.message)
     }
   },
 )
 
+export const fetchReferralsByUserId = createAsyncThunk(
+  "brands/fetchReferralsByUserId",
+  async (userId, { rejectWithValue }) => {
+    try {
+      const response = await brandService.getReferralsByUserId(userId)
+      return response
+    } catch (error) {
+      return rejectWithValue(error.message)
+    }
+  }
+)
 const brandsSlice = createSlice({
   name: "brands",
   initialState: {
     items: [],
     products: [],
     referralLink: null,
+    referrals: [],
     isLoading: false,
     error: null,
   },
+
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -82,8 +96,19 @@ const brandsSlice = createSlice({
         state.isLoading = false
         state.error = action.payload
       })
+      builder
+      .addCase(fetchReferralsByUserId.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(fetchReferralsByUserId.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.referrals = action.payload
+        state.error = null
+      })
+      .addCase(fetchReferralsByUserId.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload
+      })
   },
 })
-
 export default brandsSlice.reducer
-
