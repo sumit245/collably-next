@@ -1,16 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import * as authService from "../services/authService"
 
-export const loginUser = createAsyncThunk("auth/login", async ({ email, password }, { rejectWithValue }) => {
-  try {
-    const response = await authService.login(email, password)
-    localStorage.setItem("accessToken", response.access_token)
-    console.log(response.access_token)
-    return response
-  } catch (error) {
-    return rejectWithValue(error.message)
-  }
-})
+export const loginWithPhoneAsync = createAsyncThunk(
+  "auth/loginWithPhone",
+  async ({ contactNumber }, { rejectWithValue }) => {
+    try {
+      const response = await authService.loginWithPhone(contactNumber)
+      localStorage.setItem("accessToken", response.access_token)
+      return response
+    } catch (error) {
+      return rejectWithValue(error.message)
+    }
+  },
+)
 
 export const registerUser = createAsyncThunk(
   "auth/register",
@@ -68,18 +70,18 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(loginUser.pending, (state) => {
-        state.isLoading = true
-      })
-      .addCase(loginUser.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.user = action.payload
-        state.error = null
-      })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.isLoading = false
-        state.error = action.payload
-      })
+    .addCase(loginWithPhoneAsync.pending, (state) => {
+      state.isLoading = true
+    })
+    .addCase(loginWithPhoneAsync.fulfilled, (state, action) => {
+      state.isLoading = false
+      state.user = action.payload
+      state.error = null
+    })
+    .addCase(loginWithPhoneAsync.rejected, (state, action) => {
+      state.isLoading = false
+      state.error = action.payload
+    })
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true
       })

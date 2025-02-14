@@ -122,7 +122,7 @@ function SearchSection() {
               onChange={(e) => setSelectedCategory(e.target.value)}
             >
               {categories.map((category, index) => (
-                <option key={index} value={category}>
+                <option className={styles.dropdownMenu} key={index} value={category}>
                   {category}
                 </option>
               ))}

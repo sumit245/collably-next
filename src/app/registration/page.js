@@ -17,7 +17,7 @@ const RegistrationForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await dispatch(register(fullname, username, email, password));
+    const result = await dispatch(register(fullname, username, email, password, contactNumber));
     if (result.success) {
       router.push("/login");
     } else {

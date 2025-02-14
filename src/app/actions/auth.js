@@ -1,16 +1,16 @@
 import {
-  loginUser,
+  loginWithPhoneAsync,
   registerUser,
   loginWithGoogleAsync,
   handleGoogleRedirectAsync,
   logoutUser,
 } from "../store/authslice"
 
-export const login = (email, password) => async (dispatch) => {
+export const loginWithPhone = (contactNumber) => async (dispatch) => {
   try {
-    const result = await dispatch(loginUser({ email, password }))
-    if (loginUser.fulfilled.match(result)) {
-      return { success: true, username: result.payload.username }
+    const result = await dispatch(loginWithPhoneAsync({ contactNumber }))
+    if (loginWithPhoneAsync.fulfilled.match(result)) {
+      return { success: true, user: result.payload }
     } else {
       return { success: false, error: result.error.message }
     }
