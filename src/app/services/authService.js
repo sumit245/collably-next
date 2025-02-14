@@ -1,15 +1,9 @@
 import api from "./api"
 
-export const login = (email, password) =>
+export const loginWithPhone = (contactNumber) =>
   api.fetch("/login", {
     method: "POST",
-    body: JSON.stringify({ email, password }),
-  })
-
-export const register = (fullname, username, email, password) =>
-  api.fetch("/register", {
-    method: "POST",
-    body: JSON.stringify({ fullname, username, email, password }),
+    body: JSON.stringify({ contactNumber }),
   })
 
 export const loginWithGoogle = () => api.fetch("/auth/google")

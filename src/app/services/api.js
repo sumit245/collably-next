@@ -27,12 +27,12 @@ const api = {
 
       if (!response.ok) {
         const errorData = await response.json()
-        console.error("Error Response:", errorData); 
+        console.error("Error Response:", errorData);  // Log detailed error from the server
         throw new Error(errorData.message || `HTTP error! status: ${response.status}`)
       }
 
       const responseData = await response.json();
-      console.log("Response Data:", responseData);  
+      console.log("Response Data:", responseData);  // Log the response data for debugging
       return responseData;
     } catch (error) {
       console.error("API Error:", error.message);
