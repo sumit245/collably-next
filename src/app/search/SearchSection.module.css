@@ -98,6 +98,7 @@
 
 .contentGrid {
   flex: 1;
+  color: #fff;
   overflow: auto;
   padding: 0.5rem;
 }
@@ -153,3 +154,10 @@
     padding: 0.75rem 1rem;
   }
 }
+
+.option{
+  color:#ff0055;
+  border: 1rem solid #ff0055;
+}
+
+

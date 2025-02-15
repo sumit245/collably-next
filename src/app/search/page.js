@@ -122,7 +122,7 @@ function SearchSection() {
               onChange={(e) => setSelectedCategory(e.target.value)}
             >
               {categories.map((category, index) => (
-                <option className={styles.dropdownMenu} key={index} value={category}>
+                <option className={styles.dropdownItem} key={index} value={category}>
                   {category}
                 </option>
               ))}
@@ -137,7 +137,7 @@ function SearchSection() {
               onChange={(e) => setSelectedGender(e.target.value)}
             >
               {genders.map((gender, index) => (
-                <option key={index} value={gender}>
+                <option className={styles.option} key={index} value={gender}>
                   {gender}
                 </option>
               ))}
