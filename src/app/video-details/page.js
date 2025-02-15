@@ -22,16 +22,16 @@ const MediaDetailsContent = () => {
     product: "",
     visibility: "",
     audience: "",
-    ageRestriction: "",
+    ageRestriction: ""
   })
-  const accessToken = localStorage.getItem("accessToken"); 
+  const accessToken = localStorage.getItem("accessToken")
+  const user = useSelector(state => state.auth.user)
+
   if (!accessToken) {
-    console.error("Access token is missing");
-    setError("Authentication failed. Please log in again.");
-    return;
+    console.error("Access token is missing")
+    setError("Authentication failed. Please log in again.")
+    return
   }
-  
-  const user = useSelector((state) => state.auth.user)
 
   useEffect(() => {
     const src = searchParams.get("mediaSrc")
@@ -68,110 +68,105 @@ const MediaDetailsContent = () => {
     const storedFormData = localStorage.getItem("videoDetailsData")
     if (storedFormData) {
       const parsedFormData = JSON.parse(storedFormData)
-      setFormData((prevState) => ({
+      setFormData(prevState => ({
         ...parsedFormData,
-        product: product || parsedFormData.product || prevState.product,
+        product: product || parsedFormData.product || prevState.product
       }))
     } else if (product) {
-      setFormData((prevState) => ({ ...prevState, product }))
+      setFormData(prevState => ({ ...prevState, product }))
     }
   }, [searchParams])
 
   const dataURLtoFile = (dataUrl, fileName) => {
-    const arr = dataUrl.split(",");
+    const arr = dataUrl.split(",")
     if (arr.length < 2) {
-      console.error("Invalid data URL format");
-      return null;
+      console.error("Invalid data URL format")
+      return null
     }
-    const mimeMatch = arr[0].match(/:(.*?);/);
+    const mimeMatch = arr[0].match(/:(.*?);/)
     if (!mimeMatch) {
-      console.error("Invalid MIME type in data URL");
-      return null;
+      console.error("Invalid MIME type in data URL")
+      return null
     }
-    
-    const mime = mimeMatch[1];
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-    
+
+    const mime = mimeMatch[1]
+    const bstr = atob(arr[1])
+    let n = bstr.length
+    const u8arr = new Uint8Array(n)
+
     while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
+      u8arr[n] = bstr.charCodeAt(n)
     }
-  
-    return new File([u8arr], fileName, { type: mime });
-  };
-  
+
+    return new File([u8arr], fileName, { type: mime })
+  }
+
   const handleSubmit = async () => {
     if (!formData.product || !formData.visibility || !formData.audience) {
-      console.warn("Form is incomplete");
-      return;
+      console.warn("Form is incomplete")
+      return
     }
-  
-    try {
-      setIsLoading(true);
-      setError(null);
-  
-      if (!mediaSrc) {
-        throw new Error("No media selected");
-      }
-  
-     
-      const mimeType = mediaSrc.split(";")[0].split(":")[1];
-      const fileExtension = mimeType.split("/")[1];
-      const fileName = `media_${Date.now()}.${fileExtension}`;
-  
 
-      const mediaFile = dataURLtoFile(mediaSrc, fileName);
+    try {
+      setIsLoading(true)
+      setError(null)
+
+      if (!mediaSrc) {
+        throw new Error("No media selected")
+      }
+
+      const mimeType = mediaSrc.split(";")[0].split(":")[1]
+      const fileExtension = mimeType.split("/")[1]
+      const fileName = `media_${Date.now()}.${fileExtension}`
+
+      const mediaFile = dataURLtoFile(mediaSrc, fileName)
       if (!mediaFile) {
-        throw new Error("Failed to generate media file");
+        throw new Error("Failed to generate media file")
       }
-  
+
+      const postFormData = new FormData()
+      postFormData.append("media", mediaFile)
+      postFormData.append("caption", formData.product)
      
-      const postFormData = new FormData();
-      postFormData.append("media", mediaFile);
-      postFormData.append("caption", formData.product);
-      postFormData.append("visibility", formData.visibility);
-      postFormData.append("tags", "#content");
-  
-      if (formData.audience) postFormData.append("audience", formData.audience);
-      if (formData.ageRestriction) postFormData.append("ageRestriction", formData.ageRestriction);
-  
-     
-      console.log("FormData entries:");
-      for (let [key, value] of postFormData.entries()) {
-        console.log(`${key}:`, value);
+      postFormData.append("tags", "#content")
+console.log(`FormData : ${FormData}`)
+console.log(`postFormData : ${postFormData}`)
+      if (formData.audience) postFormData.append("audience", formData.audience)
+      if (formData.ageRestriction)
+        postFormData.append("ageRestriction", formData.ageRestriction)
+
+      console.log("FormData entries:")
+      for (const [key, value] of postFormData.entries()) {
+        console.log(`${key}:`, value)
       }
-  
-      
+
       const resultAction = await dispatch(
         createPostAsync({
           method: "POST",
           body: postFormData,
           headers: {
-            Authorization: `Bearer ${accessToken}`, 
-          },
+            Authorization: accessToken
+          }
         })
-      );
-  
-      if (createPostAsync.fulfilled.match(resultAction)) {
-        localStorage.removeItem("videoDetailsData");
-        localStorage.removeItem("savedMediaSrc");
-        localStorage.removeItem("savedMediaType");
-  
-        router.push("/upload-success");
-      } else {
-        throw new Error(resultAction.error.message);
+      )
+      //Check for errors in the response
+      if (resultAction.meta.requestStatus === "rejected") {
+        setError(resultAction.error.message)
+        console.error("Upload error:", resultAction.error)
+      } else if (resultAction.payload) {
+        localStorage.removeItem("videoDetailsData")
+        localStorage.removeItem("savedMediaSrc")
+        localStorage.removeItem("savedMediaType")
+
+        router.push("/upload-success")
       }
     } catch (err) {
-      setError(err.message || "Failed to upload post");
-      console.error("Upload error:", err);
+      setError(err.message || "Failed to upload post")
+      console.error("Upload error:", err)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
-  
-  
-  
+  }
 
   const handleproductClick = () => {
     if (mediaSrc) {
@@ -188,7 +183,8 @@ const MediaDetailsContent = () => {
     router.push("/select-audience")
   }
 
-  const isFormComplete = formData.product && formData.visibility && formData.audience
+  const isFormComplete =
+    formData.product && formData.visibility && formData.audience
 
   return (
     <div className={stylesShop.bodyShop}>
@@ -204,35 +200,64 @@ const MediaDetailsContent = () => {
 
           <div className={styles.mediaPreview}>
             {mediaType === "photo" ? (
-              <img src={mediaSrc || "/placeholder.svg"} alt="Preview" className={styles.media} />
+              <img
+                src={mediaSrc || "/placeholder.svg"}
+                alt="Preview"
+                className={styles.media}
+              />
             ) : (
-              mediaSrc && <video src={mediaSrc} className={styles.video} autoPlay loop muted />
+              mediaSrc && (
+                <video
+                  src={mediaSrc}
+                  className={styles.video}
+                  autoPlay
+                  loop
+                  muted
+                />
+              )
             )}
           </div>
 
           <div className={styles.form}>
-            <div className={styles.username}>{user?.username || user?.user?.username || "Username"}</div>
+            <div className={styles.username}>
+              {user?.username || user?.user?.username || "Username"}
+            </div>
 
-            <button className={styles.optionButton} onClick={handleproductClick}>
+            <button
+              className={styles.optionButton}
+              onClick={handleproductClick}
+            >
               <Package size={20} />
               Add Product: {formData.product || "Not selected"}
             </button>
 
-            <button className={styles.optionButton} onClick={handleVisibilityClick}>
+            <button
+              className={styles.optionButton}
+              onClick={handleVisibilityClick}
+            >
               <Eye size={20} />
               Visibility: {formData.visibility || "Not set"}
             </button>
 
-            <button className={styles.optionButton} onClick={handleAudienceClick}>
+            <button
+              className={styles.optionButton}
+              onClick={handleAudienceClick}
+            >
               <Users size={20} />
               Select Audience:{" "}
               {formData.audience
-                ? `${formData.audience}${formData.ageRestriction ? ` (${formData.ageRestriction})` : ""}`
+                ? `${formData.audience}${
+                    formData.ageRestriction
+                      ? ` (${formData.ageRestriction})`
+                      : ""
+                  }`
                 : "Not selected"}
             </button>
 
             <button
-              className={`${styles.doneButton} ${!isFormComplete || isLoading ? styles.disabledButton : ""}`}
+              className={`${styles.doneButton} ${
+                !isFormComplete || isLoading ? styles.disabledButton : ""
+              }`}
               onClick={handleSubmit}
               disabled={!isFormComplete || isLoading}
             >
@@ -253,4 +278,3 @@ export default function MediaDetails() {
     </Suspense>
   )
 }
-
