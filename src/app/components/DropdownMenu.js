@@ -31,14 +31,14 @@ export function DropdownMenu() {
   const user = useSelector((state) => state.auth.user);
 
   const menuItems = [
-    { icon: <Megaphone className={styles.menuItemIcon} />, label: 'Collab' },
-    { icon: <GraduationCap className={styles.menuItemIcon} />, label: 'Collably University' },
-    { icon: <Bot className={styles.menuItemIcon} />, label: 'AI Tools' },
+    { icon: <Megaphone className={styles.menuItemIcon} />, label: 'Collab', comingSoon: true  },
+    { icon: <GraduationCap className={styles.menuItemIcon} />, label: 'Collably University', comingSoon: true  },
+    { icon: <Bot className={styles.menuItemIcon} />, label: 'AI Tools', comingSoon: true  },
     { icon: <MessageSquare className={styles.menuItemIcon} />, label: 'Auto Reply+', comingSoon: true },
     { icon: <Trophy className={styles.menuItemIcon} />, label: 'Leaderboard', comingSoon: true },
     { icon: <Users className={styles.menuItemIcon} />, label: 'Community', comingSoon: true },
-    { icon: <Star className={styles.menuItemIcon} />, label: 'Feedback' },
-    { icon: <HelpCircle className={styles.menuItemIcon} />, label: 'Help' },
+    { icon: <Star className={styles.menuItemIcon} />, label: 'Feedback' , comingSoon: true  },
+    { icon: <HelpCircle className={styles.menuItemIcon} />, label: 'Help',  comingSoon: true  },
   ];
 
   const handleClick = (e) => {
@@ -88,7 +88,7 @@ export function DropdownMenu() {
         >
           <div className={styles.menuHeader}>
             <h2 className={styles.greeting}>
-              {user ? `Hello, ${user.user.username}!` : 'Hello User!'}
+              {user ? `Hello, ${user.user.fullname}!` : 'Hello User!'}
             </h2>
           </div>
 

@@ -1984,16 +1984,12 @@ left: 350px;
   margin-bottom: 15px;
 }
 
-.login-container .inputForm svg {
-  margin-right: 10px;
-  fill: #999;
-}
-
 .login-container .input {
   border: none;
   outline: none;
   width: 100%;
   font-size: 14px;
+  margin-left: 1rem;
 }
 
 .login-container .button-submit {
@@ -2938,3 +2934,10 @@ display: none;
   gap: 3rem;
 }
 }
+
+
+.password-toggle{
+  border: none;
+  background-color: white;
+  cursor: pointer;
+ }

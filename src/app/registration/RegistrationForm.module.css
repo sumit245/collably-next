@@ -1,87 +1,133 @@
+/* Form container */
 .form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    max-width: 400px;
-    margin: 2rem auto;
-    padding: 1.5rem;
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .label {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #374151;
-  }
-  
-  .input {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  
-  .input:focus {
-    border-color: #ff0055;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-  }
-  .image{
-    height: 50px;
-    width: 150px;
-    position: relative;
-    top: -52px;
-    left: 57px;
-  }
-  .rHeading{
-    font-size: 18px;
-    color: #666;
-    margin: -23px 0 -26px;
-    position: relative;
-    top: -20px;
-    left: 102px;
-  }
-  
-  .button {
-    width: 100%;
-    padding: 0.75rem;
-    font-size: 1rem;
-    font-weight: 600;
-    color: white;
-    background-color: #ff0055;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s, box-shadow 0.2s;
-  }
-  
-  .button:hover {
-    background-color: #ff0055;
-  }
-  
-  .button:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
-  }
-  
-  .container {
-    text-align: center;
-    margin-top: 1rem;
-    font-size: 0.875rem;
-  }
-  
-  .link {
-    color: #ff0055;
-    cursor: pointer;
-    text-decoration: none;
-  }
-  
-  .link:hover {
-    text-decoration: underline;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  max-width: 450px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.form:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Label styling */
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4b5563;
+  margin-bottom: 0.25rem;
+}
+
+/* Input styling */
+.input {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: #f9fafb;
+  margin-top: 5px;
+}
+
+.input:focus {
+  border-color: #ff0055;
+  box-shadow: 0 0 0 3px rgba(255, 0, 85, 0.2);
+}
+
+/* Row layout for inputs */
+.row {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+.row div {
+  flex: 1;
+}
+
+/* Image styling */
+.image {
+  height: 50px;
+  width: auto;
+  align-self: center;
+}
+
+/* Heading styling */
+.rHeading {
+  font-size: 1.25rem;
+  color: #333;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+/* Button styling */
+.button {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background-color: #ff0055;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.button:hover {
+  background-color: #d4004c;
+}
+
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+}
+
+/* Link to login */
+.container {
+  text-align: center;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.link {
+  color: #ff0055;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* Back Icon styling */
+.back-icon {
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  transition: transform 0.3s;
+}
+
+.back-icon:hover {
+  transform: scale(1.1);
+}
+
+.password{
+  display: flex;
+  flex-direction: column;
+}
+
+.header{
+  display: flex;
+  gap: 8.5rem;
+}

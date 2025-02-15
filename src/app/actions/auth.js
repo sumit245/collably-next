@@ -72,4 +72,3 @@ export const logout = () => async (dispatch) => {
     console.error("Logout error:", error)
   }
 }
-

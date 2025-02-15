@@ -8,6 +8,7 @@ import cartReducer from "./cartSlice"
 import brandsReducer from "./brandSlice"
 import likedProductsReducer from "./likedproductSlice"
 import searchReducer from "./searchSlice"
+import postReducer from "./postSlice"
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     brands: brandsReducer,
     likedProducts: likedProductsReducer,
     search: searchReducer,
+    posts: postReducer,
   },
 })
 

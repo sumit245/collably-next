@@ -47,7 +47,7 @@ export default function Header() {
     <header className={`${styles.header} ${isSearchExpanded ? styles.expandedHeader : ""}`}>
       <DropdownMenu />
       <div className={styles.logo}>
-        <Link href="/shop">
+        <Link href="/shop" style={{display:"flex"}}>
           <Image src="/images/c-official-logo.png" alt="logo" width={90} height={40} />
         </Link>
       </div>
