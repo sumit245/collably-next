@@ -22,18 +22,18 @@ const MediaDetailsContent = () => {
     product: "",
     visibility: "",
     audience: "",
-    ageRestriction: ""
+    ageRestriction: "",
   })
   const accessToken = localStorage.getItem("accessToken")
-  const user = useSelector(state => state.auth.user)
-
-  if (!accessToken) {
-    console.error("Access token is missing")
-    setError("Authentication failed. Please log in again.")
-    return
-  }
+  const user = useSelector((state) => state.auth.user)
 
   useEffect(() => {
+    if (!accessToken) {
+      console.error("Access token is missing")
+      setError("Authentication failed. Please log in again.")
+      return
+    }
+
     const src = searchParams.get("mediaSrc")
     const type = searchParams.get("mediaType")
     const mediaId = searchParams.get("mediaId")
@@ -68,14 +68,14 @@ const MediaDetailsContent = () => {
     const storedFormData = localStorage.getItem("videoDetailsData")
     if (storedFormData) {
       const parsedFormData = JSON.parse(storedFormData)
-      setFormData(prevState => ({
+      setFormData((prevState) => ({
         ...parsedFormData,
-        product: product || parsedFormData.product || prevState.product
+        product: product || parsedFormData.product || prevState.product,
       }))
     } else if (product) {
-      setFormData(prevState => ({ ...prevState, product }))
+      setFormData((prevState) => ({ ...prevState, product }))
     }
-  }, [searchParams])
+  }, [searchParams, accessToken])
 
   const dataURLtoFile = (dataUrl, fileName) => {
     const arr = dataUrl.split(",")
@@ -103,71 +103,57 @@ const MediaDetailsContent = () => {
 
   const handleSubmit = async () => {
     if (!formData.product || !formData.visibility || !formData.audience) {
-      console.warn("Form is incomplete")
-      return
+      console.warn("Form is incomplete");
+      return;
     }
-
+  
     try {
-      setIsLoading(true)
-      setError(null)
-
+      setIsLoading(true);
+      setError(null);
+  
       if (!mediaSrc) {
-        throw new Error("No media selected")
+        throw new Error("No media selected");
       }
-
-      const mimeType = mediaSrc.split(";")[0].split(":")[1]
-      const fileExtension = mimeType.split("/")[1]
-      const fileName = `media_${Date.now()}.${fileExtension}`
-
-      const mediaFile = dataURLtoFile(mediaSrc, fileName)
-      if (!mediaFile) {
-        throw new Error("Failed to generate media file")
-      }
-
-      const postFormData = new FormData()
-      postFormData.append("media", mediaFile)
-      postFormData.append("caption", formData.product)
-     
-      postFormData.append("tags", "#content")
-console.log(`FormData : ${FormData}`)
-console.log(`postFormData : ${postFormData}`)
-      if (formData.audience) postFormData.append("audience", formData.audience)
-      if (formData.ageRestriction)
-        postFormData.append("ageRestriction", formData.ageRestriction)
-
-      console.log("FormData entries:")
+  
+      const postFormData = new FormData();
+      postFormData.append("media", dataURLtoFile(mediaSrc, `media_${Date.now()}.jpg`)); // Assuming .jpg extension for simplicity
+      postFormData.append("caption", formData.product);
+      postFormData.append("tags", "#content");
+  
+      if (formData.audience) postFormData.append("audience", formData.audience);
+      if (formData.ageRestriction) postFormData.append("ageRestriction", formData.ageRestriction);
+  
+      console.log("FormData entries:");
       for (const [key, value] of postFormData.entries()) {
-        console.log(`${key}:`, value)
+        console.log(`${key}:`, value);
       }
-
-      const resultAction = await dispatch(
-        createPostAsync({
-          method: "POST",
-          body: postFormData,
-          headers: {
-            Authorization: accessToken
-          }
-        })
-      )
-      //Check for errors in the response
-      if (resultAction.meta.requestStatus === "rejected") {
-        setError(resultAction.error.message)
-        console.error("Upload error:", resultAction.error)
-      } else if (resultAction.payload) {
-        localStorage.removeItem("videoDetailsData")
-        localStorage.removeItem("savedMediaSrc")
-        localStorage.removeItem("savedMediaType")
-
-        router.push("/upload-success")
-      }
+  
+      const accessToken = localStorage.getItem("accessToken"); 
+  
+      const response = await fetch("http://localhost:5000/api/posts", {
+        method: "POST",
+        headers: {
+          "Authorization": accessToken
+        },
+        body: postFormData,
+      });
+  
+      const result = await response.text();
+      console.log(result);
+  
+      localStorage.removeItem("videoDetailsData");
+      localStorage.removeItem("savedMediaSrc");
+      localStorage.removeItem("savedMediaType");
+  
+      router.push("/upload-success");
     } catch (err) {
-      setError(err.message || "Failed to upload post")
-      console.error("Upload error:", err)
+      setError(err.message || "Failed to upload post");
+      console.error("Upload error:", err);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
-
+  };
+  
   const handleproductClick = () => {
     if (mediaSrc) {
       localStorage.setItem("savedMediaSrc", mediaSrc)
