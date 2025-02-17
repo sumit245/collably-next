@@ -116,7 +116,7 @@ const MediaDetailsContent = () => {
       }
   
       const postFormData = new FormData();
-      postFormData.append("media", dataURLtoFile(mediaSrc, `media_${Date.now()}.jpg`)); // Assuming .jpg extension for simplicity
+      postFormData.append("media", dataURLtoFile(mediaSrc, `media_${Date.now()}.jpg`)); 
       postFormData.append("caption", formData.product);
       postFormData.append("tags", "#content");
   
@@ -136,6 +136,7 @@ const MediaDetailsContent = () => {
           "Authorization": accessToken
         },
         body: postFormData,
+        "Content-Type": "multipart/form-data",
       });
   
       const result = await response.text();
