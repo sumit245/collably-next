@@ -61,6 +61,7 @@
   gap: 20px;
   align-items: center;
   z-index: 10;
+  justify-content: flex-end;
 }
 
 .actionItem {
@@ -150,10 +151,23 @@
   background: rgba(255, 255, 255, 0.1);
 }
 
-.caption {
-  color: white;
-  margin-bottom: 8px;
-  font-size: 14px;
+.caption{
+  display: inline-block;
+  max-width: 150px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  font-size: 12px;
+}
+
+.captionLink {
+  display: block;
+  text-decoration: none;
+  color: #ff0055;
+  white-space: nowrap;
+  overflow: hidden; 
+  text-overflow: ellipsis;
 }
 
 .songInfo {
@@ -382,7 +396,7 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    top: -31rem;
+    top: -28rem;
 }
 
 
