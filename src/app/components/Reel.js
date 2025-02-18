@@ -52,7 +52,9 @@ export default function Reel({
   const handleCommentClick = () => {
     setIsCommenting(!isCommenting)
   }
-
+  console.log("Video URL:", `${BASE_URL}${changeEscapeChar(video[0])}`);
+  console.log("Image URL:", `${BASE_URL}${changeEscapeChar(images[0])}`);
+  
   const handleLikeClick = () => {
     setIsLiked(!isLiked)
     onLike(_id)
@@ -62,17 +64,18 @@ export default function Reel({
     <div className={styles.reelContainer}>
       {video ? (
   <video
-    ref={mediaRef}
-    className={styles.video}
-    src={`${BASE_URL}${changeEscapeChar(video[0])}`} 
-    loop
-    muted
-    playsInline
-  />
+  ref={mediaRef}
+  className={styles.video}
+  src={`${BASE_URL}${changeEscapeChar(video[0])}`} 
+  loop
+  muted
+  playsInline
+/>
+
 ) : (
   images && images.length > 0 ? (
     <Image
-      src={`${BASE_URL}${changeEscapeChar(images[0])}`} // Ensure images[0] exists
+      src={`${BASE_URL}${changeEscapeChar(images[0])}`} 
       alt="Post image"
       layout="fill"
       objectFit="cover"
@@ -80,7 +83,7 @@ export default function Reel({
     />
   ) : (
     <Image
-      src="/placeholder.svg" // Placeholder if images are missing
+      src="/placeholder.svg"
       alt="Placeholder"
       layout="fill"
       objectFit="cover"

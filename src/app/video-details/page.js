@@ -8,7 +8,6 @@ import stylesShop from "../shop/StyleShop.module.css"
 import FooterCreator from "../components/FooterCreator"
 import { Package, Eye, Users, ArrowLeft } from "lucide-react"
 import Link from "next/link"
-import { createPostAsync } from "../store/postSlice"
 
 const MediaDetailsContent = () => {
   const router = useRouter()
@@ -77,84 +76,93 @@ const MediaDetailsContent = () => {
     }
   }, [searchParams, accessToken])
 
-  const dataURLtoFile = (dataUrl, fileName) => {
-    const arr = dataUrl.split(",")
-    if (arr.length < 2) {
-      console.error("Invalid data URL format")
-      return null
-    }
-    const mimeMatch = arr[0].match(/:(.*?);/)
-    if (!mimeMatch) {
-      console.error("Invalid MIME type in data URL")
-      return null
-    }
+  const getFileFromSource = async (src, fileName) => {
+    console.log("Source type:", typeof src)
+    console.log("Source value:", src.substring(0, 100) + "...")
 
-    const mime = mimeMatch[1]
-    const bstr = atob(arr[1])
-    let n = bstr.length
-    const u8arr = new Uint8Array(n)
-
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n)
+    if (src.startsWith("data:")) {
+      
+      const arr = src.split(",")
+      const mime = arr[0].match(/:(.*?);/)[1]
+      const bstr = atob(arr[1])
+      let n = bstr.length
+      const u8arr = new Uint8Array(n)
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+      }
+      return new File([u8arr], fileName, { type: mime })
+    } else if (src.startsWith("blob:") || src.startsWith("http:") || src.startsWith("https:")) {
+      
+      const response = await fetch(src)
+      const blob = await response.blob()
+      return new File([blob], fileName, { type: blob.type })
+    } else {
+     
+      const response = await fetch(src)
+      const blob = await response.blob()
+      return new File([blob], fileName, { type: blob.type })
     }
-
-    return new File([u8arr], fileName, { type: mime })
   }
 
   const handleSubmit = async () => {
     if (!formData.product || !formData.visibility || !formData.audience) {
-      console.warn("Form is incomplete");
-      return;
+      console.warn("Form is incomplete")
+      return
     }
-  
+
     try {
-      setIsLoading(true);
-      setError(null);
-  
+      setIsLoading(true)
+      setError(null)
+
       if (!mediaSrc) {
-        throw new Error("No media selected");
+        throw new Error("No media selected")
       }
-  
-      const postFormData = new FormData();
-      postFormData.append("media", dataURLtoFile(mediaSrc, `media_${Date.now()}`)); 
-      postFormData.append("caption", formData.product);
-      
-  
-      if (formData.audience) postFormData.append("audience", formData.audience);
-      if (formData.ageRestriction) postFormData.append("ageRestriction", formData.ageRestriction);
-  
-      console.log("FormData entries:");
+
+      console.log("Media source type:", typeof mediaSrc)
+      console.log("Media source length:", mediaSrc.length)
+
+      const postFormData = new FormData()
+      const mediaFile = await getFileFromSource(mediaSrc, `media_${Date.now()}`)
+      if (!mediaFile) {
+        throw new Error("Failed to create file from media source")
+      }
+      postFormData.append("media", mediaFile)
+      postFormData.append("caption", formData.product)
+
+      if (formData.audience) postFormData.append("audience", formData.audience)
+      if (formData.ageRestriction) postFormData.append("ageRestriction", formData.ageRestriction)
+
+      console.log("FormData entries:")
       for (const [key, value] of postFormData.entries()) {
-        console.log(`${key}:`, value);
+        console.log(`${key}:`, value)
       }
-  
-      const accessToken = localStorage.getItem("accessToken"); 
-  
+
+      const accessToken = localStorage.getItem("accessToken")
+
       const response = await fetch("http://localhost:5000/api/posts", {
         method: "POST",
         headers: {
-          "Authorization": accessToken
+          Authorization: accessToken,
         },
         body: postFormData,
-        "Content-Type": "multipart/form-data",
-      });
-  
-      const result = await response.text();
-      console.log(result);
-  
-      localStorage.removeItem("videoDetailsData");
-      localStorage.removeItem("savedMediaSrc");
-      localStorage.removeItem("savedMediaType");
-  
-      router.push("/upload-success");
+      })
+
+      const result = await response.text()
+      console.log(result)
+
+      localStorage.removeItem("videoDetailsData")
+      localStorage.removeItem("savedMediaSrc")
+      localStorage.removeItem("savedMediaType")
+
+      router.push("/upload-success")
     } catch (err) {
-      setError(err.message || "Failed to upload post");
-      console.error("Upload error:", err);
+      setError(err.message || "Failed to upload post")
+      console.error("Upload error:", err)
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
-  
+  }
+
   const handleproductClick = () => {
     if (mediaSrc) {
       localStorage.setItem("savedMediaSrc", mediaSrc)
@@ -170,8 +178,7 @@ const MediaDetailsContent = () => {
     router.push("/select-audience")
   }
 
-  const isFormComplete =
-    formData.product && formData.visibility && formData.audience
+  const isFormComplete = formData.product && formData.visibility && formData.audience
 
   return (
     <div className={stylesShop.bodyShop}>
@@ -187,64 +194,35 @@ const MediaDetailsContent = () => {
 
           <div className={styles.mediaPreview}>
             {mediaType === "photo" ? (
-              <img
-                src={mediaSrc || "/placeholder.svg"}
-                alt="Preview"
-                className={styles.media}
-              />
+              <img src={mediaSrc || "/placeholder.svg"} alt="Preview" className={styles.media} />
             ) : (
-              mediaSrc && (
-                <video
-                  src={mediaSrc}
-                  className={styles.video}
-                  autoPlay
-                  loop
-                  muted
-                />
-              )
+              mediaSrc && <video src={mediaSrc} className={styles.video} autoPlay loop muted />
             )}
           </div>
 
           <div className={styles.form}>
-            <div className={styles.username}>
-              {user?.username || user?.user?.username || "Username"}
-            </div>
+            <div className={styles.username}>{user?.username || user?.user?.username || "Username"}</div>
 
-            <button
-              className={styles.optionButton}
-              onClick={handleproductClick}
-            >
+            <button className={styles.optionButton} onClick={handleproductClick}>
               <Package size={20} />
               Add Product: {formData.product || "Not selected"}
             </button>
 
-            <button
-              className={styles.optionButton}
-              onClick={handleVisibilityClick}
-            >
+            <button className={styles.optionButton} onClick={handleVisibilityClick}>
               <Eye size={20} />
               Visibility: {formData.visibility || "Not set"}
             </button>
 
-            <button
-              className={styles.optionButton}
-              onClick={handleAudienceClick}
-            >
+            <button className={styles.optionButton} onClick={handleAudienceClick}>
               <Users size={20} />
               Select Audience:{" "}
               {formData.audience
-                ? `${formData.audience}${
-                    formData.ageRestriction
-                      ? ` (${formData.ageRestriction})`
-                      : ""
-                  }`
+                ? `${formData.audience}${formData.ageRestriction ? ` (${formData.ageRestriction})` : ""}`
                 : "Not selected"}
             </button>
 
             <button
-              className={`${styles.doneButton} ${
-                !isFormComplete || isLoading ? styles.disabledButton : ""
-              }`}
+              className={`${styles.doneButton} ${!isFormComplete || isLoading ? styles.disabledButton : ""}`}
               onClick={handleSubmit}
               disabled={!isFormComplete || isLoading}
             >
@@ -265,3 +243,4 @@ export default function MediaDetails() {
     </Suspense>
   )
 }
+

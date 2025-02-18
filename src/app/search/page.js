@@ -59,7 +59,7 @@ export default function SearchSection() {
           <div className={styles.gridContainer}>
             {filteredPosts.map((post) => (
               <Link href={`/feed?reelId=${post._id}`} key={post._id} className={styles.gridItem}>
-                <video src={post.video} className={styles.gridVideo} width={300} height={300} />
+                <video src={`${BASE_URL}${changeEscapeChar(post.video)}`} className={styles.gridVideo} width={300} height={300} />
               </Link>
             ))}
           </div>

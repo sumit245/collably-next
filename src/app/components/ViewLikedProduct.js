@@ -25,10 +25,12 @@ export function ViewLikedProduct() {
           {likedProducts.length > 0 ? (
             likedProducts.map((item) => (
               <div key={item._id} className={styles.item}> {/* This div now correctly has the key prop */}
+              <div className={styles.productCard}>
                 <img src={item.image || "/placeholder.svg"} alt={item.name} className={styles.itemImage} />
                 <div className={styles.itemInfo}>
                   <h3 className={styles.itemName}>{item.productname || item.name}</h3>
                   <p className={styles.itemPrice}>₹{item.price.toFixed(2)}</p>
+                </div>
                 </div>
                 <button className={styles.removeButton} onClick={() => handleRemoveLiked(item._id)}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trash2">
@@ -40,6 +42,7 @@ export function ViewLikedProduct() {
                   </svg>
                 </button>
               </div>
+              
             ))
           ) : (
             <p>Your liked products list is empty.</p>
