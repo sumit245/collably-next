@@ -7,17 +7,16 @@ const api = {
       "Content-Type": "application/json",
       ...options.headers,
     }
-    
+
     if (accessToken) {
       headers["Authorization"] = accessToken
     }
 
-    console.log("Request URL:", `${BASE_URL}${url}`);
-    console.log("Request Options:", options);
-    console.log("Request Headers:", headers);
-    console.log("Access Token:", accessToken); 
-    console.log("Authorization Header:", headers["Authorization"]);
-
+    console.log("Request URL:", `${BASE_URL}${url}`)
+    console.log("Request Options:", options)
+    console.log("Request Headers:", headers)
+    console.log("Access Token:", accessToken)
+    console.log("Authorization Header:", headers["Authorization"])
 
     try {
       const response = await fetch(`${BASE_URL}${url}`, {
@@ -27,18 +26,43 @@ const api = {
 
       if (!response.ok) {
         const errorData = await response.json()
-        console.error("Error Response:", errorData);  // Log detailed error from the server
+        console.error("Error Response:", errorData)
         throw new Error(errorData.message || `HTTP error! status: ${response.status}`)
       }
 
-      const responseData = await response.json();
-      console.log("Response Data:", responseData);  // Log the response data for debugging
-      return responseData;
+      const responseData = await response.json()
+      console.log("Response Data:", responseData)
+      return responseData
     } catch (error) {
-      console.error("API Error:", error.message);
-      throw error;  // Propagate error
+      console.error("API Error:", error.message)
+      throw error
     }
+  },
+
+  // New methods for posts
+  getPosts: async () => {
+    return api.fetch("/posts")
+  },
+
+  getPostById: async (postId) => {
+    return api.fetch(`/posts/${postId}`)
+  },
+
+  likePost: async (postId) => {
+    return api.fetch(`/posts/${postId}/like`, { method: "POST" })
+  },
+
+  unlikePost: async (postId) => {
+    return api.fetch(`/posts/${postId}/unlike`, { method: "POST" })
+  },
+
+  commentOnPost: async (postId, comment) => {
+    return api.fetch(`/posts/${postId}/comment`, {
+      method: "POST",
+      body: JSON.stringify({ comment }),
+    })
   },
 }
 
-export default api;
+export default api
+

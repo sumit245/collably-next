@@ -1,50 +1,88 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import { createPost } from "../services/postService"
+import api from "../services/api"
 
-export const createPostAsync = createAsyncThunk("posts/createPost", async (formData, { rejectWithValue }) => {
-  try {
-    const response = await createPost(formData)
-    return response
-  } catch (error) {
-    return rejectWithValue(error.message)
-  }
+export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
+  const response = await api.getPosts()
+  return response.posts
+})
+
+export const fetchPostById = createAsyncThunk("posts/fetchPostById", async (postId) => {
+  const response = await api.getPostById(postId)
+  return response.post
+})
+
+export const likePost = createAsyncThunk("posts/likePost", async (postId) => {
+  const response = await api.likePost(postId)
+  return response.post
+})
+
+export const unlikePost = createAsyncThunk("posts/unlikePost", async (postId) => {
+  const response = await api.unlikePost(postId)
+  return response.post
+})
+
+export const commentOnPost = createAsyncThunk("posts/commentOnPost", async ({ postId, comment }) => {
+  const response = await api.commentOnPost(postId, comment)
+  return response.post
 })
 
 const postSlice = createSlice({
   name: "posts",
   initialState: {
     posts: [],
-    isLoading: false,
-    error: null,
     currentPost: null,
+    status: "idle",
+    error: null,
   },
-  reducers: {
-    clearPostError: (state) => {
-      state.error = null
-    },
-    setCurrentPost: (state, action) => {
-      state.currentPost = action.payload
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(createPostAsync.pending, (state) => {
-        state.isLoading = true
-        state.error = null
+      .addCase(fetchPosts.pending, (state) => {
+        state.status = "loading"
       })
-      .addCase(createPostAsync.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.posts.unshift(action.payload)
+      .addCase(fetchPosts.fulfilled, (state, action) => {
+        state.status = "succeeded"
+        state.posts = action.payload
+      })
+      .addCase(fetchPosts.rejected, (state, action) => {
+        state.status = "failed"
+        state.error = action.error.message
+      })
+      .addCase(fetchPostById.fulfilled, (state, action) => {
         state.currentPost = action.payload
-        state.error = null
       })
-      .addCase(createPostAsync.rejected, (state, action) => {
-        state.isLoading = false
-        state.error = action.payload
+      .addCase(likePost.fulfilled, (state, action) => {
+        const updatedPost = action.payload
+        const index = state.posts.findIndex((post) => post._id === updatedPost._id)
+        if (index !== -1) {
+          state.posts[index] = updatedPost
+        }
+        if (state.currentPost && state.currentPost._id === updatedPost._id) {
+          state.currentPost = updatedPost
+        }
+      })
+      .addCase(unlikePost.fulfilled, (state, action) => {
+        const updatedPost = action.payload
+        const index = state.posts.findIndex((post) => post._id === updatedPost._id)
+        if (index !== -1) {
+          state.posts[index] = updatedPost
+        }
+        if (state.currentPost && state.currentPost._id === updatedPost._id) {
+          state.currentPost = updatedPost
+        }
+      })
+      .addCase(commentOnPost.fulfilled, (state, action) => {
+        const updatedPost = action.payload
+        const index = state.posts.findIndex((post) => post._id === updatedPost._id)
+        if (index !== -1) {
+          state.posts[index] = updatedPost
+        }
+        if (state.currentPost && state.currentPost._id === updatedPost._id) {
+          state.currentPost = updatedPost
+        }
       })
   },
 })
 
-export const { clearPostError, setCurrentPost } = postSlice.actions
 export default postSlice.reducer
 

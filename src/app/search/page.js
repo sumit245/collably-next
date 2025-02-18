@@ -1,24 +1,35 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { fetchPosts } from "../store/postSlice"
 import styles from "./SearchSection.module.css"
 import Header from "../components/HeaderShop"
 import Footer from "../components/FooterShop"
 import { LikeProvider } from "../actions/LikeContext"
 import Image from "next/image"
 import { ChevronDown, Search } from "lucide-react"
+import Link from "next/link"
 
-function SearchSection() {
+const BASE_URL = "localhost:5000/"
+
+export default function SearchSection() {
+  const dispatch = useDispatch()
+  const { posts, status, error } = useSelector((state) => state.posts)
   const [activeTab, setActiveTab] = useState("reels")
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All Categories")
   const [selectedGender, setSelectedGender] = useState("All")
 
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchPosts())
+    }
+  }, [status, dispatch])
+
   const tabs = [
     { id: "reels", label: "Reels" },
-    { id: "collections", label: "Collections" },
     { id: "posts", label: "Posts" },
-    { id: "videos", label: "Videos" },
   ]
 
   const categories = ["All Categories", "Fashion", "Electronics", "Home", "Beauty"]
@@ -26,29 +37,50 @@ function SearchSection() {
   const genders = ["All", "Men", "Women", "Unisex"]
 
   const renderContent = () => {
+    if (status === "loading") {
+      return <div>Loading...</div>
+    }
+
+    if (status === "failed") {
+      return <div>Error: {error}</div>
+    }
+
+    const filteredPosts = posts.filter((post) => {
+      if (activeTab === "reels" && !post.video) return false
+      if (activeTab === "posts" && !post.images.length) return false
+      return true
+    })
+
     switch (activeTab) {
       case "reels":
         return (
           <div className={styles.gridContainer}>
-            {[...Array(9)].map((_, i) => (
-              <div key={i} className={styles.gridItem}>
-                <Image
-                  src={`https://picsum.photos/300/300?random=${i}`}
-                  alt={`Content thumbnail ${i + 1}`}
-                  className={styles.gridImage}
-                  width={300}
-                  height={300}
-                />
-              </div>
+            {filteredPosts.map((post) => (
+              <Link href={`/feed?reelId=${post._id}`} key={post._id} className={styles.gridItem}>
+                <video src={post.video} className={styles.gridVideo} width={300} height={300} />
+              </Link>
             ))}
           </div>
         )
-      case "collections":
-        return <div>Collections content</div>
       case "posts":
-        return <div>Posts content</div>
-      case "videos":
-        return <div>Videos content</div>
+        return (
+          <div className={styles.gridContainer}>
+            {filteredPosts.map((post) => (
+              <Link href={`/post/${post._id}`} key={post._id} className={styles.gridItem}>
+               <Image
+  src={`${BASE_URL}${post.images[0].replace(/\\/g, "/")}`} 
+  alt={`Post by ${post.user?.username || "unknown"}`}
+  className={styles.gridImage}
+  width={300}
+  height={300}
+  unoptimized // Bypass Next.js optimizations (optional for dev)
+  priority // Helps with SSR
+/>
+
+              </Link>
+            ))}
+          </div>
+        )
       default:
         return null
     }
@@ -59,7 +91,6 @@ function SearchSection() {
       <div className={styles.container}>
         <Header />
 
-        {/* Search Bar */}
         <div className={styles.searchBar}>
           <div className={styles.searchInputWrapper}>
             <Search className={styles.searchIcon} />
@@ -73,7 +104,6 @@ function SearchSection() {
           </div>
         </div>
 
-        {/* Filters */}
         <div className={styles.filtersContainer}>
           <button className={styles.filterButton}>
             <svg
@@ -127,7 +157,6 @@ function SearchSection() {
           </div>
         </div>
 
-        {/* Tabs */}
         <div className={styles.tabsContainer}>
           {tabs.map((tab) => (
             <div
@@ -140,7 +169,6 @@ function SearchSection() {
           ))}
         </div>
 
-        {/* Content Grid */}
         <div className={styles.contentGrid}>{renderContent()}</div>
 
         <Footer />
@@ -148,6 +176,3 @@ function SearchSection() {
     </LikeProvider>
   )
 }
-
-export default SearchSection
-

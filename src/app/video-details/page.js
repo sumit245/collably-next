@@ -118,7 +118,7 @@ const MediaDetailsContent = () => {
       const postFormData = new FormData();
       postFormData.append("media", dataURLtoFile(mediaSrc, `media_${Date.now()}.jpg`)); 
       postFormData.append("caption", formData.product);
-      postFormData.append("tags", "#content");
+      // postFormData.append("tags", "#content");
   
       if (formData.audience) postFormData.append("audience", formData.audience);
       if (formData.ageRestriction) postFormData.append("ageRestriction", formData.ageRestriction);
