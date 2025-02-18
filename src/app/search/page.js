@@ -11,7 +11,9 @@ import Image from "next/image"
 import { ChevronDown, Search } from "lucide-react"
 import Link from "next/link"
 
-const BASE_URL = "localhost:5000/"
+const BASE_URL = "http://localhost:5000/"
+
+const changeEscapeChar = (path) => path.replace(/\\/g, "/")
 
 export default function SearchSection() {
   const dispatch = useDispatch()
@@ -67,16 +69,13 @@ export default function SearchSection() {
           <div className={styles.gridContainer}>
             {filteredPosts.map((post) => (
               <Link href={`/post/${post._id}`} key={post._id} className={styles.gridItem}>
-               <Image
-  src={`${BASE_URL}${post.images[0].replace(/\\/g, "/")}`} 
-  alt={`Post by ${post.user?.username || "unknown"}`}
-  className={styles.gridImage}
-  width={300}
-  height={300}
-  unoptimized // Bypass Next.js optimizations (optional for dev)
-  priority // Helps with SSR
-/>
-
+                <Image
+                  src={`${BASE_URL}${changeEscapeChar(post.images[0])}` || "/placeholder.svg"}
+                  alt={`Post by ${post.user?.username || "unknown"}`}
+                  className={styles.gridImage}
+                  width={300}
+                  height={300}
+                />
               </Link>
             ))}
           </div>

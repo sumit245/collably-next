@@ -22,7 +22,12 @@ export default function Reel({
   const commentSectionRef = useRef(null)
   const [isCommenting, setIsCommenting] = useState(false)
   const [isLiked, setIsLiked] = useState(false)
-
+  const BASE_URL = "http://localhost:5000/"
+  const changeEscapeChar = (path) => {
+    if (!path) return ''; 
+    return path.replace(/\\/g, "/");
+  }
+  
   useEffect(() => {
     if (isActive) {
       mediaRef.current?.play()
@@ -56,16 +61,35 @@ export default function Reel({
   return (
     <div className={styles.reelContainer}>
       {video ? (
-        <video ref={mediaRef} className={styles.video} src={video} loop muted playsInline />
-      ) : (
-        <Image
-          src={images[0] || "/placeholder.svg"}
-          alt="Post image"
-          layout="fill"
-          objectFit="cover"
-          className={styles.image}
-        />
-      )}
+  <video
+    ref={mediaRef}
+    className={styles.video}
+    src={`${BASE_URL}${changeEscapeChar(video[0])}`} 
+    loop
+    muted
+    playsInline
+  />
+) : (
+  images && images.length > 0 ? (
+    <Image
+      src={`${BASE_URL}${changeEscapeChar(images[0])}`} // Ensure images[0] exists
+      alt="Post image"
+      layout="fill"
+      objectFit="cover"
+      className={styles.image}
+    />
+  ) : (
+    <Image
+      src="/placeholder.svg" // Placeholder if images are missing
+      alt="Placeholder"
+      layout="fill"
+      objectFit="cover"
+      className={styles.image}
+    />
+  )
+)}
+
+
 
       <div className={styles.logo}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white">

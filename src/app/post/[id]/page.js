@@ -12,7 +12,7 @@ export default function PostDetail() {
   const dispatch = useDispatch()
   const { id } = useParams()
   const { currentPost, status, error } = useSelector((state) => state.posts)
-
+const BASE_URL = "http://localhost:5000/"
   useEffect(() => {
     dispatch(fetchPostById(id))
   }, [dispatch, id])
@@ -66,7 +66,7 @@ export default function PostDetail() {
             <video src={currentPost.video} controls className={styles.postVideo} />
           ) : (
             <Image
-              src={currentPost.images[0] || "/placeholder.svg"}
+            src={`${BASE_URL}${post.images[0].replace(/\\/g, "/")}`} 
               alt={`Post ${currentPost._id}`}
               layout="fill"
               objectFit="cover"

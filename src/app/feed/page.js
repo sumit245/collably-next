@@ -7,6 +7,14 @@ import styles from "./stylesfeed.module.css"
 import styleshop from "../shop/StyleShop.module.css"
 import Footer from "../components/FooterShop"
 
+const BASE_URL = "http://localhost:5000/"
+
+const changeEscapeChar = (path) => {
+  if (!path) return ''; // Ensure path is not undefined
+  return path.replace(/\\/g, "/");
+}
+
+
 export default function ReelsPage() {
   const [reelsData, setReelsData] = useState([])
   const [activeReel, setActiveReel] = useState(0)
@@ -20,10 +28,16 @@ export default function ReelsPage() {
 
   const fetchReels = async () => {
     try {
-      const response = await fetch("/api/posts")
+      const response = await fetch("http://127.0.0.1:5000/api/posts")
       const data = await response.json()
-      const videoReels = data.posts.filter((post) => post.video && !post.images.length)
-      setReelsData(shuffleArray(videoReels))
+      console.log("Fetched data:", data)
+
+      if (data && Array.isArray(data.posts)) {
+        const videoReels = data.posts.filter((post) => post.video && !post.images.length)
+        setReelsData(shuffleArray(videoReels))
+      } else {
+        console.error("Invalid response format or no posts found.")
+      }
     } catch (error) {
       console.error("Error fetching reels:", error)
     }
@@ -74,13 +88,17 @@ export default function ReelsPage() {
         <div ref={containerRef} className={styles.reelsContainer}>
           {reelsData.map((reel, index) => (
             <div key={reel._id} className={styles.reelWrapper}>
-              <Reel
-                {...reel}
-                isActive={index === activeReel}
-                onLike={() => handleLike(reel._id)}
-                onComment={(comment) => handleComment(reel._id, comment)}
-                onShare={() => handleShare(reel)}
-              />
+             <Reel
+  {...reel}
+  isActive={index === activeReel}
+  onLike={() => handleLike(reel._id)}
+  onComment={(comment) => handleComment(reel._id, comment)}
+  onShare={() => handleShare(reel)}
+  src={`${BASE_URL}${changeEscapeChar(reel.video[0])}`}
+  video={reel.video} 
+
+/>
+
             </div>
           ))}
         </div>
@@ -90,4 +108,3 @@ export default function ReelsPage() {
     </div>
   )
 }
-

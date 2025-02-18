@@ -159,7 +159,7 @@ function VideoRecorder() {
 
       {isRecording && (
         <div className={styles.progressBarContainer}>
-          <div className={styles.progressBar} style={`{ width: ${(recordingTime / 30) * 100}% }`} />
+          <div className={styles.progressBar} style={{ width: `${(recordingTime / 30) * 100}%` }} />
         </div>
       )}
 
