@@ -3,7 +3,7 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "next/navigation"
-import { fetchPostById } from "../../store/postSlice"
+import { fetchPostById, likePost, unlikePost, savePost, unsavePost } from "../../store/postSlice"
 import Image from "next/image"
 import { Heart, MessageCircle, Send, Bookmark, ArrowLeft } from 'lucide-react'
 import styles from "../../postDetails/postDetails.module.css"
@@ -26,16 +26,17 @@ export default function PostDetail() {
     }
   }
 
-  const handleComment = (comment) => {
-    dispatch(commentOnPost({ postId: id, comment }))
-  }
-
   const handleSave = () => {
     if (currentPost.isSaved) {
       dispatch(unsavePost(id))
     } else {
       dispatch(savePost(id))
     }
+  }
+
+  const handleComment = (comment) => {
+    // TODO: Implement comment functionality
+    console.log("Comment:", comment)
   }
 
   if (status === "loading") {

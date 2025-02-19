@@ -34,6 +34,21 @@ export const fetchPostById = createAsyncThunk("posts/fetchPostById", async (post
   return fetchWithToken(`/post/${postId}`)
 })
 
+export const likePost = createAsyncThunk("posts/likePost", async (postId) => {
+  return fetchWithToken(`/post/${postId}/like`, { method: 'PATCH' })
+})
+
+export const unlikePost = createAsyncThunk("posts/unlikePost", async (postId) => {
+  return fetchWithToken(`/post/${postId}/unlike`, { method: 'PATCH' })
+})
+
+export const savePost = createAsyncThunk("posts/savePost", async (postId) => {
+  return fetchWithToken(`/savePost/${postId}`, { method: 'PATCH' })
+})
+
+export const unsavePost = createAsyncThunk("posts/unsavePost", async (postId) => {
+  return fetchWithToken(`/unSavePost/${postId}`, { method: 'PATCH' })
+})
 
 const postSlice = createSlice({
   name: "posts",
@@ -60,10 +75,27 @@ const postSlice = createSlice({
       .addCase(fetchPostById.fulfilled, (state, action) => {
         state.currentPost = action.payload.post
       })
-     
+      .addCase(likePost.fulfilled, (state, action) => {
+        if (state.currentPost && state.currentPost._id === action.payload.post._id) {
+          state.currentPost = action.payload.post
+        }
+      })
+      .addCase(unlikePost.fulfilled, (state, action) => {
+        if (state.currentPost && state.currentPost._id === action.payload.post._id) {
+          state.currentPost = action.payload.post
+        }
+      })
+      .addCase(savePost.fulfilled, (state, action) => {
+        if (state.currentPost && state.currentPost._id === action.payload.post._id) {
+          state.currentPost = action.payload.post
+        }
+      })
+      .addCase(unsavePost.fulfilled, (state, action) => {
+        if (state.currentPost && state.currentPost._id === action.payload.post._id) {
+          state.currentPost = action.payload.post
+        }
+      })
   },
 })
-
-
 
 export default postSlice.reducer

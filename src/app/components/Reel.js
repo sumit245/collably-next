@@ -55,8 +55,8 @@ export default function Reel({
   }, [])
 
   useEffect(() => {
-    // Check if the current user has liked the post
-    setIsLiked(likes.includes("currentUserId")) // Replace 'currentUserId' with actual user ID
+    
+    setIsLiked(likes.includes("currentUserId"))
   }, [likes])
 
   const handleCommentClick = () => {
