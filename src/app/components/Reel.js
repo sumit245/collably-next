@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
+import { useSelector } from "react-redux"
 import styles from "../feed/stylesfeed.module.css"
 import CommentSection from "./commentSection"
 import Image from "next/image"
@@ -28,6 +29,8 @@ export default function Reel({
   const [isLiked, setIsLiked] = useState(false)
   const [isSavedState, setIsSavedState] = useState(isSaved)
   const BASE_URL = "http://localhost:5000/"
+  const currentUser = useSelector((state) => state.auth.user) // Assuming you have an auth slice with user info
+
   const changeEscapeChar = (path) => {
     if (!path) return ""
     return path.replace(/\\/g, "/")
@@ -55,9 +58,8 @@ export default function Reel({
   }, [])
 
   useEffect(() => {
-    // Check if the current user has liked the post
-    setIsLiked(likes.includes("currentUserId")) // Replace 'currentUserId' with actual user ID
-  }, [likes])
+    setIsLiked(likes.includes(currentUser?._id))
+  }, [likes, currentUser])
 
   const handleCommentClick = () => {
     setIsCommenting(!isCommenting)
@@ -187,4 +189,3 @@ export default function Reel({
     </div>
   )
 }
-

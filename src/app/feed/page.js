@@ -1,12 +1,13 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import Reel from "../components/Reel"
 import ShareModal from "../components/ShareModal"
 import styles from "./stylesfeed.module.css"
 import styleshop from "../shop/StyleShop.module.css"
 import Footer from "../components/FooterShop"
-import api from "../services/api"
+import { fetchPosts, likePost, unlikePost, commentOnPost, savePost, unsavePost } from "../store/postSlice"
 
 const BASE_URL = "http://localhost:5000/"
 
@@ -16,31 +17,16 @@ const changeEscapeChar = (path) => {
 }
 
 export default function ReelsPage() {
-  const [reelsData, setReelsData] = useState([])
+  const dispatch = useDispatch()
+  const { posts, status, error } = useSelector((state) => state.posts)
   const [activeReel, setActiveReel] = useState(0)
   const [isShareModalOpen, setIsShareModalOpen] = useState(false)
   const [currentShareReel, setCurrentShareReel] = useState(null)
   const containerRef = useRef(null)
 
   useEffect(() => {
-    fetchReels()
-  }, [])
-
-  const fetchReels = async () => {
-    try {
-      const data = await api.getPosts()
-      console.log("Fetched data:", data)
-
-      if (data && Array.isArray(data.posts)) {
-        const videoReels = data.posts.filter((post) => post.video && !post.images.length)
-        setReelsData(shuffleArray(videoReels))
-      } else {
-        console.error("Invalid response format or no posts found.")
-      }
-    } catch (error) {
-      console.error("Error fetching reels:", error)
-    }
-  }
+    dispatch(fetchPosts())
+  }, [dispatch])
 
   useEffect(() => {
     const container = containerRef.current
@@ -56,71 +42,23 @@ export default function ReelsPage() {
   }, [])
 
   const handleLike = async (reelId) => {
-    try {
-      await api.likePost(reelId)
-      updateReelLikes(reelId, true)
-    } catch (error) {
-      console.error("Error liking post:", error)
-    }
+    dispatch(likePost(reelId))
   }
 
   const handleUnlike = async (reelId) => {
-    try {
-      await api.unlikePost(reelId)
-      updateReelLikes(reelId, false)
-    } catch (error) {
-      console.error("Error unliking post:", error)
-    }
-  }
-
-  const updateReelLikes = (reelId, isLiking) => {
-    setReelsData((prevReels) =>
-      prevReels.map((reel) =>
-        reel._id === reelId
-          ? {
-              ...reel,
-              likes: isLiking ? [...reel.likes, "currentUserId"] : reel.likes.filter((id) => id !== "currentUserId"),
-            }
-          : reel,
-      ),
-    )
+    dispatch(unlikePost(reelId))
   }
 
   const handleComment = async (reelId, comment) => {
-    try {
-      const updatedPost = await api.commentOnPost(reelId, comment)
-      updateReelComments(reelId, updatedPost.comments)
-    } catch (error) {
-      console.error("Error commenting on post:", error)
-    }
-  }
-
-  const updateReelComments = (reelId, newComments) => {
-    setReelsData((prevReels) =>
-      prevReels.map((reel) => (reel._id === reelId ? { ...reel, comments: newComments } : reel)),
-    )
+    dispatch(commentOnPost({ postId: reelId, comment }))
   }
 
   const handleSave = async (reelId) => {
-    try {
-      await api.savePost(reelId)
-      updateReelSaveStatus(reelId, true)
-    } catch (error) {
-      console.error("Error saving post:", error)
-    }
+    dispatch(savePost(reelId))
   }
 
   const handleUnsave = async (reelId) => {
-    try {
-      await api.unsavePost(reelId)
-      updateReelSaveStatus(reelId, false)
-    } catch (error) {
-      console.error("Error unsaving post:", error)
-    }
-  }
-
-  const updateReelSaveStatus = (reelId, isSaving) => {
-    setReelsData((prevReels) => prevReels.map((reel) => (reel._id === reelId ? { ...reel, isSaved: isSaving } : reel)))
+    dispatch(unsavePost(reelId))
   }
 
   const handleShare = (reel) => {
@@ -141,11 +79,22 @@ export default function ReelsPage() {
     return array
   }
 
+  const videoReels = posts.filter((post) => post.video && !post.images.length)
+  const shuffledReels = shuffleArray([...videoReels])
+
+  if (status === "loading") {
+    return <div>Loading...</div>
+  }
+
+  if (status === "failed") {
+    return <div>Error: {error}</div>
+  }
+
   return (
     <div className={styleshop.bodyShop}>
       <div className={styleshop.smartphoneContainer}>
         <div ref={containerRef} className={styles.reelsContainer}>
-          {reelsData.map((reel, index) => (
+          {shuffledReels.map((reel, index) => (
             <div key={reel._id} className={styles.reelWrapper}>
               <Reel
                 {...reel}
@@ -168,4 +117,3 @@ export default function ReelsPage() {
     </div>
   )
 }
-

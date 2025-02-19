@@ -3,16 +3,17 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "next/navigation"
-import { fetchPostById, likePost, unlikePost, commentOnPost } from "../../store/postSlice"
+import { fetchPostById, likePost, unlikePost, commentOnPost, savePost, unsavePost } from "../../store/postSlice"
 import Image from "next/image"
-import { Heart, MessageCircle, Send, Bookmark, ArrowLeft } from "lucide-react"
+import { Heart, MessageCircle, Send, Bookmark, ArrowLeft } from 'lucide-react'
 import styles from "../../postDetails/postDetails.module.css"
 
 export default function PostDetail() {
   const dispatch = useDispatch()
   const { id } = useParams()
   const { currentPost, status, error } = useSelector((state) => state.posts)
-const BASE_URL = "http://localhost:5000/"
+  const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/"
+
   useEffect(() => {
     dispatch(fetchPostById(id))
   }, [dispatch, id])
@@ -27,6 +28,14 @@ const BASE_URL = "http://localhost:5000/"
 
   const handleComment = (comment) => {
     dispatch(commentOnPost({ postId: id, comment }))
+  }
+
+  const handleSave = () => {
+    if (currentPost.isSaved) {
+      dispatch(unsavePost(id))
+    } else {
+      dispatch(savePost(id))
+    }
   }
 
   if (status === "loading") {
@@ -53,7 +62,7 @@ const BASE_URL = "http://localhost:5000/"
         <div className={styles.userInfo}>
           <Image
             src={currentPost.user?.avatar || "/placeholder.svg"}
-            alt={currentPost.user?.username}
+            alt={currentPost.user?.username|| "no user found"}
             width={32}
             height={32}
             className={styles.avatar}
@@ -63,10 +72,10 @@ const BASE_URL = "http://localhost:5000/"
 
         <div className={styles.mediaContainer}>
           {currentPost.video ? (
-            <video src={currentPost.video} controls className={styles.postVideo} />
+            <video src={`${BASE_URL}${currentPost.video.replace(/\\/g, "/")}`} controls className={styles.postVideo} />
           ) : (
             <Image
-            src={`${BASE_URL}${post.images[0].replace(/\\/g, "/")}`} 
+              src={`${BASE_URL}${currentPost.images[0].replace(/\\/g, "/")}` || "/placeholder.svg"}
               alt={`Post ${currentPost._id}`}
               layout="fill"
               objectFit="cover"
@@ -85,8 +94,8 @@ const BASE_URL = "http://localhost:5000/"
           <button className={styles.actionButton}>
             <Send size={24} />
           </button>
-          <button className={styles.actionButton}>
-            <Bookmark size={24} />
+          <button className={styles.actionButton} onClick={handleSave}>
+            <Bookmark size={24} fill={currentPost.isSaved ? "black" : "none"} />
           </button>
         </div>
 
@@ -120,4 +129,3 @@ const BASE_URL = "http://localhost:5000/"
     </div>
   )
 }
-
