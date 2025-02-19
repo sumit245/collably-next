@@ -1,9 +1,9 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "next/navigation"
-import { fetchPostById, likePost, unlikePost, savePost, unsavePost } from "../../store/postSlice"
+import { fetchPostById, likePost, unlikePost, commentOnPost, savePost, unsavePost } from "../../store/postSlice"
 import Image from "next/image"
 import { Heart, MessageCircle, Send, Bookmark, ArrowLeft } from 'lucide-react'
 import styles from "../../postDetails/postDetails.module.css"
@@ -13,45 +13,29 @@ export default function PostDetail() {
   const { id } = useParams()
   const { currentPost, status, error } = useSelector((state) => state.posts)
   const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/"
-  const [isLiked, setIsLiked] = useState(false)
-  const [isSaved, setIsSaved] = useState(false)
-  const [likeCount, setLikeCount] = useState(0)
 
   useEffect(() => {
     dispatch(fetchPostById(id))
   }, [dispatch, id])
 
-  useEffect(() => {
-    if (currentPost) {
-      setIsLiked(currentPost.isLiked)
-      setIsSaved(currentPost.isSaved)
-      setLikeCount(currentPost.likes.length)
-    }
-  }, [currentPost])
-
   const handleLike = () => {
-    if (isLiked) {
+    if (currentPost.isLiked) {
       dispatch(unlikePost(id))
-      setLikeCount(prev => prev - 1)
     } else {
       dispatch(likePost(id))
-      setLikeCount(prev => prev + 1)
     }
-    setIsLiked(!isLiked)
+  }
+
+  const handleComment = (comment) => {
+    dispatch(commentOnPost({ postId: id, comment }))
   }
 
   const handleSave = () => {
-    if (isSaved) {
+    if (currentPost.isSaved) {
       dispatch(unsavePost(id))
     } else {
       dispatch(savePost(id))
     }
-    setIsSaved(!isSaved)
-  }
-
-  const handleComment = (comment) => {
-    // TODO: Implement comment functionality
-    console.log("Comment:", comment)
   }
 
   if (status === "loading") {
@@ -102,7 +86,7 @@ export default function PostDetail() {
 
         <div className={styles.postActions}>
           <button className={styles.actionButton} onClick={handleLike}>
-            <Heart size={24} fill={isLiked ? "red" : "none"} color={isLiked ? "red" : "currentColor"} />
+            <Heart size={24} fill={currentPost.isLiked ? "red" : "none"} />
           </button>
           <button className={styles.actionButton}>
             <MessageCircle size={24} />
@@ -111,11 +95,11 @@ export default function PostDetail() {
             <Send size={24} />
           </button>
           <button className={styles.actionButton} onClick={handleSave}>
-            <Bookmark size={24} fill={isSaved ? "black" : "none"} />
+            <Bookmark size={24} fill={currentPost.isSaved ? "black" : "none"} />
           </button>
         </div>
 
-        <div className={styles.likes}>{likeCount} likes</div>
+        <div className={styles.likes}>{currentPost.likes.length} likes</div>
         <div className={styles.caption}>
           <span className={styles.username}>{currentPost.user?.username}</span> {currentPost.caption}
         </div>
