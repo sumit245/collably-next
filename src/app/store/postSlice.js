@@ -57,26 +57,11 @@ export const unsavePost = createAsyncThunk("posts/unsavePost", async (postId) =>
   return fetchWithToken(`/unSavePost/${postId}`, { method: "PATCH" })
 })
 
-export const getUserPosts = createAsyncThunk("posts/getUserPosts", async (userId) => {
-  return fetchWithToken(`/user_posts/${userId}`)
-})
-
-export const getPostDiscover = createAsyncThunk("posts/getPostDiscover", async () => {
-  return fetchWithToken("/post_discover")
-})
-
-export const getSavedPosts = createAsyncThunk("posts/getSavedPosts", async () => {
-  return fetchWithToken("/getSavePosts")
-})
-
 const postSlice = createSlice({
   name: "posts",
   initialState: {
     posts: [],
     currentPost: null,
-    userPosts: [],
-    discoverPosts: [],
-    savedPosts: [],
     status: "idle",
     error: null,
   },
@@ -111,15 +96,6 @@ const postSlice = createSlice({
       })
       .addCase(unsavePost.fulfilled, (state, action) => {
         updatePost(state, action.payload.post)
-      })
-      .addCase(getUserPosts.fulfilled, (state, action) => {
-        state.userPosts = action.payload.posts
-      })
-      .addCase(getPostDiscover.fulfilled, (state, action) => {
-        state.discoverPosts = action.payload.posts
-      })
-      .addCase(getSavedPosts.fulfilled, (state, action) => {
-        state.savedPosts = action.payload.posts
       })
   },
 })

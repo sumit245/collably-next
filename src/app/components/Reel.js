@@ -187,4 +187,3 @@ export default function Reel({
     </div>
   )
 }
-

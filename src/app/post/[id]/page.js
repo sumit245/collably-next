@@ -1,113 +1,131 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+"use client"
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useParams } from "next/navigation"
+import { fetchPostById, likePost, unlikePost, commentOnPost, savePost, unsavePost } from "../../store/postSlice"
+import Image from "next/image"
+import { Heart, MessageCircle, Send, Bookmark, ArrowLeft } from 'lucide-react'
+import styles from "../../postDetails/postDetails.module.css"
 
-const fetchWithToken = async (url, options = {}) => {
-  const accessToken = localStorage.getItem("accessToken")
-  const headers = {
-    "Content-Type": "application/json",
-    ...options.headers,
+export default function PostDetail() {
+  const dispatch = useDispatch()
+  const { id } = useParams()
+  const { currentPost, status, error } = useSelector((state) => state.posts)
+  const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/"
+
+  useEffect(() => {
+    dispatch(fetchPostById(id))
+  }, [dispatch, id])
+
+  const handleLike = () => {
+    if (currentPost.isLiked) {
+      dispatch(unlikePost(id))
+    } else {
+      dispatch(likePost(id))
+    }
   }
 
-  if (accessToken) {
-    headers["Authorization"] = accessToken
+  const handleComment = (comment) => {
+    dispatch(commentOnPost({ postId: id, comment }))
   }
 
-  const response = await fetch(`${BASE_URL}${url}`, {
-    ...options,
-    headers,
-  })
-
-  if (!response.ok) {
-    const errorData = await response.json()
-    throw new Error(errorData.message || `HTTP error! status: ${response.status}`)
+  const handleSave = () => {
+    if (currentPost.isSaved) {
+      dispatch(unsavePost(id))
+    } else {
+      dispatch(savePost(id))
+    }
   }
 
-  return response.json()
+  if (status === "loading") {
+    return <div>Loading...</div>
+  }
+
+  if (status === "failed") {
+    return <div>Error: {error}</div>
+  }
+
+  if (!currentPost) {
+    return <div>Post not found</div>
+  }
+
+  return (
+    <div className={styles.postDetail}>
+      <div className={styles.header}>
+        <button onClick={() => window.history.back()} className={styles.backButton}>
+          <ArrowLeft size={24} />
+        </button>
+      </div>
+
+      <div className={styles.mainPost}>
+        <div className={styles.userInfo}>
+          <Image
+            src={currentPost.user?.avatar || "/placeholder.svg"}
+            alt={currentPost.user?.username|| "no user found"}
+            width={32}
+            height={32}
+            className={styles.avatar}
+          />
+          <span className={styles.username}>{currentPost.user?.username}</span>
+        </div>
+
+        <div className={styles.mediaContainer}>
+          {currentPost.video ? (
+            <video src={`${BASE_URL}${currentPost.video.replace(/\\/g, "/")}`} controls className={styles.postVideo} />
+          ) : (
+            <Image
+              src={`${BASE_URL}${currentPost.images[0].replace(/\\/g, "/")}` || "/placeholder.svg"}
+              alt={`Post ${currentPost._id}`}
+              layout="fill"
+              objectFit="cover"
+              className={styles.postImage}
+            />
+          )}
+        </div>
+
+        <div className={styles.postActions}>
+          <button className={styles.actionButton} onClick={handleLike}>
+            <Heart size={24} fill={currentPost.isLiked ? "red" : "none"} />
+          </button>
+          <button className={styles.actionButton}>
+            <MessageCircle size={24} />
+          </button>
+          <button className={styles.actionButton}>
+            <Send size={24} />
+          </button>
+          <button className={styles.actionButton} onClick={handleSave}>
+            <Bookmark size={24} fill={currentPost.isSaved ? "black" : "none"} />
+          </button>
+        </div>
+
+        <div className={styles.likes}>{currentPost.likes.length} likes</div>
+        <div className={styles.caption}>
+          <span className={styles.username}>{currentPost.user?.username}</span> {currentPost.caption}
+        </div>
+        <div className={styles.comments}>
+          {currentPost.comments.map((comment, index) => (
+            <div key={index} className={styles.comment}>
+              <span className={styles.commentUsername}>{comment.user.username}</span> {comment.text}
+            </div>
+          ))}
+        </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            const comment = e.target.comment.value
+            if (comment.trim()) {
+              handleComment(comment)
+              e.target.comment.value = ""
+            }
+          }}
+        >
+          <input type="text" name="comment" placeholder="Add a comment..." className={styles.commentInput} />
+          <button type="submit" className={styles.commentButton}>
+            Post
+          </button>
+        </form>
+      </div>
+    </div>
+  )
 }
-
-export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
-  return fetchWithToken("/posts")
-})
-
-export const fetchPostById = createAsyncThunk("posts/fetchPostById", async (postId) => {
-  return fetchWithToken(`/post/${postId}`)
-})
-
-export const likePost = createAsyncThunk("posts/likePost", async (postId) => {
-  return fetchWithToken(`/post/${postId}/like`, { method: "PATCH" })
-})
-
-export const unlikePost = createAsyncThunk("posts/unlikePost", async (postId) => {
-  return fetchWithToken(`/post/${postId}/unlike`, { method: "PATCH" })
-})
-
-export const commentOnPost = createAsyncThunk("posts/commentOnPost", async ({ postId, comment }) => {
-  return fetchWithToken(`/post/${postId}/comment`, {
-    method: "POST",
-    body: JSON.stringify({ comment }),
-  })
-})
-
-export const savePost = createAsyncThunk("posts/savePost", async (postId) => {
-  return fetchWithToken(`/savePost/${postId}`, { method: "PATCH" })
-})
-
-export const unsavePost = createAsyncThunk("posts/unsavePost", async (postId) => {
-  return fetchWithToken(`/unSavePost/${postId}`, { method: "PATCH" })
-})
-
-const postSlice = createSlice({
-  name: "posts",
-  initialState: {
-    posts: [],
-    currentPost: null,
-    status: "idle",
-    error: null,
-  },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchPosts.pending, (state) => {
-        state.status = "loading"
-      })
-      .addCase(fetchPosts.fulfilled, (state, action) => {
-        state.status = "succeeded"
-        state.posts = action.payload.posts
-      })
-      .addCase(fetchPosts.rejected, (state, action) => {
-        state.status = "failed"
-        state.error = action.error.message
-      })
-      .addCase(fetchPostById.fulfilled, (state, action) => {
-        state.currentPost = action.payload.post
-      })
-      .addCase(likePost.fulfilled, (state, action) => {
-        updatePost(state, action.payload.post)
-      })
-      .addCase(unlikePost.fulfilled, (state, action) => {
-        updatePost(state, action.payload.post)
-      })
-      .addCase(commentOnPost.fulfilled, (state, action) => {
-        updatePost(state, action.payload.post)
-      })
-      .addCase(savePost.fulfilled, (state, action) => {
-        updatePost(state, action.payload.post)
-      })
-      .addCase(unsavePost.fulfilled, (state, action) => {
-        updatePost(state, action.payload.post)
-      })
-  },
-})
-
-function updatePost(state, updatedPost) {
-  const index = state.posts.findIndex((post) => post._id === updatedPost._id)
-  if (index !== -1) {
-    state.posts[index] = updatedPost
-  }
-  if (state.currentPost && state.currentPost._id === updatedPost._id) {
-    state.currentPost = updatedPost
-  }
-}
-
-export default postSlice.reducer
