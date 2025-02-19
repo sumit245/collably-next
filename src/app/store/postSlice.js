@@ -34,28 +34,6 @@ export const fetchPostById = createAsyncThunk("posts/fetchPostById", async (post
   return fetchWithToken(`/post/${postId}`)
 })
 
-export const likePost = createAsyncThunk("posts/likePost", async (postId) => {
-  return fetchWithToken(`/post/${postId}/like`, { method: "PATCH" })
-})
-
-export const unlikePost = createAsyncThunk("posts/unlikePost", async (postId) => {
-  return fetchWithToken(`/post/${postId}/unlike`, { method: "PATCH" })
-})
-
-export const commentOnPost = createAsyncThunk("posts/commentOnPost", async ({ postId, comment }) => {
-  return fetchWithToken(`/post/${postId}/comment`, {
-    method: "POST",
-    body: JSON.stringify({ comment }),
-  })
-})
-
-export const savePost = createAsyncThunk("posts/savePost", async (postId) => {
-  return fetchWithToken(`/savePost/${postId}`, { method: "PATCH" })
-})
-
-export const unsavePost = createAsyncThunk("posts/unsavePost", async (postId) => {
-  return fetchWithToken(`/unSavePost/${postId}`, { method: "PATCH" })
-})
 
 const postSlice = createSlice({
   name: "posts",
@@ -82,32 +60,10 @@ const postSlice = createSlice({
       .addCase(fetchPostById.fulfilled, (state, action) => {
         state.currentPost = action.payload.post
       })
-      .addCase(likePost.fulfilled, (state, action) => {
-        updatePost(state, action.payload.post)
-      })
-      .addCase(unlikePost.fulfilled, (state, action) => {
-        updatePost(state, action.payload.post)
-      })
-      .addCase(commentOnPost.fulfilled, (state, action) => {
-        updatePost(state, action.payload.post)
-      })
-      .addCase(savePost.fulfilled, (state, action) => {
-        updatePost(state, action.payload.post)
-      })
-      .addCase(unsavePost.fulfilled, (state, action) => {
-        updatePost(state, action.payload.post)
-      })
+     
   },
 })
 
-function updatePost(state, updatedPost) {
-  const index = state.posts.findIndex((post) => post._id === updatedPost._id)
-  if (index !== -1) {
-    state.posts[index] = updatedPost
-  }
-  if (state.currentPost && state.currentPost._id === updatedPost._id) {
-    state.currentPost = updatedPost
-  }
-}
+
 
 export default postSlice.reducer

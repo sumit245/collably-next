@@ -3,7 +3,7 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "next/navigation"
-import { fetchPostById, likePost, unlikePost, commentOnPost, savePost, unsavePost } from "../../store/postSlice"
+import { fetchPostById } from "../../store/postSlice"
 import Image from "next/image"
 import { Heart, MessageCircle, Send, Bookmark, ArrowLeft } from 'lucide-react'
 import styles from "../../postDetails/postDetails.module.css"
