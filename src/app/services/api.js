@@ -12,12 +12,6 @@ const api = {
       headers["Authorization"] = accessToken
     }
 
-    console.log("Request URL:", `${BASE_URL}${url}`)
-    console.log("Request Options:", options)
-    console.log("Request Headers:", headers)
-    console.log("Access Token:", accessToken)
-    console.log("Authorization Header:", headers["Authorization"])
-
     try {
       const response = await fetch(`${BASE_URL}${url}`, {
         ...options,
@@ -26,20 +20,16 @@ const api = {
 
       if (!response.ok) {
         const errorData = await response.json()
-        console.error("Error Response:", errorData)
         throw new Error(errorData.message || `HTTP error! status: ${response.status}`)
       }
 
-      const responseData = await response.json()
-      console.log("Response Data:", responseData)
-      return responseData
+      return await response.json()
     } catch (error) {
       console.error("API Error:", error.message)
       throw error
     }
   },
 
-  // New methods for posts
   getPosts: async () => {
     return api.fetch("/posts")
   },
@@ -49,18 +39,38 @@ const api = {
   },
 
   likePost: async (postId) => {
-    return api.fetch(`/posts/${postId}/like`, { method: "POST" })
+    return api.fetch(`/post/${postId}/like`, { method: "PATCH" })
   },
 
   unlikePost: async (postId) => {
-    return api.fetch(`/posts/${postId}/unlike`, { method: "POST" })
+    return api.fetch(`/post/${postId}/unlike`, { method: "PATCH" })
   },
 
   commentOnPost: async (postId, comment) => {
-    return api.fetch(`/posts/${postId}/comment`, {
+    return api.fetch(`/post/${postId}/comment`, {
       method: "POST",
       body: JSON.stringify({ comment }),
     })
+  },
+
+  savePost: async (postId) => {
+    return api.fetch(`/savePost/${postId}`, { method: "PATCH" })
+  },
+
+  unsavePost: async (postId) => {
+    return api.fetch(`/unSavePost/${postId}`, { method: "PATCH" })
+  },
+
+  getUserPosts: async (userId) => {
+    return api.fetch(`/user_posts/${userId}`)
+  },
+
+  getPostDiscover: async () => {
+    return api.fetch("/post_discover")
+  },
+
+  getSavedPosts: async () => {
+    return api.fetch("/getSavePosts")
   },
 }
 
