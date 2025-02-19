@@ -7,6 +7,10 @@ import { fetchPostById, likePost, unlikePost, commentOnPost, savePost, unsavePos
 import Image from "next/image"
 import { Heart, MessageCircle, Send, Bookmark, ArrowLeft } from 'lucide-react'
 import styles from "../../postDetails/postDetails.module.css"
+import Header from "../../components/HeaderShop"
+import Footer from "../../components/FooterShop"
+import { LikeProvider } from "../../actions/LikeContext"
+
 
 export default function PostDetail() {
   const dispatch = useDispatch()
@@ -51,6 +55,9 @@ export default function PostDetail() {
   }
 
   return (
+    <LikeProvider>
+    <div className={styles.container}>
+      <Header />
     <div className={styles.postDetail}>
       <div className={styles.header}>
         <button onClick={() => window.history.back()} className={styles.backButton}>
@@ -127,5 +134,8 @@ export default function PostDetail() {
         </form>
       </div>
     </div>
+    <Footer />
+          </div>
+    </LikeProvider>
   )
 }
