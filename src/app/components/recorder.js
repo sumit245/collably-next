@@ -1,16 +1,18 @@
 "use client"
 
 import { useState, useRef, useEffect, useCallback } from "react"
-import { X, Camera, Instagram, Youtube } from "lucide-react"
+import { useDispatch } from "react-redux"
+import { X, Instagram, Youtube } from "lucide-react"
 import { useRouter } from "next/navigation"
 import styles from "../videoRec/styles.vid.module.css"
 import Link from "next/link"
+import { setCurrentMedia } from "../store/mediaSlice"
 
 function ImageCapture() {
+  const dispatch = useDispatch()
   const router = useRouter()
   const [hasPermission, setHasPermission] = useState(false)
   const [error, setError] = useState(null)
-  const [capturedPhoto, setCapturedPhoto] = useState(null)
   const [selectedFile, setSelectedFile] = useState(null)
 
   const videoRef = useRef(null)
@@ -47,15 +49,16 @@ function ImageCapture() {
   const handleMediaCapture = useCallback(
     (mediaSrc) => {
       const mediaId = Date.now().toString()
-      sessionStorage.setItem(`media_${mediaId}`, mediaSrc);
-      const mediaDetails = {
-        mediaId,
-        mediaType: "photo",
-        mode: "post",
-      }
-      router.push(`/preview?${new URLSearchParams(mediaDetails).toString()}`)
+      dispatch(
+        setCurrentMedia({
+          id: mediaId,
+          src: mediaSrc,
+          type: "photo",
+        }),
+      )
+      router.push("/preview")
     },
-    [router],
+    [dispatch, router],
   )
 
   const capturePhoto = useCallback(() => {
@@ -65,7 +68,6 @@ function ImageCapture() {
       canvasRef.current.height = videoRef.current.videoHeight
       context.drawImage(videoRef.current, 0, 0)
       const photoDataUrl = canvasRef.current.toDataURL("image/jpeg")
-      setCapturedPhoto(photoDataUrl)
       handleMediaCapture(photoDataUrl)
     }
   }, [handleMediaCapture])
@@ -87,16 +89,12 @@ function ImageCapture() {
   )
 
   const handleUndo = useCallback(() => {
-    if (capturedPhoto) {
-      URL.revokeObjectURL(capturedPhoto)
-    }
-    setCapturedPhoto(null)
     setSelectedFile(null)
     if (videoRef.current) {
       videoRef.current.srcObject = null
       setupCamera()
     }
-  }, [capturedPhoto, setupCamera])
+  }, [setupCamera])
 
   return (
     <div className={styles.container}>
@@ -160,3 +158,4 @@ function ImageCapture() {
 }
 
 export default ImageCapture
+

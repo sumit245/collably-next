@@ -1,30 +1,26 @@
-"use client"
+'use client'
 
 import { useState, useEffect, Suspense } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useSelector, useDispatch } from "react-redux"
 import styles from "./page.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import FooterCreator from "../components/FooterCreator"
-import { Package, Eye, Users, ArrowLeft } from "lucide-react"
+import { Package, Eye, Users, ArrowLeft } from 'lucide-react'
 import Link from "next/link"
+import { updateFormData, clearCurrentMedia, clearFormData } from '../store/mediaSlice'
 
 const MediaDetailsContent = () => {
   const router = useRouter()
-  const searchParams = useSearchParams()
   const dispatch = useDispatch()
-  const [mediaSrc, setMediaSrc] = useState("")
-  const [mediaType, setMediaType] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [formData, setFormData] = useState({
-    product: "",
-    visibility: "",
-    audience: "",
-    ageRestriction: "",
-  })
-  const accessToken = localStorage.getItem("accessToken")
+  
+  const currentMedia = useSelector((state) => state.media.currentMedia)
+  const formData = useSelector((state) => state.media.formData)
   const user = useSelector((state) => state.auth.user)
+  const accessToken = localStorage.getItem("accessToken")
+  
 
   useEffect(() => {
     if (!accessToken) {
@@ -33,55 +29,16 @@ const MediaDetailsContent = () => {
       return
     }
 
-    const src = searchParams.get("mediaSrc")
-    const type = searchParams.get("mediaType")
-    const mediaId = searchParams.get("mediaId")
-    const product = searchParams.get("product")
-
-    if (src) {
-      setMediaSrc(src)
-      localStorage.setItem("savedMediaSrc", src)
-    } else if (mediaId) {
-      const storedMedia = sessionStorage.getItem(`media_${mediaId}`)
-      if (storedMedia) {
-        setMediaSrc(storedMedia)
-        localStorage.setItem("savedMediaSrc", storedMedia)
-      }
-    } else {
-      const savedSrc = localStorage.getItem("savedMediaSrc")
-      if (savedSrc) {
-        setMediaSrc(savedSrc)
-      }
+    if (!currentMedia) {
+      router.push('/CreatorShop')
     }
-
-    if (type) {
-      setMediaType(type)
-      localStorage.setItem("savedMediaType", type)
-    } else {
-      const savedType = localStorage.getItem("savedMediaType")
-      if (savedType) {
-        setMediaType(savedType)
-      }
-    }
-
-    const storedFormData = localStorage.getItem("videoDetailsData")
-    if (storedFormData) {
-      const parsedFormData = JSON.parse(storedFormData)
-      setFormData((prevState) => ({
-        ...parsedFormData,
-        product: product || parsedFormData.product || prevState.product,
-      }))
-    } else if (product) {
-      setFormData((prevState) => ({ ...prevState, product }))
-    }
-  }, [searchParams, accessToken])
+  }, [accessToken, currentMedia, router])
 
   const getFileFromSource = async (src, fileName) => {
     console.log("Source type:", typeof src)
     console.log("Source value:", src.substring(0, 100) + "...")
 
     if (src.startsWith("data:")) {
-      
       const arr = src.split(",")
       const mime = arr[0].match(/:(.*?);/)[1]
       const bstr = atob(arr[1])
@@ -92,12 +49,10 @@ const MediaDetailsContent = () => {
       }
       return new File([u8arr], fileName, { type: mime })
     } else if (src.startsWith("blob:") || src.startsWith("http:") || src.startsWith("https:")) {
-      
       const response = await fetch(src)
       const blob = await response.blob()
       return new File([blob], fileName, { type: blob.type })
     } else {
-     
       const response = await fetch(src)
       const blob = await response.blob()
       return new File([blob], fileName, { type: blob.type })
@@ -114,32 +69,23 @@ const MediaDetailsContent = () => {
       setIsLoading(true)
       setError(null)
 
-      if (!mediaSrc) {
+      if (!currentMedia?.src) {
         throw new Error("No media selected")
       }
 
-      console.log("Media source type:", typeof mediaSrc)
-      console.log("Media source length:", mediaSrc.length)
-
-      const postFormData = new FormData();
-const fileExtension = mediaType === "photo" ? "jpg" : "webm";
-const mediaFile = await getFileFromSource(mediaSrc, `media_${Date.now()}.${fileExtension}`);
-if (!mediaFile) {
-  throw new Error("Failed to create file from media source");
-}
+      const postFormData = new FormData()
+      const fileExtension = currentMedia.type === "photo" ? "jpg" : "mp4"
+      const mediaFile = await getFileFromSource(currentMedia.src, `media_${Date.now()}.${fileExtension}`)
+      
+      if (!mediaFile) {
+        throw new Error("Failed to create file from media source")
+      }
 
       postFormData.append("media", mediaFile)
       postFormData.append("caption", formData.product)
 
       if (formData.audience) postFormData.append("audience", formData.audience)
       if (formData.ageRestriction) postFormData.append("ageRestriction", formData.ageRestriction)
-
-      console.log("FormData entries:")
-      for (const [key, value] of postFormData.entries()) {
-        console.log(`${key}:`, value)
-      }
-
-      const accessToken = localStorage.getItem("accessToken")
 
       const response = await fetch("http://localhost:5000/api/posts", {
         method: "POST",
@@ -152,9 +98,9 @@ if (!mediaFile) {
       const result = await response.text()
       console.log(result)
 
-      localStorage.removeItem("videoDetailsData")
-      localStorage.removeItem("savedMediaSrc")
-      localStorage.removeItem("savedMediaType")
+      // Clear Redux state
+      dispatch(clearCurrentMedia())
+      dispatch(clearFormData())
 
       router.push("/upload-success")
     } catch (err) {
@@ -166,9 +112,6 @@ if (!mediaFile) {
   }
 
   const handleproductClick = () => {
-    if (mediaSrc) {
-      localStorage.setItem("savedMediaSrc", mediaSrc)
-    }
     router.push("/set-product")
   }
 
@@ -181,6 +124,10 @@ if (!mediaFile) {
   }
 
   const isFormComplete = formData.product && formData.visibility && formData.audience
+
+  if (!currentMedia) {
+    return null
+  }
 
   return (
     <div className={stylesShop.bodyShop}>
@@ -195,10 +142,10 @@ if (!mediaFile) {
           {error && <div className={styles.error}>{error}</div>}
 
           <div className={styles.mediaPreview}>
-            {mediaType === "photo" ? (
-              <img src={mediaSrc || "/placeholder.svg"} alt="Preview" className={styles.media} />
+            {currentMedia.type === "photo" ? (
+              <img src={currentMedia.src || "/placeholder.svg"} alt="Preview" className={styles.media} />
             ) : (
-              mediaSrc && <video src={mediaSrc} className={styles.video} autoPlay loop muted />
+              currentMedia.src && <video src={currentMedia.src} className={styles.video} autoPlay loop muted />
             )}
           </div>
 
@@ -207,7 +154,7 @@ if (!mediaFile) {
 
             <button className={styles.optionButton} onClick={handleproductClick}>
               <Package size={20} />
-              Add Product: {formData.product || "Not selected"}
+              Add Link: {formData.product || "Not selected"}
             </button>
 
             <button className={styles.optionButton} onClick={handleVisibilityClick}>
@@ -245,4 +192,3 @@ export default function MediaDetails() {
     </Suspense>
   )
 }
-

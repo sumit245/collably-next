@@ -1,7 +1,8 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { updateFormData } from "../store/mediaSlice"
 import styles from "./page.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import FooterCreator from "../components/FooterCreator"
@@ -10,32 +11,15 @@ import { ArrowLeft } from 'lucide-react'
 
 export default function SelectAudience() {
   const router = useRouter()
-  const [selectedAudience, setSelectedAudience] = useState("")
-  const [selectedAgeRestriction, setSelectedAgeRestriction] = useState("")
+  const dispatch = useDispatch()
+  const { audience, ageRestriction } = useSelector((state) => state.media.formData)
 
-  useEffect(() => {
-    const storedData = localStorage.getItem("videoDetailsData")
-    if (storedData) {
-      const parsedData = JSON.parse(storedData)
-      setSelectedAudience(parsedData.audience || "")
-      setSelectedAgeRestriction(parsedData.ageRestriction || "")
-    }
-  }, [])
-
-  const handleSelect = (audience) => {
-    setSelectedAudience(audience)
-    const storedData = localStorage.getItem("videoDetailsData")
-    const updatedData = storedData ? JSON.parse(storedData) : {}
-    updatedData.audience = audience
-    localStorage.setItem("videoDetailsData", JSON.stringify(updatedData))
+  const handleSelect = (newAudience) => {
+    dispatch(updateFormData({ audience: newAudience }))
   }
 
   const handleAgeRestriction = (restriction) => {
-    setSelectedAgeRestriction(restriction)
-    const storedData = localStorage.getItem("videoDetailsData")
-    const updatedData = storedData ? JSON.parse(storedData) : {}
-    updatedData.ageRestriction = restriction
-    localStorage.setItem("videoDetailsData", JSON.stringify(updatedData))
+    dispatch(updateFormData({ ageRestriction: restriction }))
   }
 
   const handleDone = () => {
@@ -46,14 +30,14 @@ export default function SelectAudience() {
     <div className={stylesShop.bodyShop}>
       <div className={stylesShop.smartphoneContainer}>
         <div className={styles.container}>
-         < div className={styles.header}>
-        <Link href="/video-details">
-        <button className={styles.backButton}>
-          <ArrowLeft size={24} color="white" />
-        </button>
-        </Link>
-        <h1 className={styles.title}>Select audience</h1> 
-        </div>
+         <div className={styles.header}>
+          <Link href="/video-details">
+            <button className={styles.backButton}>
+              <ArrowLeft size={24} color="white" />
+            </button>
+          </Link>
+          <h1 className={styles.title}>Select audience</h1> 
+         </div>
           <div className={styles.question}>
             <h2>Is this video Made for Kids?</h2>
             <p>
@@ -65,7 +49,7 @@ export default function SelectAudience() {
 
           <div className={styles.options}>
             <button
-              className={`${styles.option} ${selectedAudience === "For kids" ? styles.selected : ""}`}
+              className={`${styles.option} ${audience === "For kids" ? styles.selected : ""}`}
               onClick={() => handleSelect("For kids")}
             >
               <div className={styles.radio} />
@@ -73,7 +57,7 @@ export default function SelectAudience() {
             </button>
 
             <button
-              className={`${styles.option} ${selectedAudience === "Not for kids" ? styles.selected : ""}`}
+              className={`${styles.option} ${audience === "Not for kids" ? styles.selected : ""}`}
               onClick={() => handleSelect("Not for kids")}
             >
               <div className={styles.radio} />
@@ -87,7 +71,7 @@ export default function SelectAudience() {
 
             <div className={styles.options}>
               <button
-                className={`${styles.option} ${selectedAgeRestriction === "18-plus" ? styles.selected : ""}`}
+                className={`${styles.option} ${ageRestriction === "18-plus" ? styles.selected : ""}`}
                 onClick={() => handleAgeRestriction("18-plus")}
               >
                 <div className={styles.radio} />
@@ -95,7 +79,7 @@ export default function SelectAudience() {
               </button>
 
               <button
-                className={`${styles.option} ${selectedAgeRestriction === "no-restriction" ? styles.selected : ""}`}
+                className={`${styles.option} ${ageRestriction === "no-restriction" ? styles.selected : ""}`}
                 onClick={() => handleAgeRestriction("no-restriction")}
               >
                 <div className={styles.radio} />

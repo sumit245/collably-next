@@ -1,18 +1,20 @@
 "use client"
 
 import { useState, useRef, useEffect, useCallback } from "react"
-import { X, Video, Instagram, Youtube } from "lucide-react"
+import { useDispatch } from "react-redux"
+import { X, Instagram, Youtube } from "lucide-react"
 import { useRouter } from "next/navigation"
 import styles from "../videoRec/styles.vid.module.css"
 import Link from "next/link"
+import { setCurrentMedia } from "../store/mediaSlice"
 
 function VideoRecorder() {
+  const dispatch = useDispatch()
   const router = useRouter()
   const [isRecording, setIsRecording] = useState(false)
   const [hasPermission, setHasPermission] = useState(false)
   const [error, setError] = useState(null)
   const [recordingTime, setRecordingTime] = useState(0)
-  const [recordedVideo, setRecordedVideo] = useState(null)
   const [selectedFile, setSelectedFile] = useState(null)
 
   const videoRef = useRef(null)
@@ -55,17 +57,17 @@ function VideoRecorder() {
   const handleMediaCapture = useCallback(
     (mediaSrc) => {
       const mediaId = Date.now().toString()
-   
-      sessionStorage.setItem(`media_${mediaId}`, mediaSrc);
-      const mediaDetails = {
-        mediaId,
-        mediaType: "video",
-        duration: recordingTime,
-        mode: "video",
-      }
-      router.push(`/preview?${new URLSearchParams(mediaDetails).toString()}`)
+      dispatch(
+        setCurrentMedia({
+          id: mediaId,
+          src: mediaSrc,
+          type: "video",
+          duration: recordingTime,
+        }),
+      )
+      router.push("/preview")
     },
-    [recordingTime, router],
+    [recordingTime, dispatch, router],
   )
 
   const startRecording = useCallback(() => {
@@ -83,7 +85,6 @@ function VideoRecorder() {
     recorder.onstop = () => {
       const blob = new Blob(chunksRef.current, { type: "video/webm" })
       const url = URL.createObjectURL(blob)
-      setRecordedVideo(url)
       handleMediaCapture(url)
     }
 
@@ -136,20 +137,12 @@ function VideoRecorder() {
   )
 
   const handleUndo = useCallback(() => {
-    if (recordedVideo) {
-      URL.revokeObjectURL(recordedVideo)
-    }
-    setRecordedVideo(null)
-    setSelectedFile(null)
     if (videoRef.current) {
       videoRef.current.srcObject = null
       setupCamera()
     }
-  }, [recordedVideo, setupCamera])
-
-  const handleVideoCapture = useCallback(() => {
-    isRecording ? stopRecording() : startRecording()
-  }, [isRecording, stopRecording, startRecording])
+    setSelectedFile(null)
+  }, [setupCamera])
 
   return (
     <div className={styles.container}>
@@ -182,14 +175,12 @@ function VideoRecorder() {
           />
           <button className={styles.addButton} onClick={() => fileInputRef.current?.click()}>
             <div className={styles.addButtonPreview}>
-              {selectedFile && (
-                <video src={URL.createObjectURL(selectedFile)} className={styles.previewThumbnail} />
-              )}
+              {selectedFile && <video src={URL.createObjectURL(selectedFile)} className={styles.previewThumbnail} />}
             </div>
           </button>
           <button
             className={`${styles.recordButton} ${isRecording ? styles.recording : ""}`}
-            onClick={handleVideoCapture}
+            onClick={() => (isRecording ? stopRecording() : startRecording())}
             disabled={!hasPermission}
           >
             <div className={styles.recordingInner} />
@@ -214,3 +205,4 @@ function VideoRecorder() {
 }
 
 export default VideoRecorder
+
