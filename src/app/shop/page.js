@@ -6,7 +6,7 @@ import Header from "../components/HeaderShop"
 import Footer from "../components/FooterShop"
 import HeroCarousel from "../components/HeroCaraouselShop"
 import TopCreators from "../components/TopCreatorShop"
-import ProductCategories from "../components/ProductCategoriesShop"
+import FeaturedCategories from "../components/shopCategories"
 import TopBrands from "../components/TopBrandShop"
 import ProductGrid from "../components/ProductGridShop"
 import FeaturedCreators from "../components/FeaturedCreatorShop"
@@ -37,7 +37,7 @@ export default function ShopPage() {
   }
 
   const FilteredTopCreators = filterComponentsBySearch(TopCreators)
-  const FilteredProductCategories = filterComponentsBySearch(ProductCategories)
+  const FilteredProductCategories = filterComponentsBySearch(FeaturedCategories)
   const FilteredTopBrands = filterComponentsBySearch(TopBrands)
   const FilteredProductGrid = filterComponentsBySearch(ProductGrid)
   const FilteredFeaturedCreators = filterComponentsBySearch(FeaturedCreators)
@@ -57,7 +57,7 @@ export default function ShopPage() {
             <FilteredTopBrands />
             <ReelsSec2 sectionTitle="Electronics Products" category="Electronics" />
             <ReelsSec2 sectionTitle="Beauty Products" category="Beauty" />
-            <FilteredProductGrid />
+            {/* <FilteredProductGrid /> */}
             <FilteredFeaturedCreators />
             <FilteredTrendingBrands />
             <FilteredTrendingUsersLeaderBoard />
