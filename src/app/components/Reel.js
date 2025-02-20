@@ -24,7 +24,7 @@ export default function Reel({
   isSaved,
 }) {
   const currentUser = useSelector((state) => state.auth.user)
-  const currentUserId = currentUser?._id
+  const currentUserId = currentUser?.user._id
 
   const mediaRef = useRef(null)
   const commentSectionRef = useRef(null)
