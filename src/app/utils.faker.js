@@ -95,7 +95,7 @@ export const creators = [
 
 
    export const brands = [
-        { name: 'H&M', image: '/images/hm_icon.png' },
+        { name: 'H&M', image: '/images/hm_icon.png', link:"https://www2.hm.com/en_in/index.html" },
         { name: 'Savana', image: '/images/savana_icon.png' },
         { name: 'Nykaa', image: '/images/nykaa_icon.png' },
         { name: 'Meesho', image: '/images/meesho-icon.png' },

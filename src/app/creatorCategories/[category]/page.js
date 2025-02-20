@@ -50,10 +50,9 @@ export default function CategoryProducts() {
               </div>
             </div>
             {filteredProducts.length === 0 ? (
-              <div className={styles.noProductsCard}>
-              <p className={styles.noProducts}>Comming soon</p>
-            </div>
-            
+             <div className={styles.noProductsCard}>
+             <p className={styles.noProducts}>Comming soon</p>
+           </div>
             ) : (
               <div className={styles.productsGrid}>
                 {filteredProducts.map((product) => (

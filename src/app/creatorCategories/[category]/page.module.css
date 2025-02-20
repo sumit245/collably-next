@@ -178,4 +178,21 @@
     z-index: 1000;
   }
   
+  .noProductsCard {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px; /* You can adjust this as needed */
+    margin: 20px;
+    margin-bottom: 14.5rem;
+  }
   
+  .noProducts {
+    font-size: 18px;
+    color: #333;
+    font-weight: bold;
+  }
