@@ -121,11 +121,13 @@ const MediaDetailsContent = () => {
       console.log("Media source type:", typeof mediaSrc)
       console.log("Media source length:", mediaSrc.length)
 
-      const postFormData = new FormData()
-      const mediaFile = await getFileFromSource(mediaSrc, `media_${Date.now()}`)
-      if (!mediaFile) {
-        throw new Error("Failed to create file from media source")
-      }
+      const postFormData = new FormData();
+const fileExtension = mediaType === "photo" ? "jpg" : "webm";
+const mediaFile = await getFileFromSource(mediaSrc, `media_${Date.now()}.${fileExtension}`);
+if (!mediaFile) {
+  throw new Error("Failed to create file from media source");
+}
+
       postFormData.append("media", mediaFile)
       postFormData.append("caption", formData.product)
 
