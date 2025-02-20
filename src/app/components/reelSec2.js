@@ -18,7 +18,7 @@ export default function ReelsSec2({ sectionTitle, category }) {
   }, [dispatch])
 
   useEffect(() => {
-    // Filter products by category and limit to 4 for display
+    
     const filteredProducts = allProducts.filter((product) => product.category === category).slice(0, 4)
     setDisplayProducts(filteredProducts)
   }, [allProducts, category])

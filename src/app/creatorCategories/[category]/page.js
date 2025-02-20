@@ -6,8 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Search } from "lucide-react";
 import { fetchProducts } from "../../store/productSlice";
 import CreatorCard from "../../components/Cards/creator2";
-import Header from "../../components/HeaderShop";
-import Footer from "../../components/FooterShop";
+import FooterCreator from '../../components/FooterCreator'
+import CreatorHome from '../../components/CreatorHome'
 import styles from "./page.module.css";
 import styleshop from "../../shop/StyleShop.module.css";
 import { LikeProvider } from "../../actions/LikeContext";  
@@ -31,9 +31,10 @@ export default function CategoryProducts() {
 
   return (
     <LikeProvider> {/* Wrap with LikeProvider */}
+ 
       <div className={styleshop.bodyShop}>
         <div className={styleshop.smartphoneContainer}>
-          <Header />
+        <CreatorHome />
           <div className={styles.categoryPage}>
             <div className={styles.categoryHeader}>
               <h1 className={styles.categoryTitle}>{category} Products</h1>
@@ -49,7 +50,10 @@ export default function CategoryProducts() {
               </div>
             </div>
             {filteredProducts.length === 0 ? (
-              <p className={styles.noProducts}>No products found</p>
+              <div className={styles.noProductsCard}>
+              <p className={styles.noProducts}>Comming soon</p>
+            </div>
+            
             ) : (
               <div className={styles.productsGrid}>
                 {filteredProducts.map((product) => (
@@ -58,9 +62,11 @@ export default function CategoryProducts() {
               </div>
             )}
           </div>
-          <Footer />
+          <FooterCreator />
         </div>
+      
       </div>
+      
     </LikeProvider>
   );
 }
