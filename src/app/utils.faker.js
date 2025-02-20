@@ -95,10 +95,10 @@ export const creators = [
 
 
    export const brands = [
-        { name: 'H&M', image: '/images/hm_icon.png' },
-        { name: 'Savana', image: '/images/savana_icon.png' },
-        { name: 'Nykaa', image: '/images/nykaa_icon.png' },
-        { name: 'Meesho', image: '/images/meesho-icon.png' },
+        { name: 'H&M', image: '/images/hm_icon.png' , link:'https://www2.hm.com/en_in/index.html'},
+        { name: 'Savana', image: '/images/savana_icon.png', link:'https://www.savana.com/activity/fashion-favorites-10278?withToken=1&delayGotoAppStore=1&openInApp=0&campaign_id=21114104554&adset_id=163609676521&ad_id=694061392922&keyword=savana&utm_source=google&utm_medium=&placement=&network=g&gad_source=1&gclid=Cj0KCQiAwtu9BhC8ARIsAI9JHamZ2CdhgpMYfD5qOn5WQTJpiRiwcJIM5YqHrao0sLjAnbL-7Kv8Gc8aAgJrEALw_wcB'},
+        { name: 'Nykaa', image: '/images/nykaa_icon.png', link:'https://www.nykaa.com/' },
+        { name: 'Meesho', image: '/images/meesho-icon.png', link:'https://www.meesho.com/?srsltid=AfmBOor2sWEst4r1erYNTUYUCA-3gs-Dc0L6CKsVwr8VFRuezn5Fufq0' },
       ]
 
     export const products = [
