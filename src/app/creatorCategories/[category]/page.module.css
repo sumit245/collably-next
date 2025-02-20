@@ -1,0 +1,168 @@
+.categoryPage {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .categoryHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    flex-direction: column;
+  }
+  
+  .categoryTitle {
+    margin: 0px 0px 30px 0px; 
+    font-weight: bold;
+    color: #e61f93;
+    font-size: 1.7rem;
+    padding-left: 5px;
+  }
+  
+  .searchContainer {
+    display: flex;
+    align-items: center;
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    border: 1px solid black;
+  }
+  
+  .searchIcon {
+    color: #666;
+    margin-right: 0.5rem;
+  }
+  
+  .searchInput {
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 1rem;
+    width: 100%;
+  }
+  
+  .noProducts {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    margin-top: 2rem;
+  }
+  
+  .productsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  /* Styles for CreatorCard component */
+  .creatorCard {
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .creatorCard:hover {
+    transform: translateY(-5px);
+  }
+  
+  .videoContainer {
+    position: relative;
+    width: 100%;
+    padding-top: 100%; /* 1:1 Aspect Ratio */
+  }
+  
+  .creatorVideo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .gradientOverlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
+  }
+  
+  .creatorInfo {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: #fff;
+  }
+  
+  .creatorName {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+  }
+  
+  .followerCount {
+    font-size: 0.9rem;
+  }
+  
+  .buttonContainer1 {
+    padding: 1rem;
+  }
+  
+  .productDetails {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  
+  .price {
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .buttonContainer2 {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .wishlistButton,
+  .shopButton {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .wishlistButton {
+    background-color: #f5f5f5;
+  }
+  
+  .shopButton {
+    background-color: #ff487f;
+    color: #fff;
+    flex-grow: 1;
+    margin-left: 0.5rem;
+  }
+  
+  .shopButton:hover {
+    background-color: #ff1f5a;
+  }
+  
+  .notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #4caf50;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+  }
+  
+  

@@ -10,7 +10,7 @@ import ToDo from '../components/CreatorHomeToDo'
 import PoweredByFooter from '../components/CreatorBottomFooter'
 import CreateWith from '../components/CreateWith'
 import TopCreators from '../components/TopCreatorShop'
-import FeaturedCreators from "../components/CategoriesCreatorHome"
+import FeaturedCategories from "../components/CategoriesCreatorHome"
 import  ReferralProgram from "../components/ReferralProgram"
 import TopPerformers from "../components/TopPerformers"
 import TrendingBrands from '../components/CreatorTrendingBrands';
@@ -33,7 +33,7 @@ export default function HomePage() {
        <TopCreators />
        <TrendingBrands />
        {/* <FindsOfTheDay /> */}
-       <FeaturedCreators />
+       <FeaturedCategories />
        <ReferralProgram />
        <TopPerformers />
        <ToDo />
@@ -46,4 +46,3 @@ export default function HomePage() {
      </div>
   )
 }
-
