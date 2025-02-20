@@ -1,23 +1,23 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useRouter } from "next/navigation"
 import { useDispatch, useSelector } from "react-redux"
-import { ChevronDown, ChevronUp, ArrowLeft, Search } from "lucide-react"
+import { ChevronDown, ChevronUp, ArrowLeft, Search } from 'lucide-react'
 import styles from "./page.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import FooterCreator from "../components/FooterCreator"
 import Link from "next/link"
 import { fetchReferralsByUserId } from "../store/brandSlice"
+import { updateFormData } from "../store/mediaSlice"
 
 export default function SetProductClient() {
   const dispatch = useDispatch()
   const router = useRouter()
-  const searchParams = useSearchParams()
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
-  const [selectedLink, setSelectedLink] = useState("")
   const referrals = useSelector((state) => state.brands.referrals || [])
+  const selectedLink = useSelector((state) => state.media.formData.product)
 
   const userId = useSelector((state) => state.auth.user?.user._id)
 
@@ -27,22 +27,17 @@ export default function SetProductClient() {
     }
   }, [dispatch, userId])
 
-  useEffect(() => {
-    const product = searchParams.get("product")
-    if (product) {
-      setSelectedLink(product)
-    }
-  }, [searchParams])
-
   const filteredReferrals = (referrals || []).filter((referral) =>
     referral.referralLink.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
   const handleDone = () => {
-    const currentFormData = JSON.parse(localStorage.getItem("videoDetailsData") || "{}")
-    const updatedFormData = { ...currentFormData, product: selectedLink }
-    localStorage.setItem("videoDetailsData", JSON.stringify(updatedFormData))
-    router.push(`/video-details?product=${encodeURIComponent(selectedLink)}`)
+    router.push('/video-details')
+  }
+
+  const handleSelectLink = (link) => {
+    dispatch(updateFormData({ product: link }))
+    setIsDropdownOpen(false)
   }
 
   return (
@@ -78,10 +73,7 @@ export default function SetProductClient() {
                     <div
                       key={referral._id}
                       className={styles.dropdownItem}
-                      onClick={() => {
-                        setSelectedLink(referral.referralLink)
-                        setIsDropdownOpen(false)
-                      }}
+                      onClick={() => handleSelectLink(referral.referralLink)}
                     >
                       {referral.referralLink}
                     </div>
@@ -99,4 +91,3 @@ export default function SetProductClient() {
     </div>
   )
 }
-

@@ -1,7 +1,9 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { updateFormData } from "../store/mediaSlice"
 import styles from "./page.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import FooterCreator from "../components/FooterCreator"
@@ -10,22 +12,11 @@ import { ArrowLeft } from 'lucide-react'
 
 export default function SetVisibility() {
   const router = useRouter()
-  const [selectedVisibility, setSelectedVisibility] = useState("")
-
-  useEffect(() => {
-    const storedData = localStorage.getItem("videoDetailsData")
-    if (storedData) {
-      const parsedData = JSON.parse(storedData)
-      setSelectedVisibility(parsedData.visibility || "")
-    }
-  }, [])
+  const dispatch = useDispatch()
+  const selectedVisibility = useSelector((state) => state.media.formData.visibility)
 
   const handleSelect = (visibility) => {
-    setSelectedVisibility(visibility)
-    const storedData = localStorage.getItem("videoDetailsData")
-    const updatedData = storedData ? JSON.parse(storedData) : {}
-    updatedData.visibility = visibility
-    localStorage.setItem("videoDetailsData", JSON.stringify(updatedData))
+    dispatch(updateFormData({ visibility }))
     router.back()
   }
 
@@ -34,13 +25,12 @@ export default function SetVisibility() {
       <div className={stylesShop.smartphoneContainer}>
         <div className={styles.container}>
           <div className={styles.header}>
-        <Link href="/video-details">
-        <button className={styles.backButton}>
-          <ArrowLeft size={24} color="white" />
-        </button>
-        </Link>
-        
-          <h1 className={styles.title}>Set visibility</h1>
+            <Link href="/video-details">
+              <button className={styles.backButton}>
+                <ArrowLeft size={24} color="white" />
+              </button>
+            </Link>
+            <h1 className={styles.title}>Set visibility</h1>
           </div>
           <div className={styles.options}>
             <button

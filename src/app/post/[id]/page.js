@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useParams } from "next/navigation"
 import Image from "next/image"
 import styles from "../../postDetails/postDetails.module.css"
@@ -12,72 +12,64 @@ import { useSelector } from "react-redux"
 
 export default function PostDetail() {
   const { id } = useParams()
-  // const [currentPost, setCurrentPost] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
   const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/"
   const currentUser = useSelector((state) => state.auth.user)
   const currentUserId = currentUser?.user._id
   const [currentPost, setCurrentPost] = useState({
-    likes: [], // Ensure this is always an array
-  });
-  
-  useEffect(() => {
-    fetchPost()
-  }, [id])
+    likes: [],
+    isLiked: false,
+  })
 
-  const fetchPost = async () => {
+  const fetchPost = useCallback(async () => {
     try {
-      setIsLoading(true);
-      const post = await api.getPostById(id);
-      console.log("Fetched post data:", post);
+      setIsLoading(true)
+      const post = await api.getPostById(id)
+      console.log("Fetched post data:", post)
       setCurrentPost({
         ...post,
-        likes: Array.isArray(post.likes) ? post.likes : [], // Fallback to empty array
-      });
-      setIsLoading(false);
+        likes: Array.isArray(post.likes) ? post.likes : [],
+        isLiked: Array.isArray(post.likes) ? post.likes.includes(currentUserId) : false,
+      })
+      setIsLoading(false)
     } catch (err) {
-      setError(err.message);
-      setIsLoading(false);
+      setError(err.message)
+      setIsLoading(false)
     }
-  };
-  
-  
+  }, [id, currentUserId])
+
+  useEffect(() => {
+    fetchPost()
+  }, [fetchPost])
 
   const handleLike = async () => {
-    console.log("Attempting to like/unlike post:", id);
-  
-    if (!currentPost || !Array.isArray(currentPost.likes)) {
-      console.error("Likes array is missing or not an array.");
-      return;
-    }
-  
+    console.log("Attempting to like/unlike post:", id)
+
     try {
-      if (currentPost.likes.includes(currentUserId)) {
-        console.log("Unliking post");
-        await api.unlikePost(id);
+      if (currentPost.isLiked) {
+        console.log("Unliking post")
+        await api.unlikePost(id)
       } else {
-        console.log("Liking post");
-        await api.likePost(id);
+        console.log("Liking post")
+        await api.likePost(id)
       }
-      updatePostLikes(!currentPost.likes.includes(currentUserId));
+      updatePostLikes(!currentPost.isLiked)
     } catch (error) {
-      console.error("Error liking/unliking post:", error);
+      console.error("Error liking/unliking post:", error)
     }
-  };
-  
-  
-  
+  }
 
   const updatePostLikes = (isLiking) => {
     setCurrentPost((prevPost) => {
       const updatedLikes = isLiking
         ? [...prevPost.likes, currentUserId]
-        : prevPost.likes.filter((id) => id !== currentUserId)
+        : prevPost.likes.filter((likeId) => likeId !== currentUserId)
       console.log("Updated likes:", updatedLikes)
       return {
         ...prevPost,
         likes: updatedLikes,
+        isLiked: isLiking,
       }
     })
   }
@@ -164,10 +156,18 @@ export default function PostDetail() {
 
             <div className={styles.mediaContainer}>
               {currentPost.video ? (
-                <video src={`${BASE_URL}${currentPost.video.replace(/\\/g, "/")}`} controls className={styles.postVideo} />
+                <video
+                  src={`${BASE_URL}${currentPost.video.replace(/\\/g, "/")}`}
+                  controls
+                  className={styles.postVideo}
+                />
               ) : (
                 <Image
-                  src={currentPost.images?.[0] ? `${BASE_URL}${currentPost.images[0].replace(/\\/g, "/")}` : "/placeholder.svg"}
+                  src={
+                    currentPost.images?.[0]
+                      ? `${BASE_URL}${currentPost.images[0].replace(/\\/g, "/")}`
+                      : "/placeholder.svg"
+                  }
                   alt={`Post ${currentPost._id}`}
                   layout="fill"
                   objectFit="cover"
@@ -177,18 +177,18 @@ export default function PostDetail() {
             </div>
 
             <div className={styles.postActions}>
-            <button className={styles.actionButton} onClick={handleLike}>
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill={currentPost?.likes?.includes(currentUserId) ? "red" : "none"}
-    stroke={currentPost?.likes?.includes(currentUserId) ? "red" : "currentColor"}
-    strokeWidth="2"
-  >
-    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-  </svg>
-</button>
+              <button className={styles.actionButton} onClick={handleLike}>
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill={currentPost.isLiked ? "red" : "none"}
+                  stroke={currentPost.isLiked ? "red" : "currentColor"}
+                  strokeWidth="2"
+                >
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                </svg>
+              </button>
 
               <button className={styles.actionButton}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -214,7 +214,7 @@ export default function PostDetail() {
               </button>
             </div>
 
-            <div className={styles.likes}>{currentPost.likes?.length || 0} likes</div>
+            <div className={styles.likes}>{currentPost.likes.length} likes</div>
 
             <div className={styles.caption}>
               <span className={styles.username}>{currentPost.user?.username}</span> {currentPost.caption}
@@ -252,3 +252,4 @@ export default function PostDetail() {
     </LikeProvider>
   )
 }
+
