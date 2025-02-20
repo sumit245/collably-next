@@ -58,7 +58,8 @@ export default function ShopPage() {
             <ReelsSec2 sectionTitle="Electronics Products" category="Electronics" />
             <ReelsSec2 sectionTitle="Beauty Products" category="Beauty" />
             {/* <FilteredProductGrid /> */}
-            <FilteredFeaturedCreators />
+            {/* <FilteredFeaturedCreators /> */}
+            <FilteredTopCreators />
             {/* <FilteredTrendingBrands /> */}
             <FilteredTopBrands />
             <FilteredTrendingUsersLeaderBoard />
