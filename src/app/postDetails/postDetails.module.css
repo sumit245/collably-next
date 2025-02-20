@@ -1,169 +1,168 @@
 .postDetail {
-    background-color: #fff;
-    border-radius: 3px;
-    padding: 8px
-  }
+  background-color: #fff;
+  border-radius: 3px;
+  padding: 8px
+}
 
-  .container {
-    max-width: 450px;
-    margin: 0 auto;
-    background-color: #fff;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    font-size: 14px;
-  }
+.container {
+  max-width: 450px;
+  margin: 0 auto;
+  background-color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
 
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .backButton {
-    background: none;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .userInfo {
-    display: flex;
-    align-items: center;
-    padding-left: 14px;
-    margin-bottom: .5rem;
-    margin-top: .5rem;
-  }
-  
-  .avatar {
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  .username {
-    font-weight: bold;
-  }
-  
-  .imageContainer {
-    position: relative;
-    width: 100%;
-    height: 450px;
-    margin-bottom: 20px;
-  }
-  
-  .postImage {
-    position: relative !important;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .navButton {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.7);
-    border: none;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.2s;
-  }
-  
-  .navButton:hover {
-    opacity: 1;
-  }
-  
-  .prevButton {
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  
-  .nextButton {
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  
-  .postActions {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 14px;
-  }
-  
-  .leftActions {
-    display: flex;
-  }
-  
-  .actionButton {
-    background: none;
-    border: none;
-    cursor: pointer;
-    margin-right: 14px;
-  }
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  .likes {
-    font-weight: bold;
-    padding: 0 14px;
-    margin-bottom: 8px;
-  }
-  
-  .caption {
-    padding: 0 14px;
-    margin-bottom: 8px;
-  }
-  
-  .comments {
-    color: #8e8e8e;
-    padding: 0 14px;
-    margin-bottom: 8px;
-  }
-  
-  .addComment {
-    display: flex;
-    border-top: 1px solid #dbdbdb;
-    padding: 14px;
-  }
-  
-  .commentInput {
-    flex-grow: 1;
-    border: none;
-    outline: none;
-  }
-  
-  .postButton {
-    background: none;
-    border: none;
-    color: #0095f6;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  .postsFeed {
-    display: flex;
-    justify-content: flex-start;
-    gap: 10px;
-    padding: 10px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  
-  .postThumbnail {
-    width: 100px;
-    height: 100px;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.3s;
-    border-radius: 5px;
-  }
-  
-  .postThumbnail:hover,
-  .activeThumbnail {
-    opacity: 1;
-  }
-  
+.backButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  padding-left: 14px;
+  margin-bottom: .5rem;
+  margin-top: .5rem;
+}
+
+.avatar {
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.username {
+  font-weight: bold;
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 450px;
+  margin-bottom: 20px;
+}
+
+.postImage {
+  position: relative !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.navButton {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.navButton:hover {
+  opacity: 1;
+}
+
+.prevButton {
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.nextButton {
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.postActions {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 14px;
+}
+
+.leftActions {
+  display: flex;
+}
+
+.actionButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 14px;
+}
+
+.likes {
+  font-weight: bold;
+  padding: 0 14px;
+  margin-bottom: 8px;
+}
+
+.caption {
+  padding: 0 14px;
+  margin-bottom: 8px;
+}
+
+.comments {
+  color: #8e8e8e;
+  padding: 0 14px;
+  margin-bottom: 8px;
+}
+
+.addComment {
+  display: flex;
+  border-top: 1px solid #dbdbdb;
+  padding: 14px;
+}
+
+.commentInput {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+}
+
+.postButton {
+  background: none;
+  border: none;
+  color: #0095f6;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.postsFeed {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 10px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.postThumbnail {
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+  border-radius: 5px;
+}
+
+.postThumbnail:hover,
+.activeThumbnail {
+  opacity: 1;
+}

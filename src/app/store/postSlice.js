@@ -100,14 +100,14 @@ const postSlice = createSlice({
   },
 })
 
-function updatePost(state, updatedPost) {
-  const index = state.posts.findIndex((post) => post._id === updatedPost._id)
-  if (index !== -1) {
-    state.posts[index] = updatedPost
-  }
+
+const updatePost = (state, updatedPost) => {
   if (state.currentPost && state.currentPost._id === updatedPost._id) {
     state.currentPost = updatedPost
   }
+  state.posts = state.posts.map(post => 
+    post._id === updatedPost._id ? updatedPost : post
+  )
 }
 
 export default postSlice.reducer

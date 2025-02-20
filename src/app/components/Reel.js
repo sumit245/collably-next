@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
+import { useSelector } from "react-redux"
 import styles from "../feed/stylesfeed.module.css"
 import CommentSection from "./commentSection"
 import Image from "next/image"
@@ -11,7 +12,7 @@ export default function Reel({
   images,
   user,
   caption,
-  likes,
+  likes = [],
   comments,
   isActive,
   onLike,
@@ -22,10 +23,13 @@ export default function Reel({
   onUnsave,
   isSaved,
 }) {
+  const currentUser = useSelector((state) => state.auth.user)
+  const currentUserId = currentUser?.user._id
+
   const mediaRef = useRef(null)
   const commentSectionRef = useRef(null)
   const [isCommenting, setIsCommenting] = useState(false)
-  const [isLiked, setIsLiked] = useState(false)
+  const [isLiked, setIsLiked] = useState(likes.includes(currentUserId))
   const [isSavedState, setIsSavedState] = useState(isSaved)
   const BASE_URL = "http://localhost:5000/"
   const changeEscapeChar = (path) => {
@@ -54,11 +58,6 @@ export default function Reel({
     }
   }, [])
 
-  useEffect(() => {
-    
-    setIsLiked(likes.includes("currentUserId"))
-  }, [likes])
-
   const handleCommentClick = () => {
     setIsCommenting(!isCommenting)
   }
@@ -70,6 +69,9 @@ export default function Reel({
       onLike(_id)
     }
     setIsLiked(!isLiked)
+    console.log("Attempting to like/unlike post:", _id)
+    console.log("Current user ID:", currentUserId)
+   
   }
 
   const handleSaveClick = () => {

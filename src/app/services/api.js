@@ -35,7 +35,7 @@ const api = {
   },
 
   getPostById: async (postId) => {
-    return api.fetch(`/posts/${postId}`)
+    return api.fetch(`/post/${postId}`)
   },
 
   likePost: async (postId) => {
