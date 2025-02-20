@@ -41,10 +41,10 @@ export default function Reel({
     if (isActive) {
       mediaRef.current?.play()
     } else {
-      mediaRef.current?.pause()
+      // mediaRef.current?.pause()
     }
   }, [isActive])
-
+console.log(mediaRef.current)
   useEffect(() => {
     function handleClickOutside(event) {
       if (commentSectionRef.current && !commentSectionRef.current.contains(event.target)) {
@@ -86,14 +86,18 @@ export default function Reel({
   return (
     <div className={styles.reelContainer}>
       {video ? (
-        <video
-          ref={mediaRef}
-          className={styles.video}
-          src={`${BASE_URL}${changeEscapeChar(video[0])}`}
-          loop
-          muted
-          playsInline
-        />
+     <video
+    //  ref={mediaRef}
+     className={styles.video}
+     loop
+     muted
+     playsInline
+     controls
+   >
+       <source src={`${BASE_URL}${changeEscapeChar(video)}`} type="video/mp4" />
+     
+     </video>
+     
       ) : images && images.length > 0 ? (
         <Image
           src={`${BASE_URL}${changeEscapeChar(images[0])}`}

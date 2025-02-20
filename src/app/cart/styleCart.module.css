@@ -204,3 +204,38 @@
   .placeOrderButton:hover {
     background-color: #f39000;
   }
+
+  .skeletonContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+  }
+  
+  .skeletonTitle,
+  .skeletonSubtitle,
+  .skeletonVideo {
+    background: #ccc;
+    border-radius: 8px;
+  }
+  
+  .skeletonTitle {
+    width: 60%;
+    height: 24px;
+  }
+  
+  .skeletonSubtitle {
+    width: 40%;
+    height: 20px;
+  }
+  
+  .skeletonVideos {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .skeletonVideo {
+    width: 100px;
+    height: 150px;
+    border-radius: 8px;
+  }

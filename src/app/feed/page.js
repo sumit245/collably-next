@@ -140,6 +140,8 @@ export default function ReelsPage() {
     }
     return array
   }
+  console.log(reelsData)
+  {reelsData.map((reel, index) => ( console.log(reel.video)))}
 
   return (
     <div className={styleshop.bodyShop}>
@@ -156,7 +158,7 @@ export default function ReelsPage() {
                 onShare={() => handleShare(reel)}
                 onSave={() => handleSave(reel._id)}
                 onUnsave={() => handleUnsave(reel._id)}
-                src={`${BASE_URL}${changeEscapeChar(reel.video[0])}`}
+                src={`${BASE_URL}${changeEscapeChar(reel.video)}`}
                 video={reel.video}
               />
             </div>
