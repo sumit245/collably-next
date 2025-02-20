@@ -692,6 +692,7 @@
     box-shadow: rgb(89, 46, 191) 2px 2px 0px 0px;
     height: 100px;
     width: 100px;
+    cursor: pointer;
   }
   
   .fImg1 {
@@ -709,6 +710,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     text-align: center;
+    cursor: pointer;
   }
   
   .creator {
