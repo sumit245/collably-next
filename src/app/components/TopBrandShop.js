@@ -1,4 +1,3 @@
-
 // "use client"
 
 // import { useState, useEffect } from "react";
@@ -57,7 +56,9 @@
 import Image from 'next/image'
 import styles from '../shop/StyleShop.module.css'
 import {brands} from '../utils.faker'
+import Link from 'next/link';
 export default function TopBrands() {
+
 
 
   return (
@@ -65,12 +66,14 @@ export default function TopBrands() {
       <h4 className={styles.sectionTitleShop}>Shop From Top Brands</h4>
       <div className={styles.creator}>
         {brands.map((brand, index) => (
+           <Link href={brand.link} className="">
           <div key={index} className={styles.fImg1}>
             <div className={styles.imgBorder}>
               <Image src={brand.image} alt={brand.name} width={85} height={85} href={brand.link} />
             </div>
             <span className={styles.imgText2}>{brand.name}</span>
           </div>
+          </Link>
         ))}
       </div>
     </section>
