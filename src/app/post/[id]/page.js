@@ -148,11 +148,24 @@ export default function PostDetail() {
         <Header />
         <div className={styles.postDetail}>
           <div className={styles.header}>
+            <div className={styles.profile}>
             <button onClick={() => window.history.back()} className={styles.backButton}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M19 12H5M12 19l-7-7 7-7" />
               </svg>
             </button>
+            <div className={styles.userInfo}>
+              <Image
+                src={currentPost.post.user?.avatar || "/placeholder.svg"}
+                alt={currentPost.post.user?.username}
+                width={32}
+                height={32}
+                className={styles.avatar}
+              />
+              <span className={styles.username}>{currentPost.post.user?.fullname}</span>
+              <button className={styles.followButton}>Follow</button>
+            </div>
+            </div>
             {isOwnPost && (
               <button
                 onClick={handleDelete}
@@ -171,16 +184,7 @@ export default function PostDetail() {
           </div>
 
           <div className={styles.mainPost}>
-            <div className={styles.userInfo}>
-              <Image
-                src={currentPost.post.user?.avatar || "/placeholder.svg"}
-                alt={currentPost.post.user?.username}
-                width={32}
-                height={32}
-                className={styles.avatar}
-              />
-              <span className={styles.username}>{currentPost.post.user?.fullname}</span>
-            </div>
+           
 
             <div
               className={styles.mediaContainer}

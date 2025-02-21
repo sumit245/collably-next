@@ -77,6 +77,13 @@ const api = {
       method: "DELETE",
     })
   },
+  followUser: async (userId) => {
+    return api.fetch(`/user/${userId}/follow`, { method: "PATCH" })
+  },
+
+  unfollowUser: async (userId) => {
+    return api.fetch(`/user/${userId}/unfollow`, { method: "PATCH" })
+  },
 }
 
 export default api
