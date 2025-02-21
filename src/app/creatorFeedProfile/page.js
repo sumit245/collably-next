@@ -44,10 +44,11 @@ export default function Profile() {
     };
 
     if (user?.user?._id) {
-      fetchUserPosts();
-    }
-  }, [user]);
 
+      fetchUserPosts()
+    }
+  }, [user])
+console.log(posts)
   const tabs = [
     { id: "posts", label: "Posts" },
     { id: "reels", label: "Reels" },
@@ -64,8 +65,11 @@ export default function Profile() {
 
     const filteredPosts = posts.filter((post) => {
       if (!post.user || post.user._id !== user?.user?._id) return false;
+      if (activeTab === "reels" && !post.video) return false;
+      if (activeTab === "posts" && (!post.images || post.images.length === 0)) return false;
       return true;
     });
+    
 
     switch (activeTab) {
       case "reels":
@@ -97,16 +101,13 @@ export default function Profile() {
                 className={styles.gridItem}
               >
                 <Image
-                  src={
-                    `${BASE_URL}${changeEscapeChar(post.images[0])}` ||
-                    "/placeholder.svg"
-                  }
+                  src={`${BASE_URL}/${changeEscapeChar(post.images[0])}` || "/placeholder.svg"}
                   alt={`Post by ${post.user?.username || "unknown"}`}
                   className={styles.gridImage}
                   width={300}
                   height={300}
                 />
-                <div className={styles.postOverlay}>
+                {/* <div className={styles.postOverlay}>
                   <div className={styles.postStats}>
                     <span className={styles.postStat}>
                       <Heart size={20} /> {post.likes.length}
@@ -115,7 +116,7 @@ export default function Profile() {
                       <MessageCircle size={20} /> {post.comments.length}
                     </span>
                   </div>
-                </div>
+                </div> */}
               </Link>
             ))}
           </div>
