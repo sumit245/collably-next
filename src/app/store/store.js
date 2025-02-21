@@ -8,7 +8,7 @@ import cartReducer from "./cartSlice"
 import brandsReducer from "./brandSlice"
 import likedProductsReducer from "./likedproductSlice"
 import searchReducer from "./searchSlice"
-import postReducer from "./postSlice"
+// import postReducer from "./postSlice"
 import mediaReducer from './mediaSlice'
 
 export const store = configureStore({
@@ -20,7 +20,7 @@ export const store = configureStore({
     brands: brandsReducer,
     likedProducts: likedProductsReducer,
     search: searchReducer,
-    posts: postReducer,
+    // posts: postReducer,
     media: mediaReducer,
   },
 })

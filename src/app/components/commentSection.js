@@ -81,7 +81,7 @@ export default function CommentSection({
         {[...new Set(comments)].map((comment) => (
           <div key={comment._id} className={styles.comment}>
             <div className={styles.commentContent}>
-              <strong>{comment.user?.user.username || "Anonymous"}: </strong>
+              <strong>{comment.user?.username || "Anonymous"}: </strong>
               <span>{comment.text || comment.content}</span>
               <div className={styles.commentActions}>
               {/* Like/Unlike button */}
