@@ -197,7 +197,7 @@ export default function PostDetail() {
                 <Image
                   src={
                     currentPost.images?.[0]
-                      ? `${BASE_URL}${currentPost.images[0].replace(/\\/g, "/")}`
+                      ? `${BASE_URL}${currentPost.post.images[0].replace(/\\/g, "/")}`
                       : "/placeholder.svg"
                   }
                   alt={`Post ${currentPost.post._id}`}
