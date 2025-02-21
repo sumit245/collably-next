@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import { useParams } from "next/navigation"
 import Image from "next/image"
 import styles from "../../postDetails/postDetails.module.css"
@@ -11,6 +11,7 @@ import api from "../../services/api"
 import { useSelector } from "react-redux"
 import { useRouter } from "next/navigation"
 import { Trash2, Heart, MessageCircle, Send, Bookmark } from "lucide-react"
+import CommentSection from "../../components/commentSection"
 
 export default function PostDetail() {
   const { id } = useParams()
@@ -32,6 +33,8 @@ export default function PostDetail() {
     }
   })
   const [isFollowing, setIsFollowing] = useState(false)
+  const [isCommenting, setIsCommenting] = useState(false)
+  const commentSectionRef = useRef(null)
 
   const fetchPost = useCallback(async () => {
     try {
@@ -56,6 +59,22 @@ export default function PostDetail() {
   useEffect(() => {
     fetchPost()
   }, [fetchPost])
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        commentSectionRef.current &&
+        !commentSectionRef.current.contains(event.target)
+      ) {
+        setIsCommenting(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [])
 
   const handleDelete = async () => {
     if (!confirm("Are you sure you want to delete this post?")) {
@@ -107,6 +126,7 @@ export default function PostDetail() {
     try {
       const updatedPost = await api.commentOnPost(id, comment)
       updatePostComments(updatedPost.comments)
+      setIsCommenting(false)
     } catch (error) {
       console.error("Error commenting on post:", error)
     }
@@ -150,6 +170,10 @@ export default function PostDetail() {
     } catch (error) {
       console.error("Error following/unfollowing user:", error)
     }
+  }
+
+  const handleCommentClick = () => {
+    setIsCommenting(!isCommenting)
   }
 
   if (isLoading) return <div>Loading...</div>
@@ -262,7 +286,10 @@ export default function PostDetail() {
                   stroke={currentPost.isLiked ? "red" : "currentColor"}
                 />
               </button>
-              <button className={styles.actionButton}>
+              <button
+                className={styles.actionButton}
+                onClick={handleCommentClick}
+              >
                 <MessageCircle size={24} />
               </button>
               <button className={styles.actionButton}>
@@ -300,27 +327,16 @@ export default function PostDetail() {
               )}
             </div>
 
-            <form
-              className={styles.commentForm}
-              onSubmit={e => {
-                e.preventDefault()
-                const comment = e.target.comment.value
-                if (comment.trim()) {
-                  handleComment(comment)
-                  e.target.comment.value = ""
-                }
-              }}
-            >
-              <input
-                type="text"
-                name="comment"
-                placeholder="Add a comment..."
-                className={styles.commentInput}
-              />
-              <button type="submit" className={styles.commentButton}>
-                Post
-              </button>
-            </form>
+            {isCommenting && (
+              <div ref={commentSectionRef}>
+                <CommentSection
+                  comments={currentPost.comments}
+                  onAddComment={handleComment}
+                  onClose={() => setIsCommenting(false)}
+                  postId={id}
+                />
+              </div>
+            )}
           </div>
         </div>
         <Footer />

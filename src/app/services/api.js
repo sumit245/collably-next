@@ -90,6 +90,24 @@ const api = {
       body: JSON.stringify({ postId, content: comment }),
     })
   },
+  likeComment: async (commentId) => {
+    return api.fetch(`/comment/${commentId}/like`, { method: "PATCH" })
+  },
+
+  unlikeComment: async (commentId) => {
+    return api.fetch(`/comment/${commentId}/unlike`, { method: "PATCH" })
+  },
+
+  deleteComment: async (commentId) => {
+    return api.fetch(`/comment/${commentId}`, { method: "DELETE" })
+  },
+
+  updateComment: async (commentId, updatedContent) => {
+    return api.fetch(`/comment/${commentId}`, {
+      method: "PATCH",
+      body: JSON.stringify({ content: updatedContent }),
+    })
+  },
 }
 
 export default api
