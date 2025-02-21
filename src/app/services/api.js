@@ -72,6 +72,11 @@ const api = {
   getSavedPosts: async () => {
     return api.fetch("/getSavePosts")
   },
+  deletePost: async (postId) => {
+    return api.fetch(`/post/${postId}`, {
+      method: "DELETE",
+    })
+  },
 }
 
 export default api
