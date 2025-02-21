@@ -25,7 +25,7 @@ export default function Reel({
 }) {
   const currentUser = useSelector((state) => state.auth.user)
   const currentUserId = currentUser?.user._id
-
+console.log(user)
   const mediaRef = useRef(null)
   const commentSectionRef = useRef(null)
   const [isCommenting, setIsCommenting] = useState(false)
@@ -166,9 +166,14 @@ console.log(mediaRef.current)
       <div className={styles.info}>
         <div className={styles.userInfo}>
           <div className={styles.avatar}>
-            <img src={user?.avatar || "/placeholder.svg"} alt={user?.username} />
+            <img src={user?.avatar || "/placeholder.svg"} alt={user?.fullname} />
           </div>
-          <span className={styles.username}>{user?.username}</span>
+          {user ? (
+  <span className={styles.username}>{user.fullname}</span>
+) : (
+  <span>Loading...</span>
+)}
+
           <button className={styles.followButton}>Follow</button>
         </div>
         <div className={styles.caption}>
