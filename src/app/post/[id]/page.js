@@ -145,8 +145,8 @@ console.log(currentPost)
           <div className={styles.mainPost}>
             <div className={styles.userInfo}>
               <Image
-                src={currentPost.user?.avatar || "/placeholder.svg"}
-                alt={currentPost.user?.username || "no user found"}
+                src={currentPost.post.user?.avatar || "/placeholder.svg"}
+                alt={currentPost.post.user?.username}
                 width={32}
                 height={32}
                 className={styles.avatar}
