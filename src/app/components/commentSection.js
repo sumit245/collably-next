@@ -20,12 +20,13 @@ export default function CommentSection({ comments, onAddComment, onClose }) {
         &times;
       </button>
       <div className={styles.comments}>
-        {comments.map((comment, index) => (
-          <div key={index} className={styles.comment}>
-            <strong>{comment.user?.username || "Anonymous"}: </strong>
-            {comment.text || comment.content}
-          </div>
-        ))}
+      {[...new Set(comments)].map((comment, index) => (
+  <div key={index} className={styles.comment}>
+    <strong>{comment.user?.username || "Anonymous"}: </strong>
+    {comment.text || comment.content}
+  </div>
+))}
+
       </div>
       <form onSubmit={handleSubmit} className={styles.commentForm}>
         <input
