@@ -20,7 +20,7 @@ export default function CreatorHome() {
   }, [user, router])
 
   if (!user) {
-    return null // or a loading spinner
+    return null 
   }
 
   return (

@@ -1,33 +1,39 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts } from "../store/postSlice";
-import styles from "./profile.module.css";
-import stylesShop from "../shop/StyleShop.module.css";
-import Image from "next/image";
-import Link from "next/link";
-import FooterCreator from "../components/FooterCreator";
-import CreatorHome from "../components/CreatorHome";
-import { Heart, MessageCircle } from "lucide-react";
-import api from "../services/api";
+import { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { fetchPosts } from "../store/postSlice"
+import styles from "./profile.module.css"
+import stylesShop from "../shop/StyleShop.module.css"
+import Image from "next/image"
+import Link from "next/link"
+import FooterCreator from "../components/FooterCreator"
+import CreatorHome from '../components/CreatorHome'
+import { Heart, MessageCircle } from 'lucide-react'
+import api from "../services/api"
+import { useRouter } from "next/navigation"
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"
 
-const changeEscapeChar = (path) => {
-  if (!path) return ""; // or provide a fallback path, like an empty string
-  return path.replace(/\\/g, "/");
-};
-
+const changeEscapeChar = (path) => path.replace(/\\/g, "/")
 
 export default function Profile() {
-  const dispatch = useDispatch();
-  const { posts, status, error } = useSelector((state) => state.posts);
-  const [activeTab, setActiveTab] = useState("posts");
-  const user = useSelector((state) => state.auth.user);
+  const router = useRouter()
+  const dispatch = useDispatch()
+  const { posts, status, error } = useSelector((state) => state.posts)
+  const [activeTab, setActiveTab] = useState("posts")
+  const user = useSelector((state) => state.auth.user)
+// console.log(user.user._id)
+useEffect(() => {
+  if (!user) {
+    
+    router.push(`/login?redirect=${encodeURIComponent("/CreatorHome")}`)
+  }
+}, [user, router])
 
-  console.log(user.user._id);
-  
+if (!user) {
+  return null 
+}
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchPosts());
