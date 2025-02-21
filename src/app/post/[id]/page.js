@@ -21,7 +21,7 @@ export default function PostDetail() {
     likes: [],
     isLiked: false,
   })
-
+console.log(currentPost)
   const fetchPost = useCallback(async () => {
     try {
       setIsLoading(true)
@@ -151,7 +151,7 @@ export default function PostDetail() {
                 height={32}
                 className={styles.avatar}
               />
-              <span className={styles.username}>{currentPost.user?.username}</span>
+              <span className={styles.username}>{currentPost.post.user?.fullname}</span>
             </div>
 
             <div className={styles.mediaContainer}>
@@ -168,7 +168,7 @@ export default function PostDetail() {
                       ? `${BASE_URL}${currentPost.images[0].replace(/\\/g, "/")}`
                       : "/placeholder.svg"
                   }
-                  alt={`Post ${currentPost._id}`}
+                  alt={`Post ${currentPost.post._id}`}
                   layout="fill"
                   objectFit="cover"
                   className={styles.postImage}
@@ -217,7 +217,7 @@ export default function PostDetail() {
             <div className={styles.likes}>{currentPost.likes.length} likes</div>
 
             <div className={styles.caption}>
-              <span className={styles.username}>{currentPost.user?.username}</span> {currentPost.caption}
+              <span className={styles.username}>{currentPost.post.user?.fullname}</span> {currentPost.caption}
             </div>
             <div className={styles.comments}>
               {currentPost.comments?.length > 0 ? (
