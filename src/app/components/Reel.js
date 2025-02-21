@@ -27,9 +27,6 @@ export default function Reel({
   const currentUser = useSelector((state) => state.auth.user)
   const currentUserId = currentUser?.user._id
   const [isFollowing, setIsFollowing] = useState(user?.followers?.includes(currentUserId))
-  // const currentUser = useSelector((state) => state.auth.user)
-  // const currentUserId = currentUser?.user._id
-console.log(user)
   const mediaRef = useRef(null)
   const commentSectionRef = useRef(null)
   const [isCommenting, setIsCommenting] = useState(false)
@@ -45,10 +42,10 @@ console.log(user)
     if (isActive) {
       mediaRef.current?.play()
     } else {
-      // mediaRef.current?.pause()
+      mediaRef.current?.pause()
     }
   }, [isActive])
-// console.log(mediaRef.current)
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (commentSectionRef.current && !commentSectionRef.current.contains(event.target)) {
@@ -61,6 +58,7 @@ console.log(user)
       document.removeEventListener("mousedown", handleClickOutside)
     }
   }, [])
+
   const handleFollowToggle = async () => {
     try {
       if (isFollowing) {
@@ -73,6 +71,7 @@ console.log(user)
       console.error("Error following/unfollowing user:", error)
     }
   }
+
   const handleCommentClick = () => {
     setIsCommenting(!isCommenting)
   }
@@ -84,9 +83,6 @@ console.log(user)
       onLike(_id)
     }
     setIsLiked(!isLiked)
-    console.log("Attempting to like/unlike post:", _id)
-    console.log("Current user ID:", currentUserId)
-   
   }
 
   const handleSaveClick = () => {
@@ -98,21 +94,29 @@ console.log(user)
     setIsSavedState(!isSavedState)
   }
 
+  const handleAddComment = async (comment) => {
+    try {
+      await api.commentOnPost(_id, comment)
+      onComment(comment)
+      setIsCommenting(false)
+    } catch (error) {
+      console.error("Error adding comment:", error)
+    }
+  }
+
   return (
     <div className={styles.reelContainer}>
       {video ? (
-     <video
-    //  ref={mediaRef}
-     className={styles.video}
-     loop
-     muted
-     playsInline
-     controls
-   >
-       <source src={`${BASE_URL}${changeEscapeChar(video)}`} type="video/mp4" />
-     
-     </video>
-     
+        <video
+          //  ref={mediaRef}
+          className={styles.video}
+          loop
+          muted
+          playsInline
+          controls
+        >
+          <source src={`${BASE_URL}${changeEscapeChar(video)}`} type="video/mp4" />
+        </video>
       ) : images && images.length > 0 ? (
         <Image
           src={`${BASE_URL}${changeEscapeChar(images[0])}`}
@@ -179,17 +183,17 @@ console.log(user)
       </div>
 
       <div className={styles.info}>
-      <div className={styles.userInfo}>
-        <div className={styles.avatar}>
-          <img src={user?.avatar || "/placeholder.svg"} alt={user?.fullname} />
+        <div className={styles.userInfo}>
+          <div className={styles.avatar}>
+            <img src={user?.avatar || "/placeholder.svg"} alt={user?.fullname} />
+          </div>
+          {user ? <span className={styles.username}>{user.fullname}</span> : <span>Loading...</span>}
+          {currentUserId !== user?._id && (
+            <button className={styles.followButton} onClick={handleFollowToggle}>
+              {isFollowing ? "Following" : "Follow"}
+            </button>
+          )}
         </div>
-        {user ? <span className={styles.username}>{user.fullname}</span> : <span>Loading...</span>}
-        {currentUserId !== user?._id && (
-          <button className={styles.followButton} onClick={handleFollowToggle}>
-            {isFollowing ? "Following" : "Follow"}
-          </button>
-        )}
-      </div>
         <div className={styles.caption}>
           <a className={styles.captionLink} href={caption} rel="noopener noreferrer">
             {caption}
@@ -199,16 +203,10 @@ console.log(user)
 
       {isCommenting && (
         <div ref={commentSectionRef}>
-          <CommentSection
-            comments={comments}
-            onAddComment={(comment) => {
-              onComment(comment)
-              setIsCommenting(false)
-            }}
-            onClose={() => setIsCommenting(false)}
-          />
+          <CommentSection comments={comments} onAddComment={handleAddComment} onClose={() => setIsCommenting(false)} />
         </div>
       )}
     </div>
   )
 }
+

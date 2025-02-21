@@ -84,6 +84,12 @@ const api = {
   unfollowUser: async (userId) => {
     return api.fetch(`/user/${userId}/unfollow`, { method: "PATCH" })
   },
+  commentOnPost: async (postId, comment) => {
+    return api.fetch(`/comment`, {
+      method: "POST",
+      body: JSON.stringify({ postId, content: comment }),
+    })
+  },
 }
 
 export default api
