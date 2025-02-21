@@ -9,9 +9,12 @@ import Footer from "../../components/FooterShop"
 import { LikeProvider } from "../../actions/LikeContext"
 import api from "../../services/api"
 import { useSelector } from "react-redux"
+import { useRouter } from "next/navigation"
+import { Trash2, Heart, MessageCircle, Send, Bookmark } from "lucide-react"
 
 export default function PostDetail() {
   const { id } = useParams()
+  const router = useRouter()
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
   const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/"
@@ -20,17 +23,24 @@ export default function PostDetail() {
   const [currentPost, setCurrentPost] = useState({
     likes: [],
     isLiked: false,
+    comments: [],
+    isSaved: false,
+    post: {
+      user: {},
+      images: [],
+      video: null,
+    },
   })
-console.log(currentPost)
+
   const fetchPost = useCallback(async () => {
     try {
       setIsLoading(true)
       const post = await api.getPostById(id)
-      console.log("Fetched post data:", post)
       setCurrentPost({
         ...post,
         likes: Array.isArray(post.likes) ? post.likes : [],
         isLiked: Array.isArray(post.likes) ? post.likes.includes(currentUserId) : false,
+        comments: Array.isArray(post.comments) ? post.comments : [],
       })
       setIsLoading(false)
     } catch (err) {
@@ -43,15 +53,31 @@ console.log(currentPost)
     fetchPost()
   }, [fetchPost])
 
-  const handleLike = async () => {
-    console.log("Attempting to like/unlike post:", id)
+  const handleDelete = async () => {
+    if (!confirm("Are you sure you want to delete this post?")) {
+      return
+    }
 
     try {
+      await api.deletePost(id)
+      router.push("/creatorFeedProfile")
+    } catch (error) {
+      console.error("Error deleting post:", error)
+      setError("Failed to delete post")
+    }
+  }
+
+  const handleVideoClick = (postId, isVideo) => {
+    if (isVideo) {
+      router.push(`/feed?reelId=${postId}`)
+    }
+  }
+
+  const handleLike = async () => {
+    try {
       if (currentPost.isLiked) {
-        console.log("Unliking post")
         await api.unlikePost(id)
       } else {
-        console.log("Liking post")
         await api.likePost(id)
       }
       updatePostLikes(!currentPost.isLiked)
@@ -65,7 +91,6 @@ console.log(currentPost)
       const updatedLikes = isLiking
         ? [...prevPost.likes, currentUserId]
         : prevPost.likes.filter((likeId) => likeId !== currentUserId)
-      console.log("Updated likes:", updatedLikes)
       return {
         ...prevPost,
         likes: updatedLikes,
@@ -75,7 +100,6 @@ console.log(currentPost)
   }
 
   const handleComment = async (comment) => {
-    console.log("Attempting to add comment:", comment)
     try {
       const updatedPost = await api.commentOnPost(id, comment)
       updatePostComments(updatedPost.comments)
@@ -92,13 +116,10 @@ console.log(currentPost)
   }
 
   const handleSave = async () => {
-    console.log("Attempting to save/unsave post:", id)
     try {
       if (currentPost.isSaved) {
-        console.log("Unsaving post")
         await api.unsavePost(id)
       } else {
-        console.log("Saving post")
         await api.savePost(id)
       }
       updatePostSaveStatus(!currentPost.isSaved)
@@ -108,26 +129,17 @@ console.log(currentPost)
   }
 
   const updatePostSaveStatus = (isSaving) => {
-    setCurrentPost((prevPost) => {
-      console.log("Updating save status:", isSaving)
-      return {
-        ...prevPost,
-        isSaved: isSaving,
-      }
-    })
+    setCurrentPost((prevPost) => ({
+      ...prevPost,
+      isSaved: isSaving,
+    }))
   }
 
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>Error: {error}</div>
+  if (!currentPost) return <div>Post not found</div>
 
-  if (error) {
-    return <div>Error: {error}</div>
-  }
-
-  if (!currentPost) {
-    return <div>Post not found</div>
-  }
+  const isOwnPost = currentPost.post?.user?._id === currentUserId
 
   return (
     <LikeProvider>
@@ -140,6 +152,21 @@ console.log(currentPost)
                 <path d="M19 12H5M12 19l-7-7 7-7" />
               </svg>
             </button>
+            {isOwnPost && (
+              <button
+                onClick={handleDelete}
+                className={styles.deleteButton}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  color: "red",
+                  padding: "8px",
+                }}
+              >
+                <Trash2 size={24} />
+              </button>
+            )}
           </div>
 
           <div className={styles.mainPost}>
@@ -154,9 +181,13 @@ console.log(currentPost)
               <span className={styles.username}>{currentPost.post.user?.fullname}</span>
             </div>
 
-            <div className={styles.mediaContainer}>
+            <div
+              className={styles.mediaContainer}
+             
+            >
               {currentPost.video ? (
                 <video
+                onClick={() => handleVideoClick(currentPost.post._id, !!currentPost.video)}
                   src={`${BASE_URL}${currentPost.video.replace(/\\/g, "/")}`}
                   controls
                   className={styles.postVideo}
@@ -178,39 +209,21 @@ console.log(currentPost)
 
             <div className={styles.postActions}>
               <button className={styles.actionButton} onClick={handleLike}>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
+                <Heart
+                  className={currentPost.isLiked ? styles.likedHeart : ""}
+                  size={24}
                   fill={currentPost.isLiked ? "red" : "none"}
                   stroke={currentPost.isLiked ? "red" : "currentColor"}
-                  strokeWidth="2"
-                >
-                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                </svg>
-              </button>
-
-              <button className={styles.actionButton}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-                </svg>
+                />
               </button>
               <button className={styles.actionButton}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
-                </svg>
+                <MessageCircle size={24} />
+              </button>
+              <button className={styles.actionButton}>
+                <Send size={24} />
               </button>
               <button className={styles.actionButton} onClick={handleSave}>
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill={currentPost.isSaved ? "currentColor" : "none"}
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-                </svg>
+                <Bookmark size={24} fill={currentPost.isSaved ? "currentColor" : "none"} />
               </button>
             </div>
 
@@ -219,6 +232,7 @@ console.log(currentPost)
             <div className={styles.caption}>
               <span className={styles.username}>{currentPost.post.user?.fullname}</span> {currentPost.caption}
             </div>
+
             <div className={styles.comments}>
               {currentPost.comments?.length > 0 ? (
                 currentPost.comments.map((comment, index) => (
@@ -230,7 +244,9 @@ console.log(currentPost)
                 <div>No comments yet</div>
               )}
             </div>
+
             <form
+              className={styles.commentForm}
               onSubmit={(e) => {
                 e.preventDefault()
                 const comment = e.target.comment.value
@@ -252,4 +268,5 @@ console.log(currentPost)
     </LikeProvider>
   )
 }
+
 
