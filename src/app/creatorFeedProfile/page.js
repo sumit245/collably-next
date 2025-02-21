@@ -11,17 +11,29 @@ import FooterCreator from "../components/FooterCreator"
 import CreatorHome from '../components/CreatorHome'
 import { Heart, MessageCircle } from 'lucide-react'
 import api from "../services/api"
+import { useRouter } from "next/navigation"
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"
 
 const changeEscapeChar = (path) => path.replace(/\\/g, "/")
 
 export default function Profile() {
+  const router = useRouter()
   const dispatch = useDispatch()
   const { posts, status, error } = useSelector((state) => state.posts)
   const [activeTab, setActiveTab] = useState("posts")
   const user = useSelector((state) => state.auth.user)
-console.log(user.user._id)
+// console.log(user.user._id)
+useEffect(() => {
+  if (!user) {
+    
+    router.push(`/login?redirect=${encodeURIComponent("/CreatorHome")}`)
+  }
+}, [user, router])
+
+if (!user) {
+  return null 
+}
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchPosts())
