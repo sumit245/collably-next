@@ -70,13 +70,7 @@ export default function Profile() {
     },
   ]
 
-  const handlePostClick = (postId) => {
-    setSelectedPostId(postId)
-  }
 
-  const handleBackToProfile = () => {
-    setSelectedPostId(null)
-  }
 
   return (
     <div className={stylesShop.bodyShop}>
@@ -86,19 +80,7 @@ export default function Profile() {
         ) : (
           <div className={styles.container}>
             {/* Profile Header */}
-            <header className={styles.header}>
-              <div className={styles.headerLeft}>
-                <span className={styles.lockIcon}>🔒</span>
-                <span className={styles.username}>collably_creator</span>
-                <span className={styles.dropdown}>▼</span>
-              </div>
-              <div className={styles.headerRight}>
-                <button className={styles.iconButton}>
-                  <Plus />
-                </button>
-                <button className={styles.menuButton}>☰</button>
-              </div>
-            </header>
+           
 
             {/* Profile Info */}
             <section className={styles.profileInfo}>
@@ -144,7 +126,7 @@ export default function Profile() {
             {/* Posts Grid */}
             <div className={styles.postsGrid}>
               {posts.map((post) => (
-                <div key={post.id} className={styles.postItem} onClick={() => handlePostClick(post.id)}>
+                <div key={post.id} className={styles.postItem}>
                   <div className={styles.postImageContainer}>
                     <Image
                       src={post.image || "/placeholder.svg"}

@@ -479,7 +479,7 @@
   background: #ccc;
   position: relative;
   top: 10px;
-  animation: 1.5s ease-in-out infinite StyleShop-module__KyyZDW__pulse;
+  animation: 1.5s ease-in-out infinite StyleShop-module_KyyZDW_pulse;
 }
 
 .sectionTitleText {
@@ -1296,4 +1296,3 @@
   border-radius: .2rem;
   cursor: pointer;
 }
-
