@@ -8,7 +8,7 @@ export default function CommentSection({ comments, onAddComment, onClose }) {
     e.preventDefault()
     if (newComment.trim()) {
       onAddComment(newComment)
-      setNewComment('')
+      setNewComment("")
     }
   }
 
@@ -18,8 +18,8 @@ export default function CommentSection({ comments, onAddComment, onClose }) {
         &times;
       </button>
       <div className={styles.comments}>
-        {comments.map((comment) => (
-          <div key={comment.id} className={styles.comment}>
+        {comments.map((comment, index) => (
+          <div key={comment.id || index} className={styles.comment}> {/* Using index as a fallback key */}
             <strong>{comment.username}: </strong>
             {comment.text}
           </div>
