@@ -138,6 +138,7 @@ export default function PostDetail() {
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error: {error}</div>
   if (!currentPost) return <div>Post not found</div>
+  console.log(currentPost)
 
   const isOwnPost = currentPost.post?.user?._id === currentUserId
 
@@ -185,10 +186,10 @@ export default function PostDetail() {
               className={styles.mediaContainer}
              
             >
-              {currentPost.video ? (
+              {currentPost.post.video ? (
                 <video
-                onClick={() => handleVideoClick(currentPost.post._id, !!currentPost.video)}
-                  src={`${BASE_URL}${currentPost.video.replace(/\\/g, "/")}`}
+                onClick={() => handleVideoClick(currentPost.post._id, !!currentPost.post.video)}
+                  src={`${BASE_URL}${currentPost.post.video.replace(/\\/g, "/")}`}
                   controls
                   className={styles.postVideo}
                 />

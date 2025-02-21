@@ -86,11 +86,13 @@ export default function Profile() {
             {filteredPosts.map((post) => (
               <Link href={`/post/${post._id}`} key={post._id} className={styles.gridItem}>
                 <video
-                  src={`${BASE_URL}${changeEscapeChar(post.video)}`}
+                  // src={`${BASE_URL}${changeEscapeChar(post.video)}`}
                   className={styles.gridVideo}
                   width={300}
                   height={300}
-                />
+                >
+                   <source src={`${BASE_URL}${changeEscapeChar(post.video)}`} type="video/mp4" />
+                </video>
               </Link>
             ))}
           </div>
