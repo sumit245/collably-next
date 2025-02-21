@@ -18,7 +18,7 @@ export default function PostDetail() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
   const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/"
-  const currentUser = useSelector((state) => state.auth.user)
+  const currentUser = useSelector(state => state.auth.user)
   const currentUserId = currentUser?.user._id
   const [currentPost, setCurrentPost] = useState({
     likes: [],
@@ -28,9 +28,10 @@ export default function PostDetail() {
     post: {
       user: {},
       images: [],
-      video: null,
-    },
+      video: null
+    }
   })
+  const [isFollowing, setIsFollowing] = useState(false)
 
   const fetchPost = useCallback(async () => {
     try {
@@ -39,9 +40,12 @@ export default function PostDetail() {
       setCurrentPost({
         ...post,
         likes: Array.isArray(post.likes) ? post.likes : [],
-        isLiked: Array.isArray(post.likes) ? post.likes.includes(currentUserId) : false,
-        comments: Array.isArray(post.comments) ? post.comments : [],
+        isLiked: Array.isArray(post.likes)
+          ? post.likes.includes(currentUserId)
+          : false,
+        comments: Array.isArray(post.comments) ? post.comments : []
       })
+      setIsFollowing(post.post.user.followers.includes(currentUserId))
       setIsLoading(false)
     } catch (err) {
       setError(err.message)
@@ -86,20 +90,20 @@ export default function PostDetail() {
     }
   }
 
-  const updatePostLikes = (isLiking) => {
-    setCurrentPost((prevPost) => {
+  const updatePostLikes = isLiking => {
+    setCurrentPost(prevPost => {
       const updatedLikes = isLiking
         ? [...prevPost.likes, currentUserId]
-        : prevPost.likes.filter((likeId) => likeId !== currentUserId)
+        : prevPost.likes.filter(likeId => likeId !== currentUserId)
       return {
         ...prevPost,
         likes: updatedLikes,
-        isLiked: isLiking,
+        isLiked: isLiking
       }
     })
   }
 
-  const handleComment = async (comment) => {
+  const handleComment = async comment => {
     try {
       const updatedPost = await api.commentOnPost(id, comment)
       updatePostComments(updatedPost.comments)
@@ -108,10 +112,10 @@ export default function PostDetail() {
     }
   }
 
-  const updatePostComments = (newComments) => {
-    setCurrentPost((prevPost) => ({
+  const updatePostComments = newComments => {
+    setCurrentPost(prevPost => ({
       ...prevPost,
-      comments: newComments,
+      comments: newComments
     }))
   }
 
@@ -128,17 +132,29 @@ export default function PostDetail() {
     }
   }
 
-  const updatePostSaveStatus = (isSaving) => {
-    setCurrentPost((prevPost) => ({
+  const updatePostSaveStatus = isSaving => {
+    setCurrentPost(prevPost => ({
       ...prevPost,
-      isSaved: isSaving,
+      isSaved: isSaving
     }))
+  }
+
+  const handleFollowToggle = async () => {
+    try {
+      if (isFollowing) {
+        await api.unfollowUser(currentPost.post.user._id)
+      } else {
+        await api.followUser(currentPost.post.user._id)
+      }
+      setIsFollowing(!isFollowing)
+    } catch (error) {
+      console.error("Error following/unfollowing user:", error)
+    }
   }
 
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error: {error}</div>
   if (!currentPost) return <div>Post not found</div>
-  console.log(currentPost)
 
   const isOwnPost = currentPost.post?.user?._id === currentUserId
 
@@ -148,11 +164,43 @@ export default function PostDetail() {
         <Header />
         <div className={styles.postDetail}>
           <div className={styles.header}>
-            <button onClick={() => window.history.back()} className={styles.backButton}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M19 12H5M12 19l-7-7 7-7" />
-              </svg>
-            </button>
+            <div className={styles.profile}>
+              <button
+                onClick={() => window.history.back()}
+                className={styles.backButton}
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <div className={styles.userInfo}>
+                <Image
+                  src={currentPost.post.user?.avatar || "/placeholder.svg"}
+                  alt={currentPost.post.user?.username}
+                  width={32}
+                  height={32}
+                  className={styles.avatar}
+                />
+                <span className={styles.username}>
+                  {currentPost.post.user?.fullname}
+                </span>
+                {!isOwnPost && (
+                  <button
+                    className={styles.followButton}
+                    onClick={handleFollowToggle}
+                  >
+                    {isFollowing ? "Following" : "Follow"}
+                  </button>
+                )}
+              </div>
+            </div>
             {isOwnPost && (
               <button
                 onClick={handleDelete}
@@ -162,7 +210,7 @@ export default function PostDetail() {
                   border: "none",
                   cursor: "pointer",
                   color: "red",
-                  padding: "8px",
+                  padding: "8px"
                 }}
               >
                 <Trash2 size={24} />
@@ -171,25 +219,19 @@ export default function PostDetail() {
           </div>
 
           <div className={styles.mainPost}>
-            <div className={styles.userInfo}>
-              <Image
-                src={currentPost.post.user?.avatar || "/placeholder.svg"}
-                alt={currentPost.post.user?.username}
-                width={32}
-                height={32}
-                className={styles.avatar}
-              />
-              <span className={styles.username}>{currentPost.post.user?.fullname}</span>
-            </div>
-
-            <div
-              className={styles.mediaContainer}
-             
-            >
+            <div className={styles.mediaContainer}>
               {currentPost.post.video ? (
                 <video
-                onClick={() => handleVideoClick(currentPost.post._id, !!currentPost.post.video)}
-                  src={`${BASE_URL}${currentPost.post.video.replace(/\\/g, "/")}`}
+                  onClick={() =>
+                    handleVideoClick(
+                      currentPost.post._id,
+                      !!currentPost.post.video
+                    )
+                  }
+                  src={`${BASE_URL}${currentPost.post.video.replace(
+                    /\\/g,
+                    "/"
+                  )}`}
                   controls
                   className={styles.postVideo}
                 />
@@ -197,7 +239,10 @@ export default function PostDetail() {
                 <Image
                   src={
                     currentPost.images?.[0]
-                      ? `${BASE_URL}${currentPost.post.images[0].replace(/\\/g, "/")}`
+                      ? `${BASE_URL}${currentPost.post.images[0].replace(
+                          /\\/g,
+                          "/"
+                        )}`
                       : "/placeholder.svg"
                   }
                   alt={`Post ${currentPost.post._id}`}
@@ -224,21 +269,30 @@ export default function PostDetail() {
                 <Send size={24} />
               </button>
               <button className={styles.actionButton} onClick={handleSave}>
-                <Bookmark size={24} fill={currentPost.isSaved ? "currentColor" : "none"} />
+                <Bookmark
+                  size={24}
+                  fill={currentPost.isSaved ? "currentColor" : "none"}
+                />
               </button>
             </div>
 
             <div className={styles.likes}>{currentPost.likes.length} likes</div>
 
             <div className={styles.caption}>
-              <span className={styles.username}>{currentPost.post.user?.fullname}</span> {currentPost.caption}
+              <span className={styles.username}>
+                {currentPost.post.user?.fullname}
+              </span>{" "}
+              {currentPost.caption}
             </div>
 
             <div className={styles.comments}>
               {currentPost.comments?.length > 0 ? (
                 currentPost.comments.map((comment, index) => (
                   <div key={index} className={styles.comment}>
-                    <span className={styles.commentUsername}>{comment.user?.username}</span> {comment.text}
+                    <span className={styles.commentUsername}>
+                      {comment.user?.username}
+                    </span>{" "}
+                    {comment.text}
                   </div>
                 ))
               ) : (
@@ -248,7 +302,7 @@ export default function PostDetail() {
 
             <form
               className={styles.commentForm}
-              onSubmit={(e) => {
+              onSubmit={e => {
                 e.preventDefault()
                 const comment = e.target.comment.value
                 if (comment.trim()) {
@@ -257,7 +311,12 @@ export default function PostDetail() {
                 }
               }}
             >
-              <input type="text" name="comment" placeholder="Add a comment..." className={styles.commentInput} />
+              <input
+                type="text"
+                name="comment"
+                placeholder="Add a comment..."
+                className={styles.commentInput}
+              />
               <button type="submit" className={styles.commentButton}>
                 Post
               </button>
@@ -269,5 +328,3 @@ export default function PostDetail() {
     </LikeProvider>
   )
 }
-
-
