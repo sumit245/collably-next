@@ -348,3 +348,10 @@
 .tab:hover {
   color: #fff;
 }
+.tabsContainer{
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ff0055;
+}
