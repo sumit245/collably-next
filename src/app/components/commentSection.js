@@ -1,16 +1,16 @@
-import { useState } from 'react'
-import styles from '../feed/stylesfeed.module.css'
+import { useState } from "react";
+import styles from "../feed/stylesfeed.module.css";
 
 export default function CommentSection({ comments, onAddComment, onClose }) {
-  const [newComment, setNewComment] = useState('')
+  const [newComment, setNewComment] = useState("");
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (newComment.trim()) {
-      onAddComment(newComment)
-      setNewComment("")
+      onAddComment(newComment);
+      setNewComment("");
     }
-  }
+  };
 
   return (
     <div className={styles.commentSection}>
@@ -18,10 +18,10 @@ export default function CommentSection({ comments, onAddComment, onClose }) {
         &times;
       </button>
       <div className={styles.comments}>
-        {comments.map((comment, index) => (
-          <div key={comment.id || index} className={styles.comment}> {/* Using index as a fallback key */}
-            <strong>{comment.username}: </strong>
-            {comment.text}
+        {[...new Set(comments)].map((comment, index) => (
+          <div key={index} className={styles.comment}>
+            <strong>{comment.user?.username || "Anonymous"}: </strong>
+            {comment.text || comment.content}
           </div>
         ))}
       </div>
@@ -33,8 +33,10 @@ export default function CommentSection({ comments, onAddComment, onClose }) {
           placeholder="Add a comment..."
           className={styles.commentInput}
         />
-        <button type="submit" className={styles.commentSubmit}>Post</button>
+        <button type="submit" className={styles.commentSubmit}>
+          Post
+        </button>
       </form>
     </div>
-  )
+  );
 }

@@ -96,13 +96,13 @@ export default function Reel({
 
   const handleAddComment = async (comment) => {
     try {
-      await api.commentOnPost(_id, comment)
-      onComment(comment)
+      await api.commentOnPost(_id, comment) // API call to add comment
       setIsCommenting(false)
     } catch (error) {
       console.error("Error adding comment:", error)
     }
   }
+  
 
   return (
     <div className={styles.reelContainer}>
