@@ -29,7 +29,7 @@
  /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["localhost", "127.0.0.1"],
+    domains: ["localhost", "127.0.0.1", "cdn.pixabay.com"],
     remotePatterns: [
       {
         protocol: "http",
@@ -43,9 +43,13 @@ const nextConfig = {
         port: "5000",
         pathname: "/uploads/images/**",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.pixabay.com",
+        pathname: "/photo/**"
+      },
     ],
   },
 };
 
 module.exports = nextConfig;
-

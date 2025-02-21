@@ -340,14 +340,6 @@
   transition: color 0.3s ease;
 }
 
-.tabsContainer{
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #ff0055;
-}
-
 .activeTab {
   background-color: black;
   color: #fff;
@@ -357,11 +349,10 @@
 .tab:hover {
   color: #fff;
 }
-
- /* {
+.tabsContainer{
   display: flex;
   justify-content: center;
   gap: 3rem;
-  border-bottom: 1px solid white;
   padding-bottom: 10px;
-} */
+  border-bottom: 1px solid #ff0055;
+}
