@@ -1,5 +1,6 @@
 "use client"
 
+import api from "../services/api"
 import { useState, useRef, useEffect } from "react"
 import { useSelector } from "react-redux"
 import styles from "../feed/stylesfeed.module.css"
@@ -25,6 +26,9 @@ export default function Reel({
 }) {
   const currentUser = useSelector((state) => state.auth.user)
   const currentUserId = currentUser?.user._id
+  const [isFollowing, setIsFollowing] = useState(user?.followers?.includes(currentUserId))
+  // const currentUser = useSelector((state) => state.auth.user)
+  // const currentUserId = currentUser?.user._id
 console.log(user)
   const mediaRef = useRef(null)
   const commentSectionRef = useRef(null)
@@ -44,7 +48,7 @@ console.log(user)
       // mediaRef.current?.pause()
     }
   }, [isActive])
-console.log(mediaRef.current)
+// console.log(mediaRef.current)
   useEffect(() => {
     function handleClickOutside(event) {
       if (commentSectionRef.current && !commentSectionRef.current.contains(event.target)) {
@@ -57,7 +61,18 @@ console.log(mediaRef.current)
       document.removeEventListener("mousedown", handleClickOutside)
     }
   }, [])
-
+  const handleFollowToggle = async () => {
+    try {
+      if (isFollowing) {
+        await api.unfollowUser(user._id)
+      } else {
+        await api.followUser(user._id)
+      }
+      setIsFollowing(!isFollowing)
+    } catch (error) {
+      console.error("Error following/unfollowing user:", error)
+    }
+  }
   const handleCommentClick = () => {
     setIsCommenting(!isCommenting)
   }
@@ -164,18 +179,17 @@ console.log(mediaRef.current)
       </div>
 
       <div className={styles.info}>
-        <div className={styles.userInfo}>
-          <div className={styles.avatar}>
-            <img src={user?.avatar || "/placeholder.svg"} alt={user?.fullname} />
-          </div>
-          {user ? (
-  <span className={styles.username}>{user.fullname}</span>
-) : (
-  <span>Loading...</span>
-)}
-
-          <button className={styles.followButton}>Follow</button>
+      <div className={styles.userInfo}>
+        <div className={styles.avatar}>
+          <img src={user?.avatar || "/placeholder.svg"} alt={user?.fullname} />
         </div>
+        {user ? <span className={styles.username}>{user.fullname}</span> : <span>Loading...</span>}
+        {currentUserId !== user?._id && (
+          <button className={styles.followButton} onClick={handleFollowToggle}>
+            {isFollowing ? "Following" : "Follow"}
+          </button>
+        )}
+      </div>
         <div className={styles.caption}>
           <a className={styles.captionLink} href={caption} rel="noopener noreferrer">
             {caption}
