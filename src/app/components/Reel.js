@@ -44,6 +44,7 @@ export default function Reel({
       mediaRef.current?.pause()
     }
   }, [isActive])
+  
 
   useEffect(() => {
     function handleClickOutside(event) {
