@@ -1,174 +1,154 @@
 "use client"
 
-import { useState } from "react"
-import { Search, Home, Plus, Video, User, Heart, MessageCircle, Bookmark, MoreHorizontal } from "lucide-react"
+import { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { fetchPosts } from "../store/postSlice"
 import styles from "./profile.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import Image from "next/image"
 import Link from "next/link"
 import FooterCreator from "../components/FooterCreator"
-import PostDetail from "../postDetails/page"
+import CreatorHome from '../components/CreatorHome'
+import { Heart, MessageCircle } from 'lucide-react'
+import api from "../services/api"
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"
+
+const changeEscapeChar = (path) => path.replace(/\\/g, "/")
 
 export default function Profile() {
-  const [selectedPostId, setSelectedPostId] = useState(null)
+  const dispatch = useDispatch()
+  const { posts, status, error } = useSelector((state) => state.posts)
+  const [activeTab, setActiveTab] = useState("posts")
+  const user = useSelector((state) => state.auth.user)
+console.log(user.user._id)
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchPosts())
+    }
+  }, [status, dispatch])
 
-  const posts = [
-    {
-      id: 1,
-      image: "/images/image22.webp",
-      likes: 124,
-      comments: 12,
-      caption: "Beautiful day at the beach! 🌊☀",
-      user: {
-        username: "collably_creator",
-        avatar: "/images/image26.webp",
-      },
-    },
-    {
-      id: 2,
-      image: "/images/image25.jpeg",
-      likes: 89,
-      comments: 8,
-      caption: "Exploring new places 🌍",
-      user: {
-        username: "collably_creator",
-        avatar: "/images/image26.webp",
-      },
-    },
-    {
-      id: 3,
-      image: "/images/image26.webp",
-      likes: 256,
-      comments: 24,
-      caption: "Just another day in paradise 🌴",
-      user: {
-        username: "collably_creator",
-        avatar: "/images/image26.webp",
-      },
-    },
-    {
-      id: 4,
-      image: "/images/image28.webp",
-      likes: 167,
-      comments: 15,
-      caption: "City lights and good vibes 🌃",
-      user: {
-        username: "collably_creator",
-        avatar: "/images/image26.webp",
-      },
-    },
-    {
-      id: 5,
-      image: "/images/image31.jpg",
-      likes: 198,
-      comments: 18,
-      caption: "Nature's beauty never fails to amaze me 🌿",
-      user: {
-        username: "collably_creator",
-        avatar: "/images/image26.webp",
-      },
-    },
+  useEffect(() => {
+    const fetchUserPosts = async () => {
+      try {
+        await api.getUserPosts(user.user._id)
+      } catch (err) {
+        console.error("Error fetching user posts:", err)
+      }
+    }
+
+    if (user?.user?._id) { 
+      fetchUserPosts() 
+    }
+    
+  }, [user])
+
+  const tabs = [
+    { id: "posts", label: "Posts" },
+    { id: "reels", label: "Reels" },
   ]
 
-  const handlePostClick = (postId) => {
-    setSelectedPostId(postId)
-  }
+  const renderContent = () => {
+    if (status === "loading") {
+      return <div>Loading...</div>
+    }
 
-  const handleBackToProfile = () => {
-    setSelectedPostId(null)
+    if (status === "failed") {
+      return <div>Error: {error}</div>
+    }
+
+    const filteredPosts = posts.filter((post) => {
+      if (!post.user || post.user._id !== user?.user?._id) return false;
+      return true;
+    });
+    
+    
+
+    switch (activeTab) {
+      case "reels":
+        return (
+          <div className={styles.gridContainer}>
+            {filteredPosts.map((post) => (
+              <Link href={`/feed?reelId=${post._id}`} key={post._id} className={styles.gridItem}>
+                <video src={`${BASE_URL}${changeEscapeChar(post.video)}`} className={styles.gridVideo} width={300} height={300} />
+              </Link>
+            ))}
+          </div>
+        )
+      case "posts":
+        return (
+          <div className={styles.gridContainer}>
+            {filteredPosts.map((post) => (
+              <Link href={`/post/${post._id}`} key={post._id} className={styles.gridItem}>
+                <Image
+                  src={`${BASE_URL}${changeEscapeChar(post.images[0])}` || "/placeholder.svg"}
+                  alt={`Post by ${post.user?.username || "unknown"}`}
+                  className={styles.gridImage}
+                  width={300}
+                  height={300}
+                />
+                <div className={styles.postOverlay}>
+                  <div className={styles.postStats}>
+                    <span className={styles.postStat}>
+                      <Heart size={20} /> {post.likes.length}
+                    </span>
+                    <span className={styles.postStat}>
+                      <MessageCircle size={20} /> {post.comments.length}
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )
+      default:
+        return null
+    }
   }
 
   return (
     <div className={stylesShop.bodyShop}>
       <div className={stylesShop.smartphoneContainer}>
-        {selectedPostId ? (
-          <PostDetail posts={posts} initialPostId={selectedPostId} onBack={handleBackToProfile} />
-        ) : (
-          <div className={styles.container}>
-            {/* Profile Header */}
-            <header className={styles.header}>
-              <div className={styles.headerLeft}>
-                <span className={styles.lockIcon}>🔒</span>
-                <span className={styles.username}>collably_creator</span>
-                <span className={styles.dropdown}>▼</span>
-              </div>
-              <div className={styles.headerRight}>
-                <button className={styles.iconButton}>
-                  <Plus />
-                </button>
-                <button className={styles.menuButton}>☰</button>
-              </div>
-            </header>
-
-            {/* Profile Info */}
-            <section className={styles.profileInfo}>
-              <div className={styles.profile}>
-                <div className={styles.profileImageContainer}>
-                  <Image
-                    src="/images/image26.webp"
-                    alt="Profile"
-                    width={70}
-                    height={70}
-                    className={styles.profileImage}
-                  />
-                  <button className={styles.addButton}>+</button>
+        <CreatorHome />
+        <div className={styles.container}>
+          <section className={styles.profileInfo}>
+            <div className={styles.profile}>
+              <div className={styles.stats}>
+                <div className={styles.statItem}>
+                  <span className={styles.statNumber}>{posts.filter(post => post.user._id === user.user._id).length}</span>
+                  <span className={styles.statLabel}>posts</span>
                 </div>
-
-                <div className={styles.stats}>
-                  <div className={styles.statItem}>
-                    <span className={styles.statNumber}>5</span>
-                    <span className={styles.statLabel}>posts</span>
-                  </div>
-                  <div className={styles.statItem}>
-                    <span className={styles.statNumber}>2</span>
-                    <span className={styles.statLabel}>followers</span>
-                  </div>
-                  <div className={styles.statItem}>
-                    <span className={styles.statNumber}>145</span>
-                    <span className={styles.statLabel}>following</span>
-                  </div>
+                <div className={styles.statItem}>
+                  <span className={styles.statNumber}>{user.user.followers.length}</span>
+                  <span className={styles.statLabel}>followers</span>
+                </div>
+                <div className={styles.statItem}>
+                  <span className={styles.statNumber}>{user.user.following.length}</span>
+                  <span className={styles.statLabel}>following</span>
                 </div>
               </div>
-
-              <p className={styles.bio}>collably Content Creator</p>
-
-              <div className={styles.profileActions}>
-                <button className={styles.editButton}>Edit profile</button>
-                <button className={styles.shareButton}>Share profile</button>
-                <button className={styles.addPeopleButton}>
-                  <User size={20} />
-                </button>
-              </div>
-            </section>
-
-            {/* Posts Grid */}
-            <div className={styles.postsGrid}>
-              {posts.map((post) => (
-                <div key={post.id} className={styles.postItem} onClick={() => handlePostClick(post.id)}>
-                  <div className={styles.postImageContainer}>
-                    <Image
-                      src={post.image || "/placeholder.svg"}
-                      alt={`Post ${post.id}`}
-                      layout="fill"
-                      objectFit="cover"
-                      className={styles.postImage}
-                    />
-                    <div className={styles.postOverlay}>
-                      <div className={styles.postStats}>
-                        <span className={styles.postStat}>
-                          <Heart size={20} /> {post.likes}
-                        </span>
-                        <span className={styles.postStat}>
-                          <MessageCircle size={20} /> {post.comments}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
             </div>
+
+            <div className={styles.profileActions}>
+              <button className={styles.editButton}>Edit profile</button>
+              <button className={styles.shareButton}>Share profile</button>
+            </div>
+          </section>
+
+          <div className={styles.tabsContainer}>
+            {tabs.map((tab) => (
+              <div
+                key={tab.id}
+                className={`${styles.tab} ${activeTab === tab.id ? styles.activeTab : ""}`}
+                onClick={() => setActiveTab(tab.id)}
+              >
+                {tab.label}
+              </div>
+            ))}
           </div>
-        )}
+
+          <div className={styles.contentGrid}>{renderContent()}</div>
+        </div>
         <FooterCreator />
       </div>
     </div>
