@@ -3,6 +3,7 @@ import styles from '../CreatorShop/styles.creatorShop.module.css'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
+import { ArrowRight } from 'lucide-react'
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"
 
@@ -44,6 +45,9 @@ export default function ReelsTab() {
           </video>
         </Link>
       ))}
+      <button className={styles.addButton} onClick={handleAddReelClick}>
+        Add Reel <ArrowRight size={20} />
+      </button>
     </div>
   )
 }

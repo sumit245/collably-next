@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
+import { ArrowRight } from 'lucide-react'
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"
 
@@ -45,6 +46,9 @@ export default function PostsTab() {
           />
         </Link>
       ))}
+      <button className={styles.addButton} onClick={handleAddPostClick}>
+        Add Post <ArrowRight size={20} />
+      </button>
     </div>
   )
 }

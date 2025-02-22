@@ -1,0 +1,84 @@
+/* app/brands/page.module.css */
+.brandsPage {
+    padding: 20px;
+  }
+  
+  .brandsHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .brandsTitle {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .searchContainer {
+    display: flex;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 20px;
+    padding: 5px 10px;
+  }
+  
+  .searchIcon {
+    margin-right: 5px;
+  }
+  
+  .searchInput {
+    border: none;
+    background: transparent;
+    outline: none;
+  }
+  
+  .brandsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .brandCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s;
+  }
+  
+  .brandCard:hover {
+    transform: scale(1.05);
+  }
+  
+  .brandLogo {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .brandName {
+    font-size: 18px;
+    text-align: center;
+  }
+  
+  .noBrandsCard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+  }
+  
+  .noBrands {
+    font-size: 18px;
+    color: #888;
+  }
