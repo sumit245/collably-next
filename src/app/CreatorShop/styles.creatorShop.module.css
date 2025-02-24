@@ -211,14 +211,6 @@
   }
 }
 
-
-
-
-
-/* styles.creatorShop.module.css */
-
-/* Grid container for reels */
-/* Grid container for reels */
 .gridContainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr); 
@@ -229,7 +221,7 @@
   align-items: center;
 }
 
-/* Individual reel item */
+
 .gridItem {
   background-color: #fff;
   border-radius: 8px;
@@ -242,14 +234,14 @@
   cursor: pointer;
 }
 
-/* Video styling inside grid item */
+
 .gridVideo {
   width: 20%;
   height: auto;
   border-radius: 8px;
 }
 
-/* Add Reel button at the bottom */
+
 .addButton {
   background-color: #ff0055;
   color: white;
@@ -270,12 +262,12 @@
   transform: scale(1.05);
 }
 
-/* Add arrow icon inside the button */
+
 .addButton svg {
   margin-left: 8px;
 }
 
-/* Empty State Styling */
+
 .emptyStateContainer {
   text-align: center;
   padding: 50px;
