@@ -21,12 +21,13 @@ export default function AllBrands() {
       const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000/"
   const dispatch = useDispatch();
   const allBrands = useSelector((state) => state.brands.items);
+  
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     dispatch(fetchBrands());
   }, [dispatch]);
-
+console.log(allBrands[12].brandLogo)
   const filteredBrands = allBrands.filter((brand) =>
     brand.brandName.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -55,20 +56,26 @@ export default function AllBrands() {
             </div>
           ) : (
             <div className={styles.brandsGrid}>
-              {filteredBrands.map((brand) => (
-                <Link href={brand.brandWebsite} key={brand._id} className={styles.brandCard}>
-                  <div className={styles.brandLogo}>
-                    <Image 
-                      src={`${BASE_URL}${changeEscapeChar(brand.brandLogo)}`} 
-                      alt={brand.brandName} 
-                      width={100} 
-                      height={100} 
-                    />
-                  </div>
-                  <h2 className={styles.brandName}>{brand.brandName}</h2>
-                </Link>
-              ))}
-            </div>
+  {filteredBrands.map((brand) => {
+    const imageSrc = `${BASE_URL}${changeEscapeChar(brand.brandLogo)}`;
+    console.log( imageSrc);
+
+    return (
+      <Link href={brand.brandWebsite} key={brand._id} className={styles.brandCard}>
+        <div className={styles.brandLogo}>
+          <Image 
+            src={imageSrc} 
+            alt={brand.brandName} 
+            width={100} 
+            height={100} 
+          />
+        </div>
+        <h2 className={styles.brandName}>{brand.brandName}</h2>
+      </Link>
+    );
+  })}
+</div>
+
           )}
         </div>
         <Footer />

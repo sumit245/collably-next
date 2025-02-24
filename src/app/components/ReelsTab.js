@@ -33,6 +33,7 @@ export default function ReelsTab() {
   }
 
   return (
+    <div>
     <div className={styles.gridContainer}>
       {userReels.map((reel) => (
         <Link href={`/post/${reel._id}`} key={reel._id} className={styles.gridItem}>
@@ -45,7 +46,9 @@ export default function ReelsTab() {
           </video>
         </Link>
       ))}
-      <button className={styles.addButton} onClick={handleAddReelClick}>
+      
+    </div>
+    <button className={styles.addButton} onClick={handleAddReelClick}>
         Add Reel <ArrowRight size={20} />
       </button>
     </div>

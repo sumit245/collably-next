@@ -34,11 +34,12 @@ export default function PostsTab() {
   }
 
   return (
+    <div>
     <div className={styles.gridContainer}>
       {userPosts.map((post) => (
         <Link href={`/post/${post._id}`} key={post._id} className={styles.gridItem}>
           <Image
-            src={`${BASE_URL}/${changeEscapeChar(post.images[0])}` || "/placeholder.svg"}
+            src={`${BASE_URL}/${changeEscapeChar(post.images[0])} || "/placeholder.svg"`}
             alt={`Post by ${post.user?.username || "unknown"}`}
             className={styles.gridImage}
             width={300}
@@ -46,7 +47,9 @@ export default function PostsTab() {
           />
         </Link>
       ))}
-      <button className={styles.addButton} onClick={handleAddPostClick}>
+      
+    </div>
+    <button className={styles.addButton} onClick={handleAddPostClick}>
         Add Post <ArrowRight size={20} />
       </button>
     </div>
