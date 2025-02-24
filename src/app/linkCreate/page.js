@@ -1,23 +1,36 @@
-// linkCreate.js
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import styles from "./page.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import FooterCreator from "../components/FooterCreator"
 import ShareModal from "./modalLink"
-import { createReferralLink } from "../store/brandSlice"
+import { createReferralLink, fetchReferralsByUserId } from "../store/brandSlice"
 import { toast } from "react-hot-toast"
+import { Search, Filter } from 'lucide-react'
+import Link from "next/link"
 
 export default function LinksPage() {
   const dispatch = useDispatch()
   const [activeTab, setActiveTab] = useState("my-links")
   const [inputText, setInputText] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("")
   const userId = useSelector((state) => state.auth.user?.user._id)
   const referralLink = useSelector((state) => state.brands.referralLink)
-console.log(userId)
+  const referrals = useSelector((state) => state.brands.referrals || [])
+
+  useEffect(() => {
+    if (userId) {
+      dispatch(fetchReferralsByUserId(userId))
+    }
+  }, [dispatch, userId])
+
+  const filteredReferrals = referrals.filter((referral) =>
+    referral.referralLink.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
   const handleInputChange = (e) => {
     setInputText(e.target.value)
   }
@@ -27,6 +40,9 @@ console.log(userId)
       try {
         await dispatch(createReferralLink({ userId, productUrl: inputText })).unwrap()
         setIsModalOpen(true)
+        setInputText("") // Clear input after successful creation
+        // Refresh the list of referrals
+        dispatch(fetchReferralsByUserId(userId))
       } catch (error) {
         toast.error("Failed to create referral link")
       }
@@ -82,21 +98,43 @@ console.log(userId)
 
           {activeTab === "my-links" ? (
             <>
-              <div className={styles.loadingSection}>
-                <div className={styles.loadingHeader}>
-                  <span className={styles.loadingText}>Loading...</span>
-                  <div className={styles.actionButtons}>
-                    <button className={styles.actionButton}>Filters</button>
-                    <button className={styles.actionButton}>Search</button>
-                  </div>
+              <div className={styles.linksHeader}>
+                <div className={styles.searchContainer}>
+                  <Search className={styles.searchIcon} size={20} />
+                  <input
+                    type="text"
+                    placeholder="Search links..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className={styles.searchInput}
+                  />
                 </div>
-                <p className={styles.metricsText}>Metrics are lifetime totals</p>
+                <button className={styles.filterButton}>
+                  <Filter size={20} />
+                  Filters
+                </button>
               </div>
 
-              <div className={styles.cardContainer}>
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className={styles.card} />
-                ))}
+              <div className={styles.linksList}>
+                {filteredReferrals.length > 0 ? (
+                  filteredReferrals.map((referral) => (
+                    <Link href={referral.referralLink} >
+                    <div key={referral._id} className={styles.linkCard}>
+                      <div className={styles.linkInfo}>
+                        <div className={styles.linkUrl}>{referral.referralLink}</div>
+                        <div className={styles.linkStats}>
+                          <span>Clicks: {referral.clicks }</span>
+                         
+                        </div>
+                      </div>
+                    </div>
+                    </Link>
+                  ))
+                ) : (
+                  <div className={styles.noLinks}>
+                    No links found. Create your first link above!
+                  </div>
+                )}
               </div>
             </>
           ) : (
@@ -108,7 +146,7 @@ console.log(userId)
         <ShareModal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          productName="Product Name" // You might want to fetch this from the API response
+          productName="Product Name"
           productLink={referralLink}
         />
       </div>
