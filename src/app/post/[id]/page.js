@@ -19,7 +19,7 @@ export default function PostDetail() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
   const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/"
-  const currentUser = useSelector(state => state.auth.user)
+  const currentUser = useSelector((state) => state.auth.user)
   const currentUserId = currentUser?.user._id
   const [currentPost, setCurrentPost] = useState({
     likes: [],
@@ -29,8 +29,8 @@ export default function PostDetail() {
     post: {
       user: {},
       images: [],
-      video: null
-    }
+      video: null,
+    },
   })
   const [isFollowing, setIsFollowing] = useState(false)
   const [isCommenting, setIsCommenting] = useState(false)
@@ -43,10 +43,8 @@ export default function PostDetail() {
       setCurrentPost({
         ...post,
         likes: Array.isArray(post.likes) ? post.likes : [],
-        isLiked: Array.isArray(post.likes)
-          ? post.likes.includes(currentUserId)
-          : false,
-        comments: Array.isArray(post.comments) ? post.comments : []
+        isLiked: Array.isArray(post.likes) ? post.likes.includes(currentUserId) : false,
+        comments: Array.isArray(post.comments) ? post.comments : [],
       })
       setIsFollowing(post.post.user.followers.includes(currentUserId))
       setIsLoading(false)
@@ -62,10 +60,7 @@ export default function PostDetail() {
 
   useEffect(() => {
     function handleClickOutside(event) {
-      if (
-        commentSectionRef.current &&
-        !commentSectionRef.current.contains(event.target)
-      ) {
+      if (commentSectionRef.current && !commentSectionRef.current.contains(event.target)) {
         setIsCommenting(false)
       }
     }
@@ -109,33 +104,36 @@ export default function PostDetail() {
     }
   }
 
-  const updatePostLikes = isLiking => {
-    setCurrentPost(prevPost => {
+  const updatePostLikes = (isLiking) => {
+    setCurrentPost((prevPost) => {
       const updatedLikes = isLiking
         ? [...prevPost.likes, currentUserId]
-        : prevPost.likes.filter(likeId => likeId !== currentUserId)
+        : prevPost.likes.filter((likeId) => likeId !== currentUserId)
       return {
         ...prevPost,
         likes: updatedLikes,
-        isLiked: isLiking
+        isLiked: isLiking,
       }
     })
   }
 
-  const handleComment = async comment => {
+  const handleComment = async (comment) => {
     try {
-      const updatedPost = await api.commentOnPost(id, comment)
-      updatePostComments(updatedPost.comments)
+      const newComment = await api.commentOnPost(id, comment)
+      setCurrentPost((prevPost) => ({
+        ...prevPost,
+        comments: [...prevPost.comments, newComment],
+      }))
       setIsCommenting(false)
     } catch (error) {
       console.error("Error commenting on post:", error)
     }
   }
 
-  const updatePostComments = newComments => {
-    setCurrentPost(prevPost => ({
+  const updatePostComments = (newComments) => {
+    setCurrentPost((prevPost) => ({
       ...prevPost,
-      comments: newComments
+      comments: newComments,
     }))
   }
 
@@ -152,10 +150,10 @@ export default function PostDetail() {
     }
   }
 
-  const updatePostSaveStatus = isSaving => {
-    setCurrentPost(prevPost => ({
+  const updatePostSaveStatus = (isSaving) => {
+    setCurrentPost((prevPost) => ({
       ...prevPost,
-      isSaved: isSaving
+      isSaved: isSaving,
     }))
   }
 
@@ -176,6 +174,45 @@ export default function PostDetail() {
     setIsCommenting(!isCommenting)
   }
 
+  const handleLikeComment = async (commentId) => {
+    try {
+      const updatedComment = await api.likeComment(commentId)
+      setCurrentPost((prevPost) => ({
+        ...prevPost,
+        comments: prevPost.comments.map((comment) => (comment._id === commentId ? updatedComment : comment)),
+      }))
+    } catch (error) {
+      console.error("Error liking comment:", error)
+    }
+  }
+
+  const handleDeleteComment = async (commentId) => {
+    if (!confirm("Are you sure you want to delete this comment?")) {
+      return
+    }
+    try {
+      await api.deleteComment(commentId)
+      setCurrentPost((prevPost) => ({
+        ...prevPost,
+        comments: prevPost.comments.filter((comment) => comment._id !== commentId),
+      }))
+    } catch (error) {
+      console.error("Error deleting comment:", error)
+    }
+  }
+
+  const handleUnlikeComment = async (commentId) => {
+    try {
+      const updatedComment = await api.unlikeComment(commentId)
+      setCurrentPost((prevPost) => ({
+        ...prevPost,
+        comments: prevPost.comments.map((comment) => (comment._id === commentId ? updatedComment : comment)),
+      }))
+    } catch (error) {
+      console.error("Error unliking comment:", error)
+    }
+  }
+
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error: {error}</div>
   if (!currentPost) return <div>Post not found</div>
@@ -189,18 +226,8 @@ export default function PostDetail() {
         <div className={styles.postDetail}>
           <div className={styles.header}>
             <div className={styles.profile}>
-              <button
-                onClick={() => window.history.back()}
-                className={styles.backButton}
-              >
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
+              <button onClick={() => window.history.back()} className={styles.backButton}>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M19 12H5M12 19l-7-7 7-7" />
                 </svg>
               </button>
@@ -212,14 +239,9 @@ export default function PostDetail() {
                   height={32}
                   className={styles.avatar}
                 />
-                <span className={styles.username}>
-                  {currentPost.post.user?.fullname}
-                </span>
+                <span className={styles.username}>{currentPost.post.user?.fullname}</span>
                 {!isOwnPost && (
-                  <button
-                    className={styles.followButton}
-                    onClick={handleFollowToggle}
-                  >
+                  <button className={styles.followButton} onClick={handleFollowToggle}>
                     {isFollowing ? "Following" : "Follow"}
                   </button>
                 )}
@@ -234,7 +256,7 @@ export default function PostDetail() {
                   border: "none",
                   cursor: "pointer",
                   color: "red",
-                  padding: "8px"
+                  padding: "8px",
                 }}
               >
                 <Trash2 size={24} />
@@ -246,16 +268,8 @@ export default function PostDetail() {
             <div className={styles.mediaContainer}>
               {currentPost.post.video ? (
                 <video
-                  onClick={() =>
-                    handleVideoClick(
-                      currentPost.post._id,
-                      !!currentPost.post.video
-                    )
-                  }
-                  src={`${BASE_URL}${currentPost.post.video.replace(
-                    /\\/g,
-                    "/"
-                  )}`}
+                  onClick={() => handleVideoClick(currentPost.post._id, !!currentPost.post.video)}
+                  src={`${BASE_URL}${currentPost.post.video.replace(/\\/g, "/")}`}
                   controls
                   className={styles.postVideo}
                 />
@@ -263,10 +277,7 @@ export default function PostDetail() {
                 <Image
                   src={
                     currentPost.images?.[0]
-                      ? `${BASE_URL}${currentPost.post.images[0].replace(
-                          /\\/g,
-                          "/"
-                        )}`
+                      ? `${BASE_URL}${currentPost.post.images[0].replace(/\\/g, "/")}`
                       : "/placeholder.svg"
                   }
                   alt={`Post ${currentPost.post._id}`}
@@ -286,40 +297,28 @@ export default function PostDetail() {
                   stroke={currentPost.isLiked ? "red" : "currentColor"}
                 />
               </button>
-              <button
-                className={styles.actionButton}
-                onClick={handleCommentClick}
-              >
+              <button className={styles.actionButton} onClick={handleCommentClick}>
                 <MessageCircle size={24} />
               </button>
               <button className={styles.actionButton}>
                 <Send size={24} />
               </button>
               <button className={styles.actionButton} onClick={handleSave}>
-                <Bookmark
-                  size={24}
-                  fill={currentPost.isSaved ? "currentColor" : "none"}
-                />
+                <Bookmark size={24} fill={currentPost.isSaved ? "currentColor" : "none"} />
               </button>
             </div>
 
             <div className={styles.likes}>{currentPost.likes.length} likes</div>
 
             <div className={styles.caption}>
-              <span className={styles.username}>
-                {currentPost.post.user?.fullname}
-              </span>{" "}
-              {currentPost.caption}
+              <span className={styles.username}>{currentPost.post.user?.fullname}</span> {currentPost.caption}
             </div>
 
             <div className={styles.comments}>
               {currentPost.comments?.length > 0 ? (
                 currentPost.comments.map((comment, index) => (
                   <div key={index} className={styles.comment}>
-                    <span className={styles.commentUsername}>
-                      {comment.user?.username}
-                    </span>{" "}
-                    {comment.text}
+                    <span className={styles.commentUsername}>{comment.user?.username}</span> {comment.text}
                   </div>
                 ))
               ) : (
@@ -334,6 +333,9 @@ export default function PostDetail() {
                   onAddComment={handleComment}
                   onClose={() => setIsCommenting(false)}
                   postId={id}
+                  onLikeComment={handleLikeComment}
+                  onUnlikeComment={handleUnlikeComment}
+                  onDeleteComment={handleDeleteComment}
                 />
               </div>
             )}
@@ -344,3 +346,4 @@ export default function PostDetail() {
     </LikeProvider>
   )
 }
+

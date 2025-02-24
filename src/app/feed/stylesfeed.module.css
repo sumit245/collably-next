@@ -179,8 +179,7 @@
 }
 
 .commentSection {
-  position: absolute;
-  bottom: 64px;
+  position: relative;
   left: 0;
   right: 0;
   background: #000000;
@@ -681,7 +680,6 @@
  position: relative;
  top: 30rem;
 }
-
 /* Example styles for buttons */
 .commentActions {
   display: flex;

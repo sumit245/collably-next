@@ -55,13 +55,22 @@ export default function CommentSection({
   }
 
   const handleDeleteComment = async (commentId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this comment?");
+    if (!confirmDelete) return;
+  
     try {
-      await api.deleteComment(commentId)
-      // Optionally, update state to remove the deleted comment
+      await api.deleteComment(commentId);
+      
+      // Remove the deleted comment from the UI
+      const updatedComments = comments.filter(comment => comment._id !== commentId);
+      onAddComment(updatedComments); // Update the comments state
+  
+      onClose(); // Close the chatbox after deletion
     } catch (error) {
-      console.error("Error deleting comment:", error)
+      console.error("Error deleting comment:", error);
     }
-  }
+  };
+  
 
   return (
     <div className={styles.commentSection}>
