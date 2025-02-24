@@ -170,7 +170,6 @@ export default function Profile() {
               </div>
             ))}
           </div>
-
           <div className={styles.contentGrid}>{renderContent()}</div>
         </div>
         <FooterCreator />

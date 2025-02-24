@@ -9,30 +9,39 @@ import PostsTab from './postsTab'
 import ReelsTab from './ReelsTab'
 import CollectionsTab from './collectionsTab'
 import SingleProductLinksTab from './singleProductTab'
-import { useSelector } from 'react-redux' 
-import { useRouter } from 'next/navigation' 
+import { useSelector, useDispatch } from 'react-redux'
+import { useRouter } from 'next/navigation'
+import { fetchPosts } from "../store/postSlice"
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"
 
 export default function Shop() {
   const [activeTab, setActiveTab] = useState('posts')
   const [activeCount, setActiveCount] = useState(0)
   const user = useSelector((state) => state.auth.user)
+  const { posts, status, error } = useSelector((state) => state.posts)
   const router = useRouter()
+  const dispatch = useDispatch()
 
- 
   useEffect(() => {
     if (!user) {
       router.push(`/login?redirect=${encodeURIComponent("/CreatorShop")}`)
     }
   }, [user, router])
 
- 
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchPosts())
+    }
+  }, [status, dispatch])
+
   if (!user) {
     return null
   }
 
   const tabs = [
-    { id: 'posts', label: 'Posts', count: 0 },
-    { id: 'reels', label: 'Reels', count: 0 },
+    { id: 'posts', label: 'Posts', count: posts.filter(post => post.user._id === user?.user?._id && (!post.video || post.video.length === 0)).length },
+    { id: 'reels', label: 'Reels', count: posts.filter(post => post.user._id === user?.user?._id && post.video).length },
     { id: 'collections', label: 'Collections', count: 0 },
     { id: 'links', label: 'Single Product Links', count: 0 }
   ]
@@ -40,7 +49,7 @@ export default function Shop() {
   useEffect(() => {
     const tab = tabs.find(t => t.id === activeTab)
     setActiveCount(tab?.count || 0)
-  }, [activeTab])
+  }, [activeTab, posts])
 
   const handleTabClick = (tabId) => {
     setActiveTab(tabId)
@@ -49,9 +58,9 @@ export default function Shop() {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'posts':
-        return <PostsTab />
+        return <PostsTab posts={posts.filter(post => post.user._id === user?.user?._id && (!post.video || post.video.length === 0))} />
       case 'reels':
-        return <ReelsTab />
+        return <ReelsTab reels={posts.filter(post => post.user._id === user?.user?._id && post.video)} />
       case 'collections':
         return <CollectionsTab />
       case 'links':
@@ -136,7 +145,7 @@ export default function Shop() {
             onClick={() => handleTabClick(tab.id)}
           >
             {tab.label}
-            {activeTab === tab.id && tab.count > 0 && (
+            {tab.count > 0 && (
               <span className={styles.tabCounter}>({tab.count})</span>
             )}
           </li>
