@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, Suspense } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useSelector, useDispatch } from "react-redux"
 import styles from "./page.module.css"
@@ -15,23 +15,25 @@ const MediaDetailsContent = () => {
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
-  
+
   const currentMedia = useSelector((state) => state.media.currentMedia)
   const formData = useSelector((state) => state.media.formData)
   const user = useSelector((state) => state.auth.user)
   const accessToken = localStorage.getItem("accessToken")
-  
 
   useEffect(() => {
+    console.log("Access Token:", accessToken); // Check the access token
     if (!accessToken) {
       console.error("Access token is missing")
       setError("Authentication failed. Please log in again.")
       return
     }
 
-    if (!currentMedia) {
-      router.push('/CreatorShop')
-    }
+    // if (!currentMedia) {
+    //   console.log("Redirecting to /CreatorShop because currentMedia is missing...");
+    //   router.push('/CreatorShop')
+    // }
+    
   }, [accessToken, currentMedia, router])
 
   const getFileFromSource = async (src, fileName) => {
@@ -76,7 +78,7 @@ const MediaDetailsContent = () => {
       const postFormData = new FormData()
       const fileExtension = currentMedia.type === "photo" ? "jpg" : "mp4"
       const mediaFile = await getFileFromSource(currentMedia.src, `media_${Date.now()}.${fileExtension}`)
-      
+
       if (!mediaFile) {
         throw new Error("Failed to create file from media source")
       }
@@ -102,10 +104,11 @@ const MediaDetailsContent = () => {
       dispatch(clearCurrentMedia())
       dispatch(clearFormData())
 
+      console.log("Redirecting to /upload-success...");
       router.push("/upload-success")
     } catch (err) {
-      setError(err.message || "Failed to upload post")
       console.error("Upload error:", err)
+      setError(err.message || "Failed to upload post")
     } finally {
       setIsLoading(false)
     }
@@ -187,8 +190,7 @@ const MediaDetailsContent = () => {
 
 export default function MediaDetails() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <MediaDetailsContent />
-    </Suspense>
+    // Removed Suspense for debugging
+    <MediaDetailsContent />
   )
 }
