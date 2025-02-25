@@ -39,7 +39,7 @@ export default function Profile() {
   useEffect(() => {
     const fetchUserPosts = async () => {
       try {
-        await api.getUserPosts(user?.user?._id)
+        await api.getUserPosts(user._id)
       } catch (err) {
         console.error("Error fetching user posts:", err)
       } finally {
@@ -47,7 +47,7 @@ export default function Profile() {
       }
     };
 
-    if (user?.user?._id) {
+    if (user?._id) {
       fetchUserPosts()
     } else {
       setIsLoading(false)
@@ -77,7 +77,7 @@ export default function Profile() {
     }
 
     const filteredPosts = posts.filter((post) => {
-      if (!post.user || post.user._id !== user?.user?._id) return false
+      if (!post.user || post.user._id !== user?._id) return false
       if (activeTab === "reels" && !post.video) return false
       if (activeTab === "posts" && (!post.images || post.images.length === 0)) return false
       return true
@@ -136,16 +136,16 @@ export default function Profile() {
               <div className={styles.stats}>
                 <div className={styles.statItem}>
                   <span className={styles.statNumber}>
-                    {posts.filter((post) => post.user._id === user?.user?._id).length}
+                    {posts.filter((post) => post.user._id === user?._id).length}
                   </span>
                   <span className={styles.statLabel}>posts</span>
                 </div>
                 <div className={styles.statItem}>
-                  <span className={styles.statNumber}>{user?.user?.followers?.length}</span>
+                  <span className={styles.statNumber}>{user?.followers?.length}</span>
                   <span className={styles.statLabel}>followers</span>
                 </div>
                 <div className={styles.statItem}>
-                  <span className={styles.statNumber}>{user?.user?.following?.length}</span>
+                  <span className={styles.statNumber}>{user?.following?.length}</span>
                   <span className={styles.statLabel}>following</span>
                 </div>
               </div>

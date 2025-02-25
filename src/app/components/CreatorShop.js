@@ -40,8 +40,8 @@ export default function Shop() {
   }
 
   const tabs = [
-    { id: 'posts', label: 'Posts', count: posts.filter(post => post.user._id === user?.user?._id && (!post.video || post.video.length === 0)).length },
-    { id: 'reels', label: 'Reels', count: posts.filter(post => post.user._id === user?.user?._id && post.video).length },
+    { id: 'posts', label: 'Posts', count: posts.filter(post => post.user._id === user?._id && (!post.video || post.video.length === 0)).length },
+    { id: 'reels', label: 'Reels', count: posts.filter(post => post.user._id === user?._id && post.video).length },
     { id: 'collections', label: 'Collections', count: 0 },
     { id: 'links', label: 'Single Product Links', count: 0 }
   ]
@@ -58,9 +58,9 @@ export default function Shop() {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'posts':
-        return <PostsTab posts={posts.filter(post => post.user._id === user?.user?._id && (!post.video || post.video.length === 0))} />
+        return <PostsTab posts={posts.filter(post => post.user._id === user?._id && (!post.video || post.video.length === 0))} />
       case 'reels':
-        return <ReelsTab reels={posts.filter(post => post.user._id === user?.user?._id && post.video)} />
+        return <ReelsTab reels={posts.filter(post => post.user._id === user?._id && post.video)} />
       case 'collections':
         return <CollectionsTab />
       case 'links':
@@ -89,7 +89,7 @@ export default function Shop() {
           <div className={styles.shopInfo}>
             <h1 className={styles.shopName}>My Shop</h1>
             <p className={styles.username}>
-              {user.user?.fullname || user.user?.username || "User"} 
+              {user.user?.fullname || user?.username} 
             </p>
           </div>
         </div>
