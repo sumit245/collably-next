@@ -113,7 +113,7 @@ export default function Reel({
           loop
           muted
           playsInline
-          controls
+          autoPlay
         >
           <source src={`${BASE_URL}${changeEscapeChar(video)}`} type="video/mp4" />
         </video>
