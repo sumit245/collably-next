@@ -7,12 +7,12 @@ import styles from "../CreatorHome/Categories.module.css";
 
 export default function FeaturedCategories() {
   const [categories, setCategories] = useState([
-    { name: "Fashion", image: "/images/Fashion.jpg" },
-    { name: "Electronics", image: "/images/Electronics.jpg" },
-    { name: "Beauty", image: "/images/Beauty.jpg" },
-    { name: "Home", image: "/images/Home.jpg" },
-    { name: "Sports", image: "/images/Sports.jpg" },
-    { name: "Food", image: "/images/Food.jpg" },
+    { name: "Fashion", image: "/images/Fashion.jpeg" },
+    { name: "Electronics", image: "/images/Electronics.jpeg" },
+    { name: "Beauty", image: "/images/Beauty.jpeg" },
+    { name: "Home", image: "/images/Home.jpeg" },
+    { name: "Sports", image: "/images/Sports.jpeg" },
+    { name: "Food", image: "/images/Food.jpeg" },
   ]);
 
   const [isLoading, setIsLoading] = useState(true);

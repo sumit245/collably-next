@@ -1,79 +1,49 @@
-// "use client"
+"use client";
 
-// import { useState, useEffect } from "react";
-// import Image from "next/image";
-// import styles from "../shop/StyleShop.module.css";
+import { useEffect } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCreators } from '../store/creatorSlice';
+import styles from '../shop/StyleShop.module.css';
+import { ArrowRight } from 'lucide-react';
 
-// export default function TopCreators() {
-//   const [creators, setCreators] = useState([]); 
-//   const [isLoading, setIsLoading] = useState(true);
-
-//   useEffect(() => {
-    
-//     const fetchData = async () => {
-//       setTimeout(() => {
-       
-//         setCreators([]);
-//         setIsLoading(false); 
-//       }, 2000); 
-//     };
-//     fetchData();
-//   }, []);
-
-//   return (
-//     <section className={styles.topCreatorSection}>
-//       <h4 className={styles.sectionTitleShop}>Shop From Top Creators</h4>
-//       {creators.length < 1 ? (
-        
-//         <div className={styles.creator}>
-//           {Array.from({ length: 4 }).map((_, index) => (
-//             <div key={index} className={styles.skeleton}>
-//               <div className={styles.skeletonImage}></div>
-//               <div className={styles.skeletonText}></div>
-//             </div>
-//           ))}
-//         </div>
-//       ) : (
-       
-//         <div className={styles.creator}>
-//           {creators.map((creator, index) => (
-//             <div key={index} className={styles.fImg1}>
-//               <div className={styles.imgBorder}>
-//                 <Image src={creator.image} alt={creator.name} width={85} height={85} />
-//               </div>
-//               <span className={styles.imgText2}>{creator.name}</span>
-//             </div>
-//           ))}
-//         </div>
-//       )}
-//     </section>
-//   );
-// }
-
-
-import Image from 'next/image'
-import styles from '../shop/StyleShop.module.css'
 export default function TopCreators() {
-  const creators = [
-    { name: 'Navita', image: '/images/image29.webp' },
-    { name: 'Komal', image: '/images/image25.jpeg' },
-    { name: 'Dua', image: '/images/image24.webp' },
-    { name: 'Arya', image: '/images/image26.webp' },
-  ]
+  const dispatch = useDispatch();
+  const allCreators = useSelector((state) =>  state.creators?.items);
+  console.log(`all creat : ${allCreators}`)
+console.log(allCreators)
+  useEffect(() => {
+    dispatch(fetchCreators());
+  }, [dispatch]);
+  const displayCreators = (allCreators || []).slice(0, 4);
+console.log(`disp creat : ${displayCreators}`)
 
   return (
     <section className={styles.topCreatorSection}>
-      <h4 className={styles.sectionTitleShop}>Shop From Top Creators</h4>
+      <div className={styles.sectionHeader}>
+        <h4 className={styles.sectionTitleShop}>Shop From Top Creators</h4>
+        <Link href="/creatorDisplay" className={styles.viewAllLink}>
+          View All <ArrowRight className={styles.arrowIcon} />
+        </Link>
+      </div>
       <div className={styles.creator}>
-        {creators.map((creator, index) => (
-          <div key={index} className={styles.fImg1}>
-            <div className={styles.imgBorder}>
-              <Image src={creator.image} alt={creator.name} width={85} height={85} />
+        {displayCreators.map((creator) => (
+          <Link href={`/creator/${creator._id}`} key={creator._id} className={styles.creatorLink}>
+            <div className={styles.fImg1}>
+              <div className={styles.imgBorder}>
+                <Image 
+                  src={creator.avatar || "/placeholder.svg"}
+                  alt={creator.fullname} 
+                  width={85} 
+                  height={85} 
+                />
+              </div>
+              <span className={styles.imgText2}>{creator.fullname}</span>
             </div>
-            <span className={styles.imgText2}>{creator.name}</span>
-          </div>
+          </Link>
         ))}
       </div>
     </section>
-  )
+  );
 }

@@ -10,6 +10,7 @@ import likedProductsReducer from "./likedproductSlice"
 import searchReducer from "./searchSlice"
 import postReducer from "./postSlice"
 import mediaReducer from './mediaSlice'
+import creatorReducer from "./creatorSlice"; 
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
     search: searchReducer,
     posts: postReducer,
     media: mediaReducer,
+    creators: creatorReducer,
   },
 })
 
