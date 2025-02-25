@@ -165,3 +165,129 @@
   .activeNavIcon {
     color: #3b82f6;
   }
+
+
+  /* Add these new styles to your existing CSS */
+.linksHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  background-color: #27272a;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.searchIcon {
+  color: #9ca3af;
+  margin-right: 0.5rem;
+}
+
+.searchInput {
+  border: none;
+  background: none;
+  outline: none;
+  width: 100%;
+  font-size: 0.9rem;
+  color: white;
+}
+
+.searchInput::placeholder {
+  color: #9ca3af;
+}
+
+.filterButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #27272a;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #9ca3af;
+}
+
+.filterButton:hover {
+  background-color: #323232;
+}
+
+.linksList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 5rem;
+}
+
+.linkCard {
+  background-color: #27272a;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  transition: transform 0.2s;
+}
+
+.linkCard:hover {
+  transform: translateY(-2px);
+}
+
+.linkInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.linkUrl {
+  font-size: 0.9rem;
+  color: #fff;
+  word-break: break-all;
+}
+
+.linkStats {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.linkStats span {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.noLinks {
+  text-align: center;
+  color: #9ca3af;
+  padding: 2rem;
+  background-color: #27272a;
+  border-radius: 0.5rem;
+  margin-bottom: 5rem;
+}
+
+
+
+.button {
+  padding: 0.75rem 1.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
