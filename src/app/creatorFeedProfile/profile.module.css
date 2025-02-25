@@ -356,3 +356,13 @@
   padding-bottom: 10px;
   border-bottom: 1px solid #ff0055;
 }
+
+.contentGrid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 10px;
+  scrollbar-width: none;
+}

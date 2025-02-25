@@ -68,7 +68,7 @@ export default function TopBrands() {
     if (!path) return ""
     return path.replace(/\\/g, "/")
   }
-  const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"
+  const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000/"
   const dispatch = useDispatch();
   const brands = useSelector((state) => state.brands.items);
 
