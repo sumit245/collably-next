@@ -14,7 +14,7 @@ export default function ReelsTab() {
   const { posts } = useSelector((state) => state.posts)
   const user = useSelector((state) => state.auth.user)
 
-  const userReels = posts.filter(post => post.user._id === user?.user?._id && post.video)
+  const userReels = posts.filter(post => post.user._id === user?._id && post.video)
 
   const handleAddReelClick = () => {
     router.push('/videoRec')
@@ -40,9 +40,10 @@ export default function ReelsTab() {
           <video
             className={styles.gridVideo}
             width={300}
+            src={`${BASE_URL}${changeEscapeChar(reel.video)}`}
             height={300}
           >
-            <source src={`${BASE_URL}${changeEscapeChar(reel.video)}`} type="video/mp4" />
+            {/* <source src={`${BASE_URL}${changeEscapeChar(reel.video)}`} type="video/mp4" /> */}
           </video>
         </Link>
       ))}

@@ -25,7 +25,7 @@ export default function Reel({
   isSaved,
 }) {
   const currentUser = useSelector((state) => state.auth.user)
-  const currentUserId = currentUser?.user._id
+  const currentUserId = currentUser?._id
   const [isFollowing, setIsFollowing] = useState(user?.followers?.includes(currentUserId))
   const mediaRef = useRef(null)
   const commentSectionRef = useRef(null)

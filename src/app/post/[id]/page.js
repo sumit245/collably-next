@@ -20,7 +20,7 @@ export default function PostDetail() {
   const [error, setError] = useState(null)
   const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/"
   const currentUser = useSelector((state) => state.auth.user)
-  const currentUserId = currentUser?.user._id
+  const currentUserId = currentUser?._id
   const [currentPost, setCurrentPost] = useState({
     likes: [],
     isLiked: false,

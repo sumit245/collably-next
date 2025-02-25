@@ -19,7 +19,7 @@ export default function SetProductClient() {
   const referrals = useSelector((state) => state.brands.referrals || [])
   const selectedLink = useSelector((state) => state.media.formData.product)
 
-  const userId = useSelector((state) => state.auth.user?.user._id)
+  const userId = useSelector((state) => state.auth.user?._id)
 
   useEffect(() => {
     if (userId) {
