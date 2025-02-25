@@ -150,7 +150,7 @@ const MediaDetailsContent = () => {
           </div>
 
           <div className={styles.form}>
-            <div className={styles.username}>{user?.username || user?.user?.username || "Username"}</div>
+            <div className={styles.username}>{user?.username || user?.username || "Username"}</div>
 
             <button className={styles.optionButton} onClick={handleproductClick}>
               <Package size={20} />

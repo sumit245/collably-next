@@ -17,7 +17,7 @@ export default function LinksPage() {
   const [inputText, setInputText] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
-  const userId = useSelector((state) => state.auth.user?.user._id)
+  const userId = useSelector((state) => state.auth.user?._id)
   const referralLink = useSelector((state) => state.brands.referralLink)
   const referrals = useSelector((state) => state.brands.referrals || [])
 
