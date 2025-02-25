@@ -46,6 +46,27 @@ export const fetchReferralsByUserId = createAsyncThunk(
     }
   }
 )
+
+
+export const trackReferralClick = createAsyncThunk(
+  "brands/trackReferralClick",
+  async (referralCode, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:5000/api/ref/code/${referralCode}`, {
+        method: "GET",
+      })
+
+      if (!response.ok) {
+        throw new Error("Failed to track click")
+      }
+
+      const data = await response.json()
+      return data
+    } catch (error) {
+      return rejectWithValue(error.message)
+    }
+  },
+)
 const brandsSlice = createSlice({
   name: "brands",
   initialState: {
@@ -106,6 +127,23 @@ const brandsSlice = createSlice({
         state.error = null
       })
       .addCase(fetchReferralsByUserId.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload
+      })
+      .addCase(trackReferralClick.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(trackReferralClick.fulfilled, (state, action) => {
+        state.isLoading = false
+        // Optionally update the clicks count in the state if the API returns updated data
+        if (action.payload && action.payload.referralCode) {
+          const referral = state.referrals.find((r) => r.referralLink.includes(action.payload.referralCode))
+          if (referral) {
+            referral.clicks = (referral.clicks || 0) + 1
+          }
+        }
+      })
+      .addCase(trackReferralClick.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload
       })

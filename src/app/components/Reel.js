@@ -2,7 +2,8 @@
 
 import api from "../services/api"
 import { useState, useRef, useEffect } from "react"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
+import { trackReferralClick } from "../store/brandSlice"
 import styles from "../feed/stylesfeed.module.css"
 import CommentSection from "./commentSection"
 import Image from "next/image"
@@ -24,6 +25,7 @@ export default function Reel({
   onUnsave,
   isSaved,
 }) {
+  const dispatch = useDispatch()
   const currentUser = useSelector((state) => state.auth.user)
   const currentUserId = currentUser?._id
   const [isFollowing, setIsFollowing] = useState(user?.followers?.includes(currentUserId))
@@ -103,6 +105,36 @@ export default function Reel({
     }
   }
   
+
+  const extractReferralCode = (url) => {
+    const match = url?.match(/referralCode=([A-Za-z0-9]{6})/)
+    return match ? match[1] : null
+  }
+
+  const handleCaptionClick = async (e) => {
+    e.preventDefault()
+    const referralCode = extractReferralCode(caption)
+    
+    if (referralCode) {
+      try {
+    
+        await dispatch(trackReferralClick(referralCode)).unwrap()
+        
+       
+        window.location.href = caption
+
+      } catch (error) {
+        console.error('Failed to track click:', error)
+   
+        window.location.href = caption
+
+      }
+    } else {
+   
+      window.location.href = caption
+
+    }
+  }
 
   return (
     <div className={styles.reelContainer}>
@@ -195,7 +227,12 @@ export default function Reel({
           )}
         </div>
         <div className={styles.caption}>
-          <a className={styles.captionLink} href={caption} rel="noopener noreferrer">
+          <a 
+            className={styles.captionLink} 
+            href={caption} 
+            onClick={handleCaptionClick}
+            rel="noopener noreferrer"
+          >
             {caption}
           </a>
         </div>
@@ -209,4 +246,3 @@ export default function Reel({
     </div>
   )
 }
-

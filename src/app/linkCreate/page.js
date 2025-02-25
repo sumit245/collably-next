@@ -6,10 +6,9 @@ import styles from "./page.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import FooterCreator from "../components/FooterCreator"
 import ShareModal from "./modalLink"
-import { createReferralLink, fetchReferralsByUserId } from "../store/brandSlice"
+import { createReferralLink, fetchReferralsByUserId, trackReferralClick } from "../store/brandSlice"
 import { toast } from "react-hot-toast"
-import { Search, Filter } from 'lucide-react'
-import Link from "next/link"
+import { Search, Filter } from "lucide-react"
 
 export default function LinksPage() {
   const dispatch = useDispatch()
@@ -28,7 +27,7 @@ export default function LinksPage() {
   }, [dispatch, userId])
 
   const filteredReferrals = referrals.filter((referral) =>
-    referral.referralLink.toLowerCase().includes(searchTerm.toLowerCase())
+    referral.referralLink.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
   const handleInputChange = (e) => {
@@ -40,8 +39,7 @@ export default function LinksPage() {
       try {
         await dispatch(createReferralLink({ userId, productUrl: inputText })).unwrap()
         setIsModalOpen(true)
-        setInputText("") // Clear input after successful creation
-        // Refresh the list of referrals
+        setInputText("")
         dispatch(fetchReferralsByUserId(userId))
       } catch (error) {
         toast.error("Failed to create referral link")
@@ -55,6 +53,24 @@ export default function LinksPage() {
         toast.error("Failed to paste from clipboard")
       }
     }
+  }
+
+  const handleLinkClick = async (referralCode, referralLink, e) => {
+    e.preventDefault() 
+
+    try {
+      await dispatch(trackReferralClick(referralCode)).unwrap()
+
+      window.location.href = referralLink
+    } catch (error) {
+      console.error("Failed to track click:", error)
+      window.location.href = referralLink
+    }
+  }
+
+  const extractReferralCode = (url) => {
+    const match = url.match(/referralCode=([A-Za-z0-9]{6})/)
+    return match ? match[1] : null
   }
 
   const buttonLabel = inputText ? "Create" : "Paste"
@@ -117,23 +133,26 @@ export default function LinksPage() {
 
               <div className={styles.linksList}>
                 {filteredReferrals.length > 0 ? (
-                  filteredReferrals.map((referral) => (
-                    <Link href={referral.referralLink} >
-                    <div key={referral._id} className={styles.linkCard}>
-                      <div className={styles.linkInfo}>
-                        <div className={styles.linkUrl}>{referral.referralLink}</div>
-                        <div className={styles.linkStats}>
-                          <span>Clicks: {referral.clicks }</span>
-                         
+                  filteredReferrals.map((referral) => {
+                    const referralCode = extractReferralCode(referral.referralLink)
+                    return (
+                      <div
+                        key={referral._id}
+                        className={styles.linkCard}
+                        onClick={(e) => handleLinkClick(referralCode, referral.referralLink, e)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <div className={styles.linkInfo}>
+                          <div className={styles.linkUrl}>{referral.referralLink}</div>
+                          <div className={styles.linkStats}>
+                            <span>Clicks: {referral.clicks}</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    </Link>
-                  ))
+                    )
+                  })
                 ) : (
-                  <div className={styles.noLinks}>
-                    No links found. Create your first link above!
-                  </div>
+                  <div className={styles.noLinks}>No links found. Create your first link above!</div>
                 )}
               </div>
             </>
@@ -153,3 +172,4 @@ export default function LinksPage() {
     </div>
   )
 }
+
