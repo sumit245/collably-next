@@ -12,7 +12,7 @@ import CreatorHome from "../components/CreatorHome"
 import api from "../services/api"
 import { useRouter } from "next/navigation"
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000/"
 
 const changeEscapeChar = (path) => path?.replace(/\\/g, "/") || ""
 
@@ -111,7 +111,7 @@ export default function Profile() {
                 className={styles.gridItem}
               >
                 <Image
-                  src={`${BASE_URL}/${changeEscapeChar(post.images[0])}` || "/placeholder.svg"}
+                  src={`${BASE_URL}${changeEscapeChar(post.images[0])}` || "/placeholder.svg"}
                   alt={`Post by ${post.user?.username || "unknown"}`}
                   className={styles.gridImage}
                   width={300}

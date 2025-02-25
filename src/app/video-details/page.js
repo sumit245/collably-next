@@ -30,10 +30,8 @@ const MediaDetailsContent = () => {
     }
 
     // if (!currentMedia) {
-    //   console.log("Redirecting to /CreatorShop because currentMedia is missing...");
     //   router.push('/CreatorShop')
     // }
-    
   }, [accessToken, currentMedia, router])
 
   const getFileFromSource = async (src, fileName) => {
@@ -100,12 +98,11 @@ const MediaDetailsContent = () => {
       const result = await response.text()
       console.log(result)
 
-      // Clear Redux state
       dispatch(clearCurrentMedia())
       dispatch(clearFormData())
-
-      console.log("Redirecting to /upload-success...");
+      router.refresh()
       router.push("/upload-success")
+
     } catch (err) {
       console.error("Upload error:", err)
       setError(err.message || "Failed to upload post")
