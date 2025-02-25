@@ -92,7 +92,7 @@ export default function Header() {
               height={30}
               className={styles.avatarCircle}
             />
-            <span className={styles.username}>{user.username}</span>
+            <span className="username">{user?.fullname }</span>
           </div>
         ) : (
           <button className={styles.loginButton} onClick={handleLoginRedirect}>

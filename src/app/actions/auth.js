@@ -4,6 +4,7 @@ import {
   loginWithGoogleAsync,
   handleGoogleRedirectAsync,
   logoutUser,
+  checkAuthStatus,
 } from "../store/authslice"
 
 export const loginWithPhone = (contactNumber) => async (dispatch) => {
@@ -25,7 +26,7 @@ export const loginWithPhone = (contactNumber) => async (dispatch) => {
 
 export const register = (fullname, username, email, password, contactNumber) => async (dispatch) => {
   try {
-    const result = await dispatch(registerUser({ fullname, username, email, password, contactNumber}))
+    const result = await dispatch(registerUser({ fullname, username, email, password, contactNumber }))
     if (registerUser.fulfilled.match(result)) {
       return { success: true, username: result.payload.username }
     } else {
@@ -72,3 +73,18 @@ export const logout = () => async (dispatch) => {
     console.error("Logout error:", error)
   }
 }
+
+export const checkAuth = () => async (dispatch) => {
+  try {
+    const result = await dispatch(checkAuthStatus())
+    if (checkAuthStatus.fulfilled.match(result)) {
+      return { success: true, user: result.payload }
+    } else {
+      return { success: false, error: result.error.message }
+    }
+  } catch (error) {
+    console.error("Auth check error:", error)
+    return { success: false, error: "An unexpected error occurred during auth check." }
+  }
+}
+
