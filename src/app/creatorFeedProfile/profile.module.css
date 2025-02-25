@@ -357,12 +357,27 @@
   border-bottom: 1px solid #ff0055;
 }
 
-.contentGrid{
+
+.gridVideo{
+  width: 100%;
+  height: 100%;
+  border-radius: .5rem;
+}
+
+.gridImage{
+  width: 100%;
+  height: 100%;
+  border-radius: .5rem;
+}
+
+.gridContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, 1fr); 
   gap: 20px;
   max-height: 60vh;
   overflow-y: auto;
   padding: 10px;
   scrollbar-width: none;
 }
+
+

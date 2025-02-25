@@ -80,7 +80,7 @@
 //             productId: selectedProduct,
 //             brandId: selectedBrand,
 //           }),
-//         ).unwrap()
+//         ).unwrap() 
 
 //         const storedData = localStorage.getItem("videoDetailsData")
 //         const updatedData = storedData ? JSON.parse(storedData) : {}

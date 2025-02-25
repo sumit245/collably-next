@@ -92,7 +92,7 @@
 .postActions {
   display: flex;
   justify-content: space-between;
-  padding: 0 14px;
+  padding: 12px 14px;
 }
 
 .leftActions {
@@ -168,4 +168,19 @@
 
 .profile{
   display: flex;
+}
+
+.postVideo{
+  width: 100%;
+}
+
+.postImage{
+  height: 250px;
+  width: 435px;
+}
+
+.mediaContainer{
+  display: grid;
+  grid-template-columns: 260px;
+ place-content: center;
 }
