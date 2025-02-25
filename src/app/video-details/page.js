@@ -29,9 +29,9 @@ const MediaDetailsContent = () => {
       return
     }
 
-    if (!currentMedia) {
-      router.push('/CreatorShop')
-    }
+    // if (!currentMedia) {
+    //   router.push('/CreatorShop')
+    // }
   }, [accessToken, currentMedia, router])
 
   const getFileFromSource = async (src, fileName) => {
@@ -98,11 +98,11 @@ const MediaDetailsContent = () => {
       const result = await response.text()
       console.log(result)
 
-      // Clear Redux state
       dispatch(clearCurrentMedia())
       dispatch(clearFormData())
-
+      router.refresh()
       router.push("/upload-success")
+
     } catch (err) {
       setError(err.message || "Failed to upload post")
       console.error("Upload error:", err)

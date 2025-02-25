@@ -5,19 +5,21 @@ import styles from "../feed/stylesfeed.module.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faHeart, faTrashAlt } from "@fortawesome/free-solid-svg-icons"
 import api from "../services/api"
+import { useRouter } from "next/navigation"
 
 export default function CommentSection({
+  
   comments,
   onAddComment,
   onClose,
   postId
 }) {
   const [newComment, setNewComment] = useState("")
-
-  // Track the liked state of each comment
+  const router = useRouter()
+  
   const [likedComments, setLikedComments] = useState(
     comments.reduce((acc, comment) => {
-      acc[comment._id] = comment.isLiked || false; // Initialize liked state
+      acc[comment._id] = comment.isLiked || false; 
       return acc;
     }, {})
   )
@@ -28,6 +30,7 @@ export default function CommentSection({
       try {
         await onAddComment(newComment)
         setNewComment("")
+        router.refresh()
       } catch (error) {
         console.error("Error adding comment:", error)
       }
