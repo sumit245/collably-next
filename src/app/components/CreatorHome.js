@@ -40,7 +40,8 @@ export default function CreatorHome() {
           />
           <div className={styles.userText}>
             <span className={styles.greeting}>Hello</span>
-            <span className={styles.username}>{user.user.fullname || user.user.username}</span>
+            <span className={styles.username}>{user?.fullname }</span>
+            {/* <span className="username">{user?.username }</span> */}
           </div>
         </div>
 

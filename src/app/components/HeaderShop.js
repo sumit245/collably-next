@@ -52,9 +52,9 @@ export default function Header() {
         </Link>
       </div>
       <div className={styles.headerIconsShop}>
-        <button className={styles.iconBtnShop} onClick={handleSearchToggle}>
+        {/* <button className={styles.iconBtnShop} onClick={handleSearchToggle}>
           <Image src="/images/search-blue.svg" alt="Search" width={24} height={24} />
-        </button>
+        </button> */}
         {isSearchExpanded && (
           <form onSubmit={handleSearchSubmit} className={styles.searchForm}>
             <input
@@ -92,7 +92,7 @@ export default function Header() {
               height={30}
               className={styles.avatarCircle}
             />
-            <span className={styles.username}>{user.username}</span>
+            <span className="username">{user?.fullname }</span>
           </div>
         ) : (
           <button className={styles.loginButton} onClick={handleLoginRedirect}>

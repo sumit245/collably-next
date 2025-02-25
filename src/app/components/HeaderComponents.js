@@ -77,7 +77,8 @@ const HeaderComponent = () => {
               height={40}
               className="avatar-circle"
             />
-            <span className="username">{user.user.username}</span>
+            <span className="username">{user?.fullname }</span>
+
           </div>
         ) : (
           <div className="navbar-button">
