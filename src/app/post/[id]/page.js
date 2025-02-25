@@ -212,7 +212,7 @@ export default function PostDetail() {
       console.error("Error unliking comment:", error)
     }
   }
-
+console.log(currentPost)
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error: {error}</div>
   if (!currentPost) return <div>Post not found</div>
@@ -275,11 +275,12 @@ export default function PostDetail() {
                 />
               ) : (
                 <Image
-                  src={
-                    currentPost.images?.[0]
-                      ? `${BASE_URL}${currentPost.post.images[0].replace(/\\/g, "/")}`
-                      : "/placeholder.svg"
-                  }
+                  // src={
+                  //   currentPost.images?.[0]
+                  //     ? `${BASE_URL}${currentPost.post.images[0].replace(/\\/g, "/")}`
+                  //     
+                  // }
+                  src={`${BASE_URL}${currentPost.post.images[0].replace(/\\/g, "/")}` }
                   alt={`Post ${currentPost.post._id}`}
                   layout="fill"
                   objectFit="cover"
