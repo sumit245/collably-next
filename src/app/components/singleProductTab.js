@@ -36,7 +36,12 @@ export default function SingleProductLinksTab() {
   }
 
   return (
+    <div>
+         <button className={styles.addButton} onClick={handleAddLinkClick}>
+        Add Links <ArrowRight size={20} />
+      </button>
     <div className={styles.linksContainer}>
+      
       {referrals.map((link) => (
         <Link href={link.referralLink} key={link._id}>
           <div className={styles.linkCard}>
@@ -49,9 +54,8 @@ export default function SingleProductLinksTab() {
           </div>
         </Link>
       ))}
-         <button className={styles.addButton} onClick={handleAddLinkClick}>
-        Add Links <ArrowRight size={20} />
-      </button>
+      
+    </div>
     </div>
   );
 }

@@ -35,6 +35,9 @@ export default function PostsTab() {
 
   return (
     <div>
+       <button className={styles.addButton} onClick={handleAddPostClick}>
+        Add Post <ArrowRight size={20} />
+      </button>
     <div className={styles.gridContainer}>
       {userPosts.map((post) => (
         <Link href={`/post/${post._id}`} key={post._id} className={styles.gridItem}>
@@ -49,9 +52,7 @@ export default function PostsTab() {
       ))}
       
     </div>
-    <button className={styles.addButton} onClick={handleAddPostClick}>
-        Add Post <ArrowRight size={20} />
-      </button>
+   
     </div>
   )
 }
