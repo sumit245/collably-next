@@ -1,0 +1,116 @@
+.creatorsPage {
+  padding: 20px;
+}
+
+.creatorsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.creatorsTitle {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  background-color: #f5f5f5;
+  padding: 8px 16px;
+  border-radius: 8px;
+  gap: 8px;
+}
+
+.searchIcon {
+  color: #666;
+  width: 20px;
+  height: 20px;
+}
+
+.searchInput {
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 16px;
+  width: 200px;
+}
+
+.creatorsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(20px, 1fr));
+
+  gap: 24px;
+}
+
+.creatorCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+
+.creatorCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.creatorAvatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.creatorAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.creatorName {
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.noCreatorsCard {
+  text-align: center;
+  padding: 48px;
+  background-color: #f5f5f5;
+  border-radius: 12px;
+}
+
+.noCreators {
+  font-size: 18px;
+  color: #666;
+}
+
+@media (max-width: 640px) {
+  .creatorsHeader {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .searchContainer {
+    width: 100%;
+  }
+
+  .searchInput {
+    width: 100%;
+  }
+
+  .creatorsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+  }
+}
