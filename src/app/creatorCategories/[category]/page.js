@@ -61,7 +61,9 @@ export default function CategoryProducts() {
               </div>
             )}
           </div>
+          <div style={{ position: 'relative', top: '5rem' }}> 
           <FooterCreator />
+          </div>
         </div>
       
       </div>
