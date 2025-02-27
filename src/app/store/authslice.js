@@ -17,15 +17,31 @@ export const loginWithPhoneAsync = createAsyncThunk(
   "auth/loginWithPhone",
   async ({ contactNumber }, { rejectWithValue }) => {
     try {
-      const response = await authService.loginWithPhone(contactNumber)
-      localStorage.setItem("accessToken", response.access_token)
-      localStorage.setItem("user", JSON.stringify(response.user))
-      return response.user
+      console.log("Attempting login with phone:", contactNumber); // Log the phone number used for login
+      
+      const response = await authService.loginWithPhone(contactNumber);
+      
+      console.log("Login response received:", response); // Log the entire response
+      
+      if (response && response.user) {
+        console.log("User logged in:", response.user); // Log the user details
+        
+        localStorage.setItem("accessToken", response.access_token);
+        localStorage.setItem("user", JSON.stringify(response.user));
+        
+        return response.user;
+      } else {
+        console.error("Login response does not contain user data.");
+        return rejectWithValue("Invalid login response");
+      }
+      
     } catch (error) {
-      return rejectWithValue(error.message)
+      console.error("Error during phone login:", error.message);
+      return rejectWithValue(error.message);
     }
-  },
-)
+  }
+);
+
 
 export const registerUser = createAsyncThunk(
   "auth/register",

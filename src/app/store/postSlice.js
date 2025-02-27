@@ -34,6 +34,10 @@ export const fetchPostById = createAsyncThunk("posts/fetchPostById", async (post
   return fetchWithToken(`/post/${postId}`)
 })
 
+export const fetchSavedPosts = createAsyncThunk("posts/fetchSavedPosts", async () => {
+  return fetchWithToken("/getSavePosts")
+})
+
 export const likePost = createAsyncThunk("posts/likePost", async (postId) => {
   return fetchWithToken(`/post/${postId}/like`, { method: "PATCH" })
 })
@@ -61,8 +65,10 @@ const postSlice = createSlice({
   name: "posts",
   initialState: {
     posts: [],
+    savedPosts: [],
     currentPost: null,
     status: "idle",
+    savedPostsStatus: "idle",
     error: null,
   },
   reducers: {},
@@ -77,6 +83,18 @@ const postSlice = createSlice({
       })
       .addCase(fetchPosts.rejected, (state, action) => {
         state.status = "failed"
+        state.error = action.error.message
+      })
+      .addCase(fetchSavedPosts.pending, (state) => {
+        state.savedPostsStatus = "loading"
+      })
+      .addCase(fetchSavedPosts.fulfilled, (state, action) => {
+        state.savedPostsStatus = "succeeded"; 
+        state.savedPosts = action.payload.savedPosts || []; 
+      })
+      
+      .addCase(fetchSavedPosts.rejected, (state, action) => {
+        state.savedPostsStatus = "failed"
         state.error = action.error.message
       })
       .addCase(fetchPostById.fulfilled, (state, action) => {
@@ -108,6 +126,11 @@ const updatePost = (state, updatedPost) => {
   state.posts = state.posts.map(post => 
     post._id === updatedPost._id ? updatedPost : post
   )
+  if (state.savedPosts.length > 0) {
+    state.savedPosts = state.savedPosts.map(post => 
+      post._id === updatedPost._id ? updatedPost : post
+    )
+  }
 }
 
 export default postSlice.reducer

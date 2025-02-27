@@ -181,3 +181,34 @@
   height: 100%;
   border-radius: .5rem;
 }
+
+
+/* Sub-tabs styling */
+.subTabs {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+  justify-content: space-evenly;
+}
+
+.subTab {
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #666;
+}
+
+.activeSubTab {
+  color: #000;
+  border-bottom: 2px solid #000;
+  font-weight: 600;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 40px 0;
+  color: #666;
+}

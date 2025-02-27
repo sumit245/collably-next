@@ -23,7 +23,8 @@ export default function ReelsPage() {
   const [currentShareReel, setCurrentShareReel] = useState(null)
   const containerRef = useRef(null)
   const currentUserId = useSelector((state) => state.auth.user?._id)
-
+  const currentUser = useSelector((state) => state.auth.user)
+  console.log(currentUser.saved)
   useEffect(() => {
     fetchReels()
   }, [])
@@ -38,16 +39,15 @@ export default function ReelsPage() {
         
         const processedReels = videoReels.map(reel => {
           const likesArray = reel.likes || []; // Ensure it's always an array
-          const savedByArray = reel.savedBy || []; // Ensure it's always an array
-  
+          
+          // Check if the post is saved by looking in currentUser.saved array
+          const isSaved = currentUser?.saved?.includes(reel._id);
           const isLiked = likesArray.some(like => like._id === currentUserId);
-          const isSaved = savedByArray.includes(currentUserId);
   
           console.log(`Processing reel: ${reel._id}`);
           console.log("Likes array:", likesArray);
           console.log(`Checking if liked: ${isLiked} (Current User ID: ${currentUserId})`);
-          console.log("Saved by array:", savedByArray);
-          console.log(`Checking if saved: ${isSaved}`);
+          console.log(`Checking if saved: ${isSaved} (In user's saved array: ${currentUser?.saved})`);
   
           return {
             ...reel,
@@ -131,7 +131,12 @@ export default function ReelsPage() {
   const handleSave = async (reelId) => {
     try {
       await api.savePost(reelId)
+      
+      // Update the local state to reflect the save
       updateReelSaveStatus(reelId, true)
+      
+      // Also update the currentUser.saved array in Redux if needed
+      // This would typically be handled by your API response and Redux actions
     } catch (error) {
       console.error("Error saving post:", error)
     }
@@ -140,7 +145,12 @@ export default function ReelsPage() {
   const handleUnsave = async (reelId) => {
     try {
       await api.unsavePost(reelId)
+      
+      // Update the local state to reflect the unsave
       updateReelSaveStatus(reelId, false)
+      
+      // Also update the currentUser.saved array in Redux if needed
+      // This would typically be handled by your API response and Redux actions
     } catch (error) {
       console.error("Error unsaving post:", error)
     }
@@ -169,9 +179,6 @@ export default function ReelsPage() {
     }
     return array
   }
-  
-  console.log(reelsData)
-  {reelsData.map((reel, index) => ( console.log(reel.video)))}
 
   return (
     <div className={styleshop.bodyShop}>

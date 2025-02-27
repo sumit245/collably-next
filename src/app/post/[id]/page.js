@@ -23,6 +23,7 @@ export default function PostDetail() {
     return path.replace(/\\/g, "/")
   }
   const currentUserId = useSelector((state) => state.auth.user?._id)
+  const currentUser = useSelector((state) => state.auth.user)
   const [currentPost, setCurrentPost] = useState({
     likes: [],
     isLiked: false,
@@ -56,9 +57,9 @@ export default function PostDetail() {
       const isLiked = likesArray.some((like) => like._id === currentUserId)
       console.log("Is already liked:", isLiked)
 
-      // Check if the post is saved by the current user
-      const isSaved = post.savedBy?.includes(currentUserId) || false
-      console.log("Is already saved:", isSaved)
+      // Check if the post is saved by looking in currentUser.saved array
+      const isSaved = currentUser?.saved?.includes(id)
+      console.log("Is already saved:", isSaved, "User's saved posts:", currentUser?.saved)
 
       setCurrentPost((prev) => ({
         ...prev,
@@ -76,7 +77,7 @@ export default function PostDetail() {
     } finally {
       setIsLoading(false)
     }
-  }, [id, currentUserId])
+  }, [id, currentUserId, currentUser?.saved])
 
   useEffect(() => {
     fetchPost()
@@ -144,6 +145,9 @@ export default function PostDetail() {
     try {
       await (currentPost.isSaved ? api.unsavePost(id) : api.savePost(id))
       updatePostState({ isSaved: !currentPost.isSaved })
+
+      // Note: The API call should update the currentUser.saved array in Redux
+      // This is typically handled by your API response and Redux actions
     } catch (error) {
       console.error("Error saving/unsaving post:", error)
     }
@@ -159,9 +163,8 @@ export default function PostDetail() {
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error: {error}</div>
   if (!currentPost) return <div>Post not found</div>
-  console.log(currentPost)
+
   const isOwnPost = currentPost?.user?._id === currentUserId
-  console.log(currentPost.likes?.length)
 
   return (
     <LikeProvider>
