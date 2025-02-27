@@ -16,6 +16,10 @@ export default function PostDetail() {
   const { id } = useParams(), router = useRouter()
   const [isLoading, setIsLoading] = useState(true), [error, setError] = useState(null)
   const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/"
+    const changeEscapeChar = (path) => {
+        if (!path) return ""
+        return path.replace(/\\/g, "/")
+      }
   const currentUserId = useSelector((state) => state.auth.user?._id)
   const [currentPost, setCurrentPost] = useState({
     likes: [], isLiked: false, comments: [], isSaved: false, post: { user: {}, images: [], video: null }
@@ -25,21 +29,46 @@ export default function PostDetail() {
 
   const fetchPost = useCallback(async () => {
     try {
-      setIsLoading(true)
-      const post = await api.getPostById(id)
-      setCurrentPost({
+      setIsLoading(true);
+      const response = await api.getPostById(id);
+  
+      console.log("Full API response:", response);
+  
+      if (!response || !response.post) {
+        console.error("Error: response.post is undefined");
+        setError("Failed to load post data.");
+        return;
+      }
+  
+      const post = response.post;
+      console.log("Extracted post data:", post);
+  
+      const likesArray = Array.isArray(post.likes) ? post.likes : [];
+      console.log("Extracted likes array:", likesArray);
+  
+      const isLiked = likesArray.some(like => like._id === currentUserId);
+      console.log("Is already liked:", isLiked);
+  
+      setCurrentPost(prev => ({
+        ...prev,
         ...post,
-        likes: post.likes || [],
-        isLiked: post.likes?.includes(currentUserId) || false,
+        likes: likesArray, 
+        isLiked,
         comments: post.comments || []
-      })
-      setIsFollowing(post.post.user?.followers?.includes(currentUserId))
+      }));
+  
+      setIsFollowing(post.user?.followers?.some(follower => follower._id === currentUserId));
+  
     } catch (err) {
-      setError(err.message)
+      console.error("Error fetching post:", err);
+      setError(err.message);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }, [id, currentUserId])
+  }, [id, currentUserId]);
+  
+  
+  
 
   useEffect(() => { fetchPost() }, [fetchPost])
 
@@ -89,7 +118,7 @@ export default function PostDetail() {
 
   const handleFollowToggle = async () => {
     try {
-      await (isFollowing ? api.unfollowUser(currentPost.post.user._id) : api.followUser(currentPost.post.user._id))
+      await (isFollowing ? api.unfollowUser(currentPost.user._id) : api.followUser(currentPost.user._id))
       setIsFollowing(!isFollowing)
     } catch {}
   }
@@ -97,9 +126,9 @@ export default function PostDetail() {
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error: {error}</div>
   if (!currentPost) return <div>Post not found</div>
-
-  const isOwnPost = currentPost.post?.user?._id === currentUserId
-
+console.log(currentPost)
+  const isOwnPost = currentPost?.user?._id === currentUserId
+console.log(currentPost.likes?.length)
   return (
     <LikeProvider>
       <div className={styles.container}>
@@ -113,8 +142,8 @@ export default function PostDetail() {
                 </svg>
               </button>
               <div className={styles.userInfo}>
-                <Image src={currentPost.post.user?.avatar || "/placeholder.svg"} alt={currentPost.post.user?.username} width={32} height={32} className={styles.avatar} />
-                <span className={styles.username}>{currentPost.post.user?.fullname}</span>
+                <Image src={currentPost.user?.avatar || "/placeholder.svg"} alt={currentPost.user?.username} width={32} height={32} className={styles.avatar} />
+                <span className={styles.username}>{currentPost.user?.fullname}</span>
                 {!isOwnPost && (
                   <button onClick={handleFollowToggle} className={styles.followButton}>
                     {isFollowing ? "Following" : "Follow"}
@@ -122,16 +151,33 @@ export default function PostDetail() {
                 )}
               </div>
             </div>
+            {isOwnPost && (
+              <button onClick={handleDelete} className={styles.deleteButton} style={{ background: "none", border: "none", cursor: "pointer", color: "red", padding: "8px" }}>
+                <Trash2 size={24} />
+              </button>
+            )}
           </div>
 
           <div className={styles.mainPost}>
-            <div className={styles.mediaContainer}>
-              {currentPost.post.video ? (
-                <video onClick={() => router.push(`/feed?reelId=${currentPost.post._id}`)} src={`${BASE_URL}${currentPost.post.video.replace(/\\/g, "/")}`} controls className={styles.postVideo} />
-              ) : (
-                <Image src={`${BASE_URL}${currentPost.post.images[0].replace(/\\/g, "/")}`} alt={`Post ${currentPost.post._id}`} layout="fill" objectFit="cover" className={styles.postImage} />
-              )}
-            </div>
+          <div className={styles.mediaContainer}>
+  {currentPost.video ? (
+    <video
+      onClick={() => router.push(`/feed?reelId=${currentPost._id}`)}
+      src={`${BASE_URL}${changeEscapeChar(currentPost.video)}`}
+      controls
+      className={styles.postVideo}
+    />
+  ) : (
+    <Image
+      src={`${BASE_URL}${changeEscapeChar(currentPost.images?.[0])}`}
+      alt={`Post ${currentPost._id}`}
+      layout="fill"
+      objectFit="cover"
+      className={styles.postImage}
+    />
+  )}
+</div>
+
             <div className={styles.postActions}>
               <button className={styles.actionButton} onClick={handleLike}><Heart size={24} fill={currentPost.isLiked ? "red" : "none"} stroke={currentPost.isLiked ? "red" : "currentColor"} /></button>
              
@@ -140,9 +186,9 @@ export default function PostDetail() {
               <button className={styles.actionButton}><Send size={24} /></button>
               <button className={styles.actionButton} onClick={handleSave}><Bookmark size={24} fill={currentPost.isSaved ? "currentColor" : "none"} /></button>
             </div>
-            <div className={styles.likes}>{currentPost.likes.length} likes</div>
+            <div className={styles.likes}>{currentPost.likes?.length} likes</div>
             <div className={styles.caption}>
-              <span className={styles.username}>{currentPost.post.user?.fullname}</span> {currentPost.caption}
+              <span className={styles.username}>{currentPost.user?.fullname}</span> {currentPost.caption}
             </div>
 
             <div className={styles.comments}>
