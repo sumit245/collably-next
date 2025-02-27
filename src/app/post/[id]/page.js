@@ -13,118 +13,122 @@ import { Trash2, Heart, MessageCircle, Send, Bookmark } from "lucide-react"
 import CommentSection from "../../components/commentSection"
 
 export default function PostDetail() {
-  const { id } = useParams()
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const { id } = useParams(), router = useRouter()
+  const [isLoading, setIsLoading] = useState(true), [error, setError] = useState(null)
   const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/"
-  const currentUser = useSelector((state) => state.auth.user)
-  const currentUserId = currentUser?._id
+    const changeEscapeChar = (path) => {
+        if (!path) return ""
+        return path.replace(/\\/g, "/")
+      }
+  const currentUserId = useSelector((state) => state.auth.user?._id)
   const [currentPost, setCurrentPost] = useState({
     likes: [], isLiked: false, comments: [], isSaved: false, post: { user: {}, images: [], video: null }
   })
-  const [isFollowing, setIsFollowing] = useState(false)
-  const [isCommenting, setIsCommenting] = useState(false)
+  const [isFollowing, setIsFollowing] = useState(false), [isCommenting, setIsCommenting] = useState(false)
   const commentSectionRef = useRef(null)
 
   const fetchPost = useCallback(async () => {
     try {
-      setIsLoading(true)
-      const post = await api.getPostById(id)
-      setCurrentPost({
+      setIsLoading(true);
+      const response = await api.getPostById(id);
+  
+      console.log("Full API response:", response);
+  
+      if (!response || !response.post) {
+        console.error("Error: response.post is undefined");
+        setError("Failed to load post data.");
+        return;
+      }
+  
+      const post = response.post;
+      console.log("Extracted post data:", post);
+  
+      const likesArray = Array.isArray(post.likes) ? post.likes : [];
+      console.log("Extracted likes array:", likesArray);
+  
+      const isLiked = likesArray.some(like => like._id === currentUserId);
+      console.log("Is already liked:", isLiked);
+  
+      setCurrentPost(prev => ({
+        ...prev,
         ...post,
-        likes: post.likes || [],
-        isLiked: post.likes?.includes(currentUserId) || false,
-        comments: post.comments || [],
-      })
-      setIsFollowing(post.post.user?.followers?.includes(currentUserId))
-      setIsLoading(false)
+        likes: likesArray, 
+        isLiked,
+        comments: post.comments || []
+      }));
+  
+      setIsFollowing(post.user?.followers?.some(follower => follower._id === currentUserId));
+  
     } catch (err) {
-      setError(err.message)
-      setIsLoading(false)
+      console.error("Error fetching post:", err);
+      setError(err.message);
+    } finally {
+      setIsLoading(false);
     }
-  }, [id, currentUserId])
-
-
+  }, [id, currentUserId]);
+  
+  
+  
 
   useEffect(() => { fetchPost() }, [fetchPost])
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (commentSectionRef.current && !commentSectionRef.current.contains(e.target)) {
-        setIsCommenting(false)
-      }
+      if (commentSectionRef.current && !commentSectionRef.current.contains(e.target)) setIsCommenting(false)
     }
     document.addEventListener("mousedown", handleClickOutside)
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
+  const updatePostState = (updates) => setCurrentPost((prev) => ({ ...prev, ...updates }))
+
   const handleDelete = async () => {
-    if (!confirm("Are you sure you want to delete this post?")) return
-    try {
-      await api.deletePost(id)
-      router.push("/creatorFeedProfile")
-    } catch (error) {
-      console.error("Error deleting post:", error)
-      setError("Failed to delete post")
+    if (confirm("Are you sure you want to delete this post?")) {
+      try {
+        await api.deletePost(id)
+        router.push("/creatorFeedProfile")
+      } catch { setError("Failed to delete post") }
     }
   }
 
   const handleLike = async () => {
     try {
       await (currentPost.isLiked ? api.unlikePost(id) : api.likePost(id))
-      setCurrentPost(prev => ({
-        ...prev,
-        likes: currentPost.isLiked 
-          ? prev.likes.filter(id => id !== currentUserId) 
-          : [...prev.likes, currentUserId],
-        isLiked: !prev.isLiked
-      }))
-    } catch (error) {
-      console.error("Error liking/unliking post:", error)
-    }
+      updatePostState({
+        likes: currentPost.isLiked ? currentPost.likes.filter(uid => uid !== currentUserId) : [...currentPost.likes, currentUserId],
+        isLiked: !currentPost.isLiked
+      })
+    } catch {}
   }
 
   const handleComment = async (comment) => {
     try {
       const newComment = await api.commentOnPost(id, comment)
-      setCurrentPost(prev => ({ ...prev, comments: [...prev.comments, newComment] }))
+      updatePostState({ comments: [...currentPost.comments, newComment] })
       setIsCommenting(false)
-    } catch (error) {
-      console.error("Error commenting on post:", error)
-    }
+    } catch {}
   }
 
   const handleSave = async () => {
     try {
       await (currentPost.isSaved ? api.unsavePost(id) : api.savePost(id))
-      setCurrentPost(prev => ({ ...prev, isSaved: !prev.isSaved }))
-    } catch (error) {
-      console.error("Error saving/unsaving post:", error)
-    }
+      updatePostState({ isSaved: !currentPost.isSaved })
+    } catch {}
   }
 
   const handleFollowToggle = async () => {
     try {
-      await (isFollowing ? api.unfollowUser(currentPost.post.user._id) : api.followUser(currentPost.post.user._id))
+      await (isFollowing ? api.unfollowUser(currentPost.user._id) : api.followUser(currentPost.user._id))
       setIsFollowing(!isFollowing)
-    } catch (error) {
-      console.error("Error following/unfollowing user:", error)
-    }
-  }
-
-  const handleCommentClick = () => setIsCommenting(!isCommenting)
-
-  const updateComments = (updateFn) => {
-    setCurrentPost(prev => ({ ...prev, comments: updateFn(prev.comments) }))
+    } catch {}
   }
 
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error: {error}</div>
   if (!currentPost) return <div>Post not found</div>
-
-  const isOwnPost = currentPost.post?.user?._id === currentUserId
-  console.log(currentPost)
+console.log(currentPost)
+  const isOwnPost = currentPost?.user?._id === currentUserId
+console.log(currentPost.likes?.length)
   return (
     <LikeProvider>
       <div className={styles.container}>
@@ -138,16 +142,10 @@ export default function PostDetail() {
                 </svg>
               </button>
               <div className={styles.userInfo}>
-                <Image
-                  src={currentPost.post.user?.avatar || "/placeholder.svg"}
-                  alt={currentPost.post.user?.username}
-                  width={32}
-                  height={32}
-                  className={styles.avatar}
-                />
-                <span className={styles.username}>{currentPost.post.user?.fullname}</span>
+                <Image src={currentPost.user?.avatar || "/placeholder.svg"} alt={currentPost.user?.username} width={32} height={32} className={styles.avatar} />
+                <span className={styles.username}>{currentPost.user?.fullname}</span>
                 {!isOwnPost && (
-                  <button className={styles.followButton} onClick={handleFollowToggle}>
+                  <button onClick={handleFollowToggle} className={styles.followButton}>
                     {isFollowing ? "Following" : "Follow"}
                   </button>
                 )}
@@ -161,46 +159,36 @@ export default function PostDetail() {
           </div>
 
           <div className={styles.mainPost}>
-            <div className={styles.mediaContainer}>
-              {currentPost.post.video ? (
-                <video
-                  onClick={() => router.push(`/feed?reelId=${currentPost.post._id}`)}
-                  src={`${BASE_URL}${currentPost.post.video.replace(/\\/g, "/")}`}
-                  controls
-                  className={styles.postVideo}
-                />
-              ) : (
-                <Image
-                  src={`${BASE_URL}${currentPost.post.images[0].replace(/\\/g, "/")}`}
-                  alt={`Post ${currentPost.post._id}`}
-                  layout="fill"
-                  objectFit="cover"
-                  className={styles.postImage}
-                />
-              )}
-            </div>
+          <div className={styles.mediaContainer}>
+  {currentPost.video ? (
+    <video
+      onClick={() => router.push(`/feed?reelId=${currentPost._id}`)}
+      src={`${BASE_URL}${changeEscapeChar(currentPost.video)}`}
+      controls
+      className={styles.postVideo}
+    />
+  ) : (
+    <Image
+      src={`${BASE_URL}${changeEscapeChar(currentPost.images?.[0])}`}
+      alt={`Post ${currentPost._id}`}
+      layout="fill"
+      objectFit="cover"
+      className={styles.postImage}
+    />
+  )}
+</div>
 
             <div className={styles.postActions}>
-              <button className={styles.actionButton} onClick={handleLike}>
-                <Heart
-                  className={currentPost.isLiked ? styles.likedHeart : ""}
-                  size={24}
-                  fill={currentPost.isLiked ? "red" : "none"}
-                  stroke={currentPost.isLiked ? "red" : "currentColor"}
-                />
-              </button>
-              <button className={styles.actionButton} onClick={handleCommentClick}>
-                <MessageCircle size={24} />
-              </button>
+              <button className={styles.actionButton} onClick={handleLike}><Heart size={24} fill={currentPost.isLiked ? "red" : "none"} stroke={currentPost.isLiked ? "red" : "currentColor"} /></button>
+             
+              <button className={styles.actionButton} onClick={() => setIsCommenting(!isCommenting)}><MessageCircle size={24} /></button>
+              {/* <span className={styles.commentCount}>{currentPost.comments.length}</span> */}
               <button className={styles.actionButton}><Send size={24} /></button>
-              <button className={styles.actionButton} onClick={handleSave}>
-                <Bookmark size={24} fill={currentPost.isSaved ? "currentColor" : "none"} />
-              </button>
+              <button className={styles.actionButton} onClick={handleSave}><Bookmark size={24} fill={currentPost.isSaved ? "currentColor" : "none"} /></button>
             </div>
-
-            <div className={styles.likes}>{currentPost.likes.length} likes</div>
+            <div className={styles.likes}>{currentPost.likes?.length} likes</div>
             <div className={styles.caption}>
-              <span className={styles.username}>{currentPost.post.user?.fullname}</span> {currentPost.caption}
+              <span className={styles.username}>{currentPost.user?.fullname}</span> {currentPost.caption}
             </div>
 
             <div className={styles.comments}>
@@ -210,25 +198,6 @@ export default function PostDetail() {
                 </div>
               )) : <div>No comments yet</div>}
             </div>
-
-            {isCommenting && (
-              <div ref={commentSectionRef}>
-                <CommentSection
-                  comments={currentPost.comments}
-                  onAddComment={handleComment}
-                  onClose={() => setIsCommenting(false)}
-                  postId={id}
-                  onLikeComment={(id) => api.likeComment(id).then(updateComments)}
-                  onUnlikeComment={(id) => api.unlikeComment(id).then(updateComments)}
-                  onDeleteComment={(id) => {
-                    if (!confirm("Are you sure?")) return
-                    api.deleteComment(id).then(() => 
-                      setCurrentPost(prev => ({ ...prev, comments: prev.comments.filter(c => c._id !== id) }))
-                    )
-                  }}
-                />
-              </div>
-            )}
           </div>
         </div>
         <Footer />
