@@ -68,7 +68,7 @@ const LoginComponent = () => {
       callback: () => console.log("reCAPTCHA solved"),
     })
 
-    const formatted = contactNumber.trim().startsWith("+") ? contactNumber.trim() : `+91${contactNumber.trim()}`;
+    const formatted = contactNumber.trim().startsWith("+") ? contactNumber.trim() : `+91${contactNumber.trim()}`
     
     try {
       const confirmation = await signInWithPhoneNumber(auth, formatted, window.recaptchaVerifier)
