@@ -33,7 +33,6 @@ export default function Page() {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (isButtonActive) {
-      console.log('Form submitted:', formData)
     }
   }
 

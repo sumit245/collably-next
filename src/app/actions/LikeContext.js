@@ -1,4 +1,4 @@
-// app/actions/LikeContext.js
+
 'use client';
 
 import { createContext, useState, useContext } from 'react';
@@ -16,7 +16,6 @@ export function LikeProvider({ children }) {
   );
 }
 
-// Custom hook for using the LikeContext
 export function useLikeContext() {
   const context = useContext(LikeContext);
   if (context === undefined) {

@@ -16,11 +16,8 @@ export default function CommentSection({
   const [newComment, setNewComment] = useState("");
   const router = useRouter();
 
-  console.log("Initial comments:", comments); // Log all comments initially
-
   const [likedComments, setLikedComments] = useState(
     comments.reduce((acc, comment) => {
-      console.log("Processing comment ID:", comment._id); // Log each comment's _id
       acc[comment._id] = comment.isLiked || false;
       return acc;
     }, {})
@@ -31,7 +28,6 @@ export default function CommentSection({
     if (newComment.trim()) {
       try {
         await onAddComment(newComment);
-        console.log("Added new comment:", newComment);
         setNewComment("");
         router.refresh();
       } catch (error) {
@@ -42,7 +38,6 @@ export default function CommentSection({
 
   const handleLikeComment = async (commentId) => {
     try {
-      console.log("Liking/unliking comment ID:", commentId); // Log comment ID when liked/unliked
 
       const newLikedComments = { ...likedComments };
       newLikedComments[commentId] = !newLikedComments[commentId];
@@ -51,18 +46,14 @@ export default function CommentSection({
 
       if (newLikedComments[commentId]) {
         await api.likeComment(commentId);
-        console.log("Liked comment ID:", commentId);
       } else {
         await api.unlikeComment(commentId);
-        console.log("Unliked comment ID:", commentId);
       }
     } catch (error) {
-      console.error("Error liking/unliking comment:", error);
     }
   };
 
   const handleDeleteComment = async (commentId) => {
-    console.log("Attempting to delete comment ID:", commentId); // Log before deleting
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this comment?"
     );
@@ -70,7 +61,6 @@ export default function CommentSection({
 
     try {
       await api.deleteComment(commentId);
-      console.log("Deleted comment ID:", commentId); // Log after successful deletion
 
       const updatedComments = comments.filter(
         (comment) => comment._id !== commentId
@@ -78,7 +68,6 @@ export default function CommentSection({
       onAddComment(updatedComments);
       onClose();
     } catch (error) {
-      console.error("Error deleting comment:", error);
     }
   };
 
@@ -89,7 +78,6 @@ export default function CommentSection({
       </button>
       <div className={styles.comments}>
         {[...new Set(comments)].map((comment) => {
-          console.log("Rendering comment ID:", comment._id); // Log when rendering each comment
           return (
             <div key={comment._id} className={styles.comment}>
               <div className={styles.commentContent}>

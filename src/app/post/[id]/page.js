@@ -40,7 +40,6 @@ export default function PostDetail() {
       setIsLoading(true)
       const response = await api.getPostById(id)
 
-      console.log("Full API response:", response)
 
       if (!response || !response.post) {
         console.error("Error: response.post is undefined")
@@ -49,17 +48,14 @@ export default function PostDetail() {
       }
 
       const post = response.post
-      console.log("Extracted post data:", post)
+    
 
       const likesArray = Array.isArray(post.likes) ? post.likes : []
-      console.log("Extracted likes array:", likesArray)
-
+    
       const isLiked = likesArray.some((like) => like._id === currentUserId)
-      console.log("Is already liked:", isLiked)
-
-      // Check if the post is saved by looking in currentUser.saved array
+  
       const isSaved = currentUser?.saved?.includes(id)
-      console.log("Is already saved:", isSaved, "User's saved posts:", currentUser?.saved)
+      
 
       setCurrentPost((prev) => ({
         ...prev,
@@ -119,23 +115,22 @@ export default function PostDetail() {
   const handleComment = async (comment) => {
     try {
       const response = await api.commentOnPost(id, comment)
-      // Check if the API returns the updated post or just the new comment
+     
       if (response && response.comments) {
         updatePostState({ comments: response.comments })
       } else if (response) {
-        // If the API returns just the new comment
+        
         updatePostState({
           comments: [...currentPost.comments, response],
         })
       } else {
-        // Fallback if the API doesn't return the expected data
+       
         const updatedPost = await api.getPostById(id)
         if (updatedPost && updatedPost.post) {
           updatePostState({ comments: updatedPost.post.comments || [] })
         }
       }
-      // Don't close the comment section after adding a comment
-      // to allow for multiple comments
+     
     } catch (error) {
       console.error("Error adding comment:", error)
     }
@@ -146,8 +141,6 @@ export default function PostDetail() {
       await (currentPost.isSaved ? api.unsavePost(id) : api.savePost(id))
       updatePostState({ isSaved: !currentPost.isSaved })
 
-      // Note: The API call should update the currentUser.saved array in Redux
-      // This is typically handled by your API response and Redux actions
     } catch (error) {
       console.error("Error saving/unsaving post:", error)
     }

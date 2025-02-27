@@ -35,8 +35,7 @@ const MediaDetailsContent = () => {
   }, [accessToken, currentMedia, router])
 
   const getFileFromSource = async (src, fileName) => {
-    console.log("Source type:", typeof src)
-    console.log("Source value:", src.substring(0, 100) + "...")
+  
 
     if (src.startsWith("data:")) {
       const arr = src.split(",")
@@ -96,7 +95,7 @@ const MediaDetailsContent = () => {
       })
 
       const result = await response.text()
-      console.log(result)
+
 
       dispatch(clearCurrentMedia())
       dispatch(clearFormData())

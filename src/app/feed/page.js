@@ -24,7 +24,7 @@ export default function ReelsPage() {
   const containerRef = useRef(null)
   const currentUserId = useSelector((state) => state.auth.user?._id)
   const currentUser = useSelector((state) => state.auth.user)
-  console.log(currentUser.saved)
+
   useEffect(() => {
     fetchReels()
   }, [])
@@ -32,7 +32,6 @@ export default function ReelsPage() {
   const fetchReels = async () => {
     try {
       const data = await api.getPosts();
-      console.log("Fetched data:", data);
   
       if (data && Array.isArray(data.posts)) {
         const videoReels = data.posts.filter((post) => post.video && !post.images.length);
@@ -44,10 +43,6 @@ export default function ReelsPage() {
           const isSaved = currentUser?.saved?.includes(reel._id);
           const isLiked = likesArray.some(like => like._id === currentUserId);
   
-          console.log(`Processing reel: ${reel._id}`);
-          console.log("Likes array:", likesArray);
-          console.log(`Checking if liked: ${isLiked} (Current User ID: ${currentUserId})`);
-          console.log(`Checking if saved: ${isSaved} (In user's saved array: ${currentUser?.saved})`);
   
           return {
             ...reel,

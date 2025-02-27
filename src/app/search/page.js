@@ -33,7 +33,7 @@ export default function SearchSection() {
   useEffect(() => {
     if (activeTab === "collections" && savedPostsStatus === "idle") {
       dispatch(fetchSavedPosts()).then((result) => {
-        console.log("Saved Posts API Response:", result)
+       
       })
     }
   }, [activeTab, savedPostsStatus, dispatch])
@@ -166,10 +166,7 @@ export default function SearchSection() {
         return null
     }
   }
-  //     default:
-  //       return null
-  //   }
-  // }
+ 
 
   return (
     <LikeProvider>

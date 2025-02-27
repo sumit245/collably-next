@@ -17,14 +17,14 @@ export const loginWithPhoneAsync = createAsyncThunk(
   "auth/loginWithPhone",
   async ({ contactNumber }, { rejectWithValue }) => {
     try {
-      console.log("Attempting login with phone:", contactNumber); // Log the phone number used for login
+   
       
       const response = await authService.loginWithPhone(contactNumber);
       
-      console.log("Login response received:", response); // Log the entire response
+     
       
       if (response && response.user) {
-        console.log("User logged in:", response.user); // Log the user details
+       
         
         localStorage.setItem("accessToken", response.access_token);
         localStorage.setItem("user", JSON.stringify(response.user));

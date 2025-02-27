@@ -1,14 +1,13 @@
 import api from "./api"
 
 export const createOrder = async (orderData) => {
-  console.log("Creating order with data:", JSON.stringify(orderData, null, 2))
+
   try {
     const data = await api.fetch("/order", {
       method: "POST",
       body: JSON.stringify(orderData),
       
     })
-    console.log("Order creation response:", data)
     return data
   } catch (error) {
     console.error("Error in orderService.createOrder:", error)
