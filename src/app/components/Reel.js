@@ -21,7 +21,7 @@ export default function Reel({
   onShare,
   onSave,
   onUnsave,
-  isSaved,
+  isSaved: propIsSaved,
   isLiked: propIsLiked,
   currentUserId,
 }) {
@@ -30,13 +30,15 @@ export default function Reel({
   const [isFollowing, setIsFollowing] = useState(user?.followers?.includes(userId))
   const [isCommenting, setIsCommenting] = useState(false)
   const [isLiked, setIsLiked] = useState(propIsLiked || (Array.isArray(likes) && likes.includes(userId)))
+  const [isSaved, setIsSaved] = useState(propIsSaved)
   const commentSectionRef = useRef(null)
   const BASE_URL = "http://localhost:5000/"
 
-  // Update isLiked when props change
+  // Update isLiked and isSaved when props change
   useEffect(() => {
     setIsLiked(propIsLiked || (Array.isArray(likes) && likes.includes(userId)))
-  }, [propIsLiked, likes, userId])
+    setIsSaved(propIsSaved)
+  }, [propIsLiked, propIsSaved, likes, userId])
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -85,6 +87,7 @@ export default function Reel({
     } else {
       onSave(_id)
     }
+    setIsSaved(!isSaved)
   }
 
   return (
