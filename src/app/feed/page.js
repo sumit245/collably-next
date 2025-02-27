@@ -7,6 +7,7 @@ import styles from "./stylesfeed.module.css"
 import styleshop from "../shop/StyleShop.module.css"
 import Footer from "../components/FooterShop"
 import api from "../services/api"
+import { useSelector } from "react-redux"
 
 const BASE_URL = "http://localhost:5000/"
 
@@ -21,6 +22,7 @@ export default function ReelsPage() {
   const [isShareModalOpen, setIsShareModalOpen] = useState(false)
   const [currentShareReel, setCurrentShareReel] = useState(null)
   const containerRef = useRef(null)
+  const currentUserId = useSelector((state) => state.auth.user?._id)
 
   useEffect(() => {
     fetchReels()
@@ -28,19 +30,41 @@ export default function ReelsPage() {
 
   const fetchReels = async () => {
     try {
-      const data = await api.getPosts()
-      console.log("Fetched data:", data)
-
+      const data = await api.getPosts();
+      console.log("Fetched data:", data);
+  
       if (data && Array.isArray(data.posts)) {
-        const videoReels = data.posts.filter((post) => post.video && !post.images.length)
-        setReelsData(shuffleArray(videoReels))
+        const videoReels = data.posts.filter((post) => post.video && !post.images.length);
+        
+        const processedReels = videoReels.map(reel => {
+          const likesArray = reel.likes || []; // Ensure it's always an array
+          const savedByArray = reel.savedBy || []; // Ensure it's always an array
+  
+          const isLiked = likesArray.some(like => like._id === currentUserId);
+          const isSaved = savedByArray.includes(currentUserId);
+  
+          console.log(`Processing reel: ${reel._id}`);
+          console.log("Likes array:", likesArray);
+          console.log(`Checking if liked: ${isLiked} (Current User ID: ${currentUserId})`);
+          console.log("Saved by array:", savedByArray);
+          console.log(`Checking if saved: ${isSaved}`);
+  
+          return {
+            ...reel,
+            isLiked,
+            isSaved
+          };
+        });
+  
+        setReelsData(shuffleArray(processedReels));
       } else {
-        console.error("Invalid response format or no posts found.")
+        console.error("Invalid response format or no posts found.");
       }
     } catch (error) {
-      console.error("Error fetching reels:", error)
+      console.error("Error fetching reels:", error);
     }
-  }
+  };
+  
 
   useEffect(() => {
     const container = containerRef.current
@@ -79,7 +103,10 @@ export default function ReelsPage() {
         reel._id === reelId
           ? {
               ...reel,
-              likes: isLiking ? [...reel.likes, "currentUserId"] : reel.likes.filter((id) => id !== "currentUserId"),
+              likes: isLiking 
+                ? [...reel.likes, currentUserId] 
+                : reel.likes.filter((id) => id !== currentUserId),
+              isLiked: isLiking
             }
           : reel,
       ),
@@ -103,7 +130,6 @@ export default function ReelsPage() {
 
   const handleSave = async (reelId) => {
     try {
-      
       await api.savePost(reelId)
       updateReelSaveStatus(reelId, true)
     } catch (error) {
@@ -121,7 +147,9 @@ export default function ReelsPage() {
   }
 
   const updateReelSaveStatus = (reelId, isSaving) => {
-    setReelsData((prevReels) => prevReels.map((reel) => (reel._id === reelId ? { ...reel, isSaved: isSaving } : reel)))
+    setReelsData((prevReels) => 
+      prevReels.map((reel) => (reel._id === reelId ? { ...reel, isSaved: isSaving } : reel))
+    )
   }
 
   const handleShare = (reel) => {
@@ -141,6 +169,7 @@ export default function ReelsPage() {
     }
     return array
   }
+  
   console.log(reelsData)
   {reelsData.map((reel, index) => ( console.log(reel.video)))}
 
@@ -161,6 +190,7 @@ export default function ReelsPage() {
                 onUnsave={() => handleUnsave(reel._id)}
                 src={`${BASE_URL}${changeEscapeChar(reel.video)}`}
                 video={reel.video}
+                currentUserId={currentUserId}
               />
             </div>
           ))}

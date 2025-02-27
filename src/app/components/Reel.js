@@ -9,19 +9,37 @@ import CommentSection from "./commentSection"
 import Image from "next/image"
 
 export default function Reel({
-  _id, video, images, user, caption, likes = [], comments, onLike, onUnlike, 
-  onShare, onSave, onUnsave, isSaved 
+  _id,
+  video,
+  images,
+  user,
+  caption,
+  likes = [],
+  comments,
+  onLike,
+  onUnlike,
+  onShare,
+  onSave,
+  onUnsave,
+  isSaved,
+  isLiked: propIsLiked,
+  currentUserId,
 }) {
   const dispatch = useDispatch()
-  const currentUserId = useSelector((state) => state.auth.user?._id)
-  const [isFollowing, setIsFollowing] = useState(user?.followers?.includes(currentUserId))
+  const userId = useSelector((state) => state.auth.user?._id) || currentUserId
+  const [isFollowing, setIsFollowing] = useState(user?.followers?.includes(userId))
   const [isCommenting, setIsCommenting] = useState(false)
-  const [isLiked, setIsLiked] = useState(likes.includes(currentUserId))
+  const [isLiked, setIsLiked] = useState(propIsLiked || (Array.isArray(likes) && likes.includes(userId)))
   const commentSectionRef = useRef(null)
   const BASE_URL = "http://localhost:5000/"
 
+  // Update isLiked when props change
   useEffect(() => {
-    const handleClickOutside = e => {
+    setIsLiked(propIsLiked || (Array.isArray(likes) && likes.includes(userId)))
+  }, [propIsLiked, likes, userId])
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
       if (commentSectionRef.current && !commentSectionRef.current.contains(e.target)) {
         setIsCommenting(false)
       }
@@ -39,14 +57,34 @@ export default function Reel({
     }
   }
 
-  const handleCaptionClick = async e => {
+  const handleCaptionClick = async (e) => {
     e.preventDefault()
     const referralCode = caption?.match(/referralCode=([A-Za-z0-9]{6})/)?.[1]
     if (referralCode) {
-      try { await dispatch(trackReferralClick(referralCode)).unwrap() } 
-      catch (error) { console.error('Tracking failed:', error) }
+      try {
+        await dispatch(trackReferralClick(referralCode)).unwrap()
+      } catch (error) {
+        console.error("Tracking failed:", error)
+      }
     }
     window.location.href = caption
+  }
+
+  const handleLikeAction = () => {
+    if (isLiked) {
+      onUnlike(_id)
+    } else {
+      onLike(_id)
+    }
+    setIsLiked(!isLiked)
+  }
+
+  const handleSaveAction = () => {
+    if (isSaved) {
+      onUnsave(_id)
+    } else {
+      onSave(_id)
+    }
   }
 
   return (
@@ -58,7 +96,9 @@ export default function Reel({
       ) : images?.[0] ? (
         <Image
           src={`${BASE_URL}${images[0].replace(/\\/g, "/")}`}
-          alt="Post" layout="fill" objectFit="cover"
+          alt="Post"
+          layout="fill"
+          objectFit="cover"
           className={styles.image}
         />
       ) : (
@@ -72,37 +112,45 @@ export default function Reel({
       </div>
 
       <div className={styles.actions}>
-        {[
-          { 
-            icon: <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />,
-            count: likes.length,
-            action: () => { isLiked ? onUnlike(_id) : onLike(_id); setIsLiked(!isLiked) },
-            fill: isLiked ? 'red' : 'none'
-          },
-          {
-            icon: <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />,
-            count: comments.length,
-            action: () => setIsCommenting(!isCommenting)
-          },
-          {
-            icon: <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />,
-            action: () => onShare({ _id, user, caption })
-          },
-          {
-            icon: <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />,
-            action: () => { isSaved ? onUnsave(_id) : onSave(_id) },
-            fill: isSaved ? 'white' : 'none'
-          }
-        ].map(({ icon, count, action, fill = 'none' }, index) => (
-          <div key={index} className={styles.actionItem}>
-            <button className={styles.actionButton} onClick={action}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill={fill} stroke={fill === 'none' ? 'white' : fill}>
-                {icon}
-              </svg>
-            </button>
-            {count !== undefined && <span className={styles.actionCount}>{count}</span>}
-          </div>
-        ))}
+        <div className={styles.actionItem}>
+          <button className={styles.actionButton} onClick={handleLikeAction}>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill={isLiked ? "red" : "none"}
+              stroke={isLiked ? "red" : "white"}
+            >
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+            </svg>
+          </button>
+          <span className={styles.actionCount}>{likes.length}</span>
+        </div>
+
+        <div className={styles.actionItem}>
+          <button className={styles.actionButton} onClick={() => setIsCommenting(!isCommenting)}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+            </svg>
+          </button>
+          <span className={styles.actionCount}>{comments.length}</span>
+        </div>
+
+        <div className={styles.actionItem}>
+          <button className={styles.actionButton} onClick={() => onShare({ _id, user, caption })}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white">
+              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+            </svg>
+          </button>
+        </div>
+
+        <div className={styles.actionItem}>
+          <button className={styles.actionButton} onClick={handleSaveAction}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill={isSaved ? "white" : "none"} stroke="white">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div className={styles.info}>
@@ -111,7 +159,7 @@ export default function Reel({
             <img src={user?.avatar || "/placeholder.svg"} alt={user?.fullname} />
           </div>
           <span className={styles.username}>{user?.fullname}</span>
-          {currentUserId !== user?._id && (
+          {userId !== user?._id && (
             <button className={styles.followButton} onClick={handleFollowToggle}>
               {isFollowing ? "Following" : "Follow"}
             </button>
@@ -124,9 +172,9 @@ export default function Reel({
 
       {isCommenting && (
         <div ref={commentSectionRef}>
-          <CommentSection 
-            comments={comments} 
-            onAddComment={c => api.commentOnPost(_id, c).then(() => setIsCommenting(false))}
+          <CommentSection
+            comments={comments}
+            onAddComment={(c) => api.commentOnPost(_id, c).then(() => setIsCommenting(false))}
             onClose={() => setIsCommenting(false)}
           />
         </div>
@@ -134,3 +182,4 @@ export default function Reel({
     </div>
   )
 }
+
