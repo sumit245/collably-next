@@ -8,251 +8,112 @@ import Header from "../components/HeaderShop"
 import Footer from "../components/FooterShop"
 import { LikeProvider } from "../actions/LikeContext"
 import Image from "next/image"
-import { ChevronDown, Search } from 'lucide-react'
+import { ChevronDown, Search } from "lucide-react"
 import Link from "next/link"
 
 const BASE_URL = "http://localhost:5000/"
 
-const changeEscapeChar = (path) => path.replace(/\\/g, "/")
-
 export default function SearchSection() {
   const dispatch = useDispatch()
-  const { posts = [], savedPosts = [], status, savedPostsStatus, error } = useSelector((state) => state.posts)
-  const [activeTab, setActiveTab] = useState("reels")
-  const [collectionSubTab, setCollectionSubTab] = useState("videos")
+  const { posts = [], savedPosts = [], status, savedPostsStatus, error } = useSelector(s => s.posts)
+  const [activeTab, setActiveTab] = useState("Reels")
+  const [collectionSubTab, setCollectionSubTab] = useState("Videos")
   const [searchQuery, setSearchQuery] = useState("")
-  const [selectedCategory, setSelectedCategory] = useState("All Categories")
-  const [selectedGender, setSelectedGender] = useState("All")
 
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchPosts())
-    }
-  }, [status, dispatch])
-
-  useEffect(() => {
-    if (activeTab === "collections" && savedPostsStatus === "idle") {
-      dispatch(fetchSavedPosts()).then((result) => {
-       
-      })
-    }
+  useEffect(() => { status === "idle" && dispatch(fetchPosts()) }, [status, dispatch])
+  useEffect(() => { 
+    activeTab === "Collections" && savedPostsStatus === "idle" && dispatch(fetchSavedPosts())
   }, [activeTab, savedPostsStatus, dispatch])
 
-  const tabs = [
-    { id: "reels", label: "Reels" },
-    { id: "posts", label: "Posts" },
-    { id: "collections", label: "Collections" },
-  ]
-
-  const collectionTabs = [
-    { id: "videos", label: "Videos" },
-    { id: "images", label: "Images" },
-  ]
-
-  const categories = ["All Categories", "Fashion", "Electronics", "Home", "Beauty"]
-  const genders = ["All", "Men", "Women", "Unisex"]
-
+  const filteredPosts = (activeTab === "Collections" ? savedPosts : posts).filter(post => 
+    post && (!searchQuery || post.content?.toLowerCase().includes(searchQuery.toLowerCase()))
+  );
   const renderContent = () => {
-    if (activeTab === "collections" && savedPostsStatus === "loading") {
-      return <div>Loading saved posts...</div>
-    }
+    if ([status, savedPostsStatus].includes("loading")) return <div>Loading...</div>
+    if ([status, savedPostsStatus].includes("failed")) return <div>Error: {error}</div>
 
-    if (activeTab !== "collections" && status === "loading") {
-      return <div>Loading...</div>
-    }
-
-    if ((activeTab === "collections" && savedPostsStatus === "failed") || 
-        (activeTab !== "collections" && status === "failed")) {
-      return <div>Error: {error}</div>
-    }
-
-    const postsToUse = activeTab === "collections" ? (savedPosts || []) : (posts || [])
-    
-    const filteredPosts = postsToUse.filter((post) => {
-      if (!post) return false
-      if (searchQuery && post.content && !post.content.toLowerCase().includes(searchQuery.toLowerCase())) {
-        return false
-      }
-      if (activeTab === "reels" && !post.video) return false
-      if (activeTab === "posts" && !(post.images && post.images.length)) return false
-      return true
+    const content = filteredPosts.filter(post => {
+      if (activeTab === "Reels") return post.video
+      if (activeTab === "Posts") return post.images?.length
+      return collectionSubTab === "Videos" ? post.video : post.images?.length
     })
 
-    switch (activeTab) {
-      case "reels":
-        return (
+    return activeTab === "Collections" ? (
+      <div className={styles.collectionsContainer}>
+        <div className={styles.subTabs}>
+          {["Videos", "Images"].map(id => (
+            <button key={id} className={`${styles.subTab} ${collectionSubTab === id ? styles.activeSubTab : ""}`}
+              onClick={() => setCollectionSubTab(id)}>{id}</button>
+          ))}
+        </div>
+        {content.length ? (
           <div className={styles.gridContainer}>
-            {filteredPosts.map((post) => (
-              <Link href={`/feed?reelId=${post._id}`} key={post._id} className={styles.gridItem}>
-                <video src={`${BASE_URL}${changeEscapeChar(post.video)}`} className={styles.gridVideo} width={300} height={300} />
+            {content.map(post => (
+              <Link key={post._id} href={`/${collectionSubTab === "Videos" ? "feed?reelId=" : "post/"}${post._id}`}
+                className={styles.gridItem}>
+                {collectionSubTab === "Videos" ? (
+                  <video src={`${BASE_URL}${post.video.replace(/\\/g, "/")}`} className={styles.gridVideo} 
+                    width={300} height={300} muted preload="metadata" />
+                ) : (
+                  <Image src={`${BASE_URL}${post.images[0]?.replace(/\\/g, "/")}` || "/placeholder.svg"} 
+                    alt={`Post by ${post.user?.username || "unknown"}`} className={styles.gridImage} 
+                    width={300} height={300} />
+                )}
               </Link>
             ))}
           </div>
-        )
-      case "posts":
-        return (
-          <div className={styles.gridContainer}>
-            {filteredPosts.map((post) => (
-              <Link href={`/post/${post._id}`} key={post._id} className={styles.gridItem}>
-                <Image
-                  src={`${BASE_URL}${changeEscapeChar(post.images[0])}` || "/placeholder.svg"}
-                  alt={`Post by ${post.user?.username || "unknown"}`}
-                  className={styles.gridImage}
-                  width={300}
-                  height={300}
-                />
-              </Link>
-            ))}
-          </div>
-        )
-      case "collections":
-        const collectionContent = filteredPosts.filter(post => {
-          if (collectionSubTab === "videos") return post.video
-          if (collectionSubTab === "images") return post.images?.length
-          return true
-        })
-
-        return (
-          <div className={styles.collectionsContainer}>
-            <div className={styles.subTabs}>
-              {collectionTabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  className={`${styles.subTab} ${collectionSubTab === tab.id ? styles.activeSubTab : ""}`}
-                  onClick={() => setCollectionSubTab(tab.id)}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
-
-            {collectionContent.length === 0 ? (
-              <div className={styles.emptyState}>
-                No saved {collectionSubTab} found
-              </div>
+        ) : <div className={styles.emptyState}>No saved {collectionSubTab} found</div>}
+      </div>
+    ) : (
+      <div className={styles.gridContainer}>
+        {content.map(post => (
+          <Link key={post._id} href={`/${activeTab === "Reels" ? "feed?reelId=" : "post/"}${post._id}`} 
+            className={styles.gridItem}>
+            {activeTab === "Reels" ? (
+              <video src={`${BASE_URL}${post.video.replace(/\\/g, "/")}`} className={styles.gridVideo} 
+                width={300} height={300} />
             ) : (
-              <div className={styles.gridContainer}>
-                {collectionContent.map((post) => (
-                  <Link 
-                    href={`/${collectionSubTab === "videos" ? 'feed?reelId=' : 'post/'}${post._id}`} 
-                    key={post._id} 
-                    className={styles.gridItem}
-                  >
-                    {collectionSubTab === "videos" ? (
-                      <video 
-                        src={`${BASE_URL}${changeEscapeChar(post.video)}`}
-                        className={styles.gridVideo}
-                        width={300}
-                        height={300}
-                        muted
-                        preload="metadata"
-                      />
-                    ) : (
-                      <Image
-                        src={`${BASE_URL}${changeEscapeChar(post.images[0])}` || "/placeholder.svg"}
-                        alt={`Post by ${post.user?.username || "unknown"}`}
-                        className={styles.gridImage}
-                        width={300}
-                        height={300}
-                      />
-                    )}
-                  </Link>
-                ))}
-              </div>
+              <Image src={`${BASE_URL}${post.images[0]?.replace(/\\/g, "/")}` || "/placeholder.svg"} 
+                alt={`Post by ${post.user?.username || "unknown"}`} className={styles.gridImage} 
+                width={300} height={300} />
             )}
-          </div>
-        )
-      default:
-        return null
-    }
+          </Link>
+        ))}
+      </div>
+    )
   }
- 
 
   return (
     <LikeProvider>
       <div className={styles.container}>
         <Header />
-
         <div className={styles.searchBar}>
           <div className={styles.searchInputWrapper}>
             <Search className={styles.searchIcon} />
-            <input
-              type="text"
-              placeholder="Search for products, reels & creators"
-              className={styles.searchInput}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
+            <input type="text" placeholder="Search for products, reels & creators" 
+              className={styles.searchInput} value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
           </div>
         </div>
-
         <div className={styles.filtersContainer}>
-          <button className={styles.filterButton}>
-            <svg
-              width="14"
-              height="14"
-              className={styles.navIcon}
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
-              />
-            </svg>
-            Sort By
-          </button>
-
-          <button className={styles.filterButton}>All Filters</button>
-
-          <div className={styles.customSelect}>
-            <select
-              className={styles.filterSelect}
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-            >
-              {categories.map((category, index) => (
-                <option className={styles.dropdownItem} key={index} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-            <ChevronDown className={styles.selectIcon} />
-          </div>
-
-          <div className={styles.customSelect}>
-            <select
-              className={styles.filterSelect}
-              value={selectedGender}
-              onChange={(e) => setSelectedGender(e.target.value)}
-            >
-              {genders.map((gender, index) => (
-                <option className={styles.itemContainer} key={index} value={gender}>
-                  {gender}
-                </option>
-              ))}
-            </select>
-            <ChevronDown className={styles.selectIcon} />
-          </div>
-        </div>
-
-        <div className={styles.tabsContainer}>
-          {tabs.map((tab) => (
-            <div
-              key={tab.id}
-              className={`${styles.tab} ${activeTab === tab.id ? styles.activeTab : ""}`}
-              onClick={() => setActiveTab(tab.id)}
-            >
-              {tab.label}
+          {["Sort By", "All Filters"].map(label => (
+            <button key={label} className={styles.filterButton}>{label}</button>
+          ))}
+          {[["All Categories", "Fashion", "Electronics", "Home", "Beauty"], ["All", "Men", "Women", "Unisex"]].map((options, i) => (
+            <div key={i} className={styles.customSelect}>
+              <select className={styles.filterSelect} onChange={e => i ? setSelectedGender : setSelectedCategory(e.target.value)}>
+                {options.map(o => <option key={o} value={o}>{o}</option>)}
+              </select>
+              <ChevronDown className={styles.selectIcon} />
             </div>
           ))}
         </div>
-
+        <div className={styles.tabsContainer}>
+          {["Reels", "Posts", "Collections"].map(id => (
+            <div key={id} className={`${styles.tab} ${activeTab === id ? styles.activeTab : ""}`} 
+              onClick={() => setActiveTab(id)}>{id}</div>
+          ))}
+        </div>
         <div className={styles.contentGrid}>{renderContent()}</div>
-
         <Footer />
       </div>
     </LikeProvider>

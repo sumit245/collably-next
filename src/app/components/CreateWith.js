@@ -131,8 +131,6 @@ function VideoRecorder() {
   }
 
   const handleConfirm = () => {
-    // Handle video confirmation - you can add your logic here
-    console.log("Video confirmed")
   }
 
   const setupCamera = async () => {

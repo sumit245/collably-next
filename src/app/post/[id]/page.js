@@ -13,90 +13,57 @@ import { Trash2, Heart, MessageCircle, Send, Bookmark } from "lucide-react"
 import CommentSection from "../../components/commentSection"
 
 export default function PostDetail() {
-  const { id } = useParams(),
-    router = useRouter()
-  const [isLoading, setIsLoading] = useState(true),
-    [error, setError] = useState(null)
+  const { id } = useParams(), router = useRouter()
+  const [isLoading, setIsLoading] = useState(true), [error, setError] = useState(null)
   const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/"
-  const changeEscapeChar = (path) => {
-    if (!path) return ""
-    return path.replace(/\\/g, "/")
-  }
-  const currentUserId = useSelector((state) => state.auth.user?._id)
-  const currentUser = useSelector((state) => state.auth.user)
-  const [currentPost, setCurrentPost] = useState({
-    likes: [],
-    isLiked: false,
-    comments: [],
-    isSaved: false,
-    post: { user: {}, images: [], video: null },
-  })
-  const [isFollowing, setIsFollowing] = useState(false),
-    [isCommenting, setIsCommenting] = useState(false)
+  const currentUserId = useSelector((state) => state.auth.user?._id), currentUser = useSelector((state) => state.auth.user)
+  const [currentPost, setCurrentPost] = useState({ likes: [], isLiked: false, comments: [], isSaved: false, post: { user: {}, images: [], video: null } })
+  const [isFollowing, setIsFollowing] = useState(false), [isCommenting, setIsCommenting] = useState(false)
   const commentSectionRef = useRef(null)
 
   const fetchPost = useCallback(async () => {
     try {
       setIsLoading(true)
       const response = await api.getPostById(id)
-
-
-      if (!response || !response.post) {
-        console.error("Error: response.post is undefined")
-        setError("Failed to load post data.")
-        return
-      }
-
-      const post = response.post
-    
-
-      const likesArray = Array.isArray(post.likes) ? post.likes : []
-    
-      const isLiked = likesArray.some((like) => like._id === currentUserId)
-  
-      const isSaved = currentUser?.saved?.includes(id)
+      if (!response?.post) return setError("Failed to load post data.")
       
+      const { post } = response
+      const isLiked = post.likes?.some(like => like._id === currentUserId) ?? false
+      const isSaved = currentUser?.saved?.includes(id) ?? false
 
-      setCurrentPost((prev) => ({
-        ...prev,
-        ...post,
-        likes: likesArray,
+      setCurrentPost(prev => ({
+        ...prev, ...post,
+        likes: post.likes || [],
         isLiked,
         isSaved,
-        comments: post.comments || [],
+        comments: post.comments || []
       }))
-
-      setIsFollowing(post.user?.followers?.some((follower) => follower._id === currentUserId))
+      setIsFollowing(post.user?.followers?.some(follower => follower._id === currentUserId) ?? false)
     } catch (err) {
-      console.error("Error fetching post:", err)
       setError(err.message)
     } finally {
       setIsLoading(false)
     }
   }, [id, currentUserId, currentUser?.saved])
 
-  useEffect(() => {
-    fetchPost()
-  }, [fetchPost])
+  useEffect(() => { fetchPost() }, [fetchPost])
 
   useEffect(() => {
-    const handleClickOutside = (e) => {
+    const handleClickOutside = e => {
       if (commentSectionRef.current && !commentSectionRef.current.contains(e.target)) setIsCommenting(false)
     }
     document.addEventListener("mousedown", handleClickOutside)
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
-  const updatePostState = (updates) => setCurrentPost((prev) => ({ ...prev, ...updates }))
+  const updatePostState = updates => setCurrentPost(prev => ({ ...prev, ...updates }))
 
   const handleDelete = async () => {
     if (confirm("Are you sure you want to delete this post?")) {
       try {
         await api.deletePost(id)
         router.push("/creatorFeedProfile")
-      } catch {
-        setError("Failed to delete post")
-      }
+      } catch { setError("Failed to delete post") }
     }
   }
 
@@ -104,46 +71,29 @@ export default function PostDetail() {
     try {
       await (currentPost.isLiked ? api.unlikePost(id) : api.likePost(id))
       updatePostState({
-        likes: currentPost.isLiked
-          ? currentPost.likes.filter((uid) => uid !== currentUserId)
-          : [...currentPost.likes, currentUserId],
-        isLiked: !currentPost.isLiked,
+        likes: currentPost.isLiked ? currentPost.likes.filter(uid => uid !== currentUserId) : [...currentPost.likes, currentUserId],
+        isLiked: !currentPost.isLiked
       })
     } catch {}
   }
 
-  const handleComment = async (comment) => {
+  const handleComment = async comment => {
     try {
       const response = await api.commentOnPost(id, comment)
-     
-      if (response && response.comments) {
-        updatePostState({ comments: response.comments })
-      } else if (response) {
-        
-        updatePostState({
-          comments: [...currentPost.comments, response],
-        })
-      } else {
-       
+      if (response?.comments) updatePostState({ comments: response.comments })
+      else if (response) updatePostState({ comments: [...currentPost.comments, response] })
+      else {
         const updatedPost = await api.getPostById(id)
-        if (updatedPost && updatedPost.post) {
-          updatePostState({ comments: updatedPost.post.comments || [] })
-        }
+        if (updatedPost?.post) updatePostState({ comments: updatedPost.post.comments || [] })
       }
-     
-    } catch (error) {
-      console.error("Error adding comment:", error)
-    }
+    } catch (error) { console.error("Error adding comment:", error) }
   }
 
   const handleSave = async () => {
     try {
       await (currentPost.isSaved ? api.unsavePost(id) : api.savePost(id))
       updatePostState({ isSaved: !currentPost.isSaved })
-
-    } catch (error) {
-      console.error("Error saving/unsaving post:", error)
-    }
+    } catch (error) { console.error("Error saving/unsaving post:", error) }
   }
 
   const handleFollowToggle = async () => {
@@ -167,32 +117,16 @@ export default function PostDetail() {
           <div className={styles.header}>
             <div className={styles.profile}>
               <button onClick={() => window.history.back()} className={styles.backButton}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M19 12H5M12 19l-7-7 7-7" />
-                </svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
               </button>
               <div className={styles.userInfo}>
-                <Image
-                  src={currentPost.user?.avatar || "/placeholder.svg"}
-                  alt={currentPost.user?.username}
-                  width={32}
-                  height={32}
-                  className={styles.avatar}
-                />
+                <Image src={currentPost.user?.avatar || "/placeholder.svg"} alt={currentPost.user?.username} width={32} height={32} className={styles.avatar} />
                 <span className={styles.username}>{currentPost.user?.fullname}</span>
-                {!isOwnPost && (
-                  <button onClick={handleFollowToggle} className={styles.followButton}>
-                    {isFollowing ? "Following" : "Follow"}
-                  </button>
-                )}
+                {!isOwnPost && <button onClick={handleFollowToggle} className={styles.followButton}>{isFollowing ? "Following" : "Follow"}</button>}
               </div>
             </div>
             {isOwnPost && (
-              <button
-                onClick={handleDelete}
-                className={styles.deleteButton}
-                style={{ background: "none", border: "none", cursor: "pointer", color: "red", padding: "8px" }}
-              >
+              <button onClick={handleDelete} className={styles.deleteButton} style={{ background: "none", border: "none", cursor: "pointer", color: "red", padding: "8px" }}>
                 <Trash2 size={24} />
               </button>
             )}
@@ -201,77 +135,32 @@ export default function PostDetail() {
           <div className={styles.mainPost}>
             <div className={styles.mediaContainer}>
               {currentPost.video ? (
-                <video
-                  onClick={() => router.push(`/feed?reelId=${currentPost._id}`)}
-                  src={`${BASE_URL}${changeEscapeChar(currentPost.video)}`}
-                  controls
-                  className={styles.postVideo}
-                />
+                <video onClick={() => router.push(`/feed?reelId=${currentPost._id}`)} src={`${BASE_URL}${currentPost.video?.replace(/\\/g, '/')}`} controls className={styles.postVideo} />
               ) : (
-                <Image
-                  src={`${BASE_URL}${changeEscapeChar(currentPost.images?.[0])}`}
-                  alt={`Post ${currentPost._id}`}
-                  layout="fill"
-                  objectFit="cover"
-                  className={styles.postImage}
-                />
+                <Image src={`${BASE_URL}${currentPost.images?.[0]?.replace(/\\/g, '/')}`} alt={`Post ${currentPost._id}`} layout="fill" objectFit="cover" className={styles.postImage} />
               )}
             </div>
             <div className={styles.postActions}>
               <button className={styles.actionButton} onClick={handleLike}>
-                <Heart
-                  size={24}
-                  fill={currentPost.isLiked ? "red" : "none"}
-                  stroke={currentPost.isLiked ? "red" : "currentColor"}
-                />
+                <Heart size={24} fill={currentPost.isLiked ? "red" : "none"} stroke={currentPost.isLiked ? "red" : "currentColor"} />
               </button>
-              <button className={styles.actionButton} onClick={() => setIsCommenting(!isCommenting)}>
-                <MessageCircle size={24} />
-              </button>
-              <button className={styles.actionButton}>
-                <Send size={24} />
-              </button>
+              <button className={styles.actionButton} onClick={() => setIsCommenting(!isCommenting)}><MessageCircle size={24} /></button>
+              <button className={styles.actionButton}><Send size={24} /></button>
               <button className={styles.actionButton} onClick={handleSave}>
                 <Bookmark size={24} fill={currentPost.isSaved ? "currentColor" : "none"} />
               </button>
             </div>
             <div className={styles.likes}>{currentPost.likes?.length} likes</div>
+            <div className={styles.likes}>{currentPost.comments?.length || 0} Comments</div>
             <div className={styles.caption}>
               <span className={styles.username}>{currentPost.user?.fullname}</span> {currentPost.caption}
             </div>
 
             <div className={styles.comments}>
-              <div className={styles.commentsHeader}>
-                <h3>Comments ({currentPost.comments?.length || 0})</h3>
-                <button className={styles.viewAllComments} onClick={() => setIsCommenting(!isCommenting)}>
-                  {isCommenting ? "Hide comments" : "View all comments"}
-                </button>
-              </div>
-
-              {!isCommenting && currentPost.comments?.length > 0 && (
-                <div className={styles.previewComments}>
-                  {currentPost.comments.slice(0, 2).map((comment, index) => (
-                    <div key={index} className={styles.comment}>
-                      <span className={styles.commentUsername}>{comment.user?.username}</span>{" "}
-                      {comment.text || comment.content}
-                    </div>
-                  ))}
-                  {currentPost.comments.length > 2 && (
-                    <button className={styles.viewMoreComments} onClick={() => setIsCommenting(true)}>
-                      View all {currentPost.comments.length} comments
-                    </button>
-                  )}
-                </div>
-              )}
-
+             
               {isCommenting && (
                 <div ref={commentSectionRef}>
-                  <CommentSection
-                    comments={currentPost.comments || []}
-                    onAddComment={handleComment}
-                    onClose={() => setIsCommenting(false)}
-                    postId={id}
-                  />
+                  <CommentSection comments={currentPost.comments || []} onAddComment={handleComment} onClose={() => setIsCommenting(false)} postId={id} />
                 </div>
               )}
             </div>
@@ -282,4 +171,3 @@ export default function PostDetail() {
     </LikeProvider>
   )
 }
-
