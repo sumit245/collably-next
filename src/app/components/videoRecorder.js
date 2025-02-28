@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect, useCallback } from "react"
+import { useState, useRef, useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { X, Instagram, Youtube } from "lucide-react"
 import { useRouter } from "next/navigation"
@@ -23,13 +23,9 @@ function VideoRecorder() {
   const progressIntervalRef = useRef(null)
   const fileInputRef = useRef(null)
 
-  const setupCamera = useCallback(async () => {
+  const setupCamera = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: true,
-      })
-
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
       if (videoRef.current) {
         videoRef.current.srcObject = stream
         setHasPermission(true)
@@ -39,110 +35,66 @@ function VideoRecorder() {
       setError("Camera permission denied or not available")
       setHasPermission(false)
     }
-  }, [])
+  }
 
   useEffect(() => {
     setupCamera()
-
     return () => {
-      if (videoRef.current?.srcObject) {
-        videoRef.current.srcObject.getTracks().forEach((track) => track.stop())
-      }
-      if (progressIntervalRef.current) {
-        clearInterval(progressIntervalRef.current)
-      }
+      videoRef.current?.srcObject?.getTracks().forEach(track => track.stop())
+      clearInterval(progressIntervalRef.current)
     }
-  }, [setupCamera])
+  }, [])
 
-  const handleMediaCapture = useCallback(
-    (mediaSrc) => {
-      const mediaId = Date.now().toString()
-      dispatch(
-        setCurrentMedia({
-          id: mediaId,
-          src: mediaSrc,
-          type: "video",
-          duration: recordingTime,
-        }),
-      )
-      router.push("/preview")
-    },
-    [recordingTime, dispatch, router],
-  )
+  const handleMediaCapture = (mediaSrc) => {
+    dispatch(setCurrentMedia({
+      id: Date.now().toString(),
+      src: mediaSrc,
+      type: "video",
+      duration: recordingTime
+    }))
+    router.push("/preview")
+  }
 
-  const startRecording = useCallback(() => {
+  const startRecording = () => {
     if (!videoRef.current?.srcObject) return
 
-    chunksRef.current = []
-    const recorder = new window.MediaRecorder(videoRef.current.srcObject)
-
-    recorder.ondataavailable = (event) => {
-      if (event.data.size > 0) {
-        chunksRef.current.push(event.data)
-      }
-    }
-
-    recorder.onstop = () => {
+    mediaRecorderRef.current = new MediaRecorder(videoRef.current.srcObject)
+    mediaRecorderRef.current.ondataavailable = e => e.data.size > 0 && chunksRef.current.push(e.data)
+    mediaRecorderRef.current.onstop = () => {
       const blob = new Blob(chunksRef.current, { type: "video/webm" })
-      const url = URL.createObjectURL(blob)
-      handleMediaCapture(url)
+      handleMediaCapture(URL.createObjectURL(blob))
     }
 
-    recorder.start()
-    mediaRecorderRef.current = recorder
+    mediaRecorderRef.current.start()
     setIsRecording(true)
     setRecordingTime(0)
 
     progressIntervalRef.current = setInterval(() => {
-      setRecordingTime((prev) => {
-        if (prev >= 30) {
-          stopRecording()
-          return 30
-        }
-        return prev + 1
-      })
+      setRecordingTime(prev => prev >= 30 ? (stopRecording(), 30) : prev + 1)
     }, 1000)
 
-    setTimeout(() => {
-      if (mediaRecorderRef.current && isRecording) {
-        stopRecording()
-      }
-    }, 30000)
-  }, [isRecording, handleMediaCapture])
+    setTimeout(stopRecording, 30000)
+  }
 
-  const stopRecording = useCallback(() => {
-    if (mediaRecorderRef.current && isRecording) {
-      mediaRecorderRef.current.stop()
+  const stopRecording = () => {
+    if (isRecording) {
+      mediaRecorderRef.current?.stop()
       setIsRecording(false)
-      if (progressIntervalRef.current) {
-        clearInterval(progressIntervalRef.current)
-      }
+      clearInterval(progressIntervalRef.current)
     }
-  }, [isRecording])
+  }
 
-  const handleFileUpload = useCallback(
-    (event) => {
-      const file = event.target.files?.[0]
-      if (file) {
-        const reader = new FileReader()
-        reader.onload = (e) => {
-          const fileDataUrl = e.target.result
-          setSelectedFile(file)
-          handleMediaCapture(fileDataUrl)
-        }
-        reader.readAsDataURL(file)
+  const handleFileUpload = (e) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = e => {
+        setSelectedFile(file)
+        handleMediaCapture(e.target.result)
       }
-    },
-    [handleMediaCapture],
-  )
-
-  const handleUndo = useCallback(() => {
-    if (videoRef.current) {
-      videoRef.current.srcObject = null
-      setupCamera()
+      reader.readAsDataURL(file)
     }
-    setSelectedFile(null)
-  }, [setupCamera])
+  }
 
   return (
     <div className={styles.container}>
@@ -158,14 +110,14 @@ function VideoRecorder() {
 
       <div className={styles.topBar}>
         <Link href="/CreatorShop">
-          <button className={styles.sideButton} onClick={handleUndo}>
+          <button className={styles.sideButton} onClick={() => setSelectedFile(null)}>
             <X className="h-6 w-6" />
           </button>
         </Link>
       </div>
 
       <div className={styles.bottomControls}>
-        <div className={styles.controlsRow}>
+      <div className={styles.controlsRow}>
           <input
             type="file"
             accept="video/*"
@@ -199,10 +151,10 @@ function VideoRecorder() {
             </button>
           </Link>
         </div>
+
       </div>
     </div>
   )
 }
 
 export default VideoRecorder
-

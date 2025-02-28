@@ -15,7 +15,6 @@ export default function AllCreators() {
   const dispatch = useDispatch();
   const allCreators = useSelector((state) =>  state.creators?.items);
   
-  console.log(`all creat : ${allCreators}`)
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -25,7 +24,6 @@ export default function AllCreators() {
   const filteredCreators = (allCreators || []).filter((creator) =>
     creator.fullname?.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  console.log(`filt creat : ${filteredCreators}`)
   return (
     <div className={styleshop.bodyShop}>
       <div className={styleshop.smartphoneContainer}>

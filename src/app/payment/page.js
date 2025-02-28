@@ -65,9 +65,9 @@ export default function Payment() {
     }
 
     try {
-      console.log("Submitting order:", order)
+   
       const result = await dispatch(createOrder(order)).unwrap()
-      console.log("Order created successfully:", result)
+   
 
       // Store order data before clearing cart
       localStorage.setItem(

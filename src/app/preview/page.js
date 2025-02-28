@@ -16,6 +16,10 @@ const PreviewPageContent = () => {
   const mediaRef = useRef(null)
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      console.log("Client-side URL:", window.location.href)  // Ensures no SSR issue
+    }
+
     if (mediaRef.current && currentMedia?.src) {
       if (currentMedia.type === "photo") {
         mediaRef.current.onload = () => setMediaLoaded(true)
@@ -36,7 +40,9 @@ const PreviewPageContent = () => {
   }
 
   if (!currentMedia) {
-    router.push("/CreatorShop")
+    useEffect(() => {
+      router.push("/CreatorShop")  // Ensure it runs on the client
+    }, [])
     return null
   }
 
@@ -84,4 +90,3 @@ export default function PreviewPage() {
     </Suspense>
   )
 }
-

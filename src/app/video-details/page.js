@@ -19,8 +19,22 @@ const MediaDetailsContent = () => {
   const currentMedia = useSelector((state) => state.media.currentMedia)
   const formData = useSelector((state) => state.media.formData)
   const user = useSelector((state) => state.auth.user)
-  const accessToken = localStorage.getItem("accessToken")
+  console.log(user)
+  const [accessToken, setAccessToken] = useState(null);
 
+  useEffect(() => {
+    
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("accessToken");
+      console.log(token)
+      setAccessToken(token);
+    }
+  }, []);
+  
+  useEffect(() => {
+    console.log("Updated Access Token:", accessToken);
+  }, [accessToken]); 
+  
   useEffect(() => {
     console.log("Access Token:", accessToken); // Check the access token
     if (!accessToken) {
@@ -35,8 +49,7 @@ const MediaDetailsContent = () => {
   }, [accessToken, currentMedia, router])
 
   const getFileFromSource = async (src, fileName) => {
-    console.log("Source type:", typeof src)
-    console.log("Source value:", src.substring(0, 100) + "...")
+  
 
     if (src.startsWith("data:")) {
       const arr = src.split(",")
@@ -96,7 +109,7 @@ const MediaDetailsContent = () => {
       })
 
       const result = await response.text()
-      console.log(result)
+
 
       dispatch(clearCurrentMedia())
       dispatch(clearFormData())

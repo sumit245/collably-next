@@ -27,18 +27,22 @@ export default function Reel({
 }) {
   const dispatch = useDispatch()
   const userId = useSelector((state) => state.auth.user?._id) || currentUserId
+  const currentUser = useSelector((state) => state.auth.user)
   const [isFollowing, setIsFollowing] = useState(user?.followers?.includes(userId))
   const [isCommenting, setIsCommenting] = useState(false)
   const [isLiked, setIsLiked] = useState(propIsLiked || (Array.isArray(likes) && likes.includes(userId)))
-  const [isSaved, setIsSaved] = useState(propIsSaved)
+  const [isSaved, setIsSaved] = useState(false)
   const commentSectionRef = useRef(null)
   const BASE_URL = "http://localhost:5000/"
 
-  // Update isLiked and isSaved when props change
+  // Update isLiked and isSaved when props change or when currentUser.saved changes
   useEffect(() => {
     setIsLiked(propIsLiked || (Array.isArray(likes) && likes.includes(userId)))
-    setIsSaved(propIsSaved)
-  }, [propIsLiked, propIsSaved, likes, userId])
+    
+    // Check if the post is saved by looking in currentUser.saved array
+    const isPostSaved = currentUser?.saved?.includes(_id)
+    setIsSaved(propIsSaved || isPostSaved)
+  }, [propIsLiked, propIsSaved, likes, userId, _id, currentUser?.saved])
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -185,4 +189,3 @@ export default function Reel({
     </div>
   )
 }
-

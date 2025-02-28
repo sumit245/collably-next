@@ -1,4 +1,4 @@
-// app/cart/page.js
+
 "use client"
 
 import { useSelector } from "react-redux"

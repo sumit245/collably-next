@@ -3,9 +3,9 @@ import * as orderService from "../services/orderService"
 
 export const createOrder = createAsyncThunk("orders/createOrder", async (orderData, { rejectWithValue }) => {
   try {
-    console.log("Creating order in Redux thunk:", orderData)
+   
     const response = await orderService.createOrder(orderData)
-    console.log("Order created successfully:", response)
+  
     return response
   } catch (error) {
     console.error("Error in createOrder thunk:", error)

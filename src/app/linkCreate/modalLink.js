@@ -25,7 +25,7 @@ export default function ShareModal({ isOpen, onClose, productName, productLink }
         break
       // Add more cases for other platforms
       default:
-        console.log(`Sharing to ${platform} is not implemented yet`)
+  
         return
     }
 
@@ -62,8 +62,7 @@ export default function ShareModal({ isOpen, onClose, productName, productLink }
   }
 
   const handleMore = () => {
-    // Implement additional sharing options or actions
-    console.log("More options clicked")
+   
   }
 
   if (!isOpen) return null

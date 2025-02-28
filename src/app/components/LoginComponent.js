@@ -56,13 +56,13 @@ const LoginComponent = () => {
   const handleSendOtp = async (e) => {
     e.preventDefault()
 
-    // ✅ Reset existing reCAPTCHA instead of re-rendering
+   
     if (window.recaptchaVerifier) {
       window.recaptchaVerifier.clear()
       window.recaptchaVerifier = null
     }
 
-    // ✅ Create a new reCAPTCHA instance if needed
+    
     window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
       size: "invisible",
       callback: () => console.log("reCAPTCHA solved"),

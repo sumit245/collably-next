@@ -74,7 +74,6 @@ const VideoCarouselCard = ({ videos = [], title = "Trending Today", subtitle }) 
            const videoIndex = getVideoIndex(currentIndex + offset);
            const video = videos[videoIndex];
            const uniqueKey = `${videoIndex}-${video.id ?? videoIndex}`;
-          console.log('Rendering:', { videoIndex, uniqueKey, video });
 
           return (
             <div

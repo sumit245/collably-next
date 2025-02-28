@@ -15,9 +15,6 @@ export default function ReelsTab() {
   const user = useSelector((state) => state.auth.user)
 
   const userReels = posts.filter(post => post.user._id === user?._id && post.video)
-  console.log("All Posts:", posts);
-  console.log("User ID:", user?._id);
-  console.log("Filtered User Reels:", userReels);
   
   const handleAddReelClick = () => {
     router.push('/videoRec')

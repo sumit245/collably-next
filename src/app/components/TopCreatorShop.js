@@ -11,14 +11,10 @@ import { ArrowRight } from 'lucide-react';
 export default function TopCreators() {
   const dispatch = useDispatch();
   const allCreators = useSelector((state) =>  state.creators?.items);
-  console.log(`all creat : ${allCreators}`)
-console.log(allCreators)
   useEffect(() => {
     dispatch(fetchCreators());
   }, [dispatch]);
   const displayCreators = (allCreators || []).slice(0, 4);
-console.log(`disp creat : ${displayCreators}`)
-
   return (
     <section className={styles.topCreatorSection}>
       <div className={styles.sectionHeader}>

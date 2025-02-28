@@ -27,7 +27,6 @@ export default function AllBrands() {
   useEffect(() => {
     dispatch(fetchBrands());
   }, [dispatch]);
-console.log(allBrands[12].brandLogo)
   const filteredBrands = allBrands.filter((brand) =>
     brand.brandName.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -58,7 +57,6 @@ console.log(allBrands[12].brandLogo)
             <div className={styles.brandsGrid}>
   {filteredBrands.map((brand) => {
     const imageSrc = `${BASE_URL}${changeEscapeChar(brand.brandLogo)}`;
-    console.log( imageSrc);
 
     return (
       <Link href={brand.brandWebsite} key={brand._id} className={styles.brandCard}>
