@@ -19,9 +19,22 @@ const MediaDetailsContent = () => {
   const currentMedia = useSelector((state) => state.media.currentMedia)
   const formData = useSelector((state) => state.media.formData)
   const user = useSelector((state) => state.auth.user)
-  const accessToken = localStorage.getItem("accessToken")
-  
+  console.log(user)
+  const [accessToken, setAccessToken] = useState(null);
 
+  useEffect(() => {
+    
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("accessToken");
+      console.log(token)
+      setAccessToken(token);
+    }
+  }, []);
+  
+  useEffect(() => {
+    console.log("Updated Access Token:", accessToken);
+  }, [accessToken]); 
+  
   useEffect(() => {
     if (!accessToken) {
       console.error("Access token is missing")

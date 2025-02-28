@@ -36,7 +36,7 @@ export default function ReelsSec2({ sectionTitle, category }) {
         {displayProducts.length > 0 ? (
           displayProducts.map((product) => <CreatorCard key={product._id} {...product} />)
         ) : (
-          <p>No products available in this category</p>
+          <p>Coming Soon..Stay tuned..</p>
         )}
       </div>
     </section>
