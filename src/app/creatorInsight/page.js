@@ -1,27 +1,17 @@
-"use client";
+'use client'
 
-import { ArrowLeft, Headphones, Info } from "lucide-react";
-import { Button } from "../components/Cards/button";
-import { Card } from "../components/Cards/card";
-import FooterCreator from "../components/FooterCreator";
+import { ArrowLeft, Headphones, Info } from "lucide-react"
+import { Button } from "../components/Cards/button"
+import { Card } from "../components/Cards/card"
+import FooterCreator from "../components/FooterCreator"
 import { CommissionSplit } from "../components/CommissionSplit"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../components/Cards/select";
-import styles from "./stylesinsight.module.css";
-import stylesShop from "../shop/StyleShop.module.css";
-import { useState } from "react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/Cards/select"
+import styles from "./stylesinsight.module.css"
+import stylesShop from "../shop/StyleShop.module.css"
+import { useState } from "react"
 
 export default function InsightsDashboard() {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const handleDropdownToggle = () => {
-    setIsDropdownOpen(!isDropdownOpen);
-  };
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   return (
     <div className={stylesShop.bodyShop}>
@@ -44,27 +34,14 @@ export default function InsightsDashboard() {
           <div className={styles.learnBanner}>
             <div className={styles.learnBannerText}>
               <div className={styles.learnImage}>
-                {/* Image removed for now */}
-                <img
-                  src="https://via.placeholder.com/150"
-                  alt=""
-                  className={styles.learnImageImg}
-                />
+                <img src="https://via.placeholder.com/150" alt="" className={styles.learnImageImg} />
               </div>
               <div>
                 <h2 className={styles.learnTitle}>Understand Your Payouts</h2>
-                <p className={styles.learnDescription}>
-                  Click here to learn more
-                </p>
+                <p className={styles.learnDescription}>Click here to learn more</p>
               </div>
             </div>
-            <Button
-              variant="secondary"
-              size="sm"
-              className={styles.learnButton}
-            >
-              Learn
-            </Button>
+            <Button variant="secondary" size="sm" className={styles.learnButton}>Learn</Button>
           </div>
 
           {/* Insights Content */}
@@ -72,19 +49,10 @@ export default function InsightsDashboard() {
             <div className={styles.insightsHeader}>
               <h3 className={styles.insightsTitle}>Sales & Commissions</h3>
               <Select defaultValue="today">
-                <SelectTrigger
-                  className={styles.selectTrigger}
-                  onClick={handleDropdownToggle}
-                >
-                  <SelectValue className={styles.selectValue}>
-                    Today
-                  </SelectValue>
+                <SelectTrigger className={styles.selectTrigger} onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+                  <SelectValue className={styles.selectValue}>Today</SelectValue>
                 </SelectTrigger>
-                <SelectContent
-                  className={`${styles.selectContent} ${
-                    isDropdownOpen ? "show" : ""
-                  }`}
-                >
+                <SelectContent className={`${styles.selectContent} ${isDropdownOpen ? "show" : ""}`}>
                   <SelectItem value="today">Today</SelectItem>
                   <SelectItem value="week">This Week</SelectItem>
                   <SelectItem value="month">This Month</SelectItem>
@@ -95,59 +63,41 @@ export default function InsightsDashboard() {
 
           {/* Main Metrics */}
           <div className={styles.metricsGrid}>
-            <Card className={styles.card}>
-              <div className={styles.cardHeader}>
-                <div className={styles.cardAmount}>
-                  <span className={styles.currency}>₹</span>
-                  <span className={styles.amount}>0</span>
+            {['Ordered Commissions', 'Ordered Amount'].map((text, index) => (
+              <Card className={styles.card} key={index}>
+                <div className={styles.cardHeader}>
+                  <div className={styles.cardAmount}>
+                    <span className={styles.currency}>₹</span>
+                    <span className={styles.amount}>0</span>
+                  </div>
+                  <Info className={styles.infoIcon} />
                 </div>
-                <Info className={styles.infoIcon} />
-              </div>
-              <p className={styles.cardText}>Ordered Commissions</p>
-            </Card>
-            <Card className={styles.card}>
-              <div className={styles.cardHeader}>
-                <div className={styles.cardAmount}>
-                  <span className={styles.currency}>₹</span>
-                  <span className={styles.amount}>0</span>
-                </div>
-                <Info className={styles.infoIcon} />
-              </div>
-              <p className={styles.cardText}>Ordered Amount</p>
-            </Card>
+                <p className={styles.cardText}>{text}</p>
+              </Card>
+            ))}
           </div>
 
           {/* Secondary Metrics */}
           <div className={styles.secondaryMetrics}>
-            <div className={styles.secondaryMetric}>
-              <p className={styles.secondaryAmount}>0</p>
-              <div className={styles.secondaryDescription}>
-                <p className={styles.secondaryText}>Link Clicks</p>
-                <Info className={styles.infoIcon} />
+            {[
+              { amount: 0, text: 'Link Clicks' },
+              { amount: 0, text: 'Orders Placed', percentage: '0.00%' },
+              { amount: 0, text: 'Avg Order Value', currency: '₹' },
+            ].map(({ amount, text, percentage, currency }, index) => (
+              <div key={index} className={styles.secondaryMetric}>
+                <p className={styles.secondaryAmount}>{currency}{amount}</p>
+                {percentage && <span className={styles.percentage}>{percentage}</span>}
+                <div className={styles.secondaryDescription}>
+                  <p className={styles.secondaryText}>{text}</p>
+                  <Info className={styles.infoIcon} />
+                </div>
               </div>
-            </div>
-            <div className={styles.textCenter}>
-              <div className={styles.secondaryMetric}>
-                <p className={styles.secondaryAmount}>0</p>
-                <span className={styles.percentage}>(0.00%)</span>
-                <Info className={styles.infoIcon} />
-              </div>
-              <p className={styles.secondaryText}>Orders Placed</p>
-            </div>
-            <div className={styles.secondaryMetric}>
-              <div className={styles.secondaryAmountContainer}>
-                <span className={styles.currency}>₹</span>
-                <p className={styles.secondaryAmount}>0</p>
-                <Info className={styles.infoIcon} />
-              </div>
-              <p className={styles.secondaryText}>Avg Order Value</p>
-            </div>
+            ))}
           </div>
         </div>
         <CommissionSplit className="max-w-md mx-auto" />
         <FooterCreator />
       </div>
     </div>
-    // </div>
-  );
+  )
 }

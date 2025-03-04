@@ -100,14 +100,10 @@ function ImageCapture() {
     <div className={styles.container}>
       <video ref={videoRef} autoPlay playsInline muted className={styles.video} />
       <canvas ref={canvasRef} style={{ display: "none" }} />
-
       {error && <div className={styles.error}>{error}</div>}
-
       <div className={styles.topBar}>
         <Link href="/CreatorShop">
-          <button className={styles.sideButton} onClick={handleUndo}>
-            <X className="h-6 w-6" />
-          </button>
+          <button className={styles.sideButton} onClick={handleUndo}>  <X className="h-6 w-6" /> </button>
         </Link>
       </div>
 
@@ -118,44 +114,31 @@ function ImageCapture() {
             accept="image/*"
             ref={fileInputRef}
             onChange={handleFileUpload}
-            style={{ display: "none" }}
-          />
+            style={{ display: "none" }}/>
           <button className={styles.addButton} onClick={() => fileInputRef.current?.click()}>
             <div className={styles.addButtonPreview}>
               {selectedFile && (
-                <img
-                  src={URL.createObjectURL(selectedFile) || "/placeholder.svg"}
-                  alt="Preview"
-                  className={styles.previewThumbnail}
-                />
-              )}
+                <img src={URL.createObjectURL(selectedFile) || "/placeholder.svg"} alt="Preview"  className={styles.previewThumbnail} /> )}
             </div>
           </button>
           <button
             className={`${styles.recordButton} ${styles.photoButton}`}
             onClick={capturePhoto}
-            disabled={!hasPermission}
-          >
+            disabled={!hasPermission} >
             <div className={styles.recordingInner} />
           </button>
         </div>
 
         <div className={styles.syncButtons}>
           <Link href="/instagramProfile">
-            <button className={styles.syncButton}>
-              <Instagram className="h-6 w-6" />
-            </button>
+            <button className={styles.syncButton}>  <Instagram className="h-6 w-6" /> </button>
           </Link>
           <Link href="/youtubeProfile">
-            <button className={styles.syncButton}>
-              <Youtube className="h-6 w-6" />
-            </button>
+            <button className={styles.syncButton}>  <Youtube className="h-6 w-6" /> </button>
           </Link>
         </div>
       </div>
     </div>
   )
 }
-
 export default ImageCapture
-
