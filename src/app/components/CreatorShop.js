@@ -122,28 +122,18 @@ export default function Shop() {
       </header>
 
       <div className={styles.filterBar}>
-        <button className={styles.filterButton}>
-          Sort By: Newest first
-        </button>
-        <button className={styles.filterButton}>
-          All Filters
-        </button>
-        <button className={styles.filterButton}>
-          All Time <ChevronDown size={16} />
-        </button>
-        <button className={styles.filterButton}>
-          View All <ChevronDown size={16} />
-        </button>
+        <button className={styles.filterButton}>  Sort By: Newest first </button>
+        <button className={styles.filterButton}> All Filters </button>
+        <button className={styles.filterButton}> All Time <ChevronDown size={16} /> </button>
+        <button className={styles.filterButton}> View All <ChevronDown size={16} /> </button>
       </div>
 
       <ul className={styles.tabList}>
         {tabs.map(tab => (
-          <li
-            key={tab.id}
+          <li key={tab.id}
             className={`${styles.tabItem}`}
             data-active={activeTab === tab.id}
-            onClick={() => handleTabClick(tab.id)}
-          >
+            onClick={() => handleTabClick(tab.id)} >
             {tab.label}
             {tab.count > 0 && (
               <span className={styles.tabCounter}>({tab.count})</span>
@@ -151,7 +141,6 @@ export default function Shop() {
           </li>
         ))}
       </ul>
-
       {renderTabContent()}
     </div>
   )

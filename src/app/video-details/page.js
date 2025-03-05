@@ -15,132 +15,73 @@ const MediaDetailsContent = () => {
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
-
   const currentMedia = useSelector((state) => state.media.currentMedia)
   const formData = useSelector((state) => state.media.formData)
   const user = useSelector((state) => state.auth.user)
-  console.log(user)
-  const [accessToken, setAccessToken] = useState(null);
+  const [accessToken, setAccessToken] = useState(null)
 
   useEffect(() => {
-    
     if (typeof window !== "undefined") {
-      const token = localStorage.getItem("accessToken");
-      console.log(token)
-      setAccessToken(token);
+      const token = localStorage.getItem("accessToken")
+      setAccessToken(token)
     }
-  }, []);
-  
+  }, [])
+
   useEffect(() => {
-    console.log("Updated Access Token:", accessToken);
-  }, [accessToken]); 
-  
-  useEffect(() => {
-    console.log("Access Token:", accessToken); // Check the access token
     if (!accessToken) {
-      console.error("Access token is missing")
       setError("Authentication failed. Please log in again.")
       return
     }
-
-    // if (!currentMedia) {
-    //   router.push('/CreatorShop')
-    // }
-  }, [accessToken, currentMedia, router])
+  }, [accessToken])
 
   const getFileFromSource = async (src, fileName) => {
-  
-
     if (src.startsWith("data:")) {
-      const arr = src.split(",")
-      const mime = arr[0].match(/:(.*?);/)[1]
-      const bstr = atob(arr[1])
-      let n = bstr.length
-      const u8arr = new Uint8Array(n)
-      while (n--) {
-        u8arr[n] = bstr.charCodeAt(n)
-      }
-      return new File([u8arr], fileName, { type: mime })
-    } else if (src.startsWith("blob:") || src.startsWith("http:") || src.startsWith("https:")) {
-      const response = await fetch(src)
-      const blob = await response.blob()
-      return new File([blob], fileName, { type: blob.type })
-    } else {
-      const response = await fetch(src)
-      const blob = await response.blob()
-      return new File([blob], fileName, { type: blob.type })
+      const [mime, bstr] = src.split(",")
+      const u8arr = new Uint8Array(atob(bstr).split("").map(c => c.charCodeAt(0)))
+      return new File([u8arr], fileName, { type: mime.match(/:(.*?);/)[1] })
     }
+    const response = await fetch(src)
+    const blob = await response.blob()
+    return new File([blob], fileName, { type: blob.type })
   }
 
   const handleSubmit = async () => {
-    if (!formData.product || !formData.visibility || !formData.audience) {
-      console.warn("Form is incomplete")
-      return
-    }
+    if (!formData.product || !formData.visibility || !formData.audience) return
 
     try {
       setIsLoading(true)
       setError(null)
-
-      if (!currentMedia?.src) {
-        throw new Error("No media selected")
-      }
+      if (!currentMedia?.src) throw new Error("No media selected")
 
       const postFormData = new FormData()
       const fileExtension = currentMedia.type === "photo" ? "jpg" : "mp4"
       const mediaFile = await getFileFromSource(currentMedia.src, `media_${Date.now()}.${fileExtension}`)
 
-      if (!mediaFile) {
-        throw new Error("Failed to create file from media source")
-      }
+      if (!mediaFile) throw new Error("Failed to create file from media source")
 
       postFormData.append("media", mediaFile)
       postFormData.append("caption", formData.product)
-
       if (formData.audience) postFormData.append("audience", formData.audience)
       if (formData.ageRestriction) postFormData.append("ageRestriction", formData.ageRestriction)
 
-      const response = await fetch("http://localhost:5000/api/posts", {
+      await fetch("http://localhost:5000/api/posts", {
         method: "POST",
-        headers: {
-          Authorization: accessToken,
-        },
+        headers: { Authorization: accessToken },
         body: postFormData,
       })
-
-      const result = await response.text()
-
 
       dispatch(clearCurrentMedia())
       dispatch(clearFormData())
       router.refresh()
       router.push("/upload-success")
-
     } catch (err) {
-      console.error("Upload error:", err)
       setError(err.message || "Failed to upload post")
     } finally {
       setIsLoading(false)
     }
   }
 
-  const handleproductClick = () => {
-    router.push("/set-product")
-  }
-
-  const handleVisibilityClick = () => {
-    router.push("/set-visibility")
-  }
-
-  const handleAudienceClick = () => {
-    router.push("/select-audience")
-  }
-
-  const isFormComplete = formData.product && formData.visibility && formData.audience
-
-  if (!currentMedia) {
-    return null
-  }
+  if (!currentMedia) return null
 
   return (
     <div className={stylesShop.bodyShop}>
@@ -163,30 +104,25 @@ const MediaDetailsContent = () => {
           </div>
 
           <div className={styles.form}>
-            <div className={styles.username}>{user?.username || user?.username || "Username"}</div>
+            <div className={styles.username}>{user?.username || "Username"}</div>
 
-            <button className={styles.optionButton} onClick={handleproductClick}>
-              <Package size={20} />
-              Add Link: {formData.product || "Not selected"}
+            <button className={styles.optionButton} onClick={() => router.push("/set-product")}>
+              <Package size={20} /> Add Link: {formData.product || "Not selected"}
             </button>
 
-            <button className={styles.optionButton} onClick={handleVisibilityClick}>
-              <Eye size={20} />
-              Visibility: {formData.visibility || "Not set"}
+            <button className={styles.optionButton} onClick={() => router.push("/set-visibility")}>
+              <Eye size={20} /> Visibility: {formData.visibility || "Not set"}
             </button>
 
-            <button className={styles.optionButton} onClick={handleAudienceClick}>
+            <button className={styles.optionButton} onClick={() => router.push("/select-audience")}>
               <Users size={20} />
-              Select Audience:{" "}
-              {formData.audience
-                ? `${formData.audience}${formData.ageRestriction ? ` (${formData.ageRestriction})` : ""}`
-                : "Not selected"}
+              Select Audience: {formData.audience ? `${formData.audience}${formData.ageRestriction ? ` (${formData.ageRestriction})` : ""}` : "Not selected"}
             </button>
 
             <button
-              className={`${styles.doneButton} ${!isFormComplete || isLoading ? styles.disabledButton : ""}`}
+              className={`${styles.doneButton} ${!(formData.product && formData.visibility && formData.audience) || isLoading ? styles.disabledButton : ""}`}
               onClick={handleSubmit}
-              disabled={!isFormComplete || isLoading}
+              disabled={!(formData.product && formData.visibility && formData.audience) || isLoading}
             >
               {isLoading ? "Uploading..." : "Done"}
             </button>
@@ -199,8 +135,5 @@ const MediaDetailsContent = () => {
 }
 
 export default function MediaDetails() {
-  return (
-    // Removed Suspense for debugging
-    <MediaDetailsContent />
-  )
+  return <MediaDetailsContent />
 }
