@@ -17,6 +17,7 @@
   font-size: 3rem;
   font-weight: 500;
   margin: 0rem;
+  margin-bottom: 0.5rem;
   font-family: cursive;
 }
 
@@ -37,10 +38,12 @@
   font-size: 1.25rem;
   margin: 0;
   opacity: 0.9;
+  font-weight: 500;
+  
 }
 
 .brandCircleWrapper {
-  margin: 3rem 0;
+  margin: 1rem 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -64,6 +67,7 @@
   transition: transform 0.2s ease;
   width: 100%;
   max-width: 300px;
+  margin-top:2rem;
 }
 
 .button:hover {
@@ -79,9 +83,7 @@
     font-size: 1.75rem;
   }
 
-  .subtitle {
-    font-size: 1rem;
-  }
+ 
 
   .brandCircleImage {
     width: 200px;

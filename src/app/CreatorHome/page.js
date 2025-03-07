@@ -14,6 +14,7 @@ import FeaturedCategories from "../components/CategoriesCreatorHome"
 import  ReferralProgram from "../components/ReferralProgram"
 import TopPerformers from "../components/TopPerformers"
 import TrendingBrands from '../components/CreatorTrendingBrands';
+import TrendingBrand from '../components/localBrand';
 
 export default function HomePage() {
   return (
@@ -35,8 +36,9 @@ export default function HomePage() {
        {/* <FindsOfTheDay /> */}
        <FeaturedCategories />
        <ReferralProgram />
-       <TopPerformers />
-       <ToDo />
+       {/* <TopPerformers />
+       <ToDo /> */}
+       <TrendingBrand />
        <PoweredByFooter />
       </main>
       <FooterCreator />

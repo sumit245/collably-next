@@ -14,19 +14,20 @@ export default function Home() {
         <h1 className={styles.logo}>Collably</h1>
         
         <div className={styles.content}>
-          <h2 className={styles.title}>250+ BRANDS</h2>
-          <p className={styles.subtitle}>EXCLUSIVELY ON Collably</p>
+          {/* <h2 className={styles.title}>250+ BRANDS</h2> */}
+          <p className={styles.subtitle}>India ka apna Social Commerce Platform</p>
           
           <div className={styles.brandCircleWrapper}>
             <Image
-              src="/images/creator-entry.webp" 
+              src="/images/creator-entry2.webp" 
               alt="Brand Logos"
-              width={240}
-              height={240}
+              width={300}
+              height={300}
               className={styles.brandCircleImage}
             />
           </div>
-
+          <p className={styles.subtitle}>Make your content shoppable <br/> with product links</p>
+          
           <Link href="/creatorDashboardVerify"> <button className={styles.button}>Get Started</button></Link>
         </div>
       </div>
