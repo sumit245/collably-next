@@ -11,7 +11,7 @@ const navItems = [
   { name: 'Feed', href: '/feed', icon: Rss },
   { name: 'My Items', href: '/login', icon: ShoppingBag },
   { name: 'Search', href: '/search', icon: Search },
-  { name: 'Me', href: '/login', icon: User },
+  { name: 'Me', href: 'shopProfile', icon: User },
 ]
 
 export default function FooterShop() {
