@@ -1,5 +1,4 @@
-
- /** @type {import('next').NextConfig} */
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -7,18 +6,18 @@ const nextConfig = {
         protocol: "http",
         hostname: "localhost",
         port: "5000",
-        pathname: "/uploads/images/**",
+        pathname: "/uploads/images/",
       },
       {
         protocol: "http",
         hostname: "127.0.0.1",
         port: "5000",
-        pathname: "/uploads/images/**",
+        pathname: "/uploads/images/",
       },
       {
         protocol: "https",
         hostname: "cdn.pixabay.com",
-        pathname: "/photo/**"
+        pathname: "/photo/", // Allow Pixabay images
       },
     ],
   },
