@@ -1,9 +1,8 @@
 
 
- /** @type {import('next').NextConfig} */
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["localhost", "127.0.0.1", "cdn.pixabay.com"], // Add "cdn.pixabay.com"
     remotePatterns: [
       {
         protocol: "http",
