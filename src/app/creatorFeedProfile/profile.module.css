@@ -395,3 +395,13 @@
   flex-direction: column;
   align-items: center;
 }
+
+.followButton{
+  background: none;
+  border: none;
+  color: white;
+  border: 1px solid white;
+  padding: 5px 30px;
+  border-radius: .5rem;
+  cursor: pointer;
+}

@@ -46,7 +46,6 @@ export default function CreatorProfile() {
           const response = await api.fetch(`/user/${creatorId}`)
           if (response.user) {
             setCreator(response.user)
-            // Check if current user is following this creator
             if (currentUser && response.user.followers) {
               setIsFollowing(response.user.followers.includes(currentUser._id))
             }
@@ -74,7 +73,6 @@ export default function CreatorProfile() {
       }
       setIsFollowing(!isFollowing)
 
-      // Update creator data to reflect new follower count
       const response = await api.fetch(`/user/${creatorId}`)
       if (response.user) {
         setCreator(response.user)
