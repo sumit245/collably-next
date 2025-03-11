@@ -123,12 +123,13 @@ export default function CreatorProfile() {
 
   return (
     <LikeProvider>
-      <div className={stylesShop.bodyShop}>
+       <div className={stylesShop.bodyShop}>
         <div className={stylesShop.smartphoneContainer}>
           <Header />
           <div className={styles.container}>
             <section className={styles.profileInfo}>
               <div className={styles.profileHeader}>
+                <div className={styles.profileSubHeader}>
                 <Image
                   src={creator.avatar || "/placeholder.svg"}
                   alt={creator.fullname || creator.username || "Creator"}
@@ -136,10 +137,13 @@ export default function CreatorProfile() {
                   height={100}
                   className={styles.profileImage}
                 />
-                <h2 className={styles.profileName}>{creator.fullname || creator.username}</h2>
-              </div>
-
-              <div className={styles.profile}>
+                <span>
+                  {" "}
+                  <h2 className={styles.profileName}>
+                    {creator.fullname || creator.username}
+                  </h2>
+                </span>
+                </div>
                 <div className={styles.stats}>
                   {[
                     ["posts", filteredPosts.length],
