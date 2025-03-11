@@ -32,7 +32,7 @@ const VideoCarouselCard = ({ videos = [], title = "Trending Today", subtitle }) 
   
 
   if (isLoading || !videos.length) {
-    return <div>Loading...</div>;
+    return <div>No Videos Found</div>;
   }
 
   const handleVideoClick = (videoId) => {
