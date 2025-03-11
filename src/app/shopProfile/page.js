@@ -12,12 +12,7 @@ import Footer from "../components/FooterShop"
 import Header from "../components/HeaderShop"
 import api from "../services/api"
 import { LikeProvider } from "../actions/LikeContext"
-<<<<<<< HEAD
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000/"
-=======
 import { BASE_URL } from "../services/api";
->>>>>>> 87a10b86bd0f13a52859a3d0a13831d7e1e54d09
 const changeEscapeChar = (path) => path?.replace(/\\/g, "/") || ""
 
 export default function Profile() {
@@ -124,8 +119,4 @@ export default function Profile() {
     </div>
     </LikeProvider>
   )
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 87a10b86bd0f13a52859a3d0a13831d7e1e54d09
