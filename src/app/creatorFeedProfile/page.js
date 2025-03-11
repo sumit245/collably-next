@@ -11,8 +11,7 @@ import Link from "next/link"
 import FooterCreator from "../components/FooterCreator"
 import CreatorHome from "../components/CreatorHome"
 import api from "../services/api"
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000/"
+import { BASE_URL } from "../services/api";
 const changeEscapeChar = (path) => path?.replace(/\\/g, "/") || ""
 
 export default function Profile() {

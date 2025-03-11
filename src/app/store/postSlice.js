@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api"
+import { BASE_URL } from "../services/api";
 
 const fetchWithToken = async (url, options = {}) => {
   const accessToken = localStorage.getItem("accessToken")
@@ -13,7 +12,7 @@ const fetchWithToken = async (url, options = {}) => {
     headers["Authorization"] = accessToken
   }
 
-  const response = await fetch(`${BASE_URL}${url}`, {
+  const response = await fetch(`${BASE_URL}api${url}`, {
     ...options,
     headers,
   })

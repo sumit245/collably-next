@@ -8,8 +8,7 @@ import Footer from "../components/FooterShop"
 import api from "../services/api"
 import styles from "./stylesfeed.module.css"
 import styleshop from "../shop/StyleShop.module.css"
-
-const BASE_URL = "http://localhost:5000/"
+import { BASE_URL } from "../services/api";
 
 export default function ReelsPage() {
   const [reelsData, setReelsData] = useState([])

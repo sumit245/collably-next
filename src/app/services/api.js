@@ -1,4 +1,4 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000/api"
+export const BASE_URL = "http://127.0.0.1:5000/"
 
 const api = {
   fetch: async (url, options = {}) => {
@@ -13,7 +13,7 @@ const api = {
     }
 
     try {
-      const response = await fetch(`${BASE_URL}${url}`, {
+      const response = await fetch(`${BASE_URL}api${url}`, {
         ...options,
         headers,
       })
