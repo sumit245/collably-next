@@ -14,7 +14,6 @@ export default function Home() {
         <h1 className={styles.logo}>Collably</h1>
         
         <div className={styles.content}>
-          {/* <h2 className={styles.title}>250+ BRANDS</h2> */}
           <p className={styles.subtitle}>India ka apna Social Commerce Platform</p>
           
           <div className={styles.brandCircleWrapper}>
@@ -36,4 +35,3 @@ export default function Home() {
     </div>
   )
 }
-

@@ -88,3 +88,11 @@ export const checkAuth = () => async (dispatch) => {
   }
 }
 
+export const updateUser = (userData) => async (dispatch) => {
+  try {
+    await dispatch(updateUserAsync(userData)).unwrap()
+    return { success: true }
+  } catch (error) {
+    return { success: false, error }
+  }
+}

@@ -10,8 +10,7 @@ import { LikeProvider } from "../actions/LikeContext"
 import Image from "next/image"
 import { ChevronDown, Search } from "lucide-react"
 import Link from "next/link"
-
-const BASE_URL = "http://localhost:5000/"
+import { BASE_URL } from "../services/api";
 
 export default function SearchSection() {
   const dispatch = useDispatch()

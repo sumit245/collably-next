@@ -4,8 +4,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
 import { ArrowRight } from 'lucide-react'
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000/"
+import { BASE_URL } from "../services/api";
 
 const changeEscapeChar = (path) => path?.replace(/\\/g, "/") || ""
 

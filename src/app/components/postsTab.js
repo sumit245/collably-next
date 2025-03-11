@@ -5,8 +5,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
 import { ArrowRight } from 'lucide-react'
+import { BASE_URL } from "../services/api";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000"
 
 const changeEscapeChar = (path) => path?.replace(/\\/g, "/") || ""
 

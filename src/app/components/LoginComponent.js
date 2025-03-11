@@ -59,7 +59,7 @@ const LoginComponent = () => {
     <div className="login-container">
       <form className="form" onSubmit={handleOTP}>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" 
-          strokeWidth="2" onClick={() => router.back()} style={{ cursor: "pointer", left: 20, top: 20 }}>
+          strokeWidth="2" onClick={() => router.back()} style={{ cursor: "pointer", position: "relative", left: 20, top: 20 }}>
           <polyline points="15 18 9 12 15 6"/>
         </svg>
 
@@ -98,7 +98,9 @@ const LoginComponent = () => {
             </svg>
             {isLoading ? "Connecting..." : "Google"}
           </button>
-          <button className="btn-insta" disabled>            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="25px">
+          <button className="btn-insta" type="button" disabled={isLoading}>
+            {" "}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48px" height="25px">
               <radialGradient
                 id="yOrnnhliCrdS2gy~4tD8ma"
                 cx="19.38"
@@ -142,7 +144,9 @@ const LoginComponent = () => {
                 fill="#fff"
                 d="M30,37H18c-3.859,0-7-3.14-7-7V18c0-3.86,3.141-7,7-7h12c3.859,0,7,3.14,7,7v12	C37,33.86,33.859,37,30,37z M18,13c-2.757,0-5,2.243-5,5v12c0,2.757,2.243,5,5,5h12c2.757,0,5-2.243,5-5V18c0-2.757-2.243-5-5-5H18z"
               />
-            </svg></button>
+            </svg>{" "}
+            Instagram
+          </button>
         </div>
       </form>
       <div id="recaptcha-container"></div>

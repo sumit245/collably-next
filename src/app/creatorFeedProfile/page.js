@@ -11,8 +11,7 @@ import Link from "next/link"
 import FooterCreator from "../components/FooterCreator"
 import CreatorHome from "../components/CreatorHome"
 import api from "../services/api"
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000/"
+import { BASE_URL } from "../services/api";
 const changeEscapeChar = (path) => path?.replace(/\\/g, "/") || ""
 
 export default function Profile() {
@@ -58,9 +57,9 @@ export default function Profile() {
           <section className={styles.profileInfo}>
             <div className={styles.profile}>
               <div className={styles.stats}>
-                {[ 
-                  ['posts', posts.filter(p => p.user?._id === user?._id).length], 
-                  ['followers', user?.followers?.length], 
+                {[
+                  ['posts', posts.filter(p => p.user?._id === user?._id).length],
+                  ['followers', user?.followers?.length],
                   ['following', user?.following?.length]
                 ].map(([label, value]) => (
                   <div key={label} className={styles.statItem}>
@@ -72,18 +71,17 @@ export default function Profile() {
             </div>
 
             <div className={styles.profileActions}>
-              <button className={styles.editButton}>Edit profile</button>
+            <button className={styles.editButton} onClick={() => router.push('/updateUser')}>
+        Edit profile
+      </button>
               <button className={styles.shareButton}>Share profile</button>
             </div>
           </section>
 
           <div className={styles.tabsContainer}>
             {tabs.map(tab => (
-              <div 
-                key={tab.id} 
-                className={`${styles.tab} ${activeTab === tab.id && styles.activeTab}`} 
-                onClick={() => setActiveTab(tab.id)}
-              >
+              <div key={tab.id} className={`${styles.tab} ${activeTab === tab.id && styles.activeTab}`} 
+                onClick={() => setActiveTab(tab.id)}>
                 {tab.label}
               </div>
             ))}

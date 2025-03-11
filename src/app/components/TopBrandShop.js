@@ -8,13 +8,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchBrands } from '../store/brandSlice';
 import styles from '../shop/StyleShop.module.css';
 import { ArrowRight } from 'lucide-react';
-
+import { BASE_URL } from "../services/api";
 export default function TopBrands() {
   const changeEscapeChar = (path) => {
     if (!path) return ""
     return path.replace(/\\/g, "/")
   }
-  const BASE_URL ="http://127.0.0.1:5000/"
+  
   const dispatch = useDispatch();
   const brands = useSelector((state) => state.brands.items);
 

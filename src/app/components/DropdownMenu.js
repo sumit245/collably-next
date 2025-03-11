@@ -94,7 +94,7 @@ export function DropdownMenu() {
 
           <nav className={styles.menuNav}>
             {menuItems.map((item, index) => (
-              <a key={index} href="#" className={styles.menuItem} role="menuitem">
+              <a key={index} href="#"  className={styles.menuItem} role="menuitem" >
                 <div className={styles.menuItemContent}>
                   {item.icon}
                   <span className={styles.menuItemLabel}>
@@ -126,12 +126,12 @@ export function DropdownMenu() {
             </div>
 
             {user ? (
-              <button className={styles.logoutButton} onClick={handleLogout}>
+              <button className={styles.logoutButton}  onClick={handleLogout} >
                 <span>Logout</span>
                 <LogOut className={styles.logoutIcon} />
               </button>
             ) : (
-              <button className={styles.logoutButton} onClick={() => router.push('/login')}>
+              <button className={styles.logoutButton}  onClick={() => router.push('/login')} >
                 <span>Login</span>
               </button>
             )}

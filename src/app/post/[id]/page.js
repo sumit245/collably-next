@@ -11,11 +11,11 @@ import api from "../../services/api"
 import { useSelector } from "react-redux"
 import { Trash2, Heart, MessageCircle, Send, Bookmark } from "lucide-react"
 import CommentSection from "../../components/commentSection"
-
+import { BASE_URL } from "../services/api";
 export default function PostDetail() {
   const { id } = useParams(), router = useRouter()
   const [isLoading, setIsLoading] = useState(true), [error, setError] = useState(null)
-  const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/"
+
   const currentUserId = useSelector((state) => state.auth.user?._id), currentUser = useSelector((state) => state.auth.user)
   const [currentPost, setCurrentPost] = useState({ likes: [], isLiked: false, comments: [], isSaved: false, post: { user: {}, images: [], video: null } })
   const [isFollowing, setIsFollowing] = useState(false), [isCommenting, setIsCommenting] = useState(false)

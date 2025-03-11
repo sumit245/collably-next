@@ -14,8 +14,7 @@ import FeaturedCategories from "../components/CategoriesCreatorHome"
 import  ReferralProgram from "../components/ReferralProgram"
 import TopPerformers from "../components/TopPerformers"
 import TrendingBrands from '../components/CreatorTrendingBrands';
-import TrendingBrand from '../components/localBrand';
-
+import LocalBrands from '../components/localBrands';
 export default function HomePage() {
   return (
     <div className={stylesShop.bodyShop}>
@@ -36,9 +35,10 @@ export default function HomePage() {
        {/* <FindsOfTheDay /> */}
        <FeaturedCategories />
        <ReferralProgram />
-       {/* <TopPerformers />
-       <ToDo /> */}
-       <TrendingBrand />
+       <TopCreators />
+       {/* <TopPerformers /> */}
+       {/* <ToDo /> */}
+       <LocalBrands />
        <PoweredByFooter />
       </main>
       <FooterCreator />

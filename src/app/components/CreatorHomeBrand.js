@@ -12,7 +12,7 @@ export default function TopBrands() {
 
   return (
     <div className={styles.topBrandsWrapper}>
-      <h2 className={styles.topBrandsTitle}>Click to explore Top Brands</h2>
+      <h2 className={styles.topBrandsTitle}>Explore all Top Brands</h2>
       
       <div 
         className={styles.topBrandsScroll}

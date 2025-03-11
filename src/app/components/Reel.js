@@ -7,7 +7,7 @@ import { trackReferralClick } from "../store/brandSlice"
 import styles from "../feed/stylesfeed.module.css"
 import CommentSection from "./commentSection"
 import Image from "next/image"
-
+import { BASE_URL } from "../services/api";
 export default function Reel({
   _id, video, images, user, caption, likes = [], comments, onLike, onUnlike, 
   onShare, onSave, onUnsave, isSaved: propIsSaved, isLiked: propIsLiked, currentUserId 
@@ -20,7 +20,7 @@ export default function Reel({
   const [isLiked, setIsLiked] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
   const commentSectionRef = useRef(null)
-  const BASE_URL = "http://localhost:5000/"
+  
 
   useEffect(() => {
     setIsLiked(propIsLiked || likes.includes(userId))

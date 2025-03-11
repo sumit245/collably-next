@@ -21,7 +21,7 @@ export default function SliderSectionComponent() {
   const updateSlider = (type, value) => {
     const { slider, thumb, value: val, track } = refs[type]
     const percent = ((value - slider.current.min) / (slider.current.max - slider.current.min)) * 100
-    thumb.current.style.left = `${percent}%`;
+    thumb.current.style.left = `${percent}%`
     track.current.style.width = `${percent}%`
     val.current.textContent = type === 'followers' ? formatNumber(value) : value
     
@@ -52,7 +52,7 @@ export default function SliderSectionComponent() {
                 <div className="sliderTrack">
                   <div className="sliderTicks">{[...Array(12)].map((_, i) => <div key={i} className="tick" />)}</div>
                   <div className={`sliderFill ${type}Fill`} ref={refs[type].track} />
-                  </div>
+                </div>
                 <input
                   type="range"
                   min={type === 'followers' ? 0 : 10}
