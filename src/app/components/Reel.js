@@ -7,6 +7,8 @@ import { trackReferralClick } from "../store/brandSlice"
 import styles from "../feed/stylesfeed.module.css"
 import CommentSection from "./commentSection"
 import Image from "next/image"
+import Link from "next/link"
+import { BASE_URL } from "../services/api";
 
 export default function Reel({
   _id, video, images, user, caption, likes = [], comments, onLike, onUnlike, 
@@ -20,7 +22,7 @@ export default function Reel({
   const [isLiked, setIsLiked] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
   const commentSectionRef = useRef(null)
-  const BASE_URL = "http://localhost:5000/"
+  
 
   useEffect(() => {
     setIsLiked(propIsLiked || likes.includes(userId))
@@ -120,10 +122,12 @@ export default function Reel({
 
       <div className={styles.info}>
         <div className={styles.userInfo}>
-          <div className={styles.avatar}>
+          <Link href={`/creator/${user?._id}`} className={styles.avatar}>
             <img src={user?.avatar || "/placeholder.svg"} alt={user?.fullname} />
-          </div>
-          <span className={styles.username}>{user?.fullname}</span>
+          </Link>
+          <Link href={`/creator/${user?._id}`} className={styles.username}>
+            {user?.fullname}
+          </Link>
           {userId !== user?._id && (
             <button className={styles.followButton} onClick={handleFollowToggle}>
               {isFollowing ? "Following" : "Follow"}

@@ -23,26 +23,6 @@ export default function ShopPage() {
   const [creators, setCreators] = useState([])
   const searchQuery = useSelector((state) => state.search.query)
 
-  const filterComponentsBySearch = (Component) => {
-    return (props) => {
-      if (!searchQuery) return <Component {...props} />
-
-      const searchableContent = Component.searchableProps ? Component.searchableProps(props) : []
-
-      if (searchableContent.some((content) => content.toLowerCase().includes(searchQuery.toLowerCase()))) {
-        return <Component {...props} />
-      }
-      return null
-    }
-  }
-
-  const FilteredTopCreators = filterComponentsBySearch(TopCreators)
-  const FilteredProductCategories = filterComponentsBySearch(FeaturedCategories)
-  const FilteredTopBrands = filterComponentsBySearch(TopBrands)
-  const FilteredProductGrid = filterComponentsBySearch(ProductGrid)
-  const FilteredFeaturedCreators = filterComponentsBySearch(FeaturedCreators)
-  const FilteredTrendingBrands = filterComponentsBySearch(TrendingBrands)
-  const FilteredTrendingUsersLeaderBoard = filterComponentsBySearch(TrendingUsersLeaderBoard)
 
   return (
     <LikeProvider>
@@ -51,22 +31,22 @@ export default function ShopPage() {
           <Header />
           <main>
             <HeroCarousel data={videoData1} />
-            <FilteredTopCreators />
+            <TopCreators />
             <HeroCarousel data={videoData2} />
-            <FilteredProductCategories />
-            <FilteredTopBrands />
+            <FeaturedCategories />
+            <TopBrands />
             <ReelsSec2 sectionTitle="Electronics Products" category="Electronics" />
             <ReelsSec2 sectionTitle="Beauty Products" category="Beauty" />
             <ReelsSec2 sectionTitle="Fashion Products" category="Fashion" />
             <ReelsSec2 sectionTitle="Home Products" category="Home" />
             <ReelsSec2 sectionTitle="Sports Products" category="Sports" />
             <ReelsSec2 sectionTitle="Food Products" category="Food" />
-            {/* <FilteredProductGrid /> */}
-            {/* <FilteredFeaturedCreators /> */}
-            <FilteredTopCreators />
-            {/* <FilteredTrendingBrands /> */}
-            <FilteredTopBrands />
-            <FilteredTrendingUsersLeaderBoard />
+            {/* <ProductGrid /> */}
+            {/* <FeaturedCreators /> */}
+            <TopCreators />
+            {/* <TrendingBrands /> */}
+            <TopBrands />
+            <TrendingUsersLeaderBoard />
             <ChooseYouSection />
           </main>
           <Footer />

@@ -11,7 +11,7 @@ import FooterCreator from "../components/FooterCreator"
 import { Package, Eye, Users, ArrowLeft } from 'lucide-react'
 import Link from "next/link"
 import { updateFormData, clearCurrentMedia, clearFormData } from '../store/mediaSlice'
-
+import { BASE_URL } from "../services/api";
 const MediaDetailsContent = () => {
   const router = useRouter()
   const dispatch = useDispatch()
@@ -66,7 +66,7 @@ const MediaDetailsContent = () => {
       if (formData.audience) postFormData.append("audience", formData.audience)
       if (formData.ageRestriction) postFormData.append("ageRestriction", formData.ageRestriction)
 
-      await fetch("http://localhost:5000/api/posts", {
+      await fetch(`${BASE_URL}api/posts`, {
         method: "POST",
         headers: { Authorization: accessToken },
         body: postFormData,

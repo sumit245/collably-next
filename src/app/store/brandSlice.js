@@ -1,7 +1,7 @@
 // brandSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import * as brandService from "../services/brandService"
-
+import { BASE_URL } from "../services/api";
 export const fetchBrands = createAsyncThunk("brands/fetchBrands", async (_, { rejectWithValue }) => {
   try {
     const response = await brandService.getAllBrands()
@@ -52,7 +52,7 @@ export const trackReferralClick = createAsyncThunk(
   "brands/trackReferralClick",
   async (referralCode, { rejectWithValue }) => {
     try {
-      const response = await fetch(`http://127.0.0.1:5000/api/ref/code/${referralCode}`, {
+      const response = await fetch(`${BASE_URL}api/ref/code/${referralCode}`, {
         method: "GET",
       })
 

@@ -19,28 +19,57 @@ const auth = getAuth(initializeApp({
 }))
 
 const LoginComponent = () => {
-  const [contact, setContact] = useState(""), [otp, setOtp] = useState(""), [sent, setSent] = useState(false), [confirmation, setConfirmation] = useState(null)
+  const [contact, setContact] = useState("")
+  const [otp, setOtp] = useState("")
+  const [sent, setSent] = useState(false)
+  const [confirmation, setConfirmation] = useState(null)
+  const [isSendingOTP, setIsSendingOTP] = useState(false) 
+  
   const { isLoading, error } = useSelector(({ auth }) => auth)
-  const dispatch = useDispatch(), router = useRouter(), redirect = useSearchParams()?.get("redirect") || "/"
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const redirect = useSearchParams()?.get("redirect") || "/"
 
   useEffect(() => {
-    if (location.search.includes("code=")) dispatch(handleGoogleRedirect()).then(({ success }) => success && router.push(redirect))
-    if (!window.recaptchaVerifier) window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
-      size: "invisible", callback: () => console.log("reCAPTCHA solved"), "expired-callback": () => console.error("reCAPTCHA expired")
-    })
+    if (location.search.includes("code=")) {
+      dispatch(handleGoogleRedirect()).then(({ success }) => success && router.push(redirect))
+    }
   }, [dispatch, router, redirect])
 
   const handleOTP = async (e) => {
     e.preventDefault()
+    if (isSendingOTP) return 
+
     if (!sent) {
-      window.recaptchaVerifier?.clear()
-      window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", { size: "invisible" })
+      setIsSendingOTP(true)
       try {
-        const result = await signInWithPhoneNumber(auth, contact.startsWith("+") ? contact : `+91${contact}`, window.recaptchaVerifier)
-        setConfirmation(result), setSent(true)
+       
+        if (window.recaptchaVerifier) {
+          window.recaptchaVerifier.clear()
+          window.recaptchaVerifier = null
+        }
+
+        const recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
+          size: "invisible",
+          callback: () => console.log("reCAPTCHA solved"),
+          "expired-callback": () => console.error("reCAPTCHA expired"),
+        })
+
+        window.recaptchaVerifier = recaptchaVerifier
+
+        const phoneNumber = contact.startsWith("+") ? contact : `+91${contact}`
+        const result = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier)
+        
+        setConfirmation(result)
+        setSent(true)
+        dispatch({ type: "CLEAR_ERROR" }) 
       } catch (err) {
         console.error("Error sending OTP:", err.message)
         dispatch({ type: "SET_ERROR", payload: "Failed to send OTP. Try again." })
+        setSent(false)
+        setConfirmation(null)
+      } finally {
+        setIsSendingOTP(false)
       }
     } else {
       if (!confirmation) return dispatch({ type: "SET_ERROR", payload: "No OTP confirmation found" })
@@ -82,8 +111,14 @@ const LoginComponent = () => {
           </div>
         </>}
 
-        <button className="button-submit" type="submit" disabled={isLoading}>
-          {isLoading ? (sent ? "Signing In..." : "Sending OTP...") : (sent ? "Sign In" : "Send OTP")}
+        <button 
+          className="button-submit" 
+          type="submit" 
+          disabled={isLoading || isSendingOTP} 
+        >
+          {isLoading || isSendingOTP 
+            ? (sent ? "Signing In..." : "Sending OTP...") 
+            : (sent ? "Sign In" : "Send OTP")}
         </button>
 
         <p className="p">Don't have an account? <Link href="/registration" className="span" style={{ cursor: "pointer" }}>Sign Up</Link></p>

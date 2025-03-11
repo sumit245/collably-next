@@ -11,14 +11,15 @@ import styles from "./page.module.css";
 import styleshop from "../shop/StyleShop.module.css";
 import Image from "next/image";
 import Link from "next/link";
-
+import { BASE_URL } from "../services/api";
+  
 export default function AllBrands() {
 
     const changeEscapeChar = (path) => {
         if (!path) return ""
         return path.replace(/\\/g, "/")
       }
-      const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000/"
+      
   const dispatch = useDispatch();
   const allBrands = useSelector((state) => state.brands.items);
   
