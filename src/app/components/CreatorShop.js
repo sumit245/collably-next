@@ -38,7 +38,7 @@ export default function Shop() {
   if (!user) {
     return null
   }
-
+console.log(posts)
   const tabs = [
     { id: 'posts', label: 'Posts', count: posts.filter(post => post.user._id === user?._id && (!post.video || post.video.length === 0)).length },
     { id: 'reels', label: 'Reels', count: posts.filter(post => post.user._id === user?._id && post.video).length },
