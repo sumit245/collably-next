@@ -10,7 +10,7 @@ export default function SingleProductLinksTab() {
   const router = useRouter()
   const dispatch = useDispatch()
   const userId = useSelector((state) => state.auth.user?._id)
-  const referrals = useSelector((state) => state.brands.referrals || [])
+  const referrals = useSelector((state) => state.brands?.referrals || [])
 
   useEffect(() => {
     if (userId) {
@@ -29,10 +29,10 @@ export default function SingleProductLinksTab() {
 
   const handleLinkClick = async (referralCode, referralLink, e) => {
     e.preventDefault()
-    
+
     try {
       await dispatch(trackReferralClick(referralCode)).unwrap()
-      
+
       window.location.href = referralLink
     } catch (error) {
       console.error('Failed to track click:', error)
