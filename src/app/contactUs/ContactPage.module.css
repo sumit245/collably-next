@@ -1,0 +1,342 @@
+/* ContactPage.module.css */
+
+.container {
+    position: relative;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #f9fafb, #f3f4f6);
+    overflow: hidden;
+  }
+  
+  .decorativeElements {
+    position: absolute;
+    top: 20px;
+    right: 10%;
+    width: 16rem;
+    height: 16rem;
+    border-radius: 50%;
+    background-color: rgba(255, 0, 85, 0.05);
+    filter: blur(3rem);
+  }
+  
+  .decorativeElementsBottom {
+    position: absolute;
+    bottom: 20px;
+    left: 5%;
+    width: 18rem;
+    height: 18rem;
+    border-radius: 50%;
+    background-color: rgba(255, 0, 85, 0.1);
+    filter: blur(3rem);
+  }
+  
+  .decorativeElementsTop {
+    position: absolute;
+    top: 33%;
+    left: 25%;
+    width: 24rem;
+    height: 24rem;
+    border-radius: 50%;
+    background-color: rgba(59, 130, 246, 0.05);
+    filter: blur(3rem);
+  }
+  
+  .headingContainer {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  
+  .headingAccent {
+    display: inline-block;
+  }
+  
+  .headingLine {
+    position: absolute;
+    bottom: -0.5rem;
+    left: 0;
+    right: 0;
+    height: 0.75rem;
+    background-color: rgba(255, 0, 85, 0.2);
+    border-radius: 0.5rem;
+    transform: rotate(-1deg);
+  }
+  
+  .headingTitle {
+    font-size: 3rem;
+    font-weight: bold;
+    letter-spacing: -0.5px;
+    z-index: 10;
+  }
+  
+  .subHeading {
+    margin-top: 1.5rem;
+    font-size: 1.125rem;
+    color: #4b5563;
+    max-width: 42rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .gridWrapper {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(1, 1fr);
+  }
+  
+  .socialSection {
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.1);
+    border: 1px solid #f3f4f6;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+  }
+  
+  .socialSection:hover {
+    box-shadow: 0 2rem 3rem rgba(0, 0, 0, 0.2);
+    transform: translateY(-0.25rem);
+  }
+  
+  .socialContent {
+    padding: 2rem;
+  }
+  
+  .socialHeader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+  
+  .socialLine {
+    width: 3rem;
+    height: 0.25rem;
+    background-color: #ff0055;
+    border-radius: 0.25rem;
+    margin-right: 1rem;
+  }
+  
+  .socialTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .socialGrid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .cardContainer {
+    position: relative;
+    background-color: white;
+    border-radius: 1rem;
+    border: 1px solid #f3f4f6;
+    padding: 1.5rem;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .cardContainer:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  }
+  
+  .cardIconWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0.5rem;
+    height: 100%;
+    background-color: #ff0055;
+    opacity: 0;
+    transition: width 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .cardContainer:hover .cardIconWrapper {
+    width: 100%;
+    opacity: 0.1;
+  }
+  
+  .cardContent {
+    position: relative;
+    z-index: 10;
+  }
+  
+  .cardIcon {
+    width: 3rem;
+    height: 3rem;
+    background-color: #f3f4f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0.75rem;
+    margin-bottom: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cardContainer:hover .cardIcon {
+    background-color: rgba(255, 0, 85, 0.1);
+  }
+  
+  .cardPlatform {
+    font-size: 1.125rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .cardDescription {
+    font-size: 1rem;
+    color: #6b7280;
+    margin-bottom: 1.5rem;
+  }
+  
+  .cardLink {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #ff0055;
+    font-weight: 500;
+  }
+  
+  .cardLink:hover {
+    text-decoration: underline;
+  }
+  
+  .contactMethodSection {
+    position: relative;
+  }
+  
+  .contactSticky {
+    position: sticky;
+    top: 2rem;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.1);
+    border: 1px solid #f3f4f6;
+  }
+  
+  .contactHeader {
+    height: 6rem;
+    background: linear-gradient(to right, #ff0055, #ff3377);
+  }
+  
+  .contactContent {
+    padding: 2rem;
+    margin-top: -4rem;
+  }
+  
+  .contactIconWrapper {
+    width: 3rem;
+    height: 3rem;
+    background-color: #ff0055;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .contactTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+  }
+  
+  .contactItem {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    margin-left: -1rem;
+    margin-right: -1rem;
+    border-radius: 0.75rem;
+  }
+  
+  .contactItem:hover {
+    background-color: #f3f4f6;
+  }
+  
+  .contactItemIcon {
+    width: 2rem;
+    height: 2rem;
+    background-color: #f3f4f6;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ff0055;
+  }
+  
+  .contactItemDetails {
+    margin-left: 1.5rem;
+  }
+  
+  .businessHours {
+    margin-top: 2rem;
+  }
+  
+  .businessHoursText {
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+  
+  .businessHoursDetails {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  
+  .businessHoursDay {
+    font-weight: 600;
+  }
+  
+  .businessHoursTime {
+    font-weight: 400;
+  }
+  
+  .ctaSection {
+    margin-top: 4rem;
+    position: relative;
+  }
+  
+  .ctaBackground {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, rgba(255, 0, 85, 0.2), rgba(255, 51, 119, 0.2));
+    border-radius: 1rem;
+    transform: rotate(-1deg);
+  }
+  
+  .ctaContent {
+    position: relative;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    border: 1px solid #f3f4f6;
+  }
+  
+  .ctaHeader {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .ctaHeaderText {
+    margin-bottom: 1.5rem;
+  }
+  
+  .ctaLink {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ff0055;
+    padding: 1rem 2rem;
+    color: white;
+    font-weight: 500;
+    border-radius: 0.75rem;
+    box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .ctaLink:hover {
+    background-color: #e0004b;
+    box-shadow: 0 1.25rem 2rem rgba(0, 0, 0, 0.2);
+  }
+  
