@@ -17,14 +17,16 @@ import { BASE_URL } from "../services/api";
 const changeEscapeChar = (path) => path?.replace(/\\/g, "/") || "";
 
 export default function CreatorProfile() {
-  const router = useRouter();
-  const params = useParams();
-  const creatorId = params?.id;
-  const dispatch = useDispatch();
-  const { posts, status, error } = useSelector((state) => state.posts);
-  const [activeTab, setActiveTab] = useState("posts");
-  const [creator, setCreator] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter()
+  const params = useParams()
+  const creatorId = params?.id
+  const dispatch = useDispatch()
+  const { posts, status, error } = useSelector((state) => state.posts)
+  const [activeTab, setActiveTab] = useState("posts")
+  const [creator, setCreator] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const currentUser = useSelector((state) => state.auth.user)
+  const [isFollowing, setIsFollowing] = useState(false)
 
   useEffect(() => {
     if (!creatorId) {
@@ -43,16 +45,44 @@ export default function CreatorProfile() {
         try {
           const response = await api.fetch(`/user/${creatorId}`);
           if (response.user) {
-            setCreator(response.user);
+            setCreator(response.user)
+            // Check if current user is following this creator
+            if (currentUser && response.user.followers) {
+              setIsFollowing(response.user.followers.includes(currentUser._id))
+            }
           }
         } catch (err) {
           console.error("Error fetching creator:", err);
         }
         setIsLoading(false);
       }
-    };
-    fetchCreatorData();
-  }, [creatorId]);
+    }
+    fetchCreatorData()
+  }, [creatorId, currentUser])
+
+  const handleFollowToggle = async () => {
+    if (!currentUser) {
+      router.push(`/login?redirect=${encodeURIComponent(`/creator/${creatorId}`)}`)
+      return
+    }
+
+    try {
+      if (isFollowing) {
+        await api.unfollowUser(creatorId)
+      } else {
+        await api.followUser(creatorId)
+      }
+      setIsFollowing(!isFollowing)
+
+      // Update creator data to reflect new follower count
+      const response = await api.fetch(`/user/${creatorId}`)
+      if (response.user) {
+        setCreator(response.user)
+      }
+    } catch (error) {
+      console.error("Follow toggle error:", error)
+    }
+  }
 
   const tabs = [
     { id: "posts", label: "Posts" },
@@ -95,7 +125,7 @@ export default function CreatorProfile() {
 
   return (
     <LikeProvider>
-      <div className={stylesShop.bodyShop}>
+       <div className={stylesShop.bodyShop}>
         <div className={stylesShop.smartphoneContainer}>
           <Header />
           <div className={styles.container}>
@@ -131,8 +161,14 @@ export default function CreatorProfile() {
               </div>
 
               <div className={styles.profileActions}>
-                <button className={styles.followButton}>Follow</button>
-                <button className={styles.messageButton}>Message</button>
+                {currentUser && currentUser._id !== creatorId && (
+                  <button
+                    className={`${styles.followButton} ${isFollowing ? styles.followingButton : ""}`}
+                    onClick={handleFollowToggle}
+                  >
+                    {isFollowing ? "Following" : "Follow"}
+                  </button>
+                )}
               </div>
             </section>
 
