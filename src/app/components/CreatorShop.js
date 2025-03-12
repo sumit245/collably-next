@@ -79,7 +79,7 @@ export default function Shop() {
 
         <div className={styles.profileSection}>
           <Image
-            src={user.avatar || "/images/banavt1.png"} 
+            src={user.avatar || "/images/banavt1.png"}
             alt="Shop profile"
             width={36}
             height={36}
@@ -89,7 +89,7 @@ export default function Shop() {
           <div className={styles.shopInfo}>
             <h1 className={styles.shopName}>My Shop</h1>
             <p className={styles.username}>
-              {user?.fullname || user?.username} 
+              {user?.fullname || user?.username}
             </p>
           </div>
         </div>
