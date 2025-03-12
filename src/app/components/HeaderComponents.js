@@ -92,7 +92,7 @@ const HeaderComponent = () => {
         <Link href="/">Creators</Link>
         <Link href="/brand">Brands</Link>
         <Link href="/shop">Shop</Link>
-        <Link href="/form">Contact</Link>
+        <Link href="/contact-us">Contact</Link>
       </nav>
     </header>
   )

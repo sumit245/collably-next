@@ -26,7 +26,7 @@ export default function FooterComponent() {
                         <li><a href="/brand">Brands</a></li>
                         <li><a href="/shop">Shop</a></li>
                         <li><a href="#">University</a></li>
-                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="/contact-us">Contact Us</a></li>
                        </ul>
                     </div>
                 </div>
