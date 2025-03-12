@@ -1,4 +1,4 @@
-name: Deploy on server
+name: Deploy Node.js App to EC2
 
 on:
   push:
@@ -7,41 +7,29 @@ on:
 
 jobs:
   deploy:
-    name: Push to EC2
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout the code
-        uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Deploy to my EC2 instance
-        uses: easingthemes/ssh-deploy@v2.1.5
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          SOURCE: "./"
-          REMOTE_HOST: ${{ secrets.HOST_DNS }}
-          REMOTE_USER: ${{ secrets.USERNAME }}
-          TARGET: ${{ secrets.TARGET_DIR }}
+      - name: Set up SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 400 ~/.ssh/id_rsa
+          eval $(ssh-agent -s)
+          ssh-add ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST_DNS }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
+      - name: Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+            cd /var/vhost/collably-next
             sudo su
-            # Navigate to the project directory
-            cd ${{ secrets.TARGET_DIR }}
-            # Install project dependencies
+            git pull origin main
             npm install
-            # Build the project
             npm run build
-            # Clean up existing files in the web server directory
-            sudo rm -rf /var/www/html/*
-            # Move the build files to the web server directory
-            sudo mv build/* /var/www/html
-            # Set proper SELinux context for the web content
-            sudo chcon -R -t httpd_sys_content_t /var/www/html
-            # Restart Apache to apply changes
-            sudo systemctl restart nginx
+            pm2 restart all
+            service nginx restart
+          EOF
