@@ -122,12 +122,30 @@
   transform: scale(1.1);
 }
 
+.textLabel {
+  display: flex;
+  flex-direction: column;
+}
+
 .password{
   display: flex;
   flex-direction: column;
 }
 
-.header{
+.header {
   display: flex;
   gap: 8.5rem;
+}
+
+@media screen and (max-width: 440px) {
+  .row {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .header {
+    display: flex;
+    gap: 19%;
+  }
 }

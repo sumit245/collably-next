@@ -22,6 +22,7 @@ export default function Shop() {
   const { posts, status, error } = useSelector((state) => state.posts)
   const router = useRouter()
   const dispatch = useDispatch()
+  const userId = user?._id || '';  // Default to an empty string if user is undefined/null
 
   useEffect(() => {
     if (!user) {
@@ -40,11 +41,12 @@ export default function Shop() {
   }
 
   const tabs = [
-    { id: 'posts', label: 'Posts', count: posts.filter(post => post.user._id === user?._id && (!post.video || post.video.length === 0)).length },
-    { id: 'reels', label: 'Reels', count: posts.filter(post => post.user._id === user?._id && post.video).length },
+    { id: 'posts', label: 'Posts', count: posts.filter(post => post.user?._id === userId && (!post.video || post.video?.length === 0)).length },
+    { id: 'reels', label: 'Reels', count: posts.filter(post => post.user?._id === userId && post.video).length },
     { id: 'collections', label: 'Collections', count: 0 },
     { id: 'links', label: 'Single Product Links', count: 0 }
-  ]
+  ];
+
 
   useEffect(() => {
     const tab = tabs.find(t => t.id === activeTab)
@@ -54,21 +56,24 @@ export default function Shop() {
   const handleTabClick = (tabId) => {
     setActiveTab(tabId)
   }
+  console.log("Posts:", posts);
+  console.log("Is posts an array?", Array.isArray(posts));
 
   const renderTabContent = () => {
     switch (activeTab) {
       case 'posts':
-        return <PostsTab posts={posts.filter(post => post.user._id === user?._id && (!post.video || post.video.length === 0))} />
+        return <PostsTab posts={posts.filter(post => post.user?._id === user?._id && !post.video)} />;
       case 'reels':
-        return <ReelsTab reels={posts.filter(post => post.user._id === user?._id && post.video)} />
+        return <ReelsTab reels={posts.filter(post => post.user?._id === user?._id && post.video)} />;
       case 'collections':
-        return <CollectionsTab />
+        return <CollectionsTab />;
       case 'links':
-        return <SingleProductLinksTab />
+        return <SingleProductLinksTab />;
       default:
-        return null
+        return null;
     }
-  }
+  };
+
 
   return (
     <div className={styles.containerShop}>
@@ -79,7 +84,7 @@ export default function Shop() {
 
         <div className={styles.profileSection}>
           <Image
-            src={user.avatar || "/images/banavt1.png"} 
+            src={user.avatar || "/images/banavt1.png"}
             alt="Shop profile"
             width={36}
             height={36}
@@ -89,7 +94,7 @@ export default function Shop() {
           <div className={styles.shopInfo}>
             <h1 className={styles.shopName}>My Shop</h1>
             <p className={styles.username}>
-              {user?.fullname || user?.username} 
+              {user?.fullname || user?.username}
             </p>
           </div>
         </div>

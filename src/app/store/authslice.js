@@ -14,19 +14,22 @@ export const loginWithPhoneAsync = createAsyncThunk(
   "auth/loginWithPhone",
   async ({ contactNumber }, { rejectWithValue }) => {
     try {
-      const response = await authService.loginWithPhone(contactNumber)
+      const response = await authService.loginWithPhone(contactNumber);
+
+
       if (response && response.user) {
-        localStorage.setItem("accessToken", response.access_token)
-        localStorage.setItem("user", JSON.stringify(response.user))
-        return response.user
+        localStorage.setItem("accessToken", response.access_token);
+        localStorage.setItem("user", JSON.stringify(response.user));
+        return response.user;
       } else {
-        return rejectWithValue("Invalid login response")
+        return rejectWithValue("Invalid login response");
       }
     } catch (error) {
-      return rejectWithValue(error.message)
+      return rejectWithValue(error.message);
     }
-  },
-)
+  }
+);
+
 
 export const registerUser = createAsyncThunk(
   "auth/register",
