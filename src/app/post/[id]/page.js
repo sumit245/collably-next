@@ -11,7 +11,7 @@ import api from "../../services/api"
 import { useSelector } from "react-redux"
 import { Trash2, Heart, MessageCircle, Send, Bookmark } from "lucide-react"
 import CommentSection from "../../components/commentSection"
-import { BASE_URL } from "../services/api";
+import { BASE_URL } from "../../services/api";
 export default function PostDetail() {
   const { id } = useParams(), router = useRouter()
   const [isLoading, setIsLoading] = useState(true), [error, setError] = useState(null)
