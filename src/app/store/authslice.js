@@ -16,18 +16,15 @@ export const loginWithPhoneAsync = createAsyncThunk(
     try {
       const response = await authService.loginWithPhone(contactNumber);
 
-      alert(`API Response: ${JSON.stringify(response, null, 2)}`);
 
       if (response && response.user) {
         localStorage.setItem("accessToken", response.access_token);
         localStorage.setItem("user", JSON.stringify(response.user));
         return response.user;
       } else {
-        alert("Invalid login response");
         return rejectWithValue("Invalid login response");
       }
     } catch (error) {
-      alert(`Error: ${error.message}`);
       return rejectWithValue(error.message);
     }
   }

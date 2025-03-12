@@ -7,11 +7,11 @@ import styles from "../../postDetails/postDetails.module.css"
 import Header from "../../components/HeaderShop"
 import Footer from "../../components/FooterShop"
 import { LikeProvider } from "../../actions/LikeContext"
-import api from "../../services/api"
+import api, { BASE_URL } from "../../services/api"
 import { useSelector } from "react-redux"
 import { Trash2, Heart, MessageCircle, Send, Bookmark } from "lucide-react"
 import CommentSection from "../../components/commentSection"
-import { BASE_URL } from "../../services/api";
+
 export default function PostDetail() {
   const { id } = useParams(), router = useRouter()
   const [isLoading, setIsLoading] = useState(true), [error, setError] = useState(null)
@@ -26,7 +26,7 @@ export default function PostDetail() {
       setIsLoading(true)
       const response = await api.getPostById(id)
       if (!response?.post) return setError("Failed to load post data.")
-      
+
       const { post } = response
       const isLiked = post.likes?.some(like => like._id === currentUserId) ?? false
       const isSaved = currentUser?.saved?.includes(id) ?? false
@@ -74,7 +74,7 @@ export default function PostDetail() {
         likes: currentPost.isLiked ? currentPost.likes.filter(uid => uid !== currentUserId) : [...currentPost.likes, currentUserId],
         isLiked: !currentPost.isLiked
       })
-    } catch {}
+    } catch { }
   }
 
   const handleComment = async comment => {
@@ -100,7 +100,7 @@ export default function PostDetail() {
     try {
       await (isFollowing ? api.unfollowUser(currentPost.user._id) : api.followUser(currentPost.user._id))
       setIsFollowing(!isFollowing)
-    } catch {}
+    } catch { }
   }
 
   if (isLoading) return <div>Loading...</div>
@@ -117,7 +117,7 @@ export default function PostDetail() {
           <div className={styles.header}>
             <div className={styles.profile}>
               <button onClick={() => window.history.back()} className={styles.backButton}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
               </button>
               <div className={styles.userInfo}>
                 <Image src={currentPost.user?.avatar || "/placeholder.svg"} alt={currentPost.user?.username} width={32} height={32} className={styles.avatar} />
@@ -157,7 +157,7 @@ export default function PostDetail() {
             </div>
 
             <div className={styles.comments}>
-             
+
               {isCommenting && (
                 <div ref={commentSectionRef}>
                   <CommentSection comments={currentPost.comments || []} onAddComment={handleComment} onClose={() => setIsCommenting(false)} postId={id} />
