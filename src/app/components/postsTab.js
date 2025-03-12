@@ -15,7 +15,7 @@ export default function PostsTab() {
   const { posts } = useSelector((state) => state.posts)
   const user = useSelector((state) => state.auth.user)
 
-  const userPosts = posts.filter(post => post.user._id === user?._id && (!post.video || post.video.length === 0))
+  const userPosts = posts.filter(post => post.user?._id === user?._id && (!post.video || post.video.length === 0))
 
   const handleAddPostClick = () => {
     router.push('/photoRec')

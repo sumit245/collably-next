@@ -41,8 +41,8 @@ export default function Shop() {
   }
 console.log(posts)
 const tabs = [
-  { id: 'posts', label: 'Posts', count: posts.filter(post => post.user._id === userId && (!post.video || post.video.length === 0)).length },
-  { id: 'reels', label: 'Reels', count: posts.filter(post => post.user._id === userId && post.video).length },
+  { id: 'posts', label: 'Posts', count: posts.filter(post => post.user?._id === userId && (!post.video || post.video?.length === 0)).length },
+  { id: 'reels', label: 'Reels', count: posts.filter(post => post.user?._id === userId && post.video).length },
   { id: 'collections', label: 'Collections', count: 0 },
   { id: 'links', label: 'Single Product Links', count: 0 }
 ];
