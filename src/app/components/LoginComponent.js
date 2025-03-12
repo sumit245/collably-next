@@ -123,7 +123,7 @@ const LoginComponent = () => {
 
         <p className="p">Don't have an account? <Link href="/registration" className="span" style={{ cursor: "pointer" }}>Sign Up</Link></p>
 
-        <div className="flex-row">
+        {/* <div className="flex-row">
           <button className="btn google" type="button" onClick={() => dispatch(loginWithGoogle())} disabled={isLoading}>
             <svg viewBox="0 0 512 512" width="20">
               <path fill="#FBBB00" d="M113.47 309.408 95.648 375.94l-65.139 1.378C11.042 341.211 0 299.9 0 256c0-42.451 10.324-82.483 28.624-117.732h.014l57.992 10.632 25.404 57.644c-5.317 15.501-8.215 32.141-8.215 49.456.1 18.792 3.406 36.797 9.651 53.408z"/>
@@ -182,7 +182,7 @@ const LoginComponent = () => {
             </svg>{" "}
             Instagram
           </button>
-        </div>
+        </div> */}
       </form>
       <div id="recaptcha-container"></div>
     </div>
