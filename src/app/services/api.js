@@ -1,4 +1,4 @@
-export const BASE_URL = "http://13.235.172.123:5000/"
+export const BASE_URL = "https://newapp.collably.in/"
 
 const api = {
   fetch: async (url, options = {}) => {
