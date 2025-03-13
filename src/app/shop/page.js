@@ -35,7 +35,7 @@ export default function ShopPage() {
             <TopCreators />
             <HeroCarousel data={videoData2} />
             <FeaturedCategories />
-            <BeautyReels />
+            {/* <BeautyReels /> */}
             <TopBrands />
             <ReelsSec2 sectionTitle="Electronics Products" category="Electronics" />
             <ReelsSec2 sectionTitle="Beauty Products" category="Beauty" />
