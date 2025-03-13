@@ -106,7 +106,7 @@ export default function ReelsPage() {
                 onShare={() => handleShare(reel)}
                 onSave={() => handleSave(reel._id)}
                 onUnsave={() => handleUnsave(reel._id)}
-                src={`${BASE_URL}${reel.video?.replace(/\\/g, "/")}`}
+                src={reel.video}
                 currentUserId={currentUserId}
               />
             </div>

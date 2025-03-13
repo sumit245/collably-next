@@ -41,7 +41,7 @@ export default function CreatorCard({ id, videoSrc, posterSrc, name, followers, 
     <>
       <div className={styles.creatorCard}>
         <div className={styles.videoContainer}>
-          <video className={styles.creatorVideo} playsInline loop preload="none" poster={posterSrc}>
+          <video className={styles.creatorVideo} autoPlay loop preload="none" >
             <source src={videoSrc} type="video/mp4" />
           </video>
           <div className={styles.gradientOverlay}></div>

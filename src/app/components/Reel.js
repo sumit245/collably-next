@@ -64,11 +64,11 @@ export default function Reel({
     <div className={styles.reelContainer}>
       {video ? (
         <video className={styles.video} loop muted playsInline autoPlay>
-          <source src={`${BASE_URL}${video.replace(/\\/g, "/")}`} type="video/mp4" />
+          <source src= {video} type="video/mp4" />
         </video>
       ) : images?.[0] ? (
         <Image
-          src={`${BASE_URL}${images[0].replace(/\\/g, "/")}`}
+          src={images[0]}
           alt="Post"
           fill
           className={styles.image}

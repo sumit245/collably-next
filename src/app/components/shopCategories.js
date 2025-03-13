@@ -7,7 +7,7 @@ import styles from "../CreatorHome/Categories.module.css";
 
 export default function FeaturedCategories() {
   const [categories, setCategories] = useState([
-    { name: "Fashion", image: "/images/fashion.jpeg" },
+    { name: "Fashion", image: "https://collablybucket.s3.ap-south-1.amazonaws.com/posts/1/1741842474553/SLIDE%20FASHION%2004.mp4" },
     { name: "Electronics", image: "/images/electronics.jpeg" },
     { name: "Beauty", image: "/images/beauty.jpeg" },
     { name: "Home", image: "/images/home.jpeg" },
