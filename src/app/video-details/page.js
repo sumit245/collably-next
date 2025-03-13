@@ -1,6 +1,4 @@
-
-
-'use client'
+"use client"
 
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
@@ -8,10 +6,11 @@ import { useSelector, useDispatch } from "react-redux"
 import styles from "./page.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import FooterCreator from "../components/FooterCreator"
-import { Package, Eye, Users, ArrowLeft } from 'lucide-react'
+import { Package, Eye, Users, ArrowLeft } from "lucide-react"
 import Link from "next/link"
-import { updateFormData, clearCurrentMedia, clearFormData } from '../store/mediaSlice'
-import { BASE_URL } from "../services/api";
+import { clearCurrentMedia, clearFormData } from "../store/mediaSlice"
+import { BASE_URL } from "../services/api"
+
 const MediaDetailsContent = () => {
   const router = useRouter()
   const dispatch = useDispatch()
@@ -39,7 +38,11 @@ const MediaDetailsContent = () => {
   const getFileFromSource = async (src, fileName) => {
     if (src.startsWith("data:")) {
       const [mime, bstr] = src.split(",")
-      const u8arr = new Uint8Array(atob(bstr).split("").map(c => c.charCodeAt(0)))
+      const u8arr = new Uint8Array(
+        atob(bstr)
+          .split("")
+          .map((c) => c.charCodeAt(0)),
+      )
       return new File([u8arr], fileName, { type: mime.match(/:(.*?);/)[1] })
     }
     const response = await fetch(src)
@@ -66,18 +69,24 @@ const MediaDetailsContent = () => {
       if (formData.audience) postFormData.append("audience", formData.audience)
       if (formData.ageRestriction) postFormData.append("ageRestriction", formData.ageRestriction)
 
-      await fetch(`${BASE_URL}api/posts`, {
+      const response = await fetch(`${BASE_URL}api/posts`, {
         method: "POST",
         headers: { Authorization: accessToken },
         body: postFormData,
       })
+
+      if (!response.ok) {
+        throw new Error("Failed to upload post")
+      }
 
       dispatch(clearCurrentMedia())
       dispatch(clearFormData())
       router.refresh()
       router.push("/upload-success")
     } catch (err) {
-      setError(err.message || "Failed to upload post")
+      
+      console.error("Upload error:", err.message)
+      router.push("/upload-error")
     } finally {
       setIsLoading(false)
     }
@@ -118,7 +127,10 @@ const MediaDetailsContent = () => {
 
             <button className={styles.optionButton} onClick={() => router.push("/select-audience")}>
               <Users size={20} />
-              Select Audience: {formData.audience ? `${formData.audience}${formData.ageRestriction ? ` (${formData.ageRestriction})` : ""}` : "Not selected"}
+              Select Audience:{" "}
+              {formData.audience
+                ? `${formData.audience}${formData.ageRestriction ? ` (${formData.ageRestriction})` : ""}`
+                : "Not selected"}
             </button>
 
             <button
@@ -139,3 +151,4 @@ const MediaDetailsContent = () => {
 export default function MediaDetails() {
   return <MediaDetailsContent />
 }
+
