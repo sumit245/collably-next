@@ -15,10 +15,7 @@ import { BASE_URL } from "../services/api";
   
 export default function AllBrands() {
 
-    const changeEscapeChar = (path) => {
-        if (!path) return ""
-        return path.replace(/\\/g, "/")
-      }
+    
       
   const dispatch = useDispatch();
   const allBrands = useSelector((state) => state.brands.items);
@@ -57,7 +54,7 @@ export default function AllBrands() {
           ) : (
             <div className={styles.brandsGrid}>
   {filteredBrands.map((brand) => {
-    const imageSrc = `${BASE_URL}${changeEscapeChar(brand.brandLogo)}`;
+    const imageSrc = brand.brandLogo;
 
     return (
       <Link href={brand.brandWebsite} key={brand._id} className={styles.brandCard}>

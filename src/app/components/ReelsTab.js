@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux'
 import { ArrowRight } from 'lucide-react'
 import { BASE_URL } from "../services/api";
 
-const changeEscapeChar = (path) => path?.replace(/\\/g, "/") || ""
 
 export default function ReelsTab() {
   const router = useRouter()
@@ -42,10 +41,9 @@ export default function ReelsTab() {
           <video
             className={styles.gridVideo}
             width={100}
-            // src={`${BASE_URL}${changeEscapeChar(reel.video)}`}
             height={100}
           >
-             <source src={`${BASE_URL}${changeEscapeChar(reel.video)}`} type="video/mp4" />
+             <source src={reel.video} type="video/mp4" />
           </video>
         </Link>
       ))}

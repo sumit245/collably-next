@@ -12,8 +12,6 @@ import Footer from "../components/FooterShop"
 import Header from "../components/HeaderShop"
 import api from "../services/api"
 import { LikeProvider } from "../actions/LikeContext"
-import { BASE_URL } from "../services/api";
-const changeEscapeChar = (path) => path?.replace(/\\/g, "/") || ""
 
 export default function Profile() {
   const router = useRouter()
@@ -73,7 +71,9 @@ export default function Profile() {
             </div>
 
             <div className={styles.profileActions}>
-              <button className={styles.editButton}>Edit profile</button>
+            <button className={styles.editButton} onClick={() => router.push('/updateUser')}>
+        Edit profile
+      </button>
               <button className={styles.shareButton}>Share profile</button>
             </div>
           </section>
@@ -98,11 +98,11 @@ export default function Profile() {
                 <Link href={`/post/${post._id}`} key={post._id} className={styles.gridItem}>
                   {activeTab === "reels" ? (
                     <video className={styles.gridVideo} width={300} height={300}>
-                      <source src={`${BASE_URL}${changeEscapeChar(post.video)}`} type="video/mp4" />
+                      <source src={post.video} type="video/mp4" />
                     </video>
                   ) : (
                     <Image
-                      src={`${BASE_URL}${changeEscapeChar(post.images[0])}` || "/placeholder.svg"}
+                      src={post.images[0] || "/placeholder.svg"}
                       alt={`Post by ${post.user?.username || "unknown"}`}
                       className={styles.gridImage}
                       width={300}

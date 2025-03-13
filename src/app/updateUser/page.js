@@ -80,7 +80,7 @@ const UpdateUserForm = () => {
       {error && <div className={styles.error}>{error}</div>}
 
       <div className={styles.row}>
-        <div>
+        <div className={styles.textLabel}>
           <label htmlFor="fullname" className={styles.label}>
             Full Name
           </label>
@@ -92,7 +92,7 @@ const UpdateUserForm = () => {
             className={styles.input}
           />
         </div>
-        <div>
+        <div className={styles.textLabel}>
           <label htmlFor="username" className={styles.label}>
             Username
           </label>
@@ -107,7 +107,7 @@ const UpdateUserForm = () => {
       </div>
 
       <div className={styles.row}>
-        <div>
+        <div className={styles.textLabel}>
           <label htmlFor="email" className={styles.label}>
             Email
           </label>
@@ -119,7 +119,7 @@ const UpdateUserForm = () => {
             className={styles.input}
           />
         </div>
-        <div>
+        <div className={styles.textLabel}>
           <label htmlFor="contactNumber" className={styles.label}>
             Contact Number
           </label>
@@ -133,7 +133,7 @@ const UpdateUserForm = () => {
         </div>
       </div>
 
-      <div className={styles.password}>
+      <div className={styles.textLabel}>
         <div className={styles.passwordHeader}>
           <label htmlFor="password" className={styles.label}>
             Password
@@ -167,4 +167,3 @@ const UpdateUserForm = () => {
 }
 
 export default UpdateUserForm
-

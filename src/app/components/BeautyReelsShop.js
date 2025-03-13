@@ -7,7 +7,7 @@ export default function BeautyReels() {
       id: '1',
       name: 'Voguishpriyanka',
       followers: '34.1K',
-      videoSrc: 'https://video.gumlet.io/65112bc788ea257b8ad9139e/664ef61bdc88f9b2f0baf7ea/main.mp4',
+      videoSrc: 'https://collablybucket.s3.ap-south-1.amazonaws.com/posts/1/1741842474553/SLIDE%20FASHION%2004.mp4',
       posterSrc: 'https://blog-images-redesyn.s3.ap-south-1.amazonaws.com/2w44aiwqyl1r8epsb8rna26eim4s',
       price: 999,
     },

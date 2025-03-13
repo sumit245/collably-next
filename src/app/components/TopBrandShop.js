@@ -10,10 +10,7 @@ import styles from '../shop/StyleShop.module.css';
 import { ArrowRight } from 'lucide-react';
 import { BASE_URL } from "../services/api";
 export default function TopBrands() {
-  const changeEscapeChar = (path) => {
-    if (!path) return ""
-    return path.replace(/\\/g, "/")
-  }
+ 
   
   const dispatch = useDispatch();
   const brands = useSelector((state) => state.brands.items);
@@ -39,7 +36,7 @@ export default function TopBrands() {
             <div className={styles.fImg1}>
               <div className={styles.imgBorder}>
                 <Image 
-                src={`${BASE_URL}${changeEscapeChar(brand.brandLogo)}`}
+                src={brand.brandLogo}
                   // src={brand.brandLogo || '/placeholder.svg'} 
                   alt={brand.brandName} 
                   width={85} 

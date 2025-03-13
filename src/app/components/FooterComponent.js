@@ -22,11 +22,11 @@ export default function FooterComponent() {
                     <h3>Help & Company</h3>
                        <ul className="ul-list">
                         <li><a href="#">Home</a></li>
-                        <li><a href="#">Crators</a></li>
-                        <li><a href="#">Brands</a></li>
-                        <li><a href="#">Community</a></li>
-                        <li><a href="#">Univrsity</a></li>
-                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="/creatorDashboardEntry">Creators</a></li>
+                        <li><a href="/brand">Brands</a></li>
+                        <li><a href="/shop">Shop</a></li>
+                        <li><a href="#">University</a></li>
+                        <li><a href="/contact-us">Contact Us</a></li>
                        </ul>
                     </div>
                 </div>

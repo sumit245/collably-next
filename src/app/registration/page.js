@@ -57,7 +57,7 @@ const RegistrationForm = () => {
       </div>
        <h2 className={styles.rHeading}>Sign In to Continue</h2>
       <div className={styles.row}>
-        <div>
+        <div className={styles.textLabel}>
           <label htmlFor="fullname" className={styles.label}>Full Name</label>
           <input
             type="text"
@@ -68,7 +68,7 @@ const RegistrationForm = () => {
             className={styles.input}
           />
         </div>
-        <div>
+        <div className={styles.textLabel}>
           <label htmlFor="username" className={styles.label}>Username</label>
           <input
             type="text"
@@ -82,7 +82,7 @@ const RegistrationForm = () => {
       </div>
 
       <div className={styles.row}>
-        <div>
+        <div className={styles.textLabel}>
           <label htmlFor="email" className={styles.label}>Email</label>
           <input
             type="email"
@@ -93,7 +93,7 @@ const RegistrationForm = () => {
             className={styles.input}
           />
         </div>
-        <div>
+        <div className={styles.textLabel}>
           <label htmlFor="contactNumber" className={styles.label}>Contact Number</label>
           <input
             type="tel"
