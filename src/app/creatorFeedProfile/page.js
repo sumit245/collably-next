@@ -97,7 +97,7 @@ export default function Profile() {
                     </video>
                   ) : (
                     <Image
-                      src={post.images[0] || "/placeholder.svg"}
+                      src={post.images[0]?.[0]  || "/placeholder.svg"}
                       alt={`Post by ${post.user?.username || "unknown"}`}
                       className={styles.gridImage}
                       width={300}

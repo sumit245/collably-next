@@ -68,7 +68,7 @@ export default function Reel({
         </video>
       ) : images?.[0] ? (
         <Image
-          src={images[0]}
+          src={images[0]?.[0] }
           alt="Post"
           fill
           className={styles.image}

@@ -5,7 +5,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
 import { ArrowRight } from 'lucide-react'
-import { BASE_URL } from "../services/api";
 
 
 
@@ -19,7 +18,7 @@ export default function PostsTab() {
   const handleAddPostClick = () => {
     router.push('/photoRec')
   }
-
+console.log(posts.images)
   if (userPosts.length === 0) {
     return (
       <EmptyState
@@ -41,7 +40,7 @@ export default function PostsTab() {
       {userPosts.map((post) => (
         <Link href={`/post/${post._id}`} key={post._id} className={styles.gridItem}>
           <Image
-            src={post?.images[0] || "/placeholder.svg"}
+            src={post?.images[0]?.[0] || "/placeholder.svg"}
             alt={`Post by ${post.user?.username || "unknown"}`}
             className={styles.gridImage}
             width={300}
