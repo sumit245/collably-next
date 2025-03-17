@@ -73,7 +73,9 @@ export default function Profile() {
             </div>
 
             <div className={styles.profileActions}>
-              <button className={styles.editButton} onClick={() => router.push('/updateUser')}>Edit profile</button>
+            <button className={styles.editButton} onClick={() => router.push('/updateUser')}>
+        Edit profile
+      </button>
               <button className={styles.shareButton}>Share profile</button>
             </div>
           </section>
