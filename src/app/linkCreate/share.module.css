@@ -6,19 +6,19 @@
   }
   
   .modal {
-    position: fixed;
-    bottom: 64px;
-    /* left: 0; */
-    right: 450px;
     width: 400px;
     z-index: 50;
     background-color: #18181b;
     padding: 1.5rem;
     border-top-left-radius: 1rem;
     border-top-right-radius: 1rem;
-    box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 -4px 6px -1px #0000001a;
     transform: translateY(100%);
-    transition: transform 0.3s ease-in-out;
+    transition: transform .3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-self: anchor-center;
+    margin-top: 4.2rem;
   }
   
   .modalOpen {
