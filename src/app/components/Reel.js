@@ -161,22 +161,14 @@ export default function Reel({
           </button>
         </div>
 
-        <div className={styles.actionItem}>
+        {/* <div className={styles.actionItem}>
           <button className={styles.actionButton} onClick={handleCommentAction}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white">
               <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
             </svg>
             <span className={styles.actionCount}>{comments.length}</span>
           </button>
-        </div>
-
-        <div className={styles.actionItem}>
-          <button className={styles.actionButton} onClick={() => onShare({ _id, user, caption })}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white">
-              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
-            </svg>
-          </button>
-        </div>
+        </div> */}
 
         <div className={styles.actionItem}>
           <button className={styles.actionButton} onClick={handleSaveAction}>
@@ -185,6 +177,23 @@ export default function Reel({
             </svg>
           </button>
         </div>
+
+        <div className={styles.actionItem}>
+          <button className={styles.actionButton} onClick={() => onShare({ _id, user, caption })}>
+          <svg height="24px" width="24px" version="1.1" id="Layer_1" viewBox="0 0 512 512" xmlSpace="preserve" fill="">
+      <g id="SVGRepo_bgCarrier" strokeWidth="0"/>
+      <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"/>
+      <g id="SVGRepo_iconCarrier">
+        <path style={{ fill: "none" }} d="M501.801,213.374L324.879,36.453V142.94h-59.905c-140.708,0-254.775,114.066-254.775,254.775v77.833l92.966-101.742c52.389-57.335,126.474-89.996,204.14-89.996h17.574v106.487L501.801,213.374z"/>
+        <path style={{ fill: "#fff" }} d="M10.197,485.747c-1.238,0-2.488-0.225-3.687-0.691c-3.925-1.523-6.51-5.3-6.51-9.509v-77.833c0-70.777,27.562-137.318,77.609-187.365c50.047-50.046,116.588-77.609,187.366-77.609h49.705V36.453c0-4.125,2.486-7.844,6.296-9.423c3.811-1.579,8.198-0.707,11.115,2.21l176.923,176.922c1.912,1.912,2.987,4.507,2.987,7.212c0,2.705-1.075,5.299-2.987,7.212L332.09,397.509c-2.917,2.916-7.304,3.791-11.115,2.21c-3.81-1.579-6.296-5.297-6.296-9.423v-96.288h-7.374c-74.616,0-146.278,31.593-196.611,86.677L17.728,482.427C15.758,484.584,13.007,485.747,10.197,485.747zM264.974,153.139c-134.86,0-244.576,109.716-244.576,244.575v51.551l75.237-82.339c54.187-59.303,131.338-93.316,211.669-93.316h17.573c5.632,0,10.199,4.566,10.199,10.199v81.864l152.299-152.299L335.077,61.076v81.864c0,5.633-4.567,10.199-10.199,10.199H264.974z"/>
+        <path style={{ fill: "none" }} d="M247.503,190.884c-5.444,0-9.963-4.3-10.184-9.789c-0.227-5.628,4.152-10.375,9.78-10.601c2.762-0.111,5.571-0.168,8.35-0.168c5.633,0,10.199,4.566,10.199,10.199c0,5.633-4.566,10.199-10.199,10.199c-2.507,0-5.039,0.051-7.529,0.151C247.781,190.882,247.642,190.884,247.503,190.884z"/>
+        <path style={{ fill: "none" }} d="M140.757,228.2c-3.139,0-6.236-1.444-8.234-4.169c-3.33-4.543-2.348-10.925,2.196-14.255c22.329-16.37,47.27-27.846,74.131-34.11c5.49-1.279,10.97,2.131,12.249,7.616c1.279,5.486-2.131,10.97-7.616,12.249c-24.164,5.635-46.607,15.963-66.704,30.696C144.962,227.558,142.85,228.2,140.757,228.2z"/>
+      </g>
+    </svg>
+          </button>
+        </div>
+
+       
       </div>
 
       <div className={styles.info}>
@@ -217,4 +226,3 @@ export default function Reel({
     </div>
   )
 }
-
