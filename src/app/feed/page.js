@@ -8,7 +8,6 @@ import Footer from "../components/FooterShop"
 import api from "../services/api"
 import styles from "./stylesfeed.module.css"
 import styleshop from "../shop/StyleShop.module.css"
-import { BASE_URL } from "../services/api";
 
 export default function ReelsPage() {
   const [reelsData, setReelsData] = useState([])
@@ -21,7 +20,17 @@ export default function ReelsPage() {
 
   useEffect(() => {
     fetchReels()
-    const handleScroll = () => setActiveReel(Math.round(containerRef.current.scrollTop / window.innerHeight))
+
+    const handleScroll = () => {
+      if (!containerRef.current) return
+
+      const scrollTop = containerRef.current.scrollTop
+      const height = window.innerHeight
+      const index = Math.round(scrollTop / height)
+
+      setActiveReel(index)
+    }
+
     containerRef.current?.addEventListener("scroll", handleScroll, { passive: true })
     return () => containerRef.current?.removeEventListener("scroll", handleScroll)
   }, [])

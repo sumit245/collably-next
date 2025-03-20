@@ -8,11 +8,24 @@ import styles from "../feed/stylesfeed.module.css"
 import CommentSection from "./commentSection"
 import Image from "next/image"
 import Link from "next/link"
-import { BASE_URL } from "../services/api";
 
 export default function Reel({
-  _id, video, images, user, caption, likes = [], comments, onLike, onUnlike, 
-  onShare, onSave, onUnsave, isSaved: propIsSaved, isLiked: propIsLiked, currentUserId 
+  _id,
+  video,
+  images,
+  user,
+  caption,
+  likes = [],
+  comments,
+  onLike,
+  onUnlike,
+  onShare,
+  onSave,
+  onUnsave,
+  isSaved: propIsSaved,
+  isLiked: propIsLiked,
+  currentUserId,
+  isActive,
 }) {
   const dispatch = useDispatch()
   const userId = useSelector((state) => state.auth.user?._id) || currentUserId
@@ -22,12 +35,25 @@ export default function Reel({
   const [isLiked, setIsLiked] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
   const commentSectionRef = useRef(null)
-  
+  const videoRef = useRef(null)
 
   useEffect(() => {
     setIsLiked(propIsLiked || likes.includes(userId))
     setIsSaved(propIsSaved || currentUser?.saved?.includes(_id))
   }, [propIsLiked, propIsSaved, likes, userId, _id, currentUser?.saved])
+
+  useEffect(() => {
+    if (!videoRef.current) return
+
+    if (isActive) {
+      videoRef.current.play().catch((err) => console.error("Error playing video:", err))
+      videoRef.current.muted = false
+    } else {
+      videoRef.current.pause()
+      videoRef.current.muted = true
+      videoRef.current.currentTime = 0
+    }
+  }, [isActive])
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -57,38 +83,48 @@ export default function Reel({
       } catch (error) {
         console.error("Tracking failed:", error)
       }
-    }window.location.href = caption
+    }
+    window.location.href = caption
   }
 
   return (
     <div className={styles.reelContainer}>
       {video ? (
-        <video className={styles.video} loop muted playsInline autoPlay>
-          <source src= {video} type="video/mp4" />
+        <video
+          ref={videoRef}
+          className={styles.video}
+          loop
+          playsInline
+          
+        >
+          <source src={video} type="video/mp4" />
         </video>
       ) : images?.[0] ? (
-        <Image
-          src={images[0]?.[0] }
-          alt="Post"
-          fill
-          className={styles.image}
-          objectFit="cover"
-        />
+        <Image src={images[0]?.[0] || "/placeholder.svg"} alt="Post" fill className={styles.image} objectFit="cover" />
       ) : (
         <Image src="/placeholder.svg" alt="Placeholder" fill objectFit="cover" />
       )}
 
       <div className={styles.logo}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-          <path d="M12 2C14.717 2 17.157 2.004 18.878 2.058C20.488 2.109 21.905 2.419 23.004 3.518C24.103 4.617 24.413 6.034 24.464 7.644C24.518 9.365 24.522 11.805 24.522 14.522C24.522 17.239 24.518 19.679 24.464 21.4C24.413 23.01 24.103 24.427 23.004 25.526C21.905 26.625 20.488 26.935 18.878 26.986C17.157 27.04 14.717 27.044 12 27.044C9.283 27.044 6.843 27.04 5.122 26.986C3.512 26.935 2.095 26.625 0.996 25.526C-0.103 24.427 -0.413 23.01 -0.464 21.4C-0.518 19.679 -0.522 17.239 -0.522 14.522C-0.522 11.805 -0.518 9.365 -0.464 7.644C-0.413 6.034 -0.103 4.617 0.996 3.518C2.095 2.419 3.512 2.109 5.122 2.058C6.843 2.004 9.283 2 12 2Z"/>
+          <path d="M12 2C14.717 2 17.157 2.004 18.878 2.058C20.488 2.109 21.905 2.419 23.004 3.518C24.103 4.617 24.413 6.034 24.464 7.644C24.518 9.365 24.522 11.805 24.522 14.522C24.522 17.239 24.518 19.679 24.464 21.4C24.413 23.01 24.103 24.427 23.004 25.526C21.905 26.625 20.488 26.935 18.878 26.986C17.157 27.04 14.717 27.044 12 27.044C9.283 27.044 6.843 27.04 5.122 26.986C3.512 26.935 2.095 26.625 0.996 25.526C-0.103 24.427 -0.413 23.01 -0.464 21.4C-0.518 19.679 -0.522 17.239 -0.522 14.522C-0.522 11.805 -0.518 9.365 -0.464 7.644C-0.413 6.034 -0.103 4.617 0.996 3.518C2.095 2.419 3.512 2.109 5.122 2.058C6.843 2.004 9.283 2 12 2Z" />
         </svg>
       </div>
 
       <div className={styles.actions}>
         <div className={styles.actionItem}>
-          <button className={styles.actionButton} onClick={() => (isLiked ? onUnlike(_id) : onLike(_id), setIsLiked(!isLiked))}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill={isLiked ? "red" : "none"} stroke={isLiked ? "red" : "white"}>
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+          <button
+            className={styles.actionButton}
+            onClick={() => (isLiked ? onUnlike(_id) : onLike(_id), setIsLiked(!isLiked))}
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill={isLiked ? "red" : "none"}
+              stroke={isLiked ? "red" : "white"}
+            >
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
             </svg>
             <span className={styles.actionCount}>{likes.length}</span>
           </button>
@@ -97,7 +133,7 @@ export default function Reel({
         <div className={styles.actionItem}>
           <button className={styles.actionButton} onClick={() => setIsCommenting(!isCommenting)}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white">
-              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
             </svg>
             <span className={styles.actionCount}>{comments.length}</span>
           </button>
@@ -106,15 +142,18 @@ export default function Reel({
         <div className={styles.actionItem}>
           <button className={styles.actionButton} onClick={() => onShare({ _id, user, caption })}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white">
-              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+              <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
             </svg>
           </button>
         </div>
 
         <div className={styles.actionItem}>
-          <button className={styles.actionButton} onClick={() => (isSaved ? onUnsave(_id) : onSave(_id), setIsSaved(!isSaved))}>
+          <button
+            className={styles.actionButton}
+            onClick={() => (isSaved ? onUnsave(_id) : onSave(_id), setIsSaved(!isSaved))}
+          >
             <svg width="24" height="24" viewBox="0 0 24 24" fill={isSaved ? "white" : "none"} stroke="white">
-              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
             </svg>
           </button>
         </div>
@@ -150,3 +189,4 @@ export default function Reel({
     </div>
   )
 }
+
