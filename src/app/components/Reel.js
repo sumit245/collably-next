@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { useState, useRef, useEffect } from "react"
-import { useSelector, useDispatch } from "react-redux"
-import api from "../services/api"
-import { trackReferralClick } from "../store/brandSlice"
-import styles from "../feed/stylesfeed.module.css"
-import CommentSection from "./commentSection"
-import Image from "next/image"
-import Link from "next/link"
+import { useState, useRef, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import api from "../services/api";
+import { trackReferralClick } from "../store/brandSlice";
+import styles from "../feed/stylesfeed.module.css";
+import CommentSection from "./commentSection";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Reel({
   _id,
@@ -29,103 +29,112 @@ export default function Reel({
   isLoggedIn,
   onLoginRequired,
 }) {
-  const dispatch = useDispatch()
-  const userId = useSelector((state) => state.auth.user?._id) || currentUserId
-  const currentUser = useSelector((state) => state.auth.user)
-  const [isFollowing, setIsFollowing] = useState(user?.followers?.includes(userId))
-  const [isCommenting, setIsCommenting] = useState(false)
-  const [isLiked, setIsLiked] = useState(false)
-  const [isSaved, setIsSaved] = useState(false)
-  const commentSectionRef = useRef(null)
-  const videoRef = useRef(null)
+  const dispatch = useDispatch();
+  const userId = useSelector((state) => state.auth.user?._id) || currentUserId;
+  const currentUser = useSelector((state) => state.auth.user);
+  const [isFollowing, setIsFollowing] = useState(
+    user?.followers?.includes(userId)
+  );
+  const [isCommenting, setIsCommenting] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+  const commentSectionRef = useRef(null);
+  const videoRef = useRef(null);
 
   useEffect(() => {
-    setIsLiked(propIsLiked || likes.includes(userId))
-    setIsSaved(propIsSaved || currentUser?.saved?.includes(_id))
-  }, [propIsLiked, propIsSaved, likes, userId, _id, currentUser?.saved])
+    setIsLiked(propIsLiked || likes.includes(userId));
+    setIsSaved(propIsSaved || currentUser?.saved?.includes(_id));
+  }, [propIsLiked, propIsSaved, likes, userId, _id, currentUser?.saved]);
 
   // Control video playback based on isActive prop
   useEffect(() => {
-    if (!videoRef.current) return
+    if (!videoRef.current) return;
 
     if (isActive) {
       // Play and unmute the active video
-      videoRef.current.play().catch((err) => console.error("Error playing video:", err))
-      videoRef.current.muted = false
+      videoRef.current
+        .play()
+        .catch((err) => console.error("Error playing video:", err));
+      videoRef.current.muted = false;
     } else {
       // Pause and mute inactive videos
-      videoRef.current.pause()
-      videoRef.current.muted = true
+      videoRef.current.pause();
+      videoRef.current.muted = true;
       // Reset to beginning for a better experience when it becomes active again
-      videoRef.current.currentTime = 0
+      videoRef.current.currentTime = 0;
     }
-  }, [isActive])
+  }, [isActive]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (commentSectionRef.current && !commentSectionRef.current.contains(e.target)) {
-        setIsCommenting(false)
+      if (
+        commentSectionRef.current &&
+        !commentSectionRef.current.contains(e.target)
+      ) {
+        setIsCommenting(false);
       }
-    }
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [])
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleFollowToggle = async () => {
     if (!isLoggedIn) {
-      onLoginRequired()
-      return
+      onLoginRequired();
+      return;
     }
 
     try {
-      await (isFollowing ? api.unfollowUser(user._id) : api.followUser(user._id))
-      setIsFollowing(!isFollowing)
+      await (isFollowing
+        ? api.unfollowUser(user._id)
+        : api.followUser(user._id));
+      setIsFollowing(!isFollowing);
     } catch (error) {
-      console.error("Follow toggle error:", error)
+      console.error("Follow toggle error:", error);
     }
-  }
+  };
 
   const handleCaptionClick = async (e) => {
-    e.preventDefault()
-    const referralCode = caption?.match(/referralCode=([A-Za-z0-9]{6})/)?.[1]
+    e.preventDefault();
+    const referralCode = caption?.match(/referralCode=([A-Za-z0-9]{6})/)?.[1];
     if (referralCode) {
       try {
-        await dispatch(trackReferralClick(referralCode)).unwrap()
+        await dispatch(trackReferralClick(referralCode)).unwrap();
       } catch (error) {
-        console.error("Tracking failed:", error)
+        console.error("Tracking failed:", error);
       }
     }
-    window.location.href = caption
-  }
+    window.location.href = caption;
+  };
 
   const handleLikeAction = () => {
     if (!isLoggedIn) {
-      onLoginRequired()
-      return
+      onLoginRequired();
+      return;
     }
 
-    isLiked ? onUnlike(_id) : onLike(_id)
-    setIsLiked(!isLiked)
-  }
+    isLiked ? onUnlike(_id) : onLike(_id);
+    setIsLiked(!isLiked);
+  };
 
   const handleSaveAction = () => {
     if (!isLoggedIn) {
-      onLoginRequired()
-      return
+      onLoginRequired();
+      return;
     }
 
-    isSaved ? onUnsave(_id) : onSave(_id)
-    setIsSaved(!isSaved)
-  }
+    isSaved ? onUnsave(_id) : onSave(_id);
+    setIsSaved(!isSaved);
+  };
 
   const handleCommentAction = () => {
     if (!isLoggedIn) {
-      onLoginRequired()
-      return
+      onLoginRequired();
+      return;
     }
 
-    setIsCommenting(!isCommenting)
-  }
+    setIsCommenting(!isCommenting);
+  };
 
   return (
     <div className={styles.reelContainer}>
@@ -134,9 +143,20 @@ export default function Reel({
           <source src={video} type="video/mp4" />
         </video>
       ) : images?.[0] ? (
-        <Image src={images[0]?.[0] || "/placeholder.svg"} alt="Post" fill className={styles.image} objectFit="cover" />
+        <Image
+          src={images[0]?.[0] || "/placeholder.svg"}
+          alt="Post"
+          fill
+          className={styles.image}
+          objectFit="cover"
+        />
       ) : (
-        <Image src="/placeholder.svg" alt="Placeholder" fill objectFit="cover" />
+        <Image
+          src="/placeholder.svg"
+          alt="Placeholder"
+          fill
+          objectFit="cover"
+        />
       )}
 
       <div className={styles.logo}>
@@ -172,45 +192,87 @@ export default function Reel({
 
         <div className={styles.actionItem}>
           <button className={styles.actionButton} onClick={handleSaveAction}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill={isSaved ? "white" : "none"} stroke="white">
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill={isSaved ? "white" : "none"}
+              stroke="white"
+            >
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
             </svg>
           </button>
         </div>
 
         <div className={styles.actionItem}>
-          <button className={styles.actionButton} onClick={() => onShare({ _id, user, caption })}>
-          <svg height="24px" width="24px" version="1.1" id="Layer_1" viewBox="0 0 512 512" xmlSpace="preserve" fill="">
-      <g id="SVGRepo_bgCarrier" strokeWidth="0"/>
-      <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"/>
-      <g id="SVGRepo_iconCarrier">
-        <path style={{ fill: "none" }} d="M501.801,213.374L324.879,36.453V142.94h-59.905c-140.708,0-254.775,114.066-254.775,254.775v77.833l92.966-101.742c52.389-57.335,126.474-89.996,204.14-89.996h17.574v106.487L501.801,213.374z"/>
-        <path style={{ fill: "#fff" }} d="M10.197,485.747c-1.238,0-2.488-0.225-3.687-0.691c-3.925-1.523-6.51-5.3-6.51-9.509v-77.833c0-70.777,27.562-137.318,77.609-187.365c50.047-50.046,116.588-77.609,187.366-77.609h49.705V36.453c0-4.125,2.486-7.844,6.296-9.423c3.811-1.579,8.198-0.707,11.115,2.21l176.923,176.922c1.912,1.912,2.987,4.507,2.987,7.212c0,2.705-1.075,5.299-2.987,7.212L332.09,397.509c-2.917,2.916-7.304,3.791-11.115,2.21c-3.81-1.579-6.296-5.297-6.296-9.423v-96.288h-7.374c-74.616,0-146.278,31.593-196.611,86.677L17.728,482.427C15.758,484.584,13.007,485.747,10.197,485.747zM264.974,153.139c-134.86,0-244.576,109.716-244.576,244.575v51.551l75.237-82.339c54.187-59.303,131.338-93.316,211.669-93.316h17.573c5.632,0,10.199,4.566,10.199,10.199v81.864l152.299-152.299L335.077,61.076v81.864c0,5.633-4.567,10.199-10.199,10.199H264.974z"/>
-        <path style={{ fill: "none" }} d="M247.503,190.884c-5.444,0-9.963-4.3-10.184-9.789c-0.227-5.628,4.152-10.375,9.78-10.601c2.762-0.111,5.571-0.168,8.35-0.168c5.633,0,10.199,4.566,10.199,10.199c0,5.633-4.566,10.199-10.199,10.199c-2.507,0-5.039,0.051-7.529,0.151C247.781,190.882,247.642,190.884,247.503,190.884z"/>
-        <path style={{ fill: "none" }} d="M140.757,228.2c-3.139,0-6.236-1.444-8.234-4.169c-3.33-4.543-2.348-10.925,2.196-14.255c22.329-16.37,47.27-27.846,74.131-34.11c5.49-1.279,10.97,2.131,12.249,7.616c1.279,5.486-2.131,10.97-7.616,12.249c-24.164,5.635-46.607,15.963-66.704,30.696C144.962,227.558,142.85,228.2,140.757,228.2z"/>
-      </g>
-    </svg>
+          <button
+            className={styles.actionButton}
+            onClick={() => onShare({ _id, user, caption })}
+          >
+            <svg
+              height="24px"
+              width="24px"
+              version="1.1"
+              id="Layer_1"
+              viewBox="0 0 512 512"
+              xmlSpace="preserve"
+              fill=""
+            >
+              <g id="SVGRepo_bgCarrier" strokeWidth="0" />
+              <g
+                id="SVGRepo_tracerCarrier"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  style={{ fill: "none" }}
+                  d="M501.801,213.374L324.879,36.453V142.94h-59.905c-140.708,0-254.775,114.066-254.775,254.775v77.833l92.966-101.742c52.389-57.335,126.474-89.996,204.14-89.996h17.574v106.487L501.801,213.374z"
+                />
+                <path
+                  style={{ fill: "#fff" }}
+                  d="M10.197,485.747c-1.238,0-2.488-0.225-3.687-0.691c-3.925-1.523-6.51-5.3-6.51-9.509v-77.833c0-70.777,27.562-137.318,77.609-187.365c50.047-50.046,116.588-77.609,187.366-77.609h49.705V36.453c0-4.125,2.486-7.844,6.296-9.423c3.811-1.579,8.198-0.707,11.115,2.21l176.923,176.922c1.912,1.912,2.987,4.507,2.987,7.212c0,2.705-1.075,5.299-2.987,7.212L332.09,397.509c-2.917,2.916-7.304,3.791-11.115,2.21c-3.81-1.579-6.296-5.297-6.296-9.423v-96.288h-7.374c-74.616,0-146.278,31.593-196.611,86.677L17.728,482.427C15.758,484.584,13.007,485.747,10.197,485.747zM264.974,153.139c-134.86,0-244.576,109.716-244.576,244.575v51.551l75.237-82.339c54.187-59.303,131.338-93.316,211.669-93.316h17.573c5.632,0,10.199,4.566,10.199,10.199v81.864l152.299-152.299L335.077,61.076v81.864c0,5.633-4.567,10.199-10.199,10.199H264.974z"
+                />
+                <path
+                  style={{ fill: "none" }}
+                  d="M247.503,190.884c-5.444,0-9.963-4.3-10.184-9.789c-0.227-5.628,4.152-10.375,9.78-10.601c2.762-0.111,5.571-0.168,8.35-0.168c5.633,0,10.199,4.566,10.199,10.199c0,5.633-4.566,10.199-10.199,10.199c-2.507,0-5.039,0.051-7.529,0.151C247.781,190.882,247.642,190.884,247.503,190.884z"
+                />
+                <path
+                  style={{ fill: "none" }}
+                  d="M140.757,228.2c-3.139,0-6.236-1.444-8.234-4.169c-3.33-4.543-2.348-10.925,2.196-14.255c22.329-16.37,47.27-27.846,74.131-34.11c5.49-1.279,10.97,2.131,12.249,7.616c1.279,5.486-2.131,10.97-7.616,12.249c-24.164,5.635-46.607,15.963-66.704,30.696C144.962,227.558,142.85,228.2,140.757,228.2z"
+                />
+              </g>
+            </svg>
           </button>
         </div>
-
-       
       </div>
 
       <div className={styles.info}>
         <div className={styles.userInfo}>
           <Link href={`/creator/${user?._id}`} className={styles.avatar}>
-            <img src={user?.avatar || "/placeholder.svg"} alt={user?.fullname} />
+            <img
+              src={user?.avatar || "/placeholder.svg"}
+              alt={user?.fullname}
+            />
           </Link>
           <Link href={`/creator/${user?._id}`} className={styles.username}>
             {user?.fullname}
           </Link>
           {userId !== user?._id && (
-            <button className={styles.followButton} onClick={handleFollowToggle}>
+            <button
+              className={styles.followButton}
+              onClick={handleFollowToggle}
+            >
               {isFollowing ? "Following" : "Follow"}
             </button>
           )}
         </div>
-        <a className={styles.caption} href={caption} onClick={handleCaptionClick} rel="noopener noreferrer">
+        <a
+          className={styles.caption}
+          href={caption}
+          onClick={handleCaptionClick}
+          rel="noopener noreferrer"
+        >
           {caption}
         </a>
       </div>
@@ -218,12 +280,13 @@ export default function Reel({
         <div ref={commentSectionRef}>
           <CommentSection
             comments={comments}
-            onAddComment={(c) => api.commentOnPost(_id, c).then(() => setIsCommenting(false))}
+            onAddComment={(c) =>
+              api.commentOnPost(_id, c).then(() => setIsCommenting(false))
+            }
             onClose={() => setIsCommenting(false)}
           />
         </div>
       )}
     </div>
-  )
+  );
 }
-
