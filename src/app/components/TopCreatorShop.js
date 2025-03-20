@@ -35,7 +35,7 @@ export default function TopCreators() {
                   height={85} 
                 />
               </div>
-              <span className={styles.imgText2}>{creator.fullname}</span>
+              <span className={styles.imgText2}>{creator.fullname.split(" ")[0]}</span>
             </div>
           </Link>
         ))}

@@ -50,7 +50,7 @@ export default function CategoryProducts() {
             </div>
             {filteredProducts.length === 0 ? (
               <div className={styles.noProductsCard}>
-              <p className={styles.noProducts}>Comming soon</p>
+              <p className={styles.noProducts}>Coming soon...</p>
             </div>
             ) : (
               <div className={styles.productsGrid}>

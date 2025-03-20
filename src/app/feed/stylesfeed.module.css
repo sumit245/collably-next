@@ -16,7 +16,18 @@
     max-width: 450px;
     margin: 0 auto; 
   }
+  .userInfo {
+      top: -20rem !important;
+  }
 }
+@media screen and (max-width: 768px) {
+  
+  .userInfo {
+      top: -20rem !important;
+  }
+}
+
+
 
 .reelsContainer::-webkit-scrollbar {
   display: none;
@@ -117,6 +128,8 @@
   align-items: center;
   gap: 12px;
   margin-bottom: 12px;
+  position: relative;
+  top: -26rem;
 }
 
 .avatar {
@@ -398,14 +411,7 @@
 }
 
 
-.userInfo {
-  position: absolute;
-    left: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    top: -28rem;
-}
+
 
 
 .userAvatar {

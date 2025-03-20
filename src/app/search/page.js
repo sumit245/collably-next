@@ -51,10 +51,10 @@ export default function SearchSection() {
               <Link key={post._id} href={`/${collectionSubTab === "Videos" ? "feed?reelId=" : "post/"}${post._id}`}
                 className={styles.gridItem}>
                 {collectionSubTab === "Videos" ? (
-                  <video src={`${BASE_URL}${post.video.replace(/\\/g, "/")}`} className={styles.gridVideo} 
+                  <video src={post.video} className={styles.gridVideo} 
                     width={300} height={300} muted preload="metadata" />
                 ) : (
-                  <Image src={`${BASE_URL}${post.images[0]?.replace(/\\/g, "/")}` || "/placeholder.svg"} 
+                  <Image src={post.images[0]?.[0] || "/placeholder.svg"} 
                     alt={`Post by ${post.user?.username || "unknown"}`} className={styles.gridImage} 
                     width={300} height={300} />
                 )}
@@ -69,10 +69,10 @@ export default function SearchSection() {
           <Link key={post._id} href={`/${activeTab === "Reels" ? "feed?reelId=" : "post/"}${post._id}`} 
             className={styles.gridItem}>
             {activeTab === "Reels" ? (
-              <video src={`${BASE_URL}${post.video.replace(/\\/g, "/")}`} className={styles.gridVideo} 
+              <video src={post.video} className={styles.gridVideo} 
                 width={300} height={300} />
             ) : (
-              <Image src={`${BASE_URL}${post.images[0]?.replace(/\\/g, "/")}` || "/placeholder.svg"} 
+              <Image src={post.images[0]?.[0] || "/placeholder.svg"} 
                 alt={`Post by ${post.user?.username || "unknown"}`} className={styles.gridImage} 
                 width={300} height={300} />
             )}

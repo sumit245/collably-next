@@ -26,7 +26,7 @@ export default function HeroCarousel({ data }) {
   const videoData = posts
     .filter(post => post.video)
     .map(post => ({
-      src: `${BASE_URL}${post.video.replace(/\\/g, "/")}`,
+      src: post.video,
       poster: '',
       id: post._id 
     }));
