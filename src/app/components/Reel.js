@@ -26,6 +26,8 @@ export default function Reel({
   isLiked: propIsLiked,
   currentUserId,
   isActive,
+  isLoggedIn,
+  onLoginRequired,
 }) {
   const dispatch = useDispatch()
   const userId = useSelector((state) => state.auth.user?._id) || currentUserId
@@ -42,15 +44,19 @@ export default function Reel({
     setIsSaved(propIsSaved || currentUser?.saved?.includes(_id))
   }, [propIsLiked, propIsSaved, likes, userId, _id, currentUser?.saved])
 
+  // Control video playback based on isActive prop
   useEffect(() => {
     if (!videoRef.current) return
 
     if (isActive) {
+      // Play and unmute the active video
       videoRef.current.play().catch((err) => console.error("Error playing video:", err))
       videoRef.current.muted = false
     } else {
+      // Pause and mute inactive videos
       videoRef.current.pause()
       videoRef.current.muted = true
+      // Reset to beginning for a better experience when it becomes active again
       videoRef.current.currentTime = 0
     }
   }, [isActive])
@@ -66,6 +72,11 @@ export default function Reel({
   }, [])
 
   const handleFollowToggle = async () => {
+    if (!isLoggedIn) {
+      onLoginRequired()
+      return
+    }
+
     try {
       await (isFollowing ? api.unfollowUser(user._id) : api.followUser(user._id))
       setIsFollowing(!isFollowing)
@@ -87,16 +98,39 @@ export default function Reel({
     window.location.href = caption
   }
 
+  const handleLikeAction = () => {
+    if (!isLoggedIn) {
+      onLoginRequired()
+      return
+    }
+
+    isLiked ? onUnlike(_id) : onLike(_id)
+    setIsLiked(!isLiked)
+  }
+
+  const handleSaveAction = () => {
+    if (!isLoggedIn) {
+      onLoginRequired()
+      return
+    }
+
+    isSaved ? onUnsave(_id) : onSave(_id)
+    setIsSaved(!isSaved)
+  }
+
+  const handleCommentAction = () => {
+    if (!isLoggedIn) {
+      onLoginRequired()
+      return
+    }
+
+    setIsCommenting(!isCommenting)
+  }
+
   return (
     <div className={styles.reelContainer}>
       {video ? (
-        <video
-          ref={videoRef}
-          className={styles.video}
-          loop
-          playsInline
-          
-        >
+        <video ref={videoRef} className={styles.video} loop playsInline>
           <source src={video} type="video/mp4" />
         </video>
       ) : images?.[0] ? (
@@ -113,10 +147,7 @@ export default function Reel({
 
       <div className={styles.actions}>
         <div className={styles.actionItem}>
-          <button
-            className={styles.actionButton}
-            onClick={() => (isLiked ? onUnlike(_id) : onLike(_id), setIsLiked(!isLiked))}
-          >
+          <button className={styles.actionButton} onClick={handleLikeAction}>
             <svg
               width="24"
               height="24"
@@ -131,7 +162,7 @@ export default function Reel({
         </div>
 
         <div className={styles.actionItem}>
-          <button className={styles.actionButton} onClick={() => setIsCommenting(!isCommenting)}>
+          <button className={styles.actionButton} onClick={handleCommentAction}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white">
               <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
             </svg>
@@ -148,10 +179,7 @@ export default function Reel({
         </div>
 
         <div className={styles.actionItem}>
-          <button
-            className={styles.actionButton}
-            onClick={() => (isSaved ? onUnsave(_id) : onSave(_id), setIsSaved(!isSaved))}
-          >
+          <button className={styles.actionButton} onClick={handleSaveAction}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill={isSaved ? "white" : "none"} stroke="white">
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
             </svg>
