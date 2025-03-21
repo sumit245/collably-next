@@ -1,0 +1,365 @@
+.container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .statusBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    background-color: #ff0055;
+    color: white;
+  }
+  
+  .statusBar .statusInfo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .statusBar .statusInfo .clock {
+    font-size: 16px;
+  }
+  
+  .statusBar .statusInfo .progressBar {
+    font-size: 10px;
+  }
+  
+  .statusBar .statusInfo .percent {
+    font-size: 10px;
+  }
+  
+  .header {
+    align-items: center;
+    padding: 16px;
+    background: linear-gradient(to bottom, #ff0055, #ff3377);
+    color: white;
+    border-radius: 0px 0px 9px 9px;
+  }
+
+  .headerText{
+    display: flex;
+    align-items: center;
+  }
+  
+  .header .backButton {
+    margin-right: 8px;
+  }
+
+  .backButton{
+    display: flex;
+  }
+  
+  .header h1 {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  
+  .profileCard {
+    margin: 16px;
+    background-color: #ffacc9;
+    border-radius: 12px;
+    padding: 16px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profileCard .avatar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profileCard .avatar .circle {
+    width: 56px;
+    height: 56px;
+    background-color: white;
+    border-radius: 50%;
+    color: #ff0055;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .profileCard .avatar .name {
+    margin-left: 16px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  
+  .userInfo {
+    display: flex;
+    margin: 16px;
+    gap: 16px;
+  }
+  
+  .userInfo .card {
+    flex: 1;
+    display: flex;
+    gap: .3rem;
+    background-color: #f0f0f0;
+    border-radius: 12px;
+    padding: 3px 10px;
+  }
+  
+  .userInfo .card .label {
+    color: #4a4a4a;
+  }
+  
+  .userInfo .card .value {
+    font-weight: 500;
+  }
+
+  .value{
+    color: black;
+  }
+  
+  .moneySection {
+    margin: 0px 10px;
+  }
+  
+  .moneySection h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  
+  .moneySection .container {
+    background-color: #f9f9f9;
+    border-radius: 12px;
+  }
+  
+  .moneySection .container .item {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .moneySection .container .item:last-child {
+    border-bottom: none;
+  }
+  
+  .moneySection .container .item .iconContainer {
+    width: 32px;
+    height: 32px;
+    background-color: #f0fff0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff0055;
+  }
+  
+  .reportsSection {
+    margin: 16px;
+  }
+  
+  .reportsSection h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  
+  .reportsSection .container {
+    background-color: #f9f9f9;
+    border-radius: 12px;
+  }
+  
+  .reportsSection .container .item {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .reportsSection .container .item:last-child {
+    border-bottom: none;
+  }
+  
+  .reportsSection .container .item .iconContainer {
+    width: 32px;
+    height: 32px;
+    background-color: #f0fff0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff0055;
+  }
+  
+  .reportsSection .container .item .badge {
+    margin-left: 8px;
+    padding: 2px 6px;
+    border-radius: 12px;
+    font-size: 10px;
+  }
+  
+  .exclusiveToolsSection {
+    margin:0px 10px;
+  }
+  
+  .exclusiveToolsSection h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  
+  .exclusiveToolsSection .container {
+    background-color: #f9f9f9;
+    border-radius: 12px;
+  }
+  
+  .exclusiveToolsSection .container .item {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .exclusiveToolsSection .container .item:last-child {
+    border-bottom: none;
+  }
+  
+  .exclusiveToolsSection .container .item .iconContainer {
+    width: 32px;
+    height: 32px;
+    background-color: #f0fff0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ff0055;
+  }
+  
+  .bottomNav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-top: 1px solid #e0e0e0;
+    padding: 8px 16px;
+  }
+  
+  .bottomNav .navItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #757575;
+  }
+  
+  .bottomNav .navItemActive {
+    color: #ff0055;
+  }
+  
+  .bottomNav .navItem .icon {
+    font-size: 20px;
+  }
+  
+  .bottomNav .navItem .label {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  
+  .bottomNav .makeLinksButton {
+    position: relative;
+    margin-top: -24px;
+  }
+  
+  .bottomNav .makeLinksButton .icon {
+    width: 56px;
+    height: 56px;
+    background-color: #ff0055;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+  
+  .bottomNav .makeLinksButton .label {
+    font-size: 12px;
+    margin-top: 4px;
+    text-align: center;
+  }
+
+  .itemData{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .userName{
+    font-size: 2rem;
+  }
+
+  .subText{
+    background-color: #f3a7c1;
+    color: black;
+    padding: 1px;
+    border-radius: 2px;
+  }
+
+  .logoutButtonContainer {
+    display: flex;
+    justify-content: center;
+    margin-block: 10px;
+    margin-inline: 5px;
+  }
+  
+  .logoutButton {
+    background-color: #ff0055;
+    color: white;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: .5rem
+  }
+  
+  .logoutButton:hover {
+    background-color: #d40044;
+  }
+
+  .socialIcons {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .socialIcon {
+    width: 24px;
+    height: 24px;
+    color: #333;
+    transition: transform 0.2s, color 0.2s;
+  }
+  
+  .socialIcon:hover {
+    transform: scale(1.2);
+    color: #ff0055;
+  }
+
+  .followContainer{
+    display: flex;
+    flex-direction: column;
+    /* background-color: #f9f9f9; */
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  .logoutButtonContainerShop{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 55px;
+    margin-inline: 5px;
+  }
+  

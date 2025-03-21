@@ -44,11 +44,11 @@ export default function TopBrands({ heading }) {
   }
 
   if (!brands.length) {
-    return <div className={styles.topBrandsWrapper}>Loading brands...</div>
+    return <div className={styles.topBrandsWrapperLink}>Loading brands...</div>
   }
 
   return (
-    <div className={styles.topBrandsWrapper}>
+    <div className={styles.topBrandsWrapperLink}>
       <div className={styles.headingWrapper}>
         <h2 className={styles.topBrandsTitle}>{heading}</h2>
         <Link href="/brandsdisplay" className={styles.viewAllLink}>

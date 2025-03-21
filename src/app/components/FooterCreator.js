@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FiHome, FiShoppingCart, FiBarChart2 } from 'react-icons/fi'; 
+import { CgProfile } from "react-icons/cg";
 import { FaPlus } from 'react-icons/fa'; 
 import { FaLink } from "react-icons/fa6";
 import styles from '../CreatorHome/stylescreator.module.css';
@@ -40,11 +41,11 @@ export default function Footer() {
         <span className={styles.navText}>ANALYTICS</span>
       </Link>
 
-      <Link href="/creatorFeedProfile" className={`${styles.navItem} ${pathname === '/creatorFeedProfile' ? styles.active : ''}`}>
+      <Link href="/creatorProfile" className={`${styles.navItem} ${pathname === '/creatorFeedProfile' ? styles.active : ''}`}>
         <span className={styles.navIcon}>
-          <FiShoppingCart size={20} />
+          <CgProfile size={20} />
         </span>
-        <span className={styles.navText}> MY FEED</span>
+        <span className={styles.navText}>MY PROFILE</span>
       </Link>
     </nav>
   );
