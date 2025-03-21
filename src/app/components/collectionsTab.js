@@ -6,7 +6,7 @@ export default function CollectionsTab({ collections = [] }) {
     return <EmptyState 
       type="collections"
       title="No collections added yet!"
-      description="Create collections to organize your products and share with your audience"
+      description="Create collections & tag multiple products in your content, upto x 10 and share with your audience."
       buttonText="Create Collection"
     />
   }

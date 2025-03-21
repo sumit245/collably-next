@@ -24,7 +24,7 @@ console.log(posts.images)
       <EmptyState
         type="posts"
         title="No post added yet!"
-        description="Add product to your existing Instagram content & share with your audience"
+        description="Add product to your existing Instagram content & Make your content shoppable for our shopping app also and you might wanna share with your audience also! "
         buttonText="Add Post"
         onButtonClick={handleAddPostClick}
       />

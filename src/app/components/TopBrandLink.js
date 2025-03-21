@@ -48,7 +48,7 @@ export default function TopBrands({ heading }) {
   }
 
   return (
-    <div className={styles.topBrandsWrapper}>
+    <div className={styles.topBrandsWrapperLink}>
       <div className={styles.headingWrapper}>
         <h2 className={styles.topBrandsTitle}>{heading}</h2>
         <Link href="/brandsdisplay" className={styles.viewAllLink}>
@@ -61,9 +61,11 @@ export default function TopBrands({ heading }) {
         onMouseLeave={() => setIsHovered(false)}
       >
         <div className={`${styles.topBrandsTrack} ${isHovered ? styles.topBrandsPaused : ""}`}>
+
           {[...brands, ...brands].map((brand, index) => (
             <div 
-              key={`${brand.brandName || brand._id}-${index}`} 
+            key={`${brand.brandName || brand._id}-${index}`}
+
               className={styles.topBrandsTile}
               onClick={(e) => handleBrandClick(e, brand)}
             >

@@ -30,9 +30,9 @@ const TrendingBrands = () => {
   return (
     <div className={styles.container}>
       <div className={styles.headingWrapper}>
-        <h2 className={styles.heading}>Trending Brands</h2>
-        <Link href="/brands" className={styles.viewAllLink}>
-          View All →
+        <h2 className={styles.heading}>Live Campaigns</h2>
+        <Link href="/brandsdisplay" className={styles.viewAllLink}>
+          View All <span className={styles.arrow}>→</span>
         </Link>
       </div>
       <div className={styles.gridWrapper}>
