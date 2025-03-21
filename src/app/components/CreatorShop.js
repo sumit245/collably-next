@@ -94,7 +94,7 @@ export default function Shop() {
           <div className={styles.shopInfo}>
             <h1 className={styles.shopName}>My Shop</h1>
             <p className={styles.username}>
-              {user?.fullname || user?.username}
+              {user?.username || user?.fullname}
             </p>
           </div>
         </div>

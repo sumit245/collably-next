@@ -61,11 +61,9 @@ export default function TopBrands({ heading }) {
         onMouseLeave={() => setIsHovered(false)}
       >
         <div className={`${styles.topBrandsTrack} ${isHovered ? styles.topBrandsPaused : ""}`}>
-
           {[...brands, ...brands].map((brand, index) => (
             <div 
-            key={`${brand.brandName || brand._id}-${index}`}
-
+              key={`${brand.brandName || brand._id}-${index}`} 
               className={styles.topBrandsTile}
               onClick={(e) => handleBrandClick(e, brand)}
             >

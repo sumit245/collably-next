@@ -11,7 +11,7 @@ export default function SingleProductLinksTab() {
   const dispatch = useDispatch()
   const userId = useSelector((state) => state.auth.user?._id)
   const referrals = useSelector((state) => state.brands?.referrals || [])
-
+console.log(referrals)
   useEffect(() => {
     if (userId) {
       dispatch(fetchReferralsByUserId(userId))
@@ -45,7 +45,7 @@ export default function SingleProductLinksTab() {
       <EmptyState
         type="links"
         title="No product links added yet!"
-        description="Add single product links to share individual items with your audience"
+        description="All your single product affiliate links will show here, Find the best performing product and share more to earn more."
         buttonText="Add Product Link"
       />
     )

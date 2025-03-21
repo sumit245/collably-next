@@ -2,7 +2,7 @@
   padding: 16px;
   display: flex;
   flex-direction: column;
-  /* min-height: 100vh; */
+  min-height: 100vh;
   background-color: white;
 }
 
@@ -106,7 +106,7 @@
 }
 
 .bestPracticesHeader {
-    font-size: 18px;
+  font-size: 22px;
     font-weight: 700;
     color: #333;
     margin-bottom: 10px;
@@ -124,7 +124,7 @@
   height: 10px;
   background-color: #333;
   border-radius: 50%;
-  margin-top: 3px;
+  margin-top: 8px;
   margin-right: 16px;
   flex-shrink: 0;
 }
@@ -134,8 +134,10 @@
 }
 
 .practiceTitle {
+  font-size: 20px;
   font-weight: 500;
   margin-top: 0;
+  /* margin-bottom: 24px; */
   color: #333;
   font-family: sans-serif;
 }
@@ -160,17 +162,21 @@
   color: #4caf50;
   font-weight: 600;
   margin-right: 8px;
+  font-size: 18px;
 }
 
 .wrongText {
   color: #e74c3c;
   font-weight: 600;
   margin-right: 8px;
+  font-size: 18px;
 }
 
 .tipText {
   margin-top: 24px;
+  font-size: 18px;
   color: #333;
+  margin-left: 0;
   font-family: sans-serif;
-  margin-left: -2rem;
 }
+

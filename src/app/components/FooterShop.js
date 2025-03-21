@@ -9,7 +9,7 @@ import styles from '../shop/StyleShop.module.css'
 const navItems = [
   { name: 'Home', href: '/shop', icon: Home },
   { name: 'Feed', href: '/feed', icon: Rss },
-  { name: 'My Items', href: 'myItem', icon: ShoppingBag },
+  { name: 'My Items', href: '/myitem', icon: ShoppingBag },
   { name: 'Search', href: '/search', icon: Search },
   { name: 'Me', href: 'shopProfile', icon: User },
 ]

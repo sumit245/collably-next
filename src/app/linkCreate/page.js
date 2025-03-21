@@ -97,7 +97,7 @@ export default function LinksPage() {
                   <div className={styles.circle}></div>
                   <p><span className={styles.wrongText}>Wrong:</span> oneplus.in (missing https://)</p>
                 </div>
-                <p className={styles.tipText}>Tips: Copy directly from the Address Bar and paste</p>
+                <p className={styles.tipText}>Tip: Copy directly from the Address Bar and paste</p>
               </div>
             </div>
           </div>

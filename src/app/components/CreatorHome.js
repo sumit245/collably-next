@@ -7,7 +7,7 @@ import { useSelector } from "react-redux"
 import { useRouter } from "next/navigation"
 import styles from "../CreatorHome/stylescreator.module.css"
 import { stepsCreatorHome } from "../utils.faker"
-
+import Link from "next/link";
 export default function CreatorHome() {
   const user = useSelector((state) => state.auth.user)
   const router = useRouter()
@@ -54,6 +54,16 @@ export default function CreatorHome() {
           </button>
         </div>
       </header>
+
+      <div className={styles.profitHeader}>
+        <div className={styles.profitAmount}>
+          <h3>Total Earnings</h3>
+          <p>₹0.00</p>
+        </div>
+        <Link href="/earn-more" className={styles.learnMoreBtn}>
+          Learn How To Earn Money <span className={styles.arrow}>→</span>
+        </Link>
+      </div>
       {/* <div className={styles.heroContainer}>
         <div className={styles.stepsContainer}>
           {stepsCreatorHome.map((step) => (
