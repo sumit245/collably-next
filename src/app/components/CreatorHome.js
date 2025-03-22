@@ -6,7 +6,7 @@ import Image from "next/image"
 import { useSelector } from "react-redux"
 import { useRouter } from "next/navigation"
 import styles from "../CreatorHome/stylescreator.module.css"
-import { CreatorDropdown } from "./CreatorDropdown"
+import { CreatorDropdown } from "../components/CreatorDropdown"
 import { stepsCreatorHome } from "../utils.faker"
 import Link from "next/link";
 export default function CreatorHome() {
@@ -69,7 +69,7 @@ export default function CreatorHome() {
       {/* <div className={styles.heroContainer}>
         <div className={styles.stepsContainer}>
           {stepsCreatorHome.map((step) => (
-            <div key={step.id} className={`${styles.step} ${step.isActive ? styles.active : ""}`}>
+            <div key={step.id} className={${styles.step} ${step.isActive ? styles.active : ""}}>
               {step.icon && (
                 <Image src="/images/waitlist-icon.png" alt="" width={24} height={24} className={styles.stepIcon} />
               )}
@@ -95,4 +95,3 @@ export default function CreatorHome() {
     </div>
   )
 }
-

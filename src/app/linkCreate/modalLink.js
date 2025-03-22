@@ -73,19 +73,19 @@ export default function ShareModal({ isOpen, onClose, productName, productLink }
         <div className={styles.overlay}>
           <div className={`${styles.modal} ${isOpen ? styles.modalOpen : ""}`}>
             <div className={styles.header}>
-              <h3 className={styles.title}>Share Options</h3>
+              <h3 className={styles.title}>Link Created Successfully!</h3>
               <button onClick={onClose} className={styles.closeButton}>
                 <X className={styles.closeIcon} />
               </button>
             </div>
 
             <div className={styles.content}>
-              <p className={styles.commission}>Up to 7% commission</p>
+              {/* <p className={styles.commission}>Up to 7% commission</p> */}
               <p className={styles.productName}>{productName}</p>
               <p className={styles.productLink}>{productLink}</p>
             </div>
 
-            <div className={styles.socialButtons}>
+            {/* <div className={styles.socialButtons}>
               {[
                 { name: "Facebook", color: "#1877F2" },
                 { name: "Instagram", color: "#E4405F" },
@@ -100,14 +100,14 @@ export default function ShareModal({ isOpen, onClose, productName, productLink }
                   <span className={styles.platformName}>{platform.name}</span>
                 </button>
               ))}
-            </div>
+            </div> */}
 
             <button onClick={handleCopyLink} className={styles.copyButton}>
               <LinkIcon className={styles.copyIcon} />
               Copy link
             </button>
 
-            <div className={styles.actionButtons}>
+            {/* <div className={styles.actionButtons}>
               <button className={styles.actionButton} onClick={handleSaveQR}>
                 <Download className={styles.actionIcon} />
                 Save QR
@@ -116,7 +116,7 @@ export default function ShareModal({ isOpen, onClose, productName, productLink }
                 <Share2 className={styles.actionIcon} />
                 More
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
