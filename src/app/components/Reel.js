@@ -36,9 +36,6 @@ export default function Reel({
   const [isCommenting, setIsCommenting] = useState(false)
   const [isLiked, setIsLiked] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
-  const [productPreview, setProductPreview] = useState(null)
-  const [isLoadingProduct, setIsLoadingProduct] = useState(false)
-  const [previewError, setPreviewError] = useState(null)
   const commentSectionRef = useRef(null)
   const videoRef = useRef(null)
 
@@ -47,57 +44,6 @@ export default function Reel({
     setIsSaved(propIsSaved || currentUser?.saved?.includes(_id))
   }, [propIsLiked, propIsSaved, likes, userId, _id, currentUser?.saved])
 
-  useEffect(() => {
-    const extractProductInfo = async () => {
-      const urlRegex = /(https?:\/\/[^\s]+)/g
-      const matches = caption?.match(urlRegex)
-      if (!matches) return
-
-      const productUrl = matches[0]
-      setIsLoadingProduct(true)
-      setPreviewError(null)
-
-      try {
-        // Use CORS proxy
-        const proxyUrl = 'https://corsproxy.io/?'
-        const response = await fetch(proxyUrl + encodeURIComponent(productUrl))
-        const html = await response.text()
-        
-        // Parse HTML
-        const parser = new DOMParser()
-        const doc = parser.parseFromString(html, 'text/html')
-
-        // Extract product info
-        const getMetaContent = (property) => 
-          doc.querySelector(`meta[property="${property}"]`)?.content ||
-          doc.querySelector(`meta[name="${property}"]`)?.content
-
-        const previewData = {
-          url: productUrl,
-          image: getMetaContent('og:image') || 
-                 doc.querySelector('img[itemprop="image"]')?.src ||
-                 doc.querySelector('img.product-image')?.src,
-          price: getMetaContent('product:price:amount') ||
-                 doc.querySelector('[itemprop="price"]')?.content ||
-                 doc.querySelector('.price')?.textContent?.trim()
-        }
-
-        if (!previewData.image) throw new Error('No product image found')
-        
-        setProductPreview({
-          ...previewData,
-          price: previewData.price ? `$${parseFloat(previewData.price).toFixed(2)}` : 'Price not available'
-        })
-      } catch (error) {
-        setPreviewError('Could not load product preview')
-        console.error('Product preview error:', error)
-      } finally {
-        setIsLoadingProduct(false)
-      }
-    }
-
-    extractProductInfo()
-  }, [caption])
   useEffect(() => {
     if (!videoRef.current) return
 
@@ -179,6 +125,20 @@ export default function Reel({
 
   return (
     <div className={styles.reelContainer}>
+      <div className={styles.userInfo}>
+        <Link href={`/creator/${user?._id}`} className={styles.avatar}>
+          <img src={user?.avatar || "/placeholder.svg"} alt={user?.fullname} />
+        </Link>
+        <Link href={`/creator/${user?._id}`} className={styles.username}>
+          {user?.fullname}
+        </Link>
+        {userId !== user?._id && (
+          <button className={styles.followButton} onClick={handleFollowToggle}>
+            {isFollowing ? "Following" : "Follow"}
+          </button>
+        )}
+      </div>
+
       {video ? (
         <video ref={videoRef} className={styles.video} loop playsInline>
           <source src={video} type="video/mp4" />
@@ -230,90 +190,44 @@ export default function Reel({
 
         <div className={styles.actionItem}>
           <button className={styles.actionButton} onClick={() => onShare({ _id, user, caption })}>
-          <svg height="24px" width="24px" version="1.1" id="Layer_1" viewBox="0 0 512 512" xmlSpace="preserve" fill="">
-      <g id="SVGRepo_bgCarrier" strokeWidth="0"/>
-      <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"/>
-      <g id="SVGRepo_iconCarrier">
-        <path style={{ fill: "none" }} d="M501.801,213.374L324.879,36.453V142.94h-59.905c-140.708,0-254.775,114.066-254.775,254.775v77.833l92.966-101.742c52.389-57.335,126.474-89.996,204.14-89.996h17.574v106.487L501.801,213.374z"/>
-        <path style={{ fill: "#fff" }} d="M10.197,485.747c-1.238,0-2.488-0.225-3.687-0.691c-3.925-1.523-6.51-5.3-6.51-9.509v-77.833c0-70.777,27.562-137.318,77.609-187.365c50.047-50.046,116.588-77.609,187.366-77.609h49.705V36.453c0-4.125,2.486-7.844,6.296-9.423c3.811-1.579,8.198-0.707,11.115,2.21l176.923,176.922c1.912,1.912,2.987,4.507,2.987,7.212c0,2.705-1.075,5.299-2.987,7.212L332.09,397.509c-2.917,2.916-7.304,3.791-11.115,2.21c-3.81-1.579-6.296-5.297-6.296-9.423v-96.288h-7.374c-74.616,0-146.278,31.593-196.611,86.677L17.728,482.427C15.758,484.584,13.007,485.747,10.197,485.747zM264.974,153.139c-134.86,0-244.576,109.716-244.576,244.575v51.551l75.237-82.339c54.187-59.303,131.338-93.316,211.669-93.316h17.573c5.632,0,10.199,4.566,10.199,10.199v81.864l152.299-152.299L335.077,61.076v81.864c0,5.633-4.567,10.199-10.199,10.199H264.974z"/>
-        <path style={{ fill: "none" }} d="M247.503,190.884c-5.444,0-9.963-4.3-10.184-9.789c-0.227-5.628,4.152-10.375,9.78-10.601c2.762-0.111,5.571-0.168,8.35-0.168c5.633,0,10.199,4.566,10.199,10.199c0,5.633-4.566,10.199-10.199,10.199c-2.507,0-5.039,0.051-7.529,0.151C247.781,190.882,247.642,190.884,247.503,190.884z"/>
-        <path style={{ fill: "none" }} d="M140.757,228.2c-3.139,0-6.236-1.444-8.234-4.169c-3.33-4.543-2.348-10.925,2.196-14.255c22.329-16.37,47.27-27.846,74.131-34.11c5.49-1.279,10.97,2.131,12.249,7.616c1.279,5.486-2.131,10.97-7.616,12.249c-24.164,5.635-46.607,15.963-66.704,30.696C144.962,227.558,142.85,228.2,140.757,228.2z"/>
-      </g>
-    </svg>
+            <svg
+              height="24px"
+              width="24px"
+              version="1.1"
+              id="Layer_1"
+              viewBox="0 0 512 512"
+              xmlSpace="preserve"
+              fill=""
+            >
+              <g id="SVGRepo_bgCarrier" strokeWidth="0" />
+              <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  style={{ fill: "none" }}
+                  d="M501.801,213.374L324.879,36.453V142.94h-59.905c-140.708,0-254.775,114.066-254.775,254.775v77.833l92.966-101.742c52.389-57.335,126.474-89.996,204.14-89.996h17.574v106.487L501.801,213.374z"
+                />
+                <path
+                  style={{ fill: "#fff" }}
+                  d="M10.197,485.747c-1.238,0-2.488-0.225-3.687-0.691c-3.925-1.523-6.51-5.3-6.51-9.509v-77.833c0-70.777,27.562-137.318,77.609-187.365c50.047-50.046,116.588-77.609,187.366-77.609h49.705V36.453c0-4.125,2.486-7.844,6.296-9.423c3.811-1.579,8.198-0.707,11.115,2.21l176.923,176.922c1.912,1.912,2.987,4.507,2.987,7.212c0,2.705-1.075,5.299-2.987,7.212L332.09,397.509c-2.917,2.916-7.304,3.791-11.115,2.21c-3.81-1.579-6.296-5.297-6.296-9.423v-96.288h-7.374c-74.616,0-146.278,31.593-196.611,86.677L17.728,482.427C15.758,484.584,13.007,485.747,10.197,485.747zM264.974,153.139c-134.86,0-244.576,109.716-244.576,244.575v51.551l75.237-82.339c54.187-59.303,131.338-93.316,211.669-93.316h17.573c5.632,0,10.199,4.566,10.199,10.199v81.864l152.299-152.299L335.077,61.076v81.864c0,5.633-4.567,10.199-10.199,10.199H264.974z"
+                />
+                <path
+                  style={{ fill: "none" }}
+                  d="M247.503,190.884c-5.444,0-9.963-4.3-10.184-9.789c-0.227-5.628,4.152-10.375,9.78-10.601c2.762-0.111,5.571-0.168,8.35-0.168c5.633,0,10.199,4.566,10.199,10.199c0,5.633-4.566,10.199-10.199,10.199c-2.507,0-5.039,0.051-7.529,0.151C247.781,190.882,247.642,190.884,247.503,190.884z"
+                />
+                <path
+                  style={{ fill: "none" }}
+                  d="M140.757,228.2c-3.139,0-6.236-1.444-8.234-4.169c-3.33-4.543-2.348-10.925,2.196-14.255c22.329-16.37,47.27-27.846,74.131-34.11c5.49-1.279,10.97,2.131,12.249,7.616c1.279,5.486-2.131,10.97-7.616,12.249c-24.164,5.635-46.607,15.963-66.704,30.696C144.962,227.558,142.85,228.2,140.757,228.2z"
+                />
+              </g>
+            </svg>
           </button>
         </div>
-
-       
       </div>
 
       <div className={styles.info}>
-        <div className={styles.userInfo}>
-          <Link href={`/creator/${user?._id}`} className={styles.avatar}>
-            <img src={user?.avatar || "/placeholder.svg"} alt={user?.fullname} />
-          </Link>
-          <Link href={`/creator/${user?._id}`} className={styles.username}>
-            {user?.fullname}
-          </Link>
-          {userId !== user?._id && (
-            <button className={styles.followButton} onClick={handleFollowToggle}>
-              {isFollowing ? "Following" : "Follow"}
-            </button>
-          )}
-        </div>
-        {productPreview && (
-        <div className={styles.productPreview}>
-          <div className={styles.previewContent}>
-            {isLoadingProduct ? (
-              <div className={styles.loading}>Loading product info...</div>
-            ) : previewError ? (
-              <div className={styles.error}>{previewError}</div>
-            ) : (
-              <>
-                <div className={styles.previewImage}>
-                  <img 
-                    src={productPreview.image} 
-                    alt="Product preview" 
-                    onError={(e) => {
-                      e.target.src = '/placeholder.svg'
-                      setPreviewError('Image failed to load')
-                    }}
-                  />
-                </div>
-                <div className={styles.previewInfo}>
-                  {productPreview.price && (
-                    <div className={styles.previewPrice}>
-                      {productPreview.price}
-                    </div>
-                  )}
-                  <a
-                    href={productPreview.url}
-                    className={styles.previewLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      window.open(productPreview.url, '_blank')
-                      const referralCode = caption?.match(/referralCode=([A-Za-z0-9]{6})/)?.[1]
-                      if (referralCode) {
-                        dispatch(trackReferralClick(referralCode))
-                      }
-                    }}
-                  >
-                    View Product
-                  </a>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      )}
-
-      <div className={styles.logo}>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-          <path d="M12 2C14.717 2 17.157 2.004 18.878 2.058C20.488 2.109 21.905 2.419 23.004 3.518C24.103 4.617 24.413 6.034 24.464 7.644C24.518 9.365 24.522 11.805 24.522 14.522C24.522 17.239 24.518 19.679 24.464 21.4C24.413 23.01 24.103 24.427 23.004 25.526C21.905 26.625 20.488 26.935 18.878 26.986C17.157 27.04 14.717 27.044 12 27.044C9.283 27.044 6.843 27.04 5.122 26.986C3.512 26.935 2.095 26.625 0.996 25.526C-0.103 24.427 -0.413 23.01 -0.464 21.4C-0.518 19.679 -0.522 17.239 -0.522 14.522C-0.522 11.805 -0.518 9.365 -0.464 7.644C-0.413 6.034 -0.103 4.617 0.996 3.518C2.095 2.419 3.512 2.109 5.122 2.058C6.843 2.004 9.283 2 12 2Z" />
-        </svg>
-      </div>
-
+        <a className={styles.caption} href={caption} onClick={handleCaptionClick} rel="noopener noreferrer">
+          {caption}
+        </a>
       </div>
       {isCommenting && (
         <div ref={commentSectionRef}>
@@ -327,3 +241,4 @@ export default function Reel({
     </div>
   )
 }
+

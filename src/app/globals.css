@@ -2540,10 +2540,7 @@ display: none;
     top: -21px;
     font-size: 12px;
 }
-.avatar-circle{
-  position: relative;
-  top: 10px;
-}
+
 .used_app ul li img {
   max-width: 60px;
 }
@@ -2884,6 +2881,10 @@ display: none;
 .avatar-circle{
   position: relative;
   top: 10px;
+  border-radius: 50%;
+}
+.user-info.image {
+  border-radius: 50%;
 }
 .used_app ul li img {
   max-width: 60px;
