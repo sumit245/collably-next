@@ -21,7 +21,7 @@ import {
 import { logout } from '../actions/auth';
 import styles from '../shop/StyleShop.module.css';
 
-export function DropdownMenu() {
+export function CreatorDropdown() {
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const menuRef = useRef(null);
@@ -31,14 +31,14 @@ export function DropdownMenu() {
   const user = useSelector((state) => state.auth.user);
 
   const menuItems = [
-    { icon: <Megaphone className={styles.menuItemIcon} />, label: 'Women\'s Fashion', comingSoon: false  },
-    { icon: <GraduationCap className={styles.menuItemIcon} />, label: 'Men\'s Fashion', comingSoon: false  },
-    { icon: <Bot className={styles.menuItemIcon} />, label: 'Beauty Products', comingSoon: false  },
-    { icon: <MessageSquare className={styles.menuItemIcon} />, label: 'Exclusive Deals', comingSoon: false },
-    { icon: <Trophy className={styles.menuItemIcon} />, label: 'Best Sellers', comingSoon: false},
-    { icon: <Users className={styles.menuItemIcon} />, label: 'Trending Products', comingSoon: false },
-    { icon: <Star className={styles.menuItemIcon} />, label: 'My Orders' , comingSoon: false  },
-    { icon: <HelpCircle className={styles.menuItemIcon} />, label: 'Creators',  comingSoon: false },
+    { icon: <Megaphone className={styles.menuItemIcon} />, label: 'Live Campaigns', comingSoon: false  },
+    { icon: <GraduationCap className={styles.menuItemIcon} />, label: 'Top Selling Brands', comingSoon: false  },
+    { icon: <Bot className={styles.menuItemIcon} />, label: 'Trending Brands', comingSoon: false  },
+    { icon: <MessageSquare className={styles.menuItemIcon} />, label: 'Trending Brands', comingSoon: false },
+    { icon: <Trophy className={styles.menuItemIcon} />, label: 'New on Collably', comingSoon: false},
+    { icon: <Users className={styles.menuItemIcon} />, label: 'Beauty Products', comingSoon: false },
+    { icon: <Star className={styles.menuItemIcon} />, label: 'Top Selling Products' , comingSoon: false  },
+    { icon: <HelpCircle className={styles.menuItemIcon} />, label: 'Brands',  comingSoon: false },
   ];
 
   const handleClick = (e) => {

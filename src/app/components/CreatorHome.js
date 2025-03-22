@@ -6,6 +6,7 @@ import Image from "next/image"
 import { useSelector } from "react-redux"
 import { useRouter } from "next/navigation"
 import styles from "../CreatorHome/stylescreator.module.css"
+import { CreatorDropdown } from "./CreatorDropdown"
 import { stepsCreatorHome } from "../utils.faker"
 import Link from "next/link";
 export default function CreatorHome() {
@@ -28,7 +29,8 @@ export default function CreatorHome() {
       <header className={styles.header}>
         <div className={styles.userInfo}>
           <button className={styles.menuButton}>
-            <Menu size={24} color="white" />
+            {/* <Menu size={24} color="white" /> */}
+            <CreatorDropdown />
           </button>
 
           <Image

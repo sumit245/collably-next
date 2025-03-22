@@ -40,8 +40,8 @@
   }
   
   .header {
-    position: sticky;
-    top: 0;
+    position: fixed;
+    top: 0px;
     z-index: 1000;
     background-color: #ff0055;
     padding: 1rem;
@@ -49,6 +49,8 @@
     align-items: center;
     justify-content: space-between;
     color: white;
+    max-width: 420px;
+    width: 90%;
   }
   
   .menuButton, .iconButton {
@@ -313,7 +315,9 @@ padding: 15px;
   
 
   .topBrandsWrapper {
-    padding: 1.5rem 0;
+    /* padding: 1.5rem 0; */
+    padding-left: 16px;
+    padding-right: 16px;
     background-color: #fff0f0;
   }
 
@@ -324,16 +328,21 @@ padding: 15px;
   }
   
   .topBrandsTitle {
-    font-size: 1rem;
+    /* font-size: 1rem;
     font-weight: 600;
     color: #e61f93;
-    margin: 0 0 1rem 0rem;
+    margin: 0 0 1rem 0rem; */
+    font-weight: 700;
+    color: #e61f93;
+    font-size: 1.3rem;
+    padding-left: 5px;
   }
   
   .topBrandsScroll {
     position: relative;
     overflow: hidden;
-    padding: 0.5rem 0;
+    margin-bottom: 1.5rem;
+    /* padding: 0.5rem 0; */
   }
   
   .topBrandsTrack {
@@ -722,6 +731,7 @@ padding: 15px;
     padding: 12px 16px;
     border-top: 1px solid #eee;
     background-color: #fff;
+    margin-top: 1rem;
   }
   
   .poweredByCreatorBottom {
@@ -787,7 +797,10 @@ padding: 15px;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
-    padding: 0 5px;
+    /* padding: 0 5px; */
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-top: 5rem ;
   }
   
   .profitAmount h3 {
