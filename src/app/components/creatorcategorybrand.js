@@ -110,7 +110,7 @@ export default function CategoryBrands({ heading, category }) {
       <div className={styles.trendbrandHeader}>
         <h2 className={styles.trendbrandTitle}>{heading}</h2>
         {brands.length > 0 && (
-          <Link href={`/brandsdisplay?category=${category}`} className={styles.trendbrandViewAll}>
+          <Link href={`/brandsdisplayCreator?category=${category}`} className={styles.trendbrandViewAll}>
             View All <span>→</span>
           </Link>
         )}

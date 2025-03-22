@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { useSearchParams } from "next/navigation"
 import { Search } from "lucide-react"
 import { fetchBrands } from "../store/brandSlice"
-import Header from "../components/HeaderShop"
-import Footer from "../components/FooterShop"
-import styles from "./page.module.css"
+import CreatorHome from "../components/CreatorHome";
+import FooterCreator from "../components/FooterCreator";
+import styles from "../brandsdisplay/page.module.css"
 import styleshop from "../shop/StyleShop.module.css"
 import Image from "next/image"
 import Link from "next/link"
@@ -42,7 +42,7 @@ export default function CategoryBrandsDisplay() {
   return (
     <div className={styleshop.bodyShop}>
       <div className={styleshop.smartphoneContainer}>
-        <Header />
+        <CreatorHome />
         <div className={styles.brandsPage}>
           <div className={styles.brandsHeader}>
             <h1 className={styles.brandsTitle}>{category ? `${category} Brands` : "All Brands"}</h1>
@@ -80,7 +80,7 @@ export default function CategoryBrandsDisplay() {
             </div>
           )}
         </div>
-        <Footer />
+        <FooterCreator />
       </div>
     </div>
   )

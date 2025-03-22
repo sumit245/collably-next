@@ -41,7 +41,7 @@ export default function Footer() {
       </Link>
       
 
-      <Link href="/creatorProfile" className={`${styles.navItem} ${pathname === '/creatorFeedProfile' ? styles.active : ''}`}>
+      <Link href="/creatorFeedProfile" className={`${styles.navItem} ${pathname === '/creatorFeedProfile' ? styles.active : ''}`}>
         <span className={styles.navIcon}>
           <CgProfile size={20} />
         </span>

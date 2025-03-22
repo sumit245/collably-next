@@ -1,14 +1,14 @@
-// modalLink.js
 "use client"
 
 import { useState } from "react"
-import { X, LinkIcon, Share2, Download } from 'lucide-react'
+import { X, LinkIcon } from "lucide-react"
 import styles from "./share.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import { toast } from "react-hot-toast"
 
 export default function ShareModal({ isOpen, onClose, productName, productLink }) {
   const [qrCode, setQrCode] = useState(null)
+  const [copySuccess, setCopySuccess] = useState("")
 
   const handleShare = async (platform) => {
     let shareUrl
@@ -25,7 +25,6 @@ export default function ShareModal({ isOpen, onClose, productName, productLink }
         break
       // Add more cases for other platforms
       default:
-  
         return
     }
 
@@ -35,7 +34,11 @@ export default function ShareModal({ isOpen, onClose, productName, productLink }
   const handleCopyLink = async () => {
     try {
       await navigator.clipboard.writeText(productLink)
+      setCopySuccess("Link copied!")
       toast.success("Link copied to clipboard")
+
+      // Clear the success message after 2 seconds
+      setTimeout(() => setCopySuccess(""), 2000)
     } catch (err) {
       console.error("Failed to copy link:", err)
       toast.error("Failed to copy link")
@@ -44,7 +47,9 @@ export default function ShareModal({ isOpen, onClose, productName, productLink }
 
   const handleSaveQR = async () => {
     try {
-      const response = await fetch(`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(productLink)}`)
+      const response = await fetch(
+        `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(productLink)}`,
+      )
       const blob = await response.blob()
       const url = URL.createObjectURL(blob)
       setQrCode(url)
@@ -62,7 +67,7 @@ export default function ShareModal({ isOpen, onClose, productName, productLink }
   }
 
   const handleMore = () => {
-   
+    // Placeholder for more functionality
   }
 
   if (!isOpen) return null
@@ -104,7 +109,7 @@ export default function ShareModal({ isOpen, onClose, productName, productLink }
 
             <button onClick={handleCopyLink} className={styles.copyButton}>
               <LinkIcon className={styles.copyIcon} />
-              Copy link
+              {copySuccess || "Copy link"}
             </button>
 
             {/* <div className={styles.actionButtons}>
@@ -123,3 +128,4 @@ export default function ShareModal({ isOpen, onClose, productName, productLink }
     </div>
   )
 }
+

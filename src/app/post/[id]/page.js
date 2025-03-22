@@ -62,7 +62,7 @@ export default function PostDetail() {
     if (confirm("Are you sure you want to delete this post?")) {
       try {
         await api.deletePost(id)
-        router.push("/creatorFeedProfile")
+        router.push("/CreatorShop")
       } catch { setError("Failed to delete post") }
     }
   }

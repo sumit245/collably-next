@@ -18,9 +18,13 @@
     display: flex;
     flex-direction: column;
     justify-self: anchor-center;
-    margin-top: 4.2rem;
+    margin-top: 15.2rem;
   }
-  
+  @media (max-width: 768px) {
+    .modal {
+      margin-top: 10.2rem;
+    }
+  }
   .modalOpen {
     transform: translateY(0);
   }

@@ -40,7 +40,7 @@
 }
 
 .header {
-  position: sticky;
+  position: fixed;
   top: 0px;
   z-index: 1000;
   background-color: #ff0055;
@@ -49,6 +49,8 @@
   align-items: center;
   justify-content: space-between;
   color: white;
+  max-width: 420px;
+  width: 90%;
 }
 
 .menuButton, .iconButton {

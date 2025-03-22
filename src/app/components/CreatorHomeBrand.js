@@ -51,7 +51,7 @@ export default function TopBrands({ heading }) {
     <div className={styles.topBrandsWrapper}>
       <div className={styles.headingWrapper}>
         <h2 className={styles.topBrandsTitle}>{heading}</h2>
-        <Link href="/brandsdisplay" className={styles.viewAllLink}>
+        <Link href="/brandsdisplayCreator" className={styles.viewAllLink}>
           View All <span className={styles.arrow}>→</span>
         </Link>
       </div>

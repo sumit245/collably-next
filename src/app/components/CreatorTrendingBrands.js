@@ -31,7 +31,7 @@ const TrendingBrands = () => {
     <div className={styles.container}>
       <div className={styles.headingWrapper}>
         <h2 className={styles.heading}>Live Campaigns</h2>
-        <Link href="/brandsdisplay" className={styles.viewAllLink}>
+        <Link href="/brandsdisplayCreator" className={styles.viewAllLink}>
           View All <span className={styles.arrow}>→</span>
         </Link>
       </div>
