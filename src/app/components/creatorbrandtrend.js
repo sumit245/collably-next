@@ -77,7 +77,7 @@ export default function TrendingBrands({ heading = "Trending Brands" }) {
 
     const text = `Check out ${brand.brandName} with profit up to ${brand.profit || "10"}%!`
     const url = referralLink || brand.brandWebsite || window.location.origin
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + " " + url)}`
+   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + " " + url)}`
     window.open(whatsappUrl, "_blank")
   }
 
@@ -111,7 +111,7 @@ export default function TrendingBrands({ heading = "Trending Brands" }) {
       <div className={styles.trendbrandHeader}>
         <h2 className={styles.trendbrandTitle}>{heading}</h2>
         <Link href="/brandsdisplay" className={styles.trendbrandViewAll}>
-          VIEW ALL <span className={styles.trendbrandArrow}>›</span>
+          View All<span>→</span>
         </Link>
       </div>
 
@@ -218,4 +218,3 @@ export default function TrendingBrands({ heading = "Trending Brands" }) {
     </div>
   )
 }
-

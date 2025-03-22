@@ -1,815 +1,835 @@
 .navigation {
-    background-color: white;
-    padding: 0.75rem;
-    display: flex;
-    justify-content: space-around;
-    border-top: 1px solid #eee;
-    position: sticky;
-    bottom: 0;
-    z-index: 1000;
-  }
+  background-color: white;
+  padding: 0.75rem;
+  display: flex;
+  justify-content: space-around;
+  border-top: 1px solid #eee;
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
+}
 
-  
-  .navItem {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    color: #000;
-    gap: 0.25rem;
-  }
-  
-  .navItem.active {
-    color: #f61f93;
-  }
-  
-  .navIcon {
-    font-size: 1.25rem;
-  }
-  
-  .navText {
-    font-size: 0.75rem;
-    font-weight: 500;
-  }
-  
-  .container {
-    min-height: 100vh;
-    background-color: #f5f5f5;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .header {
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    background-color: #ff0055;
-    padding: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: white;
-  }
-  
-  .menuButton, .iconButton {
-    background: none;
-    border: none;
-    padding: 0.5rem;
-    cursor: pointer;
-  }
-  
-  .userInfo {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: white;
-  }
-  
-  .userText {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .greeting {
-    font-size: 0.875rem;
-    opacity: 0.9;
-  }
-  
-  .username {
-    font-weight: 500;
-  }
-  
-  .headerIcons {
-    display: flex;
-    gap: 0.5rem;
-  }
-  
-  .main {
-    flex: 1;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    background-color: #fff0f0;
-  }
-  .heroContainer{
-    background-color: #ff0055;
+
+.navItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #000;
+  gap: 0.25rem;
+}
+
+.navItem.active {
+  color: #f61f93;
+}
+
+.navIcon {
+  font-size: 1.25rem;
+}
+
+.navText {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  position: sticky;
+  top: 0px;
+  z-index: 1000;
+  background-color: #ff0055;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+}
+
+.menuButton, .iconButton {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.userText {
+  display: flex;
+  flex-direction: column;
+}
+
+.greeting {
+  font-size: 0.875rem;
+  opacity: 0.9;
+}
+
+.username {
+  font-weight: 500;
+}
+
+.headerIcons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.main {
+  flex: 1;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: #fff0f0;
+}
+.heroContainer{
+  background-color: #ff0055;
 background-color:#ff0055;
 
 padding: 15px;
-  }
-  .stepsContainer {
-    background-color: #f1c2d2;
-    background-color: #fde3e7;
-    padding: 1rem;
-    border-radius: 30px;
-  }
-  
-  .step {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    padding: 1rem;
-    position: relative;
-  }
-  
-  .stepIcon {
-    width: 24px;
-    height: 24px;
-  }
-  
-  .stepContent {
-    flex: 1;
-  }
-  
-  .stepTitle {
-    font-size: 1rem;
-    font-weight: 500;
-    margin: 0;
-    color: #333;
-  }
-  
-  .stepDescription {
-    font-size: 0.875rem;
-    color: #666;
-    margin: 0.25rem 0 0 0;
-  }
-  
- 
-  
-  .dot {
-    width: 8px;
-    height: 8px;
-    background-color: #FF5722;
-    border-radius: 50%;
-  }
-  
-  .suggestedActions {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .actionHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .actionTitle {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #000;
-    margin: 0;
-  }
-  
-  .seeAll {
-    color: #4A90E2;
-    text-decoration: none;
-    font-size: 0.875rem;
-  }
-  
-  .actionCard , .actionCardToDo{
-    background-color: #ff19007c;
-    border: none;
-    border-radius: 12px;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    width: 100%;
-    text-align: left;
-  }
+}
+.stepsContainer {
+  background-color: #f1c2d2;
+  background-color: #fde3e7;
+  padding: 1rem;
+  border-radius: 30px;
+}
 
-  .actionCardToDo{
-    background-color: #ff9d927c;
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  position: relative;
+}
+
+.stepIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.stepContent {
+  flex: 1;
+}
+
+.stepTitle {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+  color: #333;
+}
+
+.stepDescription {
+  font-size: 0.875rem;
+  color: #666;
+  margin: 0.25rem 0 0 0;
+}
+
+
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background-color: #FF5722;
+  border-radius: 50%;
+}
+
+.suggestedActions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.actionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.actionTitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #000;
+  margin: 0;
+}
+
+.seeAll {
+  color: #4A90E2;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.actionCard , .actionCardToDo{
+  background-color: #ff19007c;
+  border: none;
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+.actionCardToDo{
+  background-color: #ff9d927c;
+}
+
+.actionContent {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.actionIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #FF9E80;
+}
+
+.actionText h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+  color: #000;
+}
+
+.actionText p {
+  font-size: 0.875rem;
+  color: #000;
+  margin: 0.25rem 0 0 0;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 480px;
+    margin: 0 auto;
+    border-left: 1px solid #eee;
+    border-right: 1px solid #eee;
   }
-  
-  .actionContent {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  
-  .actionIcon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background-color: #FF9E80;
-  }
-  
-  .actionText h3 {
-    font-size: 1rem;
-    font-weight: 500;
-    margin: 0;
-    color: #000;
-  }
-  
-  .actionText p {
-    font-size: 0.875rem;
-    color: #000;
-    margin: 0.25rem 0 0 0;
-  }
-  
-  @media (min-width: 640px) {
-    .container {
-      max-width: 480px;
-      margin: 0 auto;
-      border-left: 1px solid #eee;
-      border-right: 1px solid #eee;
-    }
-  }
-  
-  
-  .containerExclusive {
-    background-color: #f1c2d2;
-    border-radius: 12px;
-    padding: 1.25rem;
-    border: 1px solid blue;
-    margin: 1rem 1rem;
-  }
-  
-  .titleExclusive {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #333;
-    margin: 0 0 1rem 0;
-  }
-  
+}
+
+
+.containerExclusive {
+  background-color: #f1c2d2;
+  border-radius: 12px;
+  padding: 1.25rem;
+  border: 1px solid blue;
+  margin: 1rem 1rem;
+}
+
+.titleExclusive {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 1rem 0;
+}
+
+.featuresExclusive {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.featureItemExclusive {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.iconWrapperExclusive {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconExclusive {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.lockedBadgeExclusive {
+  position: absolute;
+  top: -8px;
+  background-color: #ff4b4b;
+  color: #fff;
+  font-size: 0.525rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 8px;
+  text-transform: uppercase;
+}
+
+.featureNameExclusive {
+  font-size: 0.875rem;
+  color: #333;
+  font-weight: 500;
+}
+
+@media (max-width: 400px) {
   .featuresExclusive {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-  
-  .featureItemExclusive {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     gap: 0.5rem;
   }
-  
-  .iconWrapperExclusive {
-    position: relative;
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .iconExclusive {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-  }
-  
-  .lockedBadgeExclusive {
-    position: absolute;
-    top: -8px;
-    background-color: #ff4b4b;
-    color: #fff;
-    font-size: 0.525rem;
-    font-weight: 600;
-    padding: 2px 6px;
-    border-radius: 8px;
-    text-transform: uppercase;
-  }
-  
-  .featureNameExclusive {
-    font-size: 0.875rem;
-    color: #333;
-    font-weight: 500;
-  }
-  
-  @media (max-width: 400px) {
-    .featuresExclusive {
-      gap: 0.5rem;
-    }
-  
-    .iconWrapperExclusive {
-      width: 40px;
-      height: 40px;
-    }
-  
-    .iconExclusive {
-      width: 20px;
-      height: 20px;
-    }
-  
-    .featureNameExclusive {
-      font-size: 0.75rem;
-    }
-  }
-  
-  
 
-  .topBrandsWrapper {
-    padding: 1.5rem 0;
-    background-color: #fff0f0;
-  }
-  
-  .topBrandsTitle {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e61f93;
-    margin: 0 0 1rem 1rem;
-  }
-  
-  .topBrandsScroll {
-    position: relative;
-    overflow: hidden;
-    padding: 0.5rem 0;
-  }
-  
-  .topBrandsTrack {
-    display: flex;
-    gap: 1rem;
-    padding: 0 1rem;
-    animation: scrollBrands 5s linear infinite;
-  }
-  
-  .topBrandsPaused {
-    animation-play-state: paused;
-  }
-  
-  .topBrandsTile {
-    flex: 0 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    background: white;
-    padding: 10px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    cursor: pointer;
-    transition: transform 0.2s ease;
-  }
-  
-  .topBrandsTile:hover {
-    transform: translateY(-2px);
-  }
-  
-  .topBrandsLogoWrapper {
+  .iconWrapperExclusive {
     width: 40px;
     height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
-  
-  .topBrandsLogo {
-    width: 120%;
-    height: 107%;
-    object-fit: contain;
-    border-radius: 5px;
-  }
-  
-  .topBrandsName {
-    font-size: 0.875rem;
-    color: #333;
-    font-weight: 500;
-  }
-  
-  @keyframes scrollBrands {
-    from {
-      transform: translateX(0);
-    }
-    to {
-      transform: translateX(-50%);
-    }
-  }
-  
-  @media (max-width: 640px) {
-    .topBrandsTile {
-      min-width: 90px;
-      padding: 0.75rem;
-    }
-  
-    .topBrandsName {
-      font-size: 0.75rem;
-    }
-  }
-  
-  
-  .saleCalendarWrapper {
-    background-color: #ff0055;
-    background-image: url(/images/winter-border-1.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: top;
-    padding: 1.5rem;
-    color: #fff;
-  }
- 
-  
-  .saleCalendarHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1.5rem;
-  }
-  
-  .saleCalendarTitleGroup {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .saleCalendarTitle {
-    color: #fff;
-    font-size: 1.5rem;
-    font-weight: 900;
-    margin: 0;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .saleCalendarSubtitle {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-    opacity: 0.9;
-  }
-  
-  .saleCalendarNavigation {
-    display: flex;
-    gap: 0.5rem;
-  }
-  
-  .saleCalendarNavButton {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.9);
-    color: #333;
-    transition: all 0.2s ease;
-  }
-  
-  .saleCalendarNavButton:hover:not(.saleCalendarNavDisabled) {
-    background-color: white;
-    transform: translateY(-1px);
-  }
-  
-  .saleCalendarNavDisabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-  
-  .saleCalendarContent {
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  
-  .saleCalendarGrid {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .saleCalendarLabels {
-    display: grid;
-        grid-template-columns: 1fr auto;
-        padding: .75rem 1rem;
-        background-color: #e79d416b;
-        font-size: .875rem;
-        font-weight: 500;
-        color: #c92d2d;
-  }
-  
-  .saleCalendarCard {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    padding: 0.5rem;
-    border-bottom: 1px solid #999;
-    align-items: center;
-  }
-  
-  .saleCalendarCard:last-child {
-    border-bottom: none;
-  }
-  
-  .saleCalendarBrandInfo {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  
-  .saleCalendarLogoWrapper {
-    width: 40px;
-    height: 40px;
-    border-radius: 8px;
-    overflow: hidden;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .saleCalendarLogo {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-  
-  .saleCalendarBrandDetails {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-  
-  .saleCalendarSaleTitle {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: #333;
-    margin: 0;
-  }
-  
-  .saleCalendarBrandSubtitle {
-    font-size: 0.75rem;
-    color: #666;
-    margin: 0;
-  }
-  
-  .saleCalendarBrandName {
-    font-size: 0.75rem;
-    color: #666;
-    margin: 0;
-  }
-  
-  .saleCalendarDate {
-    font-size: 0.875rem;
-    color: #333;
-    text-align: right;
-  }
-  
-  @media (max-width: 640px) {
-    .saleCalendarWrapper {
-      padding: 1rem;
-    }
-  
-    .saleCalendarTitle {
-      font-size: 1.25rem;
-    }
-  
-    .saleCalendarSubtitle {
-      font-size: 0.75rem;
-    }
-  
-    .saleCalendarCard {
-      padding: 0.75rem;
-    }
-  }
-  
-  .containerFind {
-    padding: 16px;
-    background-color: #fff0f0;
-  }
-  
-  .headerFind {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-  }
-  
-  .titleFind {
-    font-size: 24px;
-    font-weight: bolder;
-    color: #e61f93;
-  }
-  
-  .seeMoreFind {
-    color: #ff6b6b;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 13px;
-  }
-  
-  .gridFind {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-  
-  .cardFind {
-    background: #ff0055;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .cardTopFind {
-    background: #ff0055;
-    height: 24px;
-    position: relative;
-    background-image: url(/images/winter-border-1.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: top;
-  }
-  
-  .cardTopFind::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-    right: 0;
-    height: 10px;
-    background: #ff0055;
-    clip-path: polygon(0 0, 100% 0, 50% 100%);
-  }
-  
-  .timestampFind {
-    position: relative;
-    top: 10px;
-    left: 34px;
-    color: #fff;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  
-  .imageContainerFind {
-    aspect-ratio: 1;
-    position: relative;
-    margin: 10px;
-  }
-  .imageContainerFindIcon{
-    aspect-ratio: 1;
-    position: relative;
-    top: -26px;
-    left: 40%;
-    width: 30px;
-    height: 30px;
-  }
-  .imageFind {
-    object-fit: cover;
-    border-radius: 10px;
-  }
-  .imageFindIcon {
-    object-fit: cover;
-    border-radius: 5px;
-  }
-  .contentFind {
-    padding: 12px;
-    padding-top: 0px;
-    margin-top: -1.5rem;
-  }
-  
-  .cardTitleFind {
-    font-size: 14px;
-    font-weight: 600;
-    margin-bottom: 4px;
-    margin-top: 0px;
-    color: #ffffff;
-    text-align: center;
-  }
-  
-  .productsFind {
-    color: #fff;
-    font-size: 14px;
-    margin-top: 0px;
-    margin-bottom: 5px;
-    text-align: center;
-  }
-  
-  .exploreButtonFind {
-    display: flex ;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        padding: 0.25rem;
-        background: #fff;
-        border: 1px solid rgb(199, 85, 74);
-        border-radius: 4px;
-        color: rgb(199, 85, 74);
-        font-weight: 500;
-        cursor: pointer;
-        transition: all .2s;
-  }
-  
-  
-  .arrowIconFind {
-    margin-left: 4px;
-  }
-  
-  .footerCreatorBottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 16px;
-    border-top: 1px solid #eee;
-    background-color: #fff;
-  }
-  
-  .poweredByCreatorBottom {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: #666;
-    font-size: 14px;
-  }
-  
-  .CollablyCreatorBottom {
-    color: #FF6B2C;
-    font-weight: 500;
-  }
-  
-  .helpLinkCreatorBottom {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: #7C3AED;
-    text-decoration: none;
-    font-size: 14px;
-  }
-  
-  .helpIconCreatorBottom {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+  .iconExclusive {
     width: 20px;
     height: 20px;
-    border-radius: 50%;
-    background-color: #7C3AED;
-    color: white;
-  }
-  
-  
-  .viewAllLink {
-    font-size: .875rem;
-    color: #000;
-    border: none;
-    background: none;
-    cursor: pointer;
-  }
-  
-  .viewAllLink:hover {
-    color: #1F2937;
   }
 
-  .headingWrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 24px;
+  .featureNameExclusive {
+    font-size: 0.75rem;
   }
-  
+}
 
-  .profitHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-    padding: 0 5px;
+
+
+.topBrandsWrapper {
+  /* padding: 1.5rem 0; */
+  padding-left: 16px;
+  padding-right: 16px;
+  background-color: #fff0f0;
+}
+
+.topBrandsWrapperLink{
+  padding: 1.5rem 0;
+  background-color: #fff;
+  text-align: center;
+}
+
+.topBrandsTitle {
+  /* font-size: 1rem;
+  font-weight: 600;
+  color: #e61f93;
+  margin: 0 0 1rem 0rem; */
+  font-weight: 700;
+  color: #e61f93;
+  font-size: 1.3rem;
+  padding-left: 5px;
+}
+
+.topBrandsScroll {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  /* padding: 0.5rem 0; */
+}
+
+.topBrandsTrack {
+  display: flex;
+  gap: 1rem;
+  padding: 0 1rem;
+  animation: scrollBrands 5s linear infinite;
+}
+
+.topBrandsPaused {
+  animation-play-state: paused;
+}
+
+.topBrandsTile {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background: white;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.topBrandsTile:hover {
+  transform: translateY(-2px);
+}
+
+.topBrandsLogoWrapper {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topBrandsLogo {
+  width: 120%;
+  height: 107%;
+  object-fit: contain;
+  border-radius: 5px;
+}
+
+.topBrandsName {
+  font-size: 0.875rem;
+  color: #333;
+  font-weight: 500;
+}
+
+@keyframes scrollBrands {
+  from {
+    transform: translateX(0);
   }
-  
-  .profitAmount h3 {
-    color: #666;
-    font-size: 16px;
-    font-weight: 500;
-    margin: 0;
-    margin-top: 15px;
+  to {
+    transform: translateX(-50%);
   }
-  
-  .profitAmount p {
-    font-size: 24px;
-    font-weight: 600;
-    margin: 0;
+}
+
+@media (max-width: 640px) {
+  .topBrandsTile {
+    min-width: 90px;
+    padding: 0.75rem;
   }
-  
-  .learnMoreBtn {
-    display: flex;
-    align-items: center;
-    padding: 10px 15px;
-    border: 1px solid #ccc;
-    border-radius: 25px;
-    color: #666;
-    text-decoration: none;
-    font-size: 14px;
-    transition: all 0.3s ease;
+
+  .topBrandsName {
+    font-size: 0.75rem;
   }
-  
-  .learnMoreBtn:hover {
-    background-color: #f5f5f5;
+}
+
+
+.saleCalendarWrapper {
+  background-color: #ff0055;
+  background-image: url(/images/winter-border-1.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: top;
+  padding: 1.5rem;
+  color: #fff;
+}
+
+
+.saleCalendarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.saleCalendarTitleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.saleCalendarTitle {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.saleCalendarSubtitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  opacity: 0.9;
+}
+
+.saleCalendarNavigation {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.saleCalendarNavButton {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+  transition: all 0.2s ease;
+}
+
+.saleCalendarNavButton:hover:not(.saleCalendarNavDisabled) {
+  background-color: white;
+  transform: translateY(-1px);
+}
+
+.saleCalendarNavDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.saleCalendarContent {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.saleCalendarGrid {
+  display: flex;
+  flex-direction: column;
+}
+
+.saleCalendarLabels {
+  display: grid;
+      grid-template-columns: 1fr auto;
+      padding: .75rem 1rem;
+      background-color: #e79d416b;
+      font-size: .875rem;
+      font-weight: 500;
+      color: #c92d2d;
+}
+
+.saleCalendarCard {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  padding: 0.5rem;
+  border-bottom: 1px solid #999;
+  align-items: center;
+}
+
+.saleCalendarCard:last-child {
+  border-bottom: none;
+}
+
+.saleCalendarBrandInfo {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.saleCalendarLogoWrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.saleCalendarLogo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.saleCalendarBrandDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.saleCalendarSaleTitle {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.saleCalendarBrandSubtitle {
+  font-size: 0.75rem;
+  color: #666;
+  margin: 0;
+}
+
+.saleCalendarBrandName {
+  font-size: 0.75rem;
+  color: #666;
+  margin: 0;
+}
+
+.saleCalendarDate {
+  font-size: 0.875rem;
+  color: #333;
+  text-align: right;
+}
+
+@media (max-width: 640px) {
+  .saleCalendarWrapper {
+    padding: 1rem;
   }
-  
-  .learnMoreBtn .arrow {
-    margin-left: 5px;
+
+  .saleCalendarTitle {
+    font-size: 1.25rem;
   }
+
+  .saleCalendarSubtitle {
+    font-size: 0.75rem;
+  }
+
+  .saleCalendarCard {
+    padding: 0.75rem;
+  }
+}
+
+.containerFind {
+  padding: 16px;
+  background-color: #fff0f0;
+}
+
+.headerFind {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.titleFind {
+  font-size: 24px;
+  font-weight: bolder;
+  color: #e61f93;
+}
+
+.seeMoreFind {
+  color: #ff6b6b;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 13px;
+}
+
+.gridFind {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.cardFind {
+  background: #ff0055;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cardTopFind {
+  background: #ff0055;
+  height: 24px;
+  position: relative;
+  background-image: url(/images/winter-border-1.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: top;
+}
+
+.cardTopFind::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: #ff0055;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.timestampFind {
+  position: relative;
+  top: 10px;
+  left: 34px;
+  color: #fff;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.imageContainerFind {
+  aspect-ratio: 1;
+  position: relative;
+  margin: 10px;
+}
+.imageContainerFindIcon{
+  aspect-ratio: 1;
+  position: relative;
+  top: -26px;
+  left: 40%;
+  width: 30px;
+  height: 30px;
+}
+.imageFind {
+  object-fit: cover;
+  border-radius: 10px;
+}
+.imageFindIcon {
+  object-fit: cover;
+  border-radius: 5px;
+}
+.contentFind {
+  padding: 12px;
+  padding-top: 0px;
+  margin-top: -1.5rem;
+}
+
+.cardTitleFind {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  margin-top: 0px;
+  color: #ffffff;
+  text-align: center;
+}
+
+.productsFind {
+  color: #fff;
+  font-size: 14px;
+  margin-top: 0px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.exploreButtonFind {
+  display: flex ;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 0.25rem;
+      background: #fff;
+      border: 1px solid rgb(199, 85, 74);
+      border-radius: 4px;
+      color: rgb(199, 85, 74);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all .2s;
+}
+
+
+.arrowIconFind {
+  margin-left: 4px;
+}
+
+.footerCreatorBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-top: 1px solid #eee;
+  background-color: #fff;
+  margin-top: 1rem;
+}
+
+.poweredByCreatorBottom {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #666;
+  font-size: 14px;
+}
+
+.CollablyCreatorBottom {
+  color: #FF6B2C;
+  font-weight: 500;
+}
+
+.helpLinkCreatorBottom {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #7C3AED;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.helpIconCreatorBottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #7C3AED;
+  color: white;
+}
+
+.headingWrapper{
+  display: flex;
+  justify-content: space-between;
+}
+
+.viewAllLink {
+  font-size: .875rem;
+  color: #000;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.viewAllLink:hover {
+  color: #1F2937;
+}
+
+.headingWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+
+.profitHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  /* padding: 0 5px; */
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.profitAmount h3 {
+  color: #666;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  margin-top: 15px;
+}
+
+.profitAmount p {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.learnMoreBtn {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  color: #666;
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.learnMoreBtn:hover {
+  background-color: #f5f5f5;
+}
+
+.learnMoreBtn .arrow {
+  margin-left: 5px;
+}

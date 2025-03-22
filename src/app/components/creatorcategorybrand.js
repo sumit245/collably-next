@@ -111,7 +111,7 @@ export default function CategoryBrands({ heading, category }) {
         <h2 className={styles.trendbrandTitle}>{heading}</h2>
         {brands.length > 0 && (
           <Link href={`/brandsdisplay?category=${category}`} className={styles.trendbrandViewAll}>
-            VIEW ALL <span className={styles.trendbrandArrow}>›</span>
+            View All <span>→</span>
           </Link>
         )}
       </div>
@@ -227,4 +227,3 @@ export default function CategoryBrands({ heading, category }) {
     </div>
   )
 }
-

@@ -24,7 +24,6 @@ export default function ReelsPage() {
   useEffect(() => {
     fetchReels()
 
-    // Improved scroll handler with debounce for better performance
     const handleScroll = () => {
       if (!containerRef.current) return
 
@@ -61,7 +60,6 @@ export default function ReelsPage() {
   }
 
   const updateReel = async (reelId, action, apiCall) => {
-    // Check if user is logged in
     if (!isLoggedIn) {
       setIsLoginModalOpen(true)
       return
@@ -90,7 +88,6 @@ export default function ReelsPage() {
   const handleUnsave = (reelId) => updateReel(reelId, () => ({ isSaved: false }), api.unsavePost)
 
   const handleComment = async (reelId, comment) => {
-    // Check if user is logged in
     if (!isLoggedIn) {
       setIsLoginModalOpen(true)
       return
