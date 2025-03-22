@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { FiHome, FiShoppingCart, FiBarChart2 } from 'react-icons/fi'; 
 import { CgProfile } from "react-icons/cg";
 import { FaPlus } from 'react-icons/fa'; 
-import { CgProfile } from "react-icons/cg";
+// import { CgProfile } from "react-icons/cg";
 import { FaLink } from "react-icons/fa6";
 import styles from '../CreatorHome/stylescreator.module.css';
 
@@ -42,7 +42,7 @@ export default function Footer() {
       </Link>
       
 
-      <Link href="/creatorProfile" className={`${styles.navItem} ${pathname === '/creatorFeedProfile' ? styles.active : ''}`}>
+      <Link href="/creatorProfile" className={`${styles.navItem} ${pathname === '/creatorProfile' ? styles.active : ''}`}>
         <span className={styles.navIcon}>
           <CgProfile size={20} />
         </span>
