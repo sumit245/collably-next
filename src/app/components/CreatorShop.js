@@ -12,6 +12,7 @@ import SingleProductLinksTab from './singleProductTab'
 import { useSelector, useDispatch } from 'react-redux'
 import { useRouter } from 'next/navigation'
 import { fetchPosts } from "../store/postSlice"
+import { DropdownMenu } from "./DropdownMenu"
 
 
 
@@ -79,7 +80,8 @@ export default function Shop() {
     <div className={styles.containerShop}>
       <header className={styles.header}>
         <button className={styles.menuButton}>
-          <Menu size={24} />
+          {/* <Menu size={24} /> */}
+          <DropdownMenu />
         </button>
 
         <div className={styles.profileSection}>
