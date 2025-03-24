@@ -103,7 +103,7 @@ export default function Reel({
     isLiked ? onUnlike(_id) : onLike(_id)
     setIsLiked(!isLiked)
   }
-
+console.log(isSaved)
   const handleSaveAction = () => {
     if (!isLoggedIn) {
       onLoginRequired()
