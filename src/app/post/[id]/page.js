@@ -135,7 +135,7 @@ export default function PostDetail() {
           <div className={styles.mainPost}>
             <div className={styles.mediaContainer}>
               {currentPost.video ? (
-                <video onClick={() => router.push(`/feed?reelId=${currentPost._id}`)} src={currentPost.video} controls className={styles.postVideo} />
+                <video onClick={() => router.push(`/feed/${currentPost._id}`)} src={currentPost.video} controls className={styles.postVideo} />
               ) : (
                 <Image src={currentPost.images?.[0]?.[0]} alt={`Post ${currentPost._id}`} layout="fill" objectFit="cover" className={styles.postImage} />
               )}

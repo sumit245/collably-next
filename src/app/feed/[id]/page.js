@@ -24,8 +24,8 @@ export default function ReelDetailPage() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
   const [currentShareReel, setCurrentShareReel] = useState(null)
   const [isCommenting, setIsCommenting] = useState(false)
-  const containerRef = useRef(null)
-  const videoRef = useRef(null)
+  const videoRefs = useRef([])
+  const observer = useRef(null)
   const commentSectionRef = useRef(null)
   const currentUserId = useSelector((state) => state.auth.user?._id)
   const currentUser = useSelector((state) => state.auth.user)
@@ -43,7 +43,6 @@ export default function ReelDetailPage() {
       }
 
       const post = response.post
-      // Format the current reel with necessary properties
       const formattedReel = {
         ...post,
         isLiked: (post.likes || []).some((like) => like._id === currentUserId),
@@ -52,7 +51,6 @@ export default function ReelDetailPage() {
         comments: post.comments || [],
       }
 
-      // Set this as the only reel in our reels data
       setReelsData([formattedReel])
       setIsLoading(false)
     } catch (err) {
@@ -63,11 +61,9 @@ export default function ReelDetailPage() {
   }, [id, currentUserId, currentUser?.saved])
 
   const fetchRelatedReels = useCallback(async () => {
-    // After fetching the current reel, fetch similar reels
     try {
       const { posts } = await api.getPosts()
       if (Array.isArray(posts)) {
-        // Filter to only include video posts, exclude the current one
         const otherReels = posts
           .filter((post) => post.video && !post.images.length && post._id !== id)
           .map((reel) => ({
@@ -76,9 +72,7 @@ export default function ReelDetailPage() {
             isSaved: currentUser?.saved?.includes(reel._id),
           }))
 
-        // Add these reels to our reels data, keeping the current one first
         setReelsData((prevReels) => {
-          // If we have existing reels (the current one), add the others after it
           if (prevReels.length > 0) {
             return [...prevReels, ...shuffleArray(otherReels)]
           }
@@ -90,42 +84,53 @@ export default function ReelDetailPage() {
     }
   }, [id, currentUserId, currentUser?.saved])
 
-  // Fetch the current reel on component mount
   useEffect(() => {
     fetchCurrentReel()
   }, [fetchCurrentReel])
 
-  // After fetching the current reel, fetch related reels
   useEffect(() => {
     if (!isLoading && reelsData.length === 1) {
       fetchRelatedReels()
     }
   }, [isLoading, reelsData.length, fetchRelatedReels])
 
+  // Intersection Observer setup
   useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current) return
+    observer.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const index = Number(entry.target.getAttribute("data-index"))
+          if (entry.isIntersecting) {
+            setActiveReel(index)
+          }
+        })
+      },
+      { threshold: 0.75 }
+    )
 
-      const scrollTop = containerRef.current.scrollTop
-      const height = window.innerHeight
-      const index = Math.round(scrollTop / height)
+    videoRefs.current.forEach((video) => {
+      if (video) observer.current.observe(video)
+    })
 
-      setActiveReel(index)
+    return () => {
+      if (observer.current) observer.current.disconnect()
     }
+  }, [reelsData])
 
-    containerRef.current?.addEventListener("scroll", handleScroll, { passive: true })
-    return () => containerRef.current?.removeEventListener("scroll", handleScroll)
-  }, [])
-
+  // Video playback control
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (commentSectionRef.current && !commentSectionRef.current.contains(e.target)) {
-        setIsCommenting(false)
+    videoRefs.current.forEach((video, index) => {
+      if (!video) return
+      if (index === activeReel) {
+        video.play()
+        video.muted = false
+      } else {
+        video.pause()
+        video.muted = true
+        video.currentTime = 0
       }
-    }
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [])
+    })
+  }, [activeReel])
 
   const updateReel = async (reelId, action, apiCall) => {
     if (!isLoggedIn) {
@@ -135,7 +140,9 @@ export default function ReelDetailPage() {
 
     try {
       await apiCall(reelId)
-      setReelsData((prevReels) => prevReels.map((reel) => (reel._id === reelId ? { ...reel, ...action(reel) } : reel)))
+      setReelsData((prevReels) =>
+        prevReels.map((reel) => (reel._id === reelId ? { ...reel, ...action(reel) } : reel))
+      )
     } catch (error) {
       console.error(`Error updating reel:`, error)
     }
@@ -148,7 +155,7 @@ export default function ReelDetailPage() {
     updateReel(
       reelId,
       (reel) => ({ isLiked: false, likes: (reel.likes || []).filter((like) => like._id !== currentUserId) }),
-      api.unlikePost,
+      api.unlikePost
     )
 
   const handleSave = (reelId) => updateReel(reelId, () => ({ isSaved: true }), api.savePost)
@@ -164,7 +171,7 @@ export default function ReelDetailPage() {
     try {
       const updatedPost = await api.commentOnPost(reelId, comment)
       setReelsData((prevReels) =>
-        prevReels.map((reel) => (reel._id === reelId ? { ...reel, comments: updatedPost.comments } : reel)),
+        prevReels.map((reel) => (reel._id === reelId ? { ...reel, comments: updatedPost.comments } : reel))
       )
       setIsCommenting(false)
     } catch (error) {
@@ -230,8 +237,7 @@ export default function ReelDetailPage() {
     <LikeProvider>
       <div className={styleshop.bodyShop}>
         <div className={styleshop.smartphoneContainer}>
-         
-          <div ref={containerRef} className={styles.reelsContainer}>
+          <div className={styles.reelsContainer}>
             {reelsData.map((reel, index) => (
               <div key={reel._id} className={styles.reelWrapper}>
                 <div className={styles.reelContainer}>
@@ -268,8 +274,8 @@ export default function ReelDetailPage() {
                       className={styles.video}
                       loop
                       playsInline
-                      controls={index === 0} // Only show controls for the detail view (first reel)
-                      ref={index === activeReel ? videoRef : null}
+                      ref={(el) => (videoRefs.current[index] = el)}
+                      data-index={index}
                       autoPlay={index === activeReel}
                       muted={index !== activeReel}
                     >
@@ -299,22 +305,6 @@ export default function ReelDetailPage() {
                       </button>
                     </div>
 
-                    {/* <div className={styles.actionItem}>
-                      <button
-                        className={styles.actionButton}
-                        onClick={() => {
-                          if (!isLoggedIn) {
-                            setIsLoginModalOpen(true)
-                            return
-                          }
-                          setIsCommenting(!isCommenting)
-                        }}
-                      >
-                        <MessageCircle color="white" size={24} />
-                        <span className={styles.actionCount}>{reel.comments?.length || 0}</span>
-                      </button>
-                    </div> */}
-
                     <div className={styles.actionItem}>
                       <button
                         className={styles.actionButton}
@@ -326,36 +316,36 @@ export default function ReelDetailPage() {
 
                     <div className={styles.actionItem}>
                       <button className={styles.actionButton} onClick={() => handleShare(reel)}>
-                      <svg
-              height="24px"
-              width="24px"
-              version="1.1"
-              id="Layer_1"
-              viewBox="0 0 512 512"
-              xmlSpace="preserve"
-              fill=""
-            >
-              <g id="SVGRepo_bgCarrier" strokeWidth="0" />
-              <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
-              <g id="SVGRepo_iconCarrier">
-                <path
-                  style={{ fill: "none" }}
-                  d="M501.801,213.374L324.879,36.453V142.94h-59.905c-140.708,0-254.775,114.066-254.775,254.775v77.833l92.966-101.742c52.389-57.335,126.474-89.996,204.14-89.996h17.574v106.487L501.801,213.374z"
-                />
-                <path
-                  style={{ fill: "#fff" }}
-                  d="M10.197,485.747c-1.238,0-2.488-0.225-3.687-0.691c-3.925-1.523-6.51-5.3-6.51-9.509v-77.833c0-70.777,27.562-137.318,77.609-187.365c50.047-50.046,116.588-77.609,187.366-77.609h49.705V36.453c0-4.125,2.486-7.844,6.296-9.423c3.811-1.579,8.198-0.707,11.115,2.21l176.923,176.922c1.912,1.912,2.987,4.507,2.987,7.212c0,2.705-1.075,5.299-2.987,7.212L332.09,397.509c-2.917,2.916-7.304,3.791-11.115,2.21c-3.81-1.579-6.296-5.297-6.296-9.423v-96.288h-7.374c-74.616,0-146.278,31.593-196.611,86.677L17.728,482.427C15.758,484.584,13.007,485.747,10.197,485.747zM264.974,153.139c-134.86,0-244.576,109.716-244.576,244.575v51.551l75.237-82.339c54.187-59.303,131.338-93.316,211.669-93.316h17.573c5.632,0,10.199,4.566,10.199,10.199v81.864l152.299-152.299L335.077,61.076v81.864c0,5.633-4.567,10.199-10.199,10.199H264.974z"
-                />
-                <path
-                  style={{ fill: "none" }}
-                  d="M247.503,190.884c-5.444,0-9.963-4.3-10.184-9.789c-0.227-5.628,4.152-10.375,9.78-10.601c2.762-0.111,5.571-0.168,8.35-0.168c5.633,0,10.199,4.566,10.199,10.199c0,5.633-4.566,10.199-10.199,10.199c-2.507,0-5.039,0.051-7.529,0.151C247.781,190.882,247.642,190.884,247.503,190.884z"
-                />
-                <path
-                  style={{ fill: "none" }}
-                  d="M140.757,228.2c-3.139,0-6.236-1.444-8.234-4.169c-3.33-4.543-2.348-10.925,2.196-14.255c22.329-16.37,47.27-27.846,74.131-34.11c5.49-1.279,10.97,2.131,12.249,7.616c1.279,5.486-2.131,10.97-7.616,12.249c-24.164,5.635-46.607,15.963-66.704,30.696C144.962,227.558,142.85,228.2,140.757,228.2z"
-                />
-              </g>
-            </svg>
+                        <svg
+                          height="24px"
+                          width="24px"
+                          version="1.1"
+                          id="Layer_1"
+                          viewBox="0 0 512 512"
+                          xmlSpace="preserve"
+                          fill=""
+                        >
+                          <g id="SVGRepo_bgCarrier" strokeWidth="0" />
+                          <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
+                          <g id="SVGRepo_iconCarrier">
+                            <path
+                              style={{ fill: "none" }}
+                              d="M501.801,213.374L324.879,36.453V142.94h-59.905c-140.708,0-254.775,114.066-254.775,254.775v77.833l92.966-101.742c52.389-57.335,126.474-89.996,204.14-89.996h17.574v106.487L501.801,213.374z"
+                            />
+                            <path
+                              style={{ fill: "#fff" }}
+                              d="M10.197,485.747c-1.238,0-2.488-0.225-3.687-0.691c-3.925-1.523-6.51-5.3-6.51-9.509v-77.833c0-70.777,27.562-137.318,77.609-187.365c50.047-50.046,116.588-77.609,187.366-77.609h49.705V36.453c0-4.125,2.486-7.844,6.296-9.423c3.811-1.579,8.198-0.707,11.115,2.21l176.923,176.922c1.912,1.912,2.987,4.507,2.987,7.212c0,2.705-1.075,5.299-2.987,7.212L332.09,397.509c-2.917,2.916-7.304,3.791-11.115,2.21c-3.81-1.579-6.296-5.297-6.296-9.423v-96.288h-7.374c-74.616,0-146.278,31.593-196.611,86.677L17.728,482.427C15.758,484.584,13.007,485.747,10.197,485.747zM264.974,153.139c-134.86,0-244.576,109.716-244.576,244.575v51.551l75.237-82.339c54.187-59.303,131.338-93.316,211.669-93.316h17.573c5.632,0,10.199,4.566,10.199,10.199v81.864l152.299-152.299L335.077,61.076v81.864c0,5.633-4.567,10.199-10.199,10.199H264.974z"
+                            />
+                            <path
+                              style={{ fill: "none" }}
+                              d="M247.503,190.884c-5.444,0-9.963-4.3-10.184-9.789c-0.227-5.628,4.152-10.375,9.78-10.601c2.762-0.111,5.571-0.168,8.35-0.168c5.633,0,10.199,4.566,10.199,10.199c0,5.633-4.566,10.199-10.199,10.199c-2.507,0-5.039,0.051-7.529,0.151C247.781,190.882,247.642,190.884,247.503,190.884z"
+                            />
+                            <path
+                              style={{ fill: "none" }}
+                              d="M140.757,228.2c-3.139,0-6.236-1.444-8.234-4.169c-3.33-4.543-2.348-10.925,2.196-14.255c22.329-16.37,47.27-27.846,74.131-34.11c5.49-1.279,10.97,2.131,12.249,7.616c1.279,5.486-2.131,10.97-7.616,12.249c-24.164,5.635-46.607,15.963-66.704,30.696C144.962,227.558,142.85,228.2,140.757,228.2z"
+                            />
+                          </g>
+                        </svg>
                       </button>
                     </div>
                   </div>
@@ -386,4 +376,3 @@ export default function ReelDetailPage() {
     </LikeProvider>
   )
 }
-
