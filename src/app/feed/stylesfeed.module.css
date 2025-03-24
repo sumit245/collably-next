@@ -16,16 +16,9 @@
     max-width: 450px;
     margin: 0 auto; 
   }
-  .userInfo {
-      top: -20rem !important;
-  }
+ 
 }
-@media screen and (max-width: 768px) {
-  
-  .userInfo {
-      top: -20rem !important;
-  }
-}
+
 
 
 
@@ -130,7 +123,8 @@
   gap: 12px;
   margin-bottom: 12px;
   position: relative;
-  top: -26rem;
+  top: 2rem;
+  left: 1rem;
 }
 
 .avatar {

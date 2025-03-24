@@ -110,7 +110,7 @@ export default function TrendingBrands({ heading = "Trending Brands" }) {
     <div className={styles.trendbrandWrapper}>
       <div className={styles.trendbrandHeader}>
         <h2 className={styles.trendbrandTitle}>{heading}</h2>
-        <Link href="/brandsdisplay" className={styles.trendbrandViewAll}>
+        <Link href="/brandsdisplayCreator" className={styles.trendbrandViewAll}>
           View All<span>→</span>
         </Link>
       </div>

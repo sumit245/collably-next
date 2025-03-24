@@ -91,6 +91,7 @@ export default function Header() {
               width={30}
               height={30}
               className={styles.avatarCircle}
+              style={{ borderRadius: "50%" }}
             />
             {/* <span className="username">{user?.fullname }</span> */}
           </div>

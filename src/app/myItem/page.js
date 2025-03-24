@@ -32,9 +32,9 @@ export default function SearchSection() {
     <LikeProvider>
       <div className={styles.container}>
         <Header />
-        <div className={styles.noSavedProductContainer}>
+        {/* <div className={styles.noSavedProductContainer}>
           <h2 className={styles.noSavedProductHeading } >My saved product</h2>
-        </div>
+        </div> */}
         <div className={styles.tabsContainer}>
           <div className={`${styles.tab} ${collectionSubTab === "Videos" ? styles.activeTab : ""}`} 
             onClick={() => setCollectionSubTab("Videos")}>Videos</div>
@@ -60,10 +60,13 @@ export default function SearchSection() {
             </div>
           ) : <div className={styles.emptyStateCard}>
           <p className={styles.emptyStateText}>
-            You have no items saved! Save products to find here
+          Oops! 
+Hey, your wishlist is empty
+Save items you like and love will appear here, review them to add to your cart and start shopping.
+
           </p>
           <Link href="/feed">
-    <button className={styles.continueButton}>Continue Watching</button>
+    <button className={styles.continueButton}>Browse</button>
   </Link>
         </div>
         }

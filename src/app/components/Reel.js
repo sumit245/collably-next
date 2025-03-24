@@ -29,81 +29,21 @@ export default function Reel({
   isLoggedIn,
   onLoginRequired,
 }) {
-  const dispatch = useDispatch();
-  const userId = useSelector((state) => state.auth.user?._id) || currentUserId;
-  const currentUser = useSelector((state) => state.auth.user);
-  const [isFollowing, setIsFollowing] = useState(
-    user?.followers?.includes(userId)
-  );
-  const [isCommenting, setIsCommenting] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
-  const [productPreview, setProductPreview] = useState(null);
-  const [isLoadingProduct, setIsLoadingProduct] = useState(false);
-  const [previewError, setPreviewError] = useState(null);
-  const commentSectionRef = useRef(null);
-  const videoRef = useRef(null);
+  const dispatch = useDispatch()
+  const userId = useSelector((state) => state.auth.user?._id) || currentUserId
+  const currentUser = useSelector((state) => state.auth.user)
+  const [isFollowing, setIsFollowing] = useState(user?.followers?.includes(userId))
+  const [isCommenting, setIsCommenting] = useState(false)
+  const [isLiked, setIsLiked] = useState(false)
+  const [isSaved, setIsSaved] = useState(false)
+  const commentSectionRef = useRef(null)
+  const videoRef = useRef(null)
 
   useEffect(() => {
     setIsLiked(propIsLiked || likes.includes(userId));
     setIsSaved(propIsSaved || currentUser?.saved?.includes(_id));
   }, [propIsLiked, propIsSaved, likes, userId, _id, currentUser?.saved]);
 
-  useEffect(() => {
-    const extractProductInfo = async () => {
-      const urlRegex = /(https?:\/\/[^\s]+)/g;
-      const matches = caption?.match(urlRegex);
-      if (!matches) return;
-
-      const productUrl = matches[0];
-      setIsLoadingProduct(true);
-      setPreviewError(null);
-
-      try {
-        // Use CORS proxy
-        const proxyUrl = "https://corsproxy.io/?";
-        const response = await fetch(proxyUrl + encodeURIComponent(productUrl));
-        const html = await response.text();
-
-        // Parse HTML
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, "text/html");
-
-        // Extract product info
-        const getMetaContent = (property) =>
-          doc.querySelector(`meta[property="${property}"]`)?.content ||
-          doc.querySelector(`meta[name="${property}"]`)?.content;
-
-        const previewData = {
-          url: productUrl,
-          image:
-            getMetaContent("og:image") ||
-            doc.querySelector('img[itemprop="image"]')?.src ||
-            doc.querySelector("img.product-image")?.src,
-          price:
-            getMetaContent("product:price:amount") ||
-            doc.querySelector('[itemprop="price"]')?.content ||
-            doc.querySelector(".price")?.textContent?.trim(),
-        };
-
-        if (!previewData.image) throw new Error("No product image found");
-
-        setProductPreview({
-          ...previewData,
-          price: previewData.price
-            ? `$${parseFloat(previewData.price).toFixed(2)}`
-            : "Price not available",
-        });
-      } catch (error) {
-        setPreviewError("Could not load product preview");
-        console.error("Product preview error:", error);
-      } finally {
-        setIsLoadingProduct(false);
-      }
-    };
-
-    extractProductInfo();
-  }, [caption]);
   useEffect(() => {
     if (!videoRef.current) return;
 
@@ -192,6 +132,20 @@ export default function Reel({
 
   return (
     <div className={styles.reelContainer}>
+      <div className={styles.userInfo}>
+        <Link href={`/creator/${user?._id}`} className={styles.avatar}>
+          <img src={user?.avatar || "/placeholder.svg"} alt={user?.fullname} />
+        </Link>
+        <Link href={`/creator/${user?._id}`} className={styles.username}>
+          {user?.fullname}
+        </Link>
+        {userId !== user?._id && (
+          <button className={styles.followButton} onClick={handleFollowToggle}>
+            {isFollowing ? "Following" : "Follow"}
+          </button>
+        )}
+      </div>
+
       {video ? (
         <video ref={videoRef} className={styles.video} loop playsInline>
           <source src={video} type="video/mp4" />
@@ -235,14 +189,14 @@ export default function Reel({
           </button>
         </div>
 
-        {/* <div className={styles.actionItem}>
+        <div className={styles.actionItem}>
           <button className={styles.actionButton} onClick={handleCommentAction}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white">
               <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
             </svg>
-            <span className={styles.actionCount}>{comments.length}</span>
+            <span className={styles.actionCount}>{comments?.length || 0}</span>
           </button>
-        </div> */}
+        </div>
 
         <div className={styles.actionItem}>
           <button
@@ -287,10 +241,7 @@ export default function Reel({
         </div>
 
         <div className={styles.actionItem}>
-          <button
-            className={styles.actionButton}
-            onClick={() => onShare({ _id, user, caption })}
-          >
+          <button className={styles.actionButton} onClick={() => onShare({ _id, user, caption })}>
             <svg
               height="24px"
               width="24px"
@@ -301,11 +252,7 @@ export default function Reel({
               fill=""
             >
               <g id="SVGRepo_bgCarrier" strokeWidth="0" />
-              <g
-                id="SVGRepo_tracerCarrier"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+              <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
               <g id="SVGRepo_iconCarrier">
                 <path
                   style={{ fill: "none" }}
@@ -330,80 +277,9 @@ export default function Reel({
       </div>
 
       <div className={styles.info}>
-        <div className={styles.userInfo}>
-          <Link href={`/creator/${user?._id}`} className={styles.avatar}>
-            <img
-              src={user?.avatar || "/placeholder.svg"}
-              alt={user?.fullname}
-            />
-          </Link>
-          <Link href={`/creator/${user?._id}`} className={styles.username}>
-            {user?.fullname}
-          </Link>
-          {userId !== user?._id && (
-            <button
-              className={styles.followButton}
-              onClick={handleFollowToggle}
-            >
-              {isFollowing ? "Following" : "Follow"}
-            </button>
-          )}
-        </div>
-        {productPreview && (
-          <div className={styles.productPreview}>
-            <div className={styles.previewContent}>
-              {isLoadingProduct ? (
-                <div className={styles.loading}>Loading product info...</div>
-              ) : previewError ? (
-                <div className={styles.error}>{previewError}</div>
-              ) : (
-                <>
-                  <div className={styles.previewImage}>
-                    <img
-                      src={productPreview.image}
-                      alt="Product preview"
-                      onError={(e) => {
-                        e.target.src = "/placeholder.svg";
-                        setPreviewError("Image failed to load");
-                      }}
-                    />
-                  </div>
-                  <div className={styles.previewInfo}>
-                    {productPreview.price && (
-                      <div className={styles.previewPrice}>
-                        {productPreview.price}
-                      </div>
-                    )}
-                    <a
-                      href={productPreview.url}
-                      className={styles.previewLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        window.open(productPreview.url, "_blank");
-                        const referralCode = caption?.match(
-                          /referralCode=([A-Za-z0-9]{6})/
-                        )?.[1];
-                        if (referralCode) {
-                          dispatch(trackReferralClick(referralCode));
-                        }
-                      }}
-                    >
-                      View Product
-                    </a>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-        )}
-
-        <div className={styles.logo}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-            <path d="M12 2C14.717 2 17.157 2.004 18.878 2.058C20.488 2.109 21.905 2.419 23.004 3.518C24.103 4.617 24.413 6.034 24.464 7.644C24.518 9.365 24.522 11.805 24.522 14.522C24.522 17.239 24.518 19.679 24.464 21.4C24.413 23.01 24.103 24.427 23.004 25.526C21.905 26.625 20.488 26.935 18.878 26.986C17.157 27.04 14.717 27.044 12 27.044C9.283 27.044 6.843 27.04 5.122 26.986C3.512 26.935 2.095 26.625 0.996 25.526C-0.103 24.427 -0.413 23.01 -0.464 21.4C-0.518 19.679 -0.522 17.239 -0.522 14.522C-0.522 11.805 -0.518 9.365 -0.464 7.644C-0.413 6.034 -0.103 4.617 0.996 3.518C2.095 2.419 3.512 2.109 5.122 2.058C6.843 2.004 9.283 2 12 2Z" />
-          </svg>
-        </div>
+        <a className={styles.caption} href={caption} onClick={handleCaptionClick} rel="noopener noreferrer">
+          {caption}
+        </a>
       </div>
       {isCommenting && (
         <div ref={commentSectionRef}>
@@ -419,3 +295,4 @@ export default function Reel({
     </div>
   );
 }
+

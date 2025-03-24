@@ -18,7 +18,7 @@ export default function Home() {
           
           <div className={styles.brandCircleWrapper}>
             <Image
-              src="/images/creator-entry2.webp" 
+              src="/images/creator-entry-vector.jpg" 
               alt="Brand Logos"
               width={300}
               height={300}

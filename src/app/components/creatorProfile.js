@@ -1,18 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts } from "../store/postSlice";
-import { useRouter, useParams } from "next/navigation";
-import styles from "../creatorFeedProfile/profile.module.css";
-import stylesShop from "../shop/StyleShop.module.css";
-import Image from "next/image";
-import Link from "next/link";
-import Footer from "../components/FooterShop";
-import Header from "../components/HeaderShop";
-import api from "../services/api";
-import { LikeProvider } from "../actions/LikeContext";
-import { BASE_URL } from "../services/api";
+import { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { fetchPosts } from "../store/postSlice"
+import { useRouter, useParams } from "next/navigation"
+import styles from "../creator/[id]/page.module.css"
+import stylesShop from "../shop/StyleShop.module.css"
+import Image from "next/image"
+import Link from "next/link"
+import Footer from "../components/FooterShop"
+import Header from "../components/HeaderShop"
+import api from "../services/api"
+import { LikeProvider } from "../actions/LikeContext"
+import { BASE_URL } from "../services/api"
 
 
 export default function CreatorProfile() {
