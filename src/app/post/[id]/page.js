@@ -160,7 +160,7 @@ export default function PostDetail() {
 
               {isCommenting && (
                 <div ref={commentSectionRef}>
-                  <CommentSection comments={currentPost.comments || []} onAddComment={handleComment} onClose={() => setIsCommenting(false)} postId={id} />
+                  {/* <CommentSection comments={currentPost.comments || []} onAddComment={handleComment} onClose={() => setIsCommenting(false)} postId={id} /> */}
                 </div>
               )}
             </div>
