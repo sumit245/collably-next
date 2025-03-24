@@ -103,17 +103,19 @@ export default function ReelDetailPage() {
   }, [isLoading, reelsData.length, fetchRelatedReels])
 
   useEffect(() => {
-    if (!videoRef.current) return
+    const handleScroll = () => {
+      if (!containerRef.current) return
 
-    if (isActive) {
-      videoRef.current.play().catch((err) => console.error("Error playing video:", err))
-      videoRef.current.muted = false
-    } else {
-      videoRef.current.pause()
-      videoRef.current.muted = true
-      videoRef.current.currentTime = 0
+      const scrollTop = containerRef.current.scrollTop
+      const height = window.innerHeight
+      const index = Math.round(scrollTop / height)
+
+      setActiveReel(index)
     }
-  }, [isActive])
+
+    containerRef.current?.addEventListener("scroll", handleScroll, { passive: true })
+    return () => containerRef.current?.removeEventListener("scroll", handleScroll)
+  }, [])
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -266,7 +268,7 @@ export default function ReelDetailPage() {
                       className={styles.video}
                       loop
                       playsInline
-                      controls={index === activeReel} 
+                      controls={index === 0} // Only show controls for the detail view (first reel)
                       ref={index === activeReel ? videoRef : null}
                       autoPlay={index === activeReel}
                       muted={index !== activeReel}
@@ -384,3 +386,4 @@ export default function ReelDetailPage() {
     </LikeProvider>
   )
 }
+
