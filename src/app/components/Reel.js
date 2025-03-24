@@ -36,6 +36,8 @@ export default function Reel({
   const [isCommenting, setIsCommenting] = useState(false)
   const [isLiked, setIsLiked] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
+  const [productInfo, setProductInfo] = useState({ image: null, price: null, loading: false, error: null })
+  const [showProductFrame, setShowProductFrame] = useState(false)
   const commentSectionRef = useRef(null)
   const videoRef = useRef(null)
 
@@ -81,18 +83,47 @@ export default function Reel({
     }
   }
 
-  const handleCaptionClick = async (e) => {
-    e.preventDefault()
-    const referralCode = caption?.match(/referralCode=([A-Za-z0-9]{6})/)?.[1]
-    if (referralCode) {
+  useEffect(() => {
+    const fetchProductData = async () => {
+      if (!caption) return
       try {
-        await dispatch(trackReferralClick(referralCode)).unwrap()
-      } catch (error) {
-        console.error("Tracking failed:", error)
+        setProductInfo(prev => ({ ...prev, loading: true, error: null }))
+        const proxyUrl = `https://cors-anywhere.herokuapp.com/${caption}`
+        const response = await fetch(proxyUrl)
+        const html = await response.text()
+        const parser = new DOMParser()
+        const doc = parser.parseFromString(html, 'text/html')
+        
+        // Extract product image
+        const ogImage = doc.querySelector('meta[property="og:image"]')?.content || 
+                       doc.querySelector('meta[name="twitter:image"]')?.content ||
+                       doc.querySelector('img')?.src
+
+        // Extract product price
+        const priceMeta = doc.querySelector('meta[property="product:price:amount"]') ||
+                         doc.querySelector('meta[itemprop="price"]')
+        const price = priceMeta?.content || 
+                     doc.querySelector('.price, .product-price, .price__amount')?.textContent?.trim()
+
+        setProductInfo({
+          image: ogImage,
+          price: price ? `$${parseFloat(price).toFixed(2)}` : null,
+          loading: false,
+          error: null
+        })
+      } catch (err) {
+        setProductInfo({
+          image: null,
+          price: null,
+          loading: false,
+          error: 'Failed to load product info'
+        })
       }
     }
-    window.location.href = caption
-  }
+
+    fetchProductData()
+  }, [caption])
+
   
 
   const handleLikeAction = () => {
@@ -123,7 +154,14 @@ export default function Reel({
 
     setIsCommenting(!isCommenting)
   }
+  const handleProductPreviewClick = (e) => {
+    e.preventDefault()
+    setShowProductFrame(true)
+  }
 
+  const closeProductFrame = () => {
+    setShowProductFrame(false)
+  }
   return (
     <div className={styles.reelContainer}>
       <div className={styles.userInfo}>
@@ -226,10 +264,47 @@ export default function Reel({
       </div>
 
       <div className={styles.info}>
-        <a className={styles.caption} href={caption} onClick={handleCaptionClick} rel="noopener noreferrer">
-          {caption}
-        </a>
+        {productInfo.loading ? (
+          <div className={styles.loadingPreview}>Loading product info...</div>
+        ) : productInfo.error ? (
+          <a className={styles.caption} href={caption} onClick={handleCaptionClick}>
+            {caption}
+          </a>
+        ) : (
+          <div className={styles.productPreview} onClick={handleProductPreviewClick}>
+            {productInfo.image && (
+              <img 
+                src={productInfo.image} 
+                alt="Product preview" 
+                className={styles.productImage}
+                onError={(e) => e.target.style.display = 'none'}
+              />
+            )}
+            {productInfo.price && (
+              <div className={styles.productPrice}>{productInfo.price}</div>
+            )}
+            <span className={styles.viewProduct}>View Product →</span>
+          </div>
+        )}
       </div>
+
+      {showProductFrame && (
+        <div className={styles.productFrameOverlay}>
+          <div className={styles.productFrameContainer}>
+            <button className={styles.closeFrameButton} onClick={closeProductFrame}>
+              ×
+            </button>
+            <iframe 
+              src={caption}
+              className={styles.productFrame}
+              title="Product Preview"
+              allowFullScreen
+            />
+          </div>
+        </div>
+      )}
+
+
       {isCommenting && (
         <div ref={commentSectionRef}>
           <CommentSection

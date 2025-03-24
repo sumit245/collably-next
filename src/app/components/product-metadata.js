@@ -1,7 +1,5 @@
-// Helper function to fetch metadata from a URL
 export async function fetchProductMetadata(url) {
     try {
-      // First, check if we're in a browser environment
       if (typeof window === "undefined") {
         return null
       }
