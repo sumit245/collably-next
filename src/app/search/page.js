@@ -66,7 +66,7 @@ export default function SearchSection() {
     ) : (
       <div className={styles.gridContainer}>
         {content.map(post => (
-          <Link key={post._id} href={`/feed/${post._id}`} 
+          <Link key={post._id} href={`/${activeTab === "Reels" ? "feed/" : "post/"}${post._id}`} 
             className={styles.gridItem}>
             {activeTab === "Reels" ? (
               <video src={post.video} className={styles.gridVideo} 

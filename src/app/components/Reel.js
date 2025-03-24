@@ -93,6 +93,7 @@ export default function Reel({
     }
     window.location.href = caption
   }
+  
 
   const handleLikeAction = () => {
     if (!isLoggedIn) {

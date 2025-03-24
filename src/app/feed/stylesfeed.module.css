@@ -748,3 +748,67 @@
 .deleteButton:hover {
   color: red;
 }
+
+
+
+/* Add these styles to your existing CSS file */
+
+.productPreview {
+  display: flex;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 8px 0;
+  text-decoration: none;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.productPreview:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.productPreviewIcon {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+.productPreviewInfo {
+  padding: 8px 12px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.productPreviewTitle {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.productPreviewShop {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 4px 0;
+}
+
+.productPreviewCta {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  font-weight: 500;
+}
+
