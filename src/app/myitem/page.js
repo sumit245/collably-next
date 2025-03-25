@@ -45,7 +45,7 @@ export default function SearchSection() {
           {content.length ? (
             <div className={styles.gridContainer}>
               {content.map(post => (
-                <Link key={post._id} href={`/${collectionSubTab === "Videos" ? "feed?reelId=" : "post/"}${post._id}`}
+                <Link key={post._id} href={`/feed/${post._id}`}
                   className={styles.gridItem}>
                   {collectionSubTab === "Videos" ? (
                     <video src={post.video} className={styles.gridVideo} 
