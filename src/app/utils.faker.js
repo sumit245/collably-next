@@ -413,12 +413,76 @@ export  const creatorsFeed = [
         }
       ]
 
+      export const quickEasyData = {
+        badge: "Quick & Easy",
+        title: "Start Earnings in 3 Steps",
+        steps: [
+          {
+            iconName: "FaPlus",
+            title: "Sign up on Collably",
+            description: "Complete OTP process & Create your collably account",
+            step: "01",
+          },
+          {
+            iconName: "FaLink",
+            title: "Link your Social Media",
+            description: "Connect your social media accounts to maximize your reach",
+            step: "02",
+          },
+          {
+            iconName: "FaStore",
+            title: "Start Earning",
+            description: "Create content, share links, and watch your earnings grow",
+            step: "03",
+          },
+        ],
+        cta: {
+          text: "Get started now",
+          href: "#",
+        },
+      }
+      
+
+      export const quickEasyDataBrand = {
+        badge: "Quick & Easy",
+        title: "Partner with us in 3 steps",
+        steps: [
+          {
+            iconName: "FaPlus",
+            title: "Sign up on Collably",
+            description: "Login with OTP & complete the process to create your collably account",
+            step: "01",
+          },
+          {
+            iconName: "FaLink",
+            title: "Discover Brand Dashboard & Create Affiliate Program ",
+            description: "Discover dashboard & start creating affiliate campaigns",
+            step: "02",
+          },
+          {
+            iconName: "FaStore",
+            title: "Integrate with our Brand API for seamless integration",
+            description: "Create content, share links, and watch your earnings grow",
+            step: "03",
+          },
+        ],
+        cta: {
+          text: "Get started now",
+          href: "#",
+        },
+      }
+      
+
       export const heroData = {
+        title: "Power Up Your Creator Game",
+        description: "Discover collaborations, create affiliate links, and book studios or services—all in one place.",
         bannerTexts: [
           "Explore Brand Collaborations",
           "Shop from your Favourite Creator",
           "Create Smart Affiliate Links",
         ],
+        primbutton:"Join Now for Free",
+        secbutton: "Learn More",
         appImages: [
           { src: "/images/banavt1.png", alt: "image 1", width: 80, height: 80 },
           { src: "/images/banavt2.png", alt: "image 2", width: 80, height: 80 },
@@ -439,11 +503,68 @@ export  const creatorsFeed = [
             }
           },
         ],
+        appTagline: "That 'One App' for Creator Economy",
+        appDescription: "Collably makes the creator\nlife simpler, smarter,\nand more rewarding.",
         heroImages: [
           { className: "mobile-hero", src: "/images/iphonescren.png", alt: "iPhone screen", width: 300, height: 600 },
           { className: "hero-bg-image", src: "/images/bannerScreen2.png", alt: "", width: 600, height: 583 },
         ],
       };
+    export  const imageBrand = [
+        {
+          src: "/placeholder.svg?height=500&width=800",
+          alt: "Brand image 1",
+        },
+        {
+          src: "/placeholder.svg?height=500&width=800",
+          alt: "Brand image 2",
+        },
+        {
+          src: "/placeholder.svg?height=500&width=800",
+          alt: "Brand image 3",
+        },
+        {
+          src: "/placeholder.svg?height=500&width=800",
+          alt: "Brand image 4",
+        },
+      ]
+      export const heroDataBrand = {
+        title: "Upgrade your sales channels & game",
+        description: "Create your custom affiliate program & turn creators into sales channels",
+        bannerTexts: [
+          "The smartest way to sell is here",
+          "Creator Driven Shopping",
+        ],
+        primbutton:"Get Started",
+        secbutton: "Special Message",
+        appImages: [
+          { src: "/images/banavt1.png", alt: "image 1", width: 80, height: 80 },
+          { src: "/images/banavt2.png", alt: "image 2", width: 80, height: 80 },
+          { src: "/images/banavt3.png", alt: "image 3", width: 80, height: 80 },
+          { 
+            src: "/images/play.png", 
+            alt: "play image", 
+            width: 80, 
+            height: 80, 
+            isLink: true,
+            linkProps: {
+              href: "#",
+              className: "popup-youtube play-button",
+              "data-url": "https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&amp;mute=1",
+              "data-toggle": "modal",
+              "data-target": "#myModal",
+              title: "XJj2PbenIsU",
+            }
+          },
+        ],
+        appTagline: "That 'One App' for Creator Economy",
+        appDescription: "Exclusive perks for early brands",
+        heroImages: [
+          { className: "mobile-hero", src: "/images/iphonescren.png", alt: "iPhone screen", width: 300, height: 600 },
+          { className: "hero-bg-image", src: "/images/bannerScreen2.png", alt: "", width: 600, height: 583 },
+        ],
+      };
+      
       export const scrollerData = {
         text: "Why Choose Our App?",
         starImage: {
@@ -490,7 +611,32 @@ export  const creatorsFeed = [
         ],
       };
             
-
+      export const scrollerData3 = {
+        text: "Why choose our App",
+        starImage: {
+          src: "/images/bigstar_dark.png",
+          alt: "Star",
+          className: "star absolute top-0 left-1/2 transform -translate-x-1/2",
+        },
+        brandList: [
+          { text: "Performance based model", isDot: false },
+          { text: "●", isDot: true },
+          { text: "Affiliate & Creator Marketing", isDot: false },
+          { text: "●", isDot: true },
+          { text: "Shoppable Platform", isDot: false },
+          { text: "●", isDot: true },
+          { text: "Early Access for Early Partners", isDot: false },
+          { text: "●", isDot: true },
+          { text: "Performance based model", isDot: false },
+          { text: "●", isDot: true },
+          { text: "Affiliate & Creator Marketing", isDot: false },
+          { text: "●", isDot: true },
+          { text: "Shoppable Platform", isDot: false },
+          { text: "●", isDot: true },
+          { text: "Early Access for Early Partners", isDot: false },
+          { text: "●", isDot: true },
+        ],
+      };
     export  const categoryData = [
         {
           src: "/images/animate1.webp",

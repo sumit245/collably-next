@@ -1,0 +1,117 @@
+.container {
+    background: linear-gradient(135deg, #f8f9fa, #e0e0e0);
+    padding: 60px 20px; /* Adjusted for smaller screens */
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    margin: 30px 0;
+  }
+  
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .headline {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ff0055;
+    margin-bottom: 15px;
+  }
+  
+  .description {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 30px;
+  }
+  
+  .perkList {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 40px;
+  }
+  
+  /* Making the perk items stack on smaller screens */
+  @media (max-width: 768px) {
+    .perkList {
+      grid-template-columns: repeat(2, 1fr); /* Two items per row on tablets */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .perkList {
+      grid-template-columns: 1fr; /* One item per row on small screens */
+      gap: 20px;
+    }
+  
+    .headline {
+      font-size: 2rem; /* Smaller headline on smaller screens */
+    }
+  
+    .description {
+      font-size: 1rem; /* Adjusted font size for better readability */
+      margin-bottom: 20px;
+    }
+  
+    .perkItem {
+      padding: 15px; /* Reduced padding for smaller screens */
+    }
+  
+    .perkItem h3 {
+      font-size: 1.2rem; /* Adjusted font size */
+    }
+  
+    .perkDescription {
+      font-size: 0.9rem; /* Reduced font size */
+    }
+  
+    .ctaButton {
+      font-size: 1rem; /* Smaller button text */
+      padding: 10px 25px; /* Adjusted button padding */
+    }
+  }
+  
+  .perkItem {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .perkItem h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 10px;
+    color: #333;
+  }
+  
+  .perkDescription {
+    font-size: 1rem;
+    color: #777;
+    margin-top: 10px;
+  }
+  
+  .icon {
+    font-size: 3rem;
+    color: #ff0055;
+  }
+  
+  .ctaButton {
+    background-color: #ff0055;
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    margin-top: 20px;
+  }
+  
+  .ctaButton:hover {
+    background-color: #d70349;
+  }
+  
