@@ -5,14 +5,13 @@ import { useDispatch, useSelector } from "react-redux"
 import { useSearchParams } from "next/navigation"
 import { Search } from "lucide-react"
 import { fetchBrands } from "../store/brandSlice"
-import Header from "../components/HeaderShop"
-import Footer from "../components/FooterShop"
-import styles from "./page.module.css"
+import CreatorHome from "../components/CreatorHome";
+import FooterCreator from "../components/FooterCreator";
+import styles from "../brandsdisplay/page.module.css"
 import styleshop from "../shop/StyleShop.module.css"
 import Image from "next/image"
 import Link from "next/link"
 
-// Component that uses useSearchParams
 function BrandsContent() {
   const dispatch = useDispatch()
   const allBrands = useSelector((state) => state.brands.items)
@@ -84,7 +83,7 @@ export default function CategoryBrandsDisplay() {
   return (
     <div className={styleshop.bodyShop}>
       <div className={styleshop.smartphoneContainer}>
-        <Header />
+        <CreatorHome />
         <Suspense
           fallback={
             <div className={styles.brandsPage}>
@@ -99,7 +98,7 @@ export default function CategoryBrandsDisplay() {
         >
           <BrandsContent />
         </Suspense>
-        <Footer />
+        <FooterCreator />
       </div>
     </div>
   )

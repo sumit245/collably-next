@@ -54,7 +54,7 @@ export default function SearchSection() {
                   <video src={post.video} className={styles.gridVideo} 
                     width={300} height={300} muted preload="metadata" />
                 ) : (
-                  <Image src={post.images[0]|| "/placeholder.svg"} 
+                  <Image src={post.images[0]?.[0] || "/placeholder.svg"} 
                     alt={`Post by ${post.user?.username || "unknown"}`} className={styles.gridImage} 
                     width={300} height={300} />
                 )}
@@ -66,13 +66,13 @@ export default function SearchSection() {
     ) : (
       <div className={styles.gridContainer}>
         {content.map(post => (
-          <Link key={post._id} href={`/${activeTab === "Reels" ? "feed?reelId=" : "post/"}${post._id}`} 
+          <Link key={post._id} href={`/${activeTab === "Reels" ? "feed/" : "post/"}${post._id}`} 
             className={styles.gridItem}>
             {activeTab === "Reels" ? (
               <video src={post.video} className={styles.gridVideo} 
                 width={300} height={300} />
             ) : (
-              <Image src={post.images[0] || "/placeholder.svg"} 
+              <Image src={post.images[0]?.[0] || "/placeholder.svg"} 
                 alt={`Post by ${post.user?.username || "unknown"}`} className={styles.gridImage} 
                 width={300} height={300} />
             )}

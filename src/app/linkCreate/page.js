@@ -1,103 +1,132 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import styles from "./page.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import FooterCreator from "../components/FooterCreator"
 import ShareModal from "./modalLink"
-import { createReferralLink, fetchReferralsByUserId, trackReferralClick } from "../store/brandSlice"
+import { createReferralLink } from "../store/brandSlice"
 import { toast } from "react-hot-toast"
-import { Search, Filter } from "lucide-react"
+import { ArrowLeft, LinkIcon } from "lucide-react"
+import TopBrands from "../components/TopBrandLink"
 
 export default function LinksPage() {
   const dispatch = useDispatch()
-  const [activeTab, setActiveTab] = useState("my-links")
   const [inputText, setInputText] = useState("")
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [searchTerm, setSearchTerm] = useState("")
-  const userId = useSelector(state => state.auth.user?._id)
-  const { referralLink, referrals = [] } = useSelector(state => state.brands)
+  const userId = useSelector((state) => state.auth.user?._id)
+  const { referralLink } = useSelector((state) => state.brands)
 
-  useEffect(() => { userId && dispatch(fetchReferralsByUserId(userId)) }, [dispatch, userId])
+  // Function to validate URL
+  const isValidUrl = (url) => {
+    try {
+      new URL(url)
+      return true
+    } catch (e) {
+      return false
+    }
+  }
 
-  const filteredReferrals = referrals.filter(r => 
-    r.referralLink.toLowerCase().includes(searchTerm.toLowerCase())
-  )
+  const handleInputChange = (e) => {
+    setInputText(e.target.value)
+  }
 
   const handlePasteClick = async () => {
-    if (inputText) {
+  
+    if (!inputText) {
+      try {
+        setInputText(await navigator.clipboard.readText())
+      } catch {
+        toast.error("Failed to paste")
+      }
+    } else {
+     
+      if (!isValidUrl(inputText)) {
+        alert("Please enter a valid URL (e.g., https://www.example.com)")
+        return
+      }
+
       try {
         await dispatch(createReferralLink({ userId, productUrl: inputText })).unwrap()
         setIsModalOpen(true)
-        setInputText("")
-        dispatch(fetchReferralsByUserId(userId))
-      } catch { toast.error("Failed to create link") }
-    } else try {
-      setInputText(await navigator.clipboard.readText())
-    } catch { toast.error("Failed to paste") }
-  }
-
-  const handleLinkClick = async (e, referralLink) => {
-    e.preventDefault()
-    const code = referralLink.match(/referralCode=([A-Za-z0-9]{6})/)?.[1]
-    try { code && await dispatch(trackReferralClick(code)).unwrap() } catch {}
-    window.location.href = referralLink
+        setInputText("") 
+      } catch {
+        toast.error("Failed to create link")
+      }
+    }
   }
 
   return (
     <div className={stylesShop.bodyShop}>
       <div className={stylesShop.smartphoneContainer}>
         <div className={styles.container}>
-          <h1 className={styles.header}>Links</h1>
-
-          <div className={styles.tabContainer}>
-            {["my-links", "link-folders"].map(tab => (
-              <button key={tab} className={`${styles.tab} ${activeTab === tab ? styles.activeTab : styles.inactiveTab}`}
-                onClick={() => setActiveTab(tab)}>
-                {tab.replace("-", " ")}
-              </button>
-            ))}
+          <div className={styles.header}>
+            <button className={styles.backButton}>
+              <ArrowLeft size={20} />
+            </button>
+            <h1 className={styles.headerTitle}>My Links</h1>
           </div>
 
           <div className={styles.createLinkSection}>
-            <h2 className={styles.createLinkHeader}>Create Link</h2>
-            <div className={styles.inputContainer}>
-              <input value={inputText} onChange={e => setInputText(e.target.value)}
-                placeholder="Paste URL here..." className={styles.input} />
-              <button className={styles.button} onClick={handlePasteClick}>
-                {inputText ? "Create" : "Paste"}
-              </button>
+            <h2 className={styles.createLinkHeader}>Make your own affiliate links in seconds</h2>
+            <p className={styles.createLinkSubheader}>
+            Paste a link from our partnered brands websites in the box below to generate your link & share it.
+            </p>
+
+            <div className={styles.inputWrapper}>
+              <div className={styles.linkIconContainer}>
+                <LinkIcon className={styles.linkIcon} size={24} color="white" />
+              </div>
+              <input
+                value={inputText}
+                onChange={handleInputChange}
+                placeholder="Paste Homepage or Product Link here"
+                className={styles.input}
+              />
             </div>
+
+            <button className={styles.createButton} onClick={handlePasteClick}>
+              {inputText ? "Generate My Link" : "PASTE LINK"} 
+            </button>
           </div>
 
-          {activeTab === "my-links" ? <>
-            <div className={styles.linksHeader}>
-              <div className={styles.searchContainer}>
-                <Search className={styles.searchIcon} size={20} />
-                <input type="text" placeholder="Search links..." value={searchTerm}
-                  onChange={e => setSearchTerm(e.target.value)} className={styles.searchInput} />
-              </div>
-              <button className={styles.filterButton}><Filter size={20} />Filters</button>
-            </div>
+          <TopBrands heading="Quick Homepage Links of Brands " />
 
-            <div className={styles.linksList}>
-              {filteredReferrals.length > 0 ? filteredReferrals.map(r => (
-                <div key={r._id} className={styles.linkCard} onClick={e => handleLinkClick(e, r.referralLink)}>
-                  <div className={styles.linkInfo}>
-                    <div className={styles.linkUrl}>{r.referralLink}</div>
-                    <div className={styles.linkStats}><span>Clicks: {r.clicks}</span></div>
-                  </div>
+          <div className={styles.bestPracticesSection}>
+            <h2 className={styles.bestPracticesHeader}>Best Practices & Tips:</h2>
+
+            <div className={styles.practiceItem}>
+              <div className={styles.bulletPoint}></div>
+              <div className={styles.practiceContent}>
+                <p className={styles.practiceTitle}>Ensure Link Format is Correct:</p>
+                <div className={styles.exampleContainer}>
+                  <div className={styles.circle}></div>
+                  <p>
+                    <span className={styles.rightText}>Right:</span> https://www.oneplus.in
+                  </p>
                 </div>
-              )) : <div className={styles.noLinks}>No links found. Create your first link above!</div>}
+                <div className={styles.exampleContainer}>
+                  <div className={styles.circle}></div>
+                  <p>
+                    <span className={styles.wrongText}>Wrong:</span> oneplus.in (missing https://)
+                  </p>
+                </div>
+                <p className={styles.tipText}>Tip: Copy directly from the Address Bar and paste</p>
+              </div>
             </div>
-          </> : <div className={styles.metricsText}>Link Folders content goes here</div>}
+          </div>
         </div>
-        
+
         <FooterCreator />
-        <ShareModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}
-          productName="Product Name" productLink={referralLink} />
+        <ShareModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          productName="Product Name"
+          productLink={referralLink}
+        />
       </div>
     </div>
   )
 }
+

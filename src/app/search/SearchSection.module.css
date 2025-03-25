@@ -212,3 +212,95 @@
   padding: 40px 0;
   color: #666;
 }
+
+.noSavedProductHeading{
+  font-size: 1rem;
+  color: #000;
+  text-align: center;
+}
+
+.noSavedProductContainer{
+  margin-block: .5rem;
+  border-radius:5px;
+  padding: 1rem;
+  border-bottom: 1px solid black;
+}
+
+
+.emptyStateCard {
+  background: linear-gradient(145deg, #f9f9f9, #f1f1f1); 
+  padding: 30px;
+  border-radius: 15px; 
+  border: 1px solid #ddd; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  max-width: 500px;  
+  margin: 30px auto; 
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;  
+}
+
+
+.emptyStateCard:hover {
+  transform: translateY(-10px);  
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); 
+}
+
+
+.emptyStateText {
+  font-size: 18px;
+  font-weight: 500;
+  color: #555; 
+  line-height: 1.5;
+  margin-top: 10px;
+}
+
+
+.container {
+  padding: 20px;
+}
+
+.emptyStateCard {
+  background: linear-gradient(145deg, #f9f9f9, #f1f1f1);  
+  padding: 30px;
+  border-radius: 15px; 
+  border: 1px solid #ddd; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
+  max-width: 500px;  
+  margin: 30px auto;  
+  text-align: center;  
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.emptyStateCard:hover {
+  transform: translateY(-10px); 
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.emptyStateText {
+  font-size: 18px;
+  font-weight: 500;
+  color: #555;  
+  line-height: 1.5;
+  margin-top: 10px;
+}
+
+.continueButton {
+  background: linear-gradient(145deg, #f1578a, #ff0055);  
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 30px;  
+  margin-top: 20px; 
+  cursor: pointer; 
+  transition: background 0.3s ease, transform 0.2s ease;  
+}
+
+.continueButton:hover {
+  transform: scale(1.05);  
+}
+
+.continueButton:focus {
+  outline: none; 
+}

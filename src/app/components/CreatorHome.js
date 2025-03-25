@@ -6,8 +6,9 @@ import Image from "next/image"
 import { useSelector } from "react-redux"
 import { useRouter } from "next/navigation"
 import styles from "../CreatorHome/stylescreator.module.css"
+import { CreatorDropdown } from "../components/CreatorDropdown"
 import { stepsCreatorHome } from "../utils.faker"
-
+import Link from "next/link";
 export default function CreatorHome() {
   const user = useSelector((state) => state.auth.user)
   const router = useRouter()
@@ -28,7 +29,8 @@ export default function CreatorHome() {
       <header className={styles.header}>
         <div className={styles.userInfo}>
           <button className={styles.menuButton}>
-            <Menu size={24} color="white" />
+            {/* <Menu size={24} color="white" /> */}
+            <CreatorDropdown />
           </button>
 
           <Image
@@ -54,10 +56,20 @@ export default function CreatorHome() {
           </button>
         </div>
       </header>
+
+      <div className={styles.profitHeader}>
+        <div className={styles.profitAmount}>
+          <h3>Total Earnings</h3>
+          <p>₹0.00</p>
+        </div>
+        <Link href="/earn-more" className={styles.learnMoreBtn}>
+          Learn How To Earn Money <span className={styles.arrow}>→</span>
+        </Link>
+      </div>
       {/* <div className={styles.heroContainer}>
         <div className={styles.stepsContainer}>
           {stepsCreatorHome.map((step) => (
-            <div key={step.id} className={`${styles.step} ${step.isActive ? styles.active : ""}`}>
+            <div key={step.id} className={${styles.step} ${step.isActive ? styles.active : ""}}>
               {step.icon && (
                 <Image src="/images/waitlist-icon.png" alt="" width={24} height={24} className={styles.stepIcon} />
               )}
@@ -83,4 +95,3 @@ export default function CreatorHome() {
     </div>
   )
 }
-

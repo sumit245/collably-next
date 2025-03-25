@@ -8,9 +8,9 @@ import styles from "../CreatorHome/Categories.module.css";
 export default function FeaturedCategories() {
   const [categories, setCategories] = useState([
     { name: "Fashion", image: "/images/fashion.jpeg" },
-    { name: "Electronics", image: "/images/electronics.jpeg" },
     { name: "Beauty", image: "/images/beauty.jpeg" },
-    { name: "Home", image: "/images/home.jpeg" },
+    { name: "Lifestyle", image: "/images/home.jpeg" },
+    { name: "Electronics", image: "/images/electronics.jpeg" },
     { name: "Sports", image: "/images/sports.jpeg" },
     { name: "Food", image: "/images/food.jpeg" },
   ]);
@@ -30,7 +30,7 @@ export default function FeaturedCategories() {
     <section className={styles.featuredCreators}>
       <div>
         <div className={styles.fText}>
-          <h3 className={styles.sectionTitleShop}>Categories</h3>
+          <h3 className={styles.sectionTitleShop}>Top Categories</h3>
 
           {isLoading ? (
             <div className={styles.fImg}>

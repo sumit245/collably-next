@@ -1,116 +1,440 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { fetchPosts } from "../store/postSlice"
-import { useRouter } from "next/navigation"
-import styles from "./profile.module.css"
-import stylesShop from "../shop/StyleShop.module.css"
+import { useState } from "react";
+import stylesShop from "../shop/StyleShop.module.css";
+import FooterCreator from "../components/FooterCreator";
+import CreatorHome from "../components/CreatorHome";
+import {useRef} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useRouter } from 'next/navigation';
+import Link from "next/link";
 import Image from "next/image"
-import Link from "next/link"
-import FooterCreator from "../components/FooterCreator"
-import CreatorHome from "../components/CreatorHome"
-import api from "../services/api"
+import {
+  ChevronLeft,
+  ChevronRight,
+  IndianRupee,
+  LinkIcon,
+  Instagram,
+  Youtube,
+  Phone,
+  UserRoundCog,
+  Store,
+  FileText,
+  Share2,
+  Users,
+  UserRound,
+  LogOut
+} from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
+import styles from "./profile.module.css";
+import { logout } from '../actions/auth';
 
-export default function Profile() {
-  const router = useRouter()
-  const dispatch = useDispatch()
-  const { posts, status, error } = useSelector((state) => state.posts)
-  const [activeTab, setActiveTab] = useState("posts")
-  const user = useSelector((state) => state.auth.user)
-  const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    if (!user) router.push(`/login?redirect=${encodeURIComponent("/CreatorHome")}`)
-    if (status === "idle") dispatch(fetchPosts())
-  }, [user, router, status, dispatch])
+export default function ProfilePage() {
+  const [activeTab, setActiveTab] = useState("profile");
+  const menuRef = useRef(null);
+  const referrals = useSelector((state) => state.brands?.referrals || [])
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const user = useSelector((state) => state.auth.user);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (user?._id) try {
-        await api.getUserPosts(user._id)
-      } catch (err) { console.error("Error fetching posts:", err) }
-      setIsLoading(false)
-    }
-    fetchUserData()
-  }, [user])
-
-  const tabs = [
-    { id: "posts", label: "Posts" },
-    { id: "reels", label: "Reels" },
-  ]
-
-  const filteredPosts = posts.filter(post => 
-    post.user?._id === user?._id && (
-      activeTab === "reels" ? post.video : 
-      post.images?.length > 0
-    )
-  )
+  const handleLogout = () => {
+    dispatch(logout());
+    setIsOpen(false); 
+  };
 
   return (
     <div className={stylesShop.bodyShop}>
       <div className={stylesShop.smartphoneContainer}>
-        <CreatorHome />
         <div className={styles.container}>
-          <section className={styles.profileInfo}>
-            <div className={styles.profile}>
-              <div className={styles.stats}>
-                {[
-                  ['posts', posts.filter(p => p.user?._id === user?._id).length],
-                  ['followers', user?.followers?.length],
-                  ['following', user?.following?.length]
-                ].map(([label, value]) => (
-                  <div key={label} className={styles.statItem}>
-                    <span className={styles.statNumber}>{value}</span>
-                    <span className={styles.statLabel}>{label}</span>
+          {/* <CreatorHome /> */}
+
+          {/* Header */}
+          <div className={styles.header}>
+            <div className={styles.headerText}>
+              <Link href="#" className={styles.backButton}>
+                <ChevronLeft size={24} />
+              </Link>
+              <h1>Profile</h1>
+            </div>
+            <div className={styles.profileCard}>
+              <div className={styles.avatar}>
+                <div className={styles.circle}><Image
+            src={user?.avatar || "/images/banavt1.png"}
+            alt="User avatar"
+            width={40}
+            height={40}
+            className={styles.avatar}
+          /></div>
+                <div className={styles.name}>
+                  <h2 className={styles.userName}>{user?.fullname }</h2>
+                </div>
+              </div>
+            </div>
+            <div className={styles.userInfo}>
+              <div className={styles.card}>
+                <p className={styles.label}>No of MyLinks:</p>
+                <p className={styles.value}>{referrals?.length || 0} </p>
+              </div>
+              <div className={styles.card}>
+                <p className={styles.label}>Total Profit:</p>
+                <p className={styles.value}>₹100</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Profile Section */}
+          <div className={styles.moneySection}>
+            <h3>Profile</h3>
+            <div className={styles.container}>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <UserRound size={18} />
                   </div>
-                ))}
+                  <span>My Profile</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <IndianRupee size={18} />
+                  </div>
+                  <span>My Earnings</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Store size={18} />
+                  </div>
+                  <span>My Shop</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <UserRoundCog size={18} />
+                  </div>
+                  <span>My User ID</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
               </div>
             </div>
+          </div>
 
-            <div className={styles.profileActions}>
-            <button className={styles.editButton} onClick={() => router.push('/updateUser')}>
-        Edit profile
-      </button>
-              <button className={styles.shareButton}>Share profile</button>
-            </div>
-          </section>
-
-          <div className={styles.tabsContainer}>
-            {tabs.map(tab => (
-              <div key={tab.id} className={`${styles.tab} ${activeTab === tab.id && styles.activeTab}`} 
-                onClick={() => setActiveTab(tab.id)}>
-                {tab.label}
+          {/* Analytics Section */}
+          <div className={styles.reportsSection}>
+            <h3>Analytics</h3>
+            <div className={styles.container}>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <LinkIcon size={18} />
+                  </div>
+                  <div className="ml-4 flex items-center">
+                    <span>My Links</span>
+                  </div>
+                  {/* <span className={styles.subText}>
+                    New
+                  </span> */}
+                </div>
+                <ChevronRight className={styles.chevron} />
               </div>
-            ))}
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <FileText size={18} />
+                  </div>
+                  <div>
+                    <span>My Reports</span>
+                  </div>
+                  {/* <span className={styles.subText}>
+                    New
+                  </span> */}
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+            </div>
           </div>
 
-          <div className={styles.contentGrid}>
-            {isLoading || status === "loading" ? <div>Loading...</div> :
-             status === "failed" ? <div>Error: {error}</div> :
-             <div className={styles.gridContainer}>
-              {filteredPosts.map(post => (
-                <Link href={`/post/${post._id}`} key={post._id} className={styles.gridItem}>
-                  {activeTab === "reels" ? (
-                    <video className={styles.gridVideo} width={300} height={300}>
-                      <source src={post.video} type="video/mp4" />
-                    </video>
-                  ) : (
-                    <Image
-                      src={post.images[0] || "/placeholder.svg"}
-                      alt={`Post by ${post.user?.username || "unknown"}`}
-                      className={styles.gridImage}
-                      width={300}
-                      height={300}
-                    />
-                  )}
-                </Link>
-              ))}
-            </div>}
+          {/* Exclusive Deals Section */}
+          <div className={styles.exclusiveToolsSection}>
+            <h3>Exclusive Deals</h3>
+            <div className={styles.container}>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <FaWhatsapp size={18} />
+                  </div>
+                  <span>Join our Whatsapp Channel</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Users size={18} />
+                  </div>
+                  <span>Join our Creators Group</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+            </div>
           </div>
+
+          {/* Earn Extra Section */}
+          <div className={styles.exclusiveToolsSection}>
+            <h3>Earn Extra Profit</h3>
+            <div className={styles.container}>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Share2 size={18} />
+                  </div>
+                  <span>Refer & Earn</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Users size={18} />
+                  </div>
+                  <span>Referral Network</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+            </div>
+          </div>
+
+          {/* Collaby University Section */}
+          <div className={styles.exclusiveToolsSection}>
+            <h3>Collaby University</h3>
+            <div className={styles.container}>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Share2 size={18} />
+                  </div>
+                  <span>Learn How Collably Works</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Users size={18} />
+                  </div>
+                  <span>Latest Blogs & Articles</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Users size={18} />
+                  </div>
+                  <span>Quick Tips</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+            </div>
+          </div>
+
+          {/* Get Help Section */}
+          <div className={styles.exclusiveToolsSection}>
+            <h3>Get Help</h3>
+            <div className={styles.container}>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Share2 size={18} />
+                  </div>
+                  <span>FAQ's</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Users size={18} />
+                  </div>
+                  <span>Raise a Ticket</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Users size={18} />
+                  </div>
+                  <span>Chat with us</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Users size={18} />
+                  </div>
+                  <span>Email us</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Users size={18} />
+                  </div>
+                  <span>Call us</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+            </div>
+          </div>
+
+          {/* More Section */}
+          <div className={styles.exclusiveToolsSection}>
+            <h3>More</h3>
+            <div className={styles.container}>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Share2 size={18} />
+                  </div>
+                  <span>Account Settings</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Users size={18} />
+                  </div>
+                  <span>Terms & Conditions</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Users size={18} />
+                  </div>
+                  <span>Privacy Policy</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Users size={18} />
+                  </div>
+                  <span>Email us</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Users size={18} />
+                  </div>
+                  <span>Call us</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+            </div>
+          </div>
+
+          {/* Exclusive Tools Section */}
+          <div className={styles.exclusiveToolsSection}>
+            <h3>Exclusive Tools</h3>
+            <div className={styles.container}>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Share2 size={18} />
+                  </div>
+                  <span>Coming soon</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+            </div>
+          </div>
+
+          {/* Leaderboard Section */}
+          <div className={styles.exclusiveToolsSection}>
+            <h3>Leaderboard</h3>
+            <div className={styles.container}>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Share2 size={18} />
+                  </div>
+                  <span>Coming soon</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+            </div>
+          </div>
+
+          {/* My Bookings Section */}
+          <div className={styles.exclusiveToolsSection}>
+            <h3>My Bookings</h3>
+            <div className={styles.container}>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Share2 size={18} />
+                  </div>
+                  <span>Coming soon</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+            </div>
+          </div>
+
+          {/* Follow Section */}
+          <div className={styles.exclusiveToolsSection}>
+            <h3>Follow us</h3>
+            <div className={styles.followContainer}>
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <a href="#" aria-label="Instagram">
+                    <Instagram className={styles.socialIcon} />
+                  </a>
+                  <a href="#" aria-label="WhatsApp">
+                    <Phone className={styles.socialIcon} />
+                  </a>
+                  <a href="#" aria-label="YouTube">
+                    <Youtube className={styles.socialIcon} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Logout Button */}
+          <div className={styles.logoutButtonContainerShop}>
+          {user ? (
+              <button className={styles.logoutButton}  onClick={handleLogout} >
+                <span>Logout</span>
+                <LogOut className={styles.logoutIcon} />
+              </button>
+            ) : (
+              <button className={styles.logoutButton}  onClick={() => router.push(`/login?redirect=${encodeURIComponent("/shop")}`)} >
+                <span>Login</span>
+                <LogOut className={styles.logoutIcon} />
+              </button>
+            )}
+          </div>
+
         </div>
         <FooterCreator />
       </div>
     </div>
-  )
+  );
 }

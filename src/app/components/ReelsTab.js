@@ -23,7 +23,7 @@ export default function ReelsTab() {
       <EmptyState
         type="reels"
         title="No reels added yet!"
-        description="Create engaging reels to showcase your products and share with your audience"
+        description="Add product to your existing Videos to convert them into a shoppable reel to let users swipe and shop from your content."
         buttonText="Add Reel"
         onButtonClick={handleAddReelClick}
       />

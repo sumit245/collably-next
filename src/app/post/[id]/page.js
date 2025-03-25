@@ -62,7 +62,7 @@ export default function PostDetail() {
     if (confirm("Are you sure you want to delete this post?")) {
       try {
         await api.deletePost(id)
-        router.push("/creatorFeedProfile")
+        router.push("/CreatorShop")
       } catch { setError("Failed to delete post") }
     }
   }
@@ -135,9 +135,9 @@ export default function PostDetail() {
           <div className={styles.mainPost}>
             <div className={styles.mediaContainer}>
               {currentPost.video ? (
-                <video onClick={() => router.push(`/feed?reelId=${currentPost._id}`)} src={currentPost.video} controls className={styles.postVideo} />
+                <video onClick={() => router.push(`/feed/${currentPost._id}`)} src={currentPost.video} controls className={styles.postVideo} />
               ) : (
-                <Image src={currentPost.images?.[0]} alt={`Post ${currentPost._id}`} layout="fill" objectFit="cover" className={styles.postImage} />
+                <Image src={currentPost.images?.[0]?.[0]} alt={`Post ${currentPost._id}`} layout="fill" objectFit="cover" className={styles.postImage} />
               )}
             </div>
             <div className={styles.postActions}>
@@ -160,7 +160,7 @@ export default function PostDetail() {
 
               {isCommenting && (
                 <div ref={commentSectionRef}>
-                  <CommentSection comments={currentPost.comments || []} onAddComment={handleComment} onClose={() => setIsCommenting(false)} postId={id} />
+                  {/* <CommentSection comments={currentPost.comments || []} onAddComment={handleComment} onClose={() => setIsCommenting(false)} postId={id} /> */}
                 </div>
               )}
             </div>

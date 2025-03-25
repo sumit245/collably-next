@@ -48,7 +48,7 @@ export default function ShopPage() {
             <TopCreators />
             {/* <TrendingBrands /> */}
             <TopBrands />
-            <TrendingUsersLeaderBoard />
+            {/* <TrendingUsersLeaderBoard /> */}
             <ChooseYouSection />
           </main>
           <Footer />

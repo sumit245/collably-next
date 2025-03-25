@@ -76,6 +76,7 @@ const HeaderComponent = () => {
               width={40}
               height={40}
               className="avatar-circle"
+              style={{ borderRadius: "50%" }}
             />
             <span className="username">{user?.fullname }</span>
 

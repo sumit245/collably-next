@@ -57,7 +57,7 @@ export default function PostDetail({ posts, initialPostId, onBack }) {
             <video src={currentPost.video} controls className={styles.postVideo} />
           ) : (
             <Image
-              src={currentPost.images[0] || "/placeholder.svg"}
+              src={currentPost.images[0]?.[0] || "/placeholder.svg"}
               alt={`Post ${currentPost._id}`}
               layout="fill"
               objectFit="cover"

@@ -21,7 +21,7 @@ export default function TopBrands() {
 
   const displayBrands = brands.slice(0, 4);
 
-  
+  console.log(brands)
   return (
     <section className={styles.topBrandsSection}>
       <div className={styles.sectionHeader}>

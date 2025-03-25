@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchPosts } from "../store/postSlice"
 import { useRouter, useParams } from "next/navigation"
-import styles from "../creatorFeedProfile/profile.module.css"
+import styles from "../creator/[id]/page.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import Image from "next/image"
 import Link from "next/link"
@@ -197,7 +197,7 @@ export default function CreatorProfile() {
                           </video>
                         ) : (
                           <Image
-                            src={post.images[0] || "/placeholder.svg"}
+                            src={post.images[0]?.[0] || "/placeholder.svg"}
                             alt={`Post by ${post.user?.username || "unknown"}`}
                             className={styles.gridImage}
                             width={300}

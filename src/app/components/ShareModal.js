@@ -12,7 +12,7 @@ export default function ShareModal({ reel, onClose }) {
 
   async function copyToClipboard() {
     try {
-      await navigator.clipboard.writeText(`https://yourdomain.com/reels/${reel.id}`)
+      await navigator.clipboard.writeText(`https://newapp.collably.in/feed/${reel._id}`)
       setCopySuccess('Link copied!')
       setTimeout(() => setCopySuccess(''), 2000)
     } catch (err) {
@@ -26,7 +26,7 @@ export default function ShareModal({ reel, onClose }) {
         await navigator.share({
           title: `${reel.username}'s Reel`,
           text: reel.caption,
-          url: `https://yourdomain.com/reels/${reel.id}`,
+          url: `https://newapp.collably.in/feed/${reel._id}`,
         })
       } catch (err) {
         console.error('Error sharing: ', err)
