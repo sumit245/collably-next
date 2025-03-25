@@ -26,16 +26,17 @@ export default function TrendingBrands({ heading = "Trending Brands" }) {
       toast.error("Please login to create a link")
       return null
     }
-
+  
     setProcessingBrandId(brand._id)
     try {
-      await dispatch(
+      const link = await dispatch(
         createReferralLink({
           userId,
           productUrl: brand.brandWebsite,
-        }),
+        })
       ).unwrap()
-      return true
+  
+      return link // Ensuring the generated referral link is returned
     } catch (error) {
       toast.error("Failed to create link")
       return null
@@ -43,61 +44,94 @@ export default function TrendingBrands({ heading = "Trending Brands" }) {
       setProcessingBrandId(null)
     }
   }
-
-  const handleShare = async (brand) => {
-    const success = await createLink(brand)
-    if (!success) return
-
-    const shareData = {
-      title: brand.brandName,
-      text: `Check out ${brand.brandName} with profit up to ${brand.profit || "10"}%!`,
-      url: referralLink || brand.brandWebsite || window.location.origin,
-    }
-
-    try {
-      if (navigator.share) {
-        await navigator.share(shareData)
-      } else {
-        // Fallback for browsers that don't support Web Share API
-        toast.error("Sharing not supported on this browser. Link copied to clipboard instead.")
-        await navigator.clipboard.writeText(shareData.url)
-        setNotification({ show: true, message: "Link copied!" })
-        setTimeout(() => {
-          setNotification({ show: false, message: "" })
-        }, 3000)
-      }
-    } catch (err) {
-      console.error("Error sharing:", err)
-    }
-  }
-
-  const handleShareNow = async (brand) => {
-    const success = await createLink(brand)
-    if (!success) return
-
-    const text = `Check out ${brand.brandName} with profit up to ${brand.profit || "10"}%!`
-    const url = referralLink || brand.brandWebsite || window.location.origin
-   const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + " " + url)}`
-    window.open(whatsappUrl, "_blank")
-  }
-
+  
+  // Function to copy link and support mobile compatibility
   const handleCopyLink = async (brand) => {
-    const success = await createLink(brand)
-    if (!success) return
-
-    const linkToCopy = referralLink || brand.brandWebsite || window.location.origin
-
+    const updatedReferralLink = await createLink(brand)
+    if (!updatedReferralLink) return
+  
     try {
-      await navigator.clipboard.writeText(linkToCopy)
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        // Modern clipboard API
+        await navigator.clipboard.writeText(updatedReferralLink)
+      } else {
+        // Fallback for older browsers
+        const tempInput = document.createElement("input")
+        tempInput.value = updatedReferralLink
+        document.body.appendChild(tempInput)
+        tempInput.select()
+        tempInput.setSelectionRange(0, 99999) // For mobile devices
+        document.execCommand("copy")
+        document.body.removeChild(tempInput)
+      }
+  
+      toast.success("Link copied to clipboard!")
       setNotification({ show: true, message: "Link copied!" })
       setTimeout(() => {
         setNotification({ show: false, message: "" })
       }, 3000)
     } catch (err) {
       console.error("Failed to copy: ", err)
-      toast.error("Failed to copy link")
+      toast.error("Failed to copy link. Try manually selecting and copying.")
     }
   }
+  
+  // Function to share link using Web Share API (fallbacks for mobile)
+  const handleShare = async (brand) => {
+    const updatedReferralLink = await createLink(brand)
+    if (!updatedReferralLink) return
+  
+    const shareData = {
+      title: brand.brandName,
+      text: `Check out ${brand.brandName} with profit up to ${brand.profit || "10"}%!`,
+      url: updatedReferralLink,
+    }
+  
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData)
+        toast.success("Shared successfully!")
+      } else {
+        throw new Error("Web Share API not supported")
+      }
+    } catch (err) {
+      console.error("Error sharing:", err)
+      toast.info("Sharing not supported, copying link instead.")
+  
+      try {
+        await navigator.clipboard.writeText(updatedReferralLink)
+        toast.success("Link copied to clipboard!")
+      } catch (clipboardErr) {
+        console.error("Clipboard fallback failed:", clipboardErr)
+        toast.error("Failed to copy link. Try manually selecting and copying.")
+      }
+    }
+  }
+  
+  // Function to share via WhatsApp with a proper mobile fallback
+  const handleShareNow = async (brand) => {
+    const updatedReferralLink = await createLink(brand)
+    if (!updatedReferralLink) return
+  
+    const text = `Check out ${brand.brandName} with profit up to ${brand.profit || "10"}%!`
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + " " + updatedReferralLink)}`
+  
+    const newWindow = window.open(whatsappUrl, "_blank", "noopener,noreferrer")
+  
+    if (!newWindow || newWindow.closed || typeof newWindow.closed === "undefined") {
+      // Fallback if pop-ups are blocked
+      toast.info("WhatsApp didn't open? Link copied to clipboard instead.")
+      try {
+        await navigator.clipboard.writeText(whatsappUrl)
+        toast.success("WhatsApp link copied to clipboard!")
+      } catch (err) {
+        console.error("Failed to copy WhatsApp link: ", err)
+        toast.error("Failed to copy WhatsApp link. Try manually selecting and copying.")
+      }
+    }
+  }
+  
+  
 
   if (!brands.length) {
     return <div className={styles.trendbrandWrapper}>Loading brands...</div>
@@ -120,7 +154,7 @@ export default function TrendingBrands({ heading = "Trending Brands" }) {
           <div key={`${brand._id}-${index}`} className={styles.trendbrandCard}>
             <div className={styles.trendbrandBanner}>{brand.promotion || "UPTO 85% OFF"}</div>
 
-            <button
+            {/* <button
               className={styles.trendbrandShareTop}
               onClick={() => handleShare(brand)}
               disabled={processingBrandId === brand._id}
@@ -167,7 +201,7 @@ export default function TrendingBrands({ heading = "Trending Brands" }) {
               <span className={styles.trendbrandShareText}>
                 {processingBrandId === brand._id ? "CREATING..." : "SHARE"}
               </span>
-            </button>
+            </button> */}
 
             <Link href={brand.brandWebsite || "#"} className={styles.trendbrandLogoContainer}>
               <Image
@@ -184,7 +218,7 @@ export default function TrendingBrands({ heading = "Trending Brands" }) {
             </div>
 
             <div className={styles.trendbrandProfitContainer}>
-              <h3 className={styles.trendbrandProfit}>Upto {brand.profit || 17}% Profit</h3>
+              <h3 className={styles.trendbrandProfit}>Upto {brand.profit || 17}% <br></br>Commission</h3>
             </div>
 
             <button

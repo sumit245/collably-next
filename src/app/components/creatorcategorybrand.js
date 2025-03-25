@@ -32,16 +32,17 @@ export default function CategoryBrands({ heading, category }) {
       toast.error("Please login to create a link")
       return null
     }
-
+  
     setProcessingBrandId(brand._id)
     try {
-      await dispatch(
+      const link = await dispatch(
         createReferralLink({
           userId,
           productUrl: brand.brandWebsite,
-        }),
+        })
       ).unwrap()
-      return true
+  
+      return link // Ensuring the generated referral link is returned
     } catch (error) {
       toast.error("Failed to create link")
       return null
@@ -49,61 +50,100 @@ export default function CategoryBrands({ heading, category }) {
       setProcessingBrandId(null)
     }
   }
-
-  const handleShare = async (brand) => {
-    const success = await createLink(brand)
-    if (!success) return
-
-    const shareData = {
-      title: brand.brandName,
-      text: `Check out ${brand.brandName} with profit up to ${brand.profit || "10"}%!`,
-      url: referralLink || brand.brandWebsite || window.location.origin,
-    }
-
-    try {
-      if (navigator.share) {
-        await navigator.share(shareData)
-      } else {
-        // Fallback for browsers that don't support Web Share API
-        toast.error("Sharing not supported on this browser. Link copied to clipboard instead.")
-        await navigator.clipboard.writeText(shareData.url)
-        setNotification({ show: true, message: "Link copied!" })
-        setTimeout(() => {
-          setNotification({ show: false, message: "" })
-        }, 3000)
-      }
-    } catch (err) {
-      console.error("Error sharing:", err)
-    }
-  }
-
-  const handleShareNow = async (brand) => {
-    const success = await createLink(brand)
-    if (!success) return
-
-    const text = `Check out ${brand.brandName} with profit up to ${brand.profit || "10"}%!`
-    const url = referralLink || brand.brandWebsite || window.location.origin
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + " " + url)}`
-    window.open(whatsappUrl, "_blank")
-  }
-
+  
+  // Function to copy link and support mobile compatibility
   const handleCopyLink = async (brand) => {
-    const success = await createLink(brand)
-    if (!success) return
-
-    const linkToCopy = referralLink || brand.brandWebsite || window.location.origin
-
+    const updatedReferralLink = await createLink(brand)
+    if (!updatedReferralLink) return
+  
     try {
-      await navigator.clipboard.writeText(linkToCopy)
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        // Modern clipboard API
+        await navigator.clipboard.writeText(updatedReferralLink)
+      } else {
+        // Fallback for older browsers
+        const tempInput = document.createElement("input")
+        tempInput.value = updatedReferralLink
+        document.body.appendChild(tempInput)
+        tempInput.select()
+        tempInput.setSelectionRange(0, 99999) // For mobile devices
+        document.execCommand("copy")
+        document.body.removeChild(tempInput)
+      }
+  
+      toast.success("Link copied to clipboard!")
       setNotification({ show: true, message: "Link copied!" })
       setTimeout(() => {
         setNotification({ show: false, message: "" })
       }, 3000)
     } catch (err) {
       console.error("Failed to copy: ", err)
-      toast.error("Failed to copy link")
+      toast.error("Failed to copy link. Try manually selecting and copying.")
     }
   }
+  
+  // Function to share link using Web Share API (fallbacks for mobile)
+  const handleShare = async (brand) => {
+    const updatedReferralLink = await createLink(brand)
+    if (!updatedReferralLink) return
+  
+    const shareData = {
+      title: brand.brandName,
+      text: `Check out ${brand.brandName} with profit up to ${brand.profit || "10"}%!`,
+      url: updatedReferralLink,
+    }
+  
+    // Debugging - Show if Web Share API is supported
+    alert(`Share API supported: ${navigator.share ? "Yes" : "No"}`)
+  
+    // Debugging - Show the share data
+    alert(`Share Data: ${JSON.stringify(shareData)}`)
+  
+    try {
+      if (navigator.share && typeof navigator.share === "function") {
+        await navigator.share(shareData)
+        toast.success("Shared successfully!")
+      } else {
+        throw new Error("Web Share API not supported on this browser.")
+      }
+    } catch (err) {
+      alert(`Error: ${err.message}`) // Debugging
+      toast.error("Sharing not supported. Copying link instead.")
+  
+      try {
+        await navigator.clipboard.writeText(updatedReferralLink)
+        toast.success("Link copied to clipboard!")
+        alert("Link copied to clipboard!") // Debugging
+      } catch (clipboardErr) {
+        alert(`Clipboard fallback failed: ${clipboardErr.message}`) // Debugging
+        toast.error("Failed to copy link. Try manually selecting and copying.")
+      }
+    }
+  }
+  
+  // Function to share via WhatsApp with a proper mobile fallback
+  const handleShareNow = async (brand) => {
+    const updatedReferralLink = await createLink(brand)
+    if (!updatedReferralLink) return
+  
+    const text = `Check out ${brand.brandName} with profit up to ${brand.profit || "10"}%!`
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + " " + updatedReferralLink)}`
+  
+    const newWindow = window.open(whatsappUrl, "_blank", "noopener,noreferrer")
+  
+    if (!newWindow || newWindow.closed || typeof newWindow.closed === "undefined") {
+      // Fallback if pop-ups are blocked
+      toast.info("WhatsApp didn't open? Link copied to clipboard instead.")
+      try {
+        await navigator.clipboard.writeText(whatsappUrl)
+        toast.success("WhatsApp link copied to clipboard!")
+      } catch (err) {
+        console.error("Failed to copy WhatsApp link: ", err)
+        toast.error("Failed to copy WhatsApp link. Try manually selecting and copying.")
+      }
+    }
+  }
+  
 
   return (
     <div className={styles.trendbrandWrapper}>
