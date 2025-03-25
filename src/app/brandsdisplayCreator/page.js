@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useSearchParams } from "next/navigation"
 import { Search } from "lucide-react"
@@ -12,7 +12,6 @@ import styleshop from "../shop/StyleShop.module.css"
 import Image from "next/image"
 import Link from "next/link"
 
-// Component that uses useSearchParams
 function BrandsContent() {
   const dispatch = useDispatch()
   const allBrands = useSelector((state) => state.brands.items)
