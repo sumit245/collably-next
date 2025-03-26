@@ -2,13 +2,11 @@ import Link from "next/link";
 import { FaPlus, FaLink, FaStore } from "react-icons/fa6";
 import { TbMoneybag } from "react-icons/tb";
 
-// Icon mapping to use with dynamic data
 const iconMap = {
   FaPlus: FaPlus,
   FaLink: FaLink,
   FaStore: FaStore,
-  TbMoneybag: TbMoneybag,  // Add TbMoneybag to the mapping
-  // Add more icons as needed
+  TbMoneybag: TbMoneybag,  
 };
 
 export default function QuickEasyComponent({ quickEasyData }) {

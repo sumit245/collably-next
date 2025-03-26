@@ -10,7 +10,7 @@ const HeaderComponent = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const dispatch = useDispatch()
   const user = useSelector((state) => state.auth.user)
-
+console.log(user)
   const handleLogout = () => {
     dispatch(logout())
   }
