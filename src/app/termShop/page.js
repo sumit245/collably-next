@@ -1,16 +1,16 @@
 'use client'
 
-import styles from './page.module.css';
+import styles from "../termsCreator/page.module.css"
 import stylesShop from "../shop/StyleShop.module.css";
-import FooterCreator from "../components/FooterCreator";
-import CreatorHome from "../components/CreatorHome";
+import FooterShop from "../components/FooterShop";
+import Header from "../components/HeaderShop"
 
 export default function TermsAndConditions() {
   return (
     
         <div className={stylesShop.bodyShop}>
         <div className={stylesShop.smartphoneContainer}>
-             <CreatorHome />
+             <Header />
       <h1 className={styles.title}>Terms and Conditions</h1>
       
       <div>
@@ -75,9 +75,9 @@ export default function TermsAndConditions() {
           </p>
         </section>
       </div>
-      <FooterCreator />
+      <FooterShop />
       </div>
       </div>
-  
+   
   );
 }
