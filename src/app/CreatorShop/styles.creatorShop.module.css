@@ -196,7 +196,8 @@
 .postsContainer,
 .collectionsContainer,
 .draftsContainer,
-.linksContainer {
+.linksContainer ,
+.linksContainer1{
   animation: fadeIn 0.3s ease;
 }
 
@@ -211,7 +212,7 @@
   }
 }
 
-.linksContainer {
+.linksContainer{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
@@ -220,6 +221,18 @@
   padding: 10px;
   scrollbar-width: none;
 }
+
+.linksContainer1{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  max-height: 80.5vh;
+  overflow-y: auto;
+  padding: 10px;
+  scrollbar-width: none;
+}
+
+
 
 .linksList {
   display: flex;

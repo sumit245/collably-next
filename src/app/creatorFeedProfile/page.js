@@ -4,11 +4,11 @@ import { useState } from "react";
 import stylesShop from "../shop/StyleShop.module.css";
 import FooterCreator from "../components/FooterCreator";
 import CreatorHome from "../components/CreatorHome";
-import {useRef} from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useRouter } from 'next/navigation';
+import { useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image"
+import Image from "next/image";
 import {
   ChevronLeft,
   ChevronRight,
@@ -17,30 +17,30 @@ import {
   Instagram,
   Youtube,
   Phone,
+  Settings, 
   UserRoundCog,
   Store,
   FileText,
   Share2,
   Users,
   UserRound,
-  LogOut
+  LogOut,
 } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import styles from "./profile.module.css";
-import { logout } from '../actions/auth';
-
+import { logout } from "../actions/auth";
 
 export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState("profile");
   const menuRef = useRef(null);
-  const referrals = useSelector((state) => state.brands?.referrals || [])
+  const referrals = useSelector((state) => state.brands?.referrals || []);
   const dispatch = useDispatch();
   const router = useRouter();
   const user = useSelector((state) => state.auth.user);
 
   const handleLogout = () => {
     dispatch(logout());
-    setIsOpen(false); 
+    setIsOpen(false);
   };
 
   return (
@@ -59,15 +59,17 @@ export default function ProfilePage() {
             </div>
             <div className={styles.profileCard}>
               <div className={styles.avatar}>
-                <div className={styles.circle}><Image
-            src={user?.avatar || "/images/banavt1.png"}
-            alt="User avatar"
-            width={40}
-            height={40}
-            className={styles.avatar}
-          /></div>
+                <div className={styles.circle}>
+                  <Image
+                    src={user?.avatar || "/images/banavt1.png"}
+                    alt="User avatar"
+                    width={40}
+                    height={40}
+                    className={styles.avatar}
+                  />
+                </div>
                 <div className={styles.name}>
-                  <h2 className={styles.userName}>{user?.fullname }</h2>
+                  <h2 className={styles.userName}>{user?.fullname}</h2>
                 </div>
               </div>
             </div>
@@ -105,15 +107,19 @@ export default function ProfilePage() {
                 </div>
                 <ChevronRight className={styles.chevron} />
               </div>
-              <div className={styles.item}>
-                <div className={styles.itemData}>
-                  <div className={styles.iconContainer}>
-                    <Store size={18} />
+
+              <Link href="/CreatorShop">
+                <div className={styles.item}>
+                  <div className={styles.itemData}>
+                    <div className={styles.iconContainer}>
+                      <Store size={18} />
+                    </div>
+                    <span>My Shop</span>
                   </div>
-                  <span>My Shop</span>
+                  <ChevronRight className={styles.chevron} />
                 </div>
-                <ChevronRight className={styles.chevron} />
-              </div>
+              </Link>
+
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
@@ -130,20 +136,22 @@ export default function ProfilePage() {
           <div className={styles.reportsSection}>
             <h3>Analytics</h3>
             <div className={styles.container}>
-              <div className={styles.item}>
-                <div className={styles.itemData}>
-                  <div className={styles.iconContainer}>
-                    <LinkIcon size={18} />
-                  </div>
-                  <div className="ml-4 flex items-center">
-                    <span>My Links</span>
-                  </div>
-                  {/* <span className={styles.subText}>
+              <Link href="/myLinks">
+                <div className={styles.item}>
+                  <div className={styles.itemData}>
+                    <div className={styles.iconContainer}>
+                      <LinkIcon size={18} />
+                    </div>
+                    <div className="ml-4 flex items-center">
+                      <span>My Links</span>
+                    </div>
+                    {/* <span className={styles.subText}>
                     New
                   </span> */}
+                  </div>
+                  <ChevronRight className={styles.chevron} />
                 </div>
-                <ChevronRight className={styles.chevron} />
-              </div>
+              </Link>
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
@@ -218,7 +226,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    <Share2 size={18} />
+                    {/* <Share2 size={18} /> */}
                   </div>
                   <span>Learn How Collably Works</span>
                 </div>
@@ -227,7 +235,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    <Users size={18} />
+                    {/* <Users size={18} /> */}
                   </div>
                   <span>Latest Blogs & Articles</span>
                 </div>
@@ -236,7 +244,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    <Users size={18} />
+                    {/* <Users size={18} /> */}
                   </div>
                   <span>Quick Tips</span>
                 </div>
@@ -249,51 +257,59 @@ export default function ProfilePage() {
           <div className={styles.exclusiveToolsSection}>
             <h3>Get Help</h3>
             <div className={styles.container}>
+           
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    <Share2 size={18} />
+                    {/* <Share2 size={18} /> */}
                   </div>
                   <span>FAQ's</span>
                 </div>
                 <ChevronRight className={styles.chevron} />
               </div>
-              <div className={styles.item}>
+            
+             <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    <Users size={18} />
+                    {/* <Users size={18} /> */}
                   </div>
                   <span>Raise a Ticket</span>
                 </div>
                 <ChevronRight className={styles.chevron} />
               </div>
+              <Link href="/contact-us">
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    <Users size={18} />
+                    {/* <Users size={18} /> */}
                   </div>
                   <span>Chat with us</span>
                 </div>
                 <ChevronRight className={styles.chevron} />
               </div>
+              </Link>
+              <Link href="/contact-us">
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    <Users size={18} />
+                    {/* <Users size={18} /> */}
                   </div>
                   <span>Email us</span>
                 </div>
                 <ChevronRight className={styles.chevron} />
               </div>
+              </Link>
+              <Link href="/contact-us">
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    <Users size={18} />
+                    {/* <Users size={18} /> */}
                   </div>
                   <span>Call us</span>
                 </div>
                 <ChevronRight className={styles.chevron} />
               </div>
+              </Link>
             </div>
           </div>
 
@@ -304,7 +320,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    <Share2 size={18} />
+                    <Settings  size={18} />
                   </div>
                   <span>Account Settings</span>
                 </div>
@@ -313,7 +329,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    <Users size={18} />
+                    {/* <Users size={18} /> */}
                   </div>
                   <span>Terms & Conditions</span>
                 </div>
@@ -322,30 +338,13 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    <Users size={18} />
+                    {/* <Users size={18} /> */}
                   </div>
                   <span>Privacy Policy</span>
                 </div>
                 <ChevronRight className={styles.chevron} />
               </div>
-              <div className={styles.item}>
-                <div className={styles.itemData}>
-                  <div className={styles.iconContainer}>
-                    <Users size={18} />
-                  </div>
-                  <span>Email us</span>
-                </div>
-                <ChevronRight className={styles.chevron} />
-              </div>
-              <div className={styles.item}>
-                <div className={styles.itemData}>
-                  <div className={styles.iconContainer}>
-                    <Users size={18} />
-                  </div>
-                  <span>Call us</span>
-                </div>
-                <ChevronRight className={styles.chevron} />
-              </div>
+              
             </div>
           </div>
 
@@ -356,7 +355,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    <Share2 size={18} />
+                    {/* <Share2 size={18} /> */}
                   </div>
                   <span>Coming soon</span>
                 </div>
@@ -372,7 +371,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    <Share2 size={18} />
+                    {/* <Share2 size={18} /> */}
                   </div>
                   <span>Coming soon</span>
                 </div>
@@ -388,7 +387,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    <Share2 size={18} />
+                    {/* <Share2 size={18} /> */}
                   </div>
                   <span>Coming soon</span>
                 </div>
@@ -419,19 +418,23 @@ export default function ProfilePage() {
 
           {/* Logout Button */}
           <div className={styles.logoutButtonContainerShop}>
-          {user ? (
-              <button className={styles.logoutButton}  onClick={handleLogout} >
+            {user ? (
+              <button className={styles.logoutButton} onClick={handleLogout}>
                 <span>Logout</span>
                 <LogOut className={styles.logoutIcon} />
               </button>
             ) : (
-              <button className={styles.logoutButton}  onClick={() => router.push(`/login?redirect=${encodeURIComponent("/shop")}`)} >
+              <button
+                className={styles.logoutButton}
+                onClick={() =>
+                  router.push(`/login?redirect=${encodeURIComponent("/shop")}`)
+                }
+              >
                 <span>Login</span>
                 <LogOut className={styles.logoutIcon} />
               </button>
             )}
           </div>
-
         </div>
         <FooterCreator />
       </div>
