@@ -1,24 +1,43 @@
 import Header from '../components/HeaderComponents'
-import Footer from '../components/FooterComponent'
+import CommunitySectionComponent from '../components/CommunitySectionComponent'
+import FooterComponent from '../components/FooterComponent'
+import BottomNavComponent from '../components/BottomNavComponent'
 import ComingSoon from '../components/ComingSoon'
+import HeroSectionComponent from '../components/HeroSectionComponent'
+import AffiliateFeatures from '../components/affiliatebrand'
+import {heroDataBrand, scrollerData3, faqs, imageBrand} from '../utils.faker'
+import ScrollerComponent from '../components/ScrollerComponent'
+import QuickEasyComponent from '../components/QuickEasyComponent'
+import {quickEasyDataBrand} from '../utils.faker'
+import FAQSectionComponent from '../components/FaqSectionComponent'
+import ClientSectionComponent from '../components/ClientSectionComponent'
+import RotatingImageSection from '../components/rotateBrands'
 import MoreReasons from '../components/ChooseUs'
-import ExclusivePerks from '../components/ExclusivePerks'
-import TargetSection from '../components/TargetSection'
-import RotatingScreens from '../components/RotatingScreen'
-
-
+ import ExclusivePerks from '../components/ExclusivePerks'
+ import TargetSection from '../components/TargetSection'
 export default function ShopPage() {
   return (
     <div>
       <Header />
       <main>
-        <MoreReasons/>
-        <ExclusivePerks/>
-        <TargetSection/>
-        <RotatingScreens/>
+        <HeroSectionComponent heroData={heroDataBrand} />
+        <AffiliateFeatures/>
+<QuickEasyComponent quickEasyData={quickEasyDataBrand} />
+         <ScrollerComponent scrollerData={scrollerData3} />
+         <TargetSection/>
+         <RotatingImageSection  />
+         <ExclusivePerks/>
+         <ClientSectionComponent />
+           <MoreReasons/>
+         
+        
+        
     {/* <ComingSoon /> */}
-      </main>
-      <Footer />
+     <FAQSectionComponent faqs={faqs}/>
+       <CommunitySectionComponent />
+            </main>
+            <FooterComponent />
+            <BottomNavComponent />
     </div>
   )
 }

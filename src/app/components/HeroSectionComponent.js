@@ -4,9 +4,8 @@ import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Typed from 'typed.js'
-import { heroData } from '../utils.faker'
 
-export default function HeroSectionComponent() {
+export default function HeroSectionComponent({ heroData }) {
   const typedRef = useRef(null)
 
   useEffect(() => {
@@ -22,7 +21,7 @@ export default function HeroSectionComponent() {
     return () => {
       typed.destroy()
     }
-  }, [])
+  }, [heroData.bannerTexts])
 
   return (
     <section className="hero-section">
@@ -32,11 +31,8 @@ export default function HeroSectionComponent() {
             <div className="type-wrap">
               <span ref={typedRef}></span>
             </div>
-            <h1>Power Up Your Creator Game</h1>
-            <p>
-              Discover collaborations, create affiliate links, and book studios or
-              services—all in one place.
-            </p>
+            <h1>{heroData.title}</h1>
+            <p>{heroData.description}</p>
           </div>
 
           <div className="used_app">
@@ -53,20 +49,18 @@ export default function HeroSectionComponent() {
                 </li>
               ))}
             </ul>
-            <h3>That &apos;One App&apos; for Creator Economy</h3>
+            <h3>{heroData.appTagline}</h3>
             <pre>
-              Collably makes the creator<br/>
-              life simpler, smarter,<br/>
-              and more rewarding.
+              {heroData.appDescription}
             </pre>
           </div>
 
           <ul className="app_btn">
             <li>
-              <Link href="#" className="btn btn-primary">Join Now for Free</Link>
+              <Link href="#" className="btn btn-primary"> {heroData.primbutton}</Link>
             </li>
             <li>
-              <Link href="#" className="btn btn-secondary">Special Message</Link>
+              <Link href="#" className="btn btn-secondary">{heroData.secbutton}</Link>
             </li>
           </ul>
         </div>
