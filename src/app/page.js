@@ -26,17 +26,18 @@ export default function HomePage() {
       <HeaderComponent />
       <main>
         <HeroSectionComponent heroData={heroData} />
-        <KeyFeaturesComponent items={items} />
+        <ImageRotationComponent />
         <QuickEasyComponent quickEasyData={quickEasyData} />
         <ScrollerComponent scrollerData={scrollerData} />
-        <CategoryGridComponent />
-        <ImageRotationComponent />
         <ReviewSectionComponent />
-        <SliderSectionComponent />
         <ClientSectionComponent />
         <ScrollerComponent scrollerData={scrollerData2} />
         <FAQSectionComponent faqs={faqs}/>
-        <CommunitySectionComponent />
+        {/* <CategoryGridComponent /> */}
+        {/* <KeyFeaturesComponent items={items} /> */}
+        
+        {/* <SliderSectionComponent /> */}
+       <CommunitySectionComponent />
       </main>
       <FooterComponent />
       <BottomNavComponent />

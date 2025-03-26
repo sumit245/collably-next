@@ -1,13 +1,15 @@
-import Link from "next/link"
-import { FaPlus, FaLink, FaStore } from "react-icons/fa6"
+import Link from "next/link";
+import { FaPlus, FaLink, FaStore } from "react-icons/fa6";
+import { TbMoneybag } from "react-icons/tb";
 
 // Icon mapping to use with dynamic data
 const iconMap = {
   FaPlus: FaPlus,
   FaLink: FaLink,
   FaStore: FaStore,
+  TbMoneybag: TbMoneybag,  // Add TbMoneybag to the mapping
   // Add more icons as needed
-}
+};
 
 export default function QuickEasyComponent({ quickEasyData }) {
   return (
@@ -20,7 +22,7 @@ export default function QuickEasyComponent({ quickEasyData }) {
         <div className="steps-grid">
           {quickEasyData.steps.map((step, index) => {
             // Get the icon component from the mapping
-            const IconComponent = iconMap[step.iconName]
+            const IconComponent = iconMap[step.iconName];
 
             return (
               <div key={index} className="step-card">
@@ -29,7 +31,7 @@ export default function QuickEasyComponent({ quickEasyData }) {
                 <p className="step-description">{step.description}</p>
                 <span className="step-number">{step.step}</span>
               </div>
-            )
+            );
           })}
         </div>
         <div className="cta">
@@ -39,6 +41,5 @@ export default function QuickEasyComponent({ quickEasyData }) {
         </div>
       </div>
     </section>
-  )
+  );
 }
-
