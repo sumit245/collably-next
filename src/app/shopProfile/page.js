@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import stylesShop from "../shop/StyleShop.module.css";
-import FooterCreator from "../components/FooterCreator";
+import FooterShop from "../components/FooterShop";
 import CreatorHome from "../components/CreatorHome";
 import {useRef} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -160,6 +160,7 @@ export default function ProfilePage() {
                   <ChevronRight className={styles.chevron} />
                 </div>
               </Link>
+              <Link href="/CreatorAnalytics">
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
@@ -174,7 +175,8 @@ export default function ProfilePage() {
                 </div>
                 <ChevronRight className={styles.chevron} />
               </div>
-            </div>
+</Link>
+     </div>
           </div>
 
           {/* Exclusive Deals Section */}
@@ -234,7 +236,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Share2 size={18} /> */}
+                    <Share2 size={18} />
                   </div>
                   <span>Learn How Collably Works</span>
                 </div>
@@ -243,7 +245,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Users size={18} /> */}
+                    <Users size={18} />
                   </div>
                   <span>Latest Blogs & Articles</span>
                 </div>
@@ -252,7 +254,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Users size={18} /> */}
+                    <Users size={18} />
                   </div>
                   <span>Quick Tips</span>
                 </div>
@@ -269,7 +271,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Share2 size={18} /> */}
+                    <Share2 size={18} />
                   </div>
                   <span>FAQ's</span>
                 </div>
@@ -279,7 +281,7 @@ export default function ProfilePage() {
              <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Users size={18} /> */}
+                    <Users size={18} />
                   </div>
                   <span>Raise a Ticket</span>
                 </div>
@@ -289,7 +291,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Users size={18} /> */}
+                    <Users size={18} />
                   </div>
                   <span>Chat with us</span>
                 </div>
@@ -300,7 +302,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Users size={18} /> */}
+                    <Users size={18} />
                   </div>
                   <span>Email us</span>
                 </div>
@@ -311,7 +313,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Users size={18} /> */}
+                    <Users size={18} />
                   </div>
                   <span>Call us</span>
                 </div>
@@ -325,6 +327,7 @@ export default function ProfilePage() {
           <div className={styles.exclusiveToolsSection}>
             <h3>More</h3>
             <div className={styles.container}>
+            <Link href="/updateUser">
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
@@ -334,25 +337,29 @@ export default function ProfilePage() {
                 </div>
                 <ChevronRight className={styles.chevron} />
               </div>
+              </Link>
+              <Link href="/termsCreator">
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Users size={18} /> */}
+                    <Users size={18} />
                   </div>
                   <span>Terms & Conditions</span>
                 </div>
                 <ChevronRight className={styles.chevron} />
               </div>
+              </Link>
+              <Link href="/privacyCreator">
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Users size={18} /> */}
+                    <Users size={18} />
                   </div>
                   <span>Privacy Policy</span>
                 </div>
                 <ChevronRight className={styles.chevron} />
               </div>
-              
+              </Link>
             </div>
           </div>
 
@@ -363,7 +370,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Share2 size={18} /> */}
+                    <Share2 size={18} />
                   </div>
                   <span>Coming soon</span>
                 </div>
@@ -379,7 +386,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Share2 size={18} /> */}
+                    <Share2 size={18} />
                   </div>
                   <span>Coming soon</span>
                 </div>
@@ -395,7 +402,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Share2 size={18} /> */}
+                    <Share2 size={18} />
                   </div>
                   <span>Coming soon</span>
                 </div>
@@ -444,7 +451,7 @@ export default function ProfilePage() {
             )}
           </div>
         </div>
-        <FooterCreator />
+        <FooterShop />
       </div>
     </div>
   );

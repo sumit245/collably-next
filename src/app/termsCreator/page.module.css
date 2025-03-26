@@ -1,0 +1,46 @@
+.container {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: 2.5rem 1rem;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 2.5rem;
+    color: #ff0055;
+  }
+  
+  .section {
+    margin: 1.5rem;
+  }
+  
+  .sectionTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #1f2937;
+  }
+  
+  .content {
+    color: #4b5563;
+    line-height: 1.6;
+  }
+  
+  .list {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
+    color: #4b5563;
+  }
+  
+  .listItem {
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer {
+    padding-top: 1rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+  }
+  
