@@ -90,7 +90,7 @@ const HeaderComponent = () => {
         )}
       </div>
       <nav className={`nav-items ${isMenuOpen ? "active" : ""}`}>
-        <Link href="/">Creators</Link>
+        <Link href="/creators">Creators</Link>
         <Link href="/brand">Brands</Link>
         <Link href="/shop">Shop</Link>
         <Link href="/contact-us">Contact</Link>

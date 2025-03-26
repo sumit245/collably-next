@@ -1,10 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
-import {clientLogos} from '../utils.faker'
 
-
-
-export default function ClientSectionComponent() {
+export default function ClientSectionComponent({ images }) {
   return (
     <section className="client-section">
       <div className="container5">
@@ -12,7 +9,7 @@ export default function ClientSectionComponent() {
           <h2>Trusted by <span className="highlight">Top Brands</span></h2>
         </div>
         <div className="client-grid">
-          {clientLogos.map((logo, index) => (
+          {images.map((logo, index) => (
             <div className="client-logo" key={index}>
               <Image src={logo.src} alt={logo.alt} width={120} height={60} />
             </div>

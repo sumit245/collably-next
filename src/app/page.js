@@ -13,7 +13,7 @@ import CommunitySectionComponent from '../app/components/CommunitySectionCompone
 import FooterComponent from '../app/components/FooterComponent'
 import BottomNavComponent from '../app/components/BottomNavComponent'
 import LoginComponent from '../app/components/LoginComponent';
-import {heroData, scrollerData, faqs} from '../app/utils.faker'
+import {heroData, scrollerData, faqs, items, clientLogos} from '../app/utils.faker'
 import {scrollerData2} from '../app/utils.faker'
 import {quickEasyData} from '../app/utils.faker'
 // import {heroData} from '../app/utils.faker'
@@ -26,14 +26,14 @@ export default function HomePage() {
       <HeaderComponent />
       <main>
         <HeroSectionComponent heroData={heroData} />
-        <KeyFeaturesComponent />
+        <KeyFeaturesComponent items = {items}/>
         <QuickEasyComponent quickEasyData={quickEasyData} />
         <ScrollerComponent scrollerData={scrollerData} />
         <CategoryGridComponent />
         <ImageRotationComponent />
         <ReviewSectionComponent />
         <SliderSectionComponent />
-        <ClientSectionComponent />
+        <ClientSectionComponent images={clientLogos}/>
         <ScrollerComponent scrollerData={scrollerData2} />
         <FAQSectionComponent faqs={faqs}/>
         <CommunitySectionComponent />

@@ -521,6 +521,10 @@ i {
   margin-bottom: 50px;
 }
 
+.banner-slider{
+  /* height: 95vh; */
+}
+
 .title_badge {
   display: inline-block;
   padding: 5px 10px;
@@ -2307,6 +2311,9 @@ html, body {
     max-width: 85%;
     border-radius: 3rem;
   }
+
+ 
+
   .container6 {
     max-width: 380px;
     position: relative;

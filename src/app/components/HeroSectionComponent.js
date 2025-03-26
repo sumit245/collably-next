@@ -65,7 +65,7 @@ export default function HeroSectionComponent({ heroData }) {
           </ul>
         </div>
         <div className="col-lg-6 col-md-12">
-          <div className="banner_slider">
+          <div className="banner-slider">
             <div className="slider_frame">
               {heroData.heroImages.map((img, index) => (
                 <Image

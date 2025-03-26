@@ -2,27 +2,23 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import {items} from '../utils.faker'
 
-export default function KeyFeaturesComponent() {
+export default function KeyFeaturesComponent({ items = {} }) {
   const trackRef = useRef(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemWidth = 200;
- 
+
+  const features = items.features || [];
 
   useEffect(() => {
+    if (features.length === 0) return;
+    
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => {
-        const nextIndex = prevIndex + 1;
-        if (nextIndex >= items.length) {
-          return 0;
-        }
-        return nextIndex;
-      });
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % features.length);
     }, 3500);
 
     return () => clearInterval(interval);
-  }, [items.length]);
+  }, [features.length]);
 
   useEffect(() => {
     if (trackRef.current) {
@@ -36,12 +32,15 @@ export default function KeyFeaturesComponent() {
     <section className="key_inner">
       <div className="container2">
         <div className="section_title">
-          <span className="title_badge">Key Features</span>
-          <h2>Empowering Creators with <span>Innovative Tools</span></h2>
+          <span className="title_badge">{items?.titleBadge || 'Key Features'}</span>
+          <h2>
+            {items?.mainTitle || 'Empowering Creators with'}{' '}
+            <span>{items?.highlightedText || 'Innovative Tools'}</span>
+          </h2>
         </div>
         <div className="feature_slider">
           <div className="feature_track" ref={trackRef}>
-            {items.concat(items).map((item, index) => (
+            {features.concat(features).map((item, index) => (
               <div className="feature_item" key={index}>
                 <div className="feature_box">
                   <h3>{item.title}</h3>
