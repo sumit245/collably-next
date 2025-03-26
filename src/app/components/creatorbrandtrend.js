@@ -154,7 +154,7 @@ export default function TrendingBrands({ heading = "Trending Brands" }) {
           <div key={`${brand._id}-${index}`} className={styles.trendbrandCard}>
             <div className={styles.trendbrandBanner}>{brand.promotion || "UPTO 85% OFF"}</div>
 
-            {/* <button
+            <button
               className={styles.trendbrandShareTop}
               onClick={() => handleShare(brand)}
               disabled={processingBrandId === brand._id}
@@ -201,7 +201,7 @@ export default function TrendingBrands({ heading = "Trending Brands" }) {
               <span className={styles.trendbrandShareText}>
                 {processingBrandId === brand._id ? "CREATING..." : "SHARE"}
               </span>
-            </button> */}
+            </button>
 
             <Link href={brand.brandWebsite || "#"} className={styles.trendbrandLogoContainer}>
               <Image
