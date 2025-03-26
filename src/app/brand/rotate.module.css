@@ -1,10 +1,10 @@
 .carouselWrapper {
     width: 100%;
-    overflow: hidden; /* Hide overflow to show only one card at a time */
+    overflow: hidden; 
     display: flex;
     justify-content: center;
     align-items: center;
-    perspective: 1500px; /* Gives a 3D perspective */
+    perspective: 1500px;
   }
   
   .carousel {
@@ -24,8 +24,8 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     padding: 10px;
     overflow: hidden;
-    transform-style: preserve-3d; /* Allow child elements to be positioned in 3D space */
-    transition: transform 1s ease-in-out; /* Smooth transition for the rotation */
+    transform-style: preserve-3d; 
+    transition: transform 1s ease-in-out;
   }
   
   .image {
@@ -34,6 +34,6 @@
     object-fit: cover;
     border-radius: 10px;
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
-    backface-visibility: hidden; /* Hides the back side when rotated */
+    backface-visibility: hidden; 
   }
   
