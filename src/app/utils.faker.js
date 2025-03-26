@@ -133,7 +133,11 @@ export const creators = [
         { name: 'Neha Diwan', image: '/images/image29.webp' },
       ]
 
-    export const items = [
+    export const items = {
+      titleBadge: "Key Features",
+  mainTitle: "Empowering Creators with",
+  highlightedText: "Innovative Tools",
+  features: [
         {
           title: 'Brand Collaborations',
           description: 'Connect with brands for exciting partnerships and sponsorships.',
@@ -164,8 +168,8 @@ export const creators = [
           description: 'Find and book studios for your content creation needs.',
           image: '/images/keyftr1.png',
         },
-       
-      ];
+      ]
+    };
 
     export const images = [
         "/images/bannerScreen2.png", 
