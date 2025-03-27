@@ -13,9 +13,10 @@ import CommunitySectionComponent from '../app/components/CommunitySectionCompone
 import FooterComponent from '../app/components/FooterComponent'
 import BottomNavComponent from '../app/components/BottomNavComponent'
 import LoginComponent from '../app/components/LoginComponent';
-import {scrollerData} from '../app/utils.faker'
+import {heroData, scrollerData, faqs, items} from '../app/utils.faker'
 import {scrollerData2} from '../app/utils.faker'
-
+import {quickEasyData} from '../app/utils.faker'
+// import {heroData} from '../app/utils.faker'
 const handleLoginSuccess = (userData) => {
   setUser(userData);
 };
@@ -24,18 +25,19 @@ export default function HomePage() {
     <>
       <HeaderComponent />
       <main>
-        <HeroSectionComponent />
-        <KeyFeaturesComponent />
-        <QuickEasyComponent />
-        <ScrollerComponent scrollerData={scrollerData} />
-        <CategoryGridComponent />
+        <HeroSectionComponent heroData={heroData} />
         <ImageRotationComponent />
+        <QuickEasyComponent quickEasyData={quickEasyData} />
+        <ScrollerComponent scrollerData={scrollerData} />
         <ReviewSectionComponent />
-        <SliderSectionComponent />
         <ClientSectionComponent />
         <ScrollerComponent scrollerData={scrollerData2} />
-        <FAQSectionComponent />
-        <CommunitySectionComponent />
+        <FAQSectionComponent faqs={faqs}/>
+        {/* <CategoryGridComponent /> */}
+        {/* <KeyFeaturesComponent items={items} /> */}
+        
+        {/* <SliderSectionComponent /> */}
+       <CommunitySectionComponent />
       </main>
       <FooterComponent />
       <BottomNavComponent />

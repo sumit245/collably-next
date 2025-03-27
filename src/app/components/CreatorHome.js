@@ -57,7 +57,7 @@ export default function CreatorHome() {
         </div>
       </header>
 
-      <div className={styles.profitHeader}>
+      {/* <div className={styles.profitHeader}>
         <div className={styles.profitAmount}>
           <h3>Total Earnings</h3>
           <p>₹0.00</p>
@@ -65,7 +65,7 @@ export default function CreatorHome() {
         <Link href="/earn-more" className={styles.learnMoreBtn}>
           Learn How To Earn Money <span className={styles.arrow}>→</span>
         </Link>
-      </div>
+      </div> */}
       {/* <div className={styles.heroContainer}>
         <div className={styles.stepsContainer}>
           {stepsCreatorHome.map((step) => (

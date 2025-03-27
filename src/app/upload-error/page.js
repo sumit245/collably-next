@@ -16,7 +16,7 @@ export default function UploadError() {
           <div className={styles.errorContainer}>
             <AlertCircle size={64} color="red" />
             <h2 className={styles.errorTitle}>Something went wrong</h2>
-            <p className={styles.errorMessage}>Please try again later</p>
+            <p className={styles.errorMessage}>Please relogin and try again later</p>
 
             <button className={styles.homeButton} onClick={() => router.push("/CreatorShop")}>
               Go back home

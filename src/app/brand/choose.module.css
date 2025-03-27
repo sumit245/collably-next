@@ -1,0 +1,67 @@
+.moreReasons {
+    background: linear-gradient(135deg, #f9f9f9 50%, #e0e0e0 100%);
+    padding: 80px 0;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .container {
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  .heading {
+    font-size: 2.8rem;
+    font-weight: 600;
+    margin-bottom: 40px;
+    color: #333;
+  }
+  
+  .reasons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-top: 2rem;
+  }
+  
+  .reason {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .reason:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  }
+  
+  .icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #0077ff;
+  }
+  
+  .reason h3 {
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  .reason p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.6;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .reason {
+      padding: 30px;
+    }
+  
+    .heading {
+      font-size: 2.2rem;
+    }
+  }

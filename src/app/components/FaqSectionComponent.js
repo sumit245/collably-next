@@ -1,12 +1,9 @@
 'use client'
 
 import React, { useState } from 'react'
-import {faqs} from '../utils.faker'
 
-export default function FAQSectionComponent() {
+export default function FAQSectionComponent({ faqs }) {
   const [activeIndex, setActiveIndex] = useState(null)
-
-  
 
   const toggleFAQ = (index) => {
     setActiveIndex(activeIndex === index ? null : index)
@@ -37,4 +34,3 @@ export default function FAQSectionComponent() {
     </section>
   )
 }
-

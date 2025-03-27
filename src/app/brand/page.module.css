@@ -1,0 +1,230 @@
+/* affiliate module css */
+
+.brand_features_section {
+    padding: 4rem 0;
+    background-color: #f9fafb;
+  }
+  
+  .brand_container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  
+  .brand_heading {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 3rem;
+    color: #111827;
+    line-height: 1.2;
+  }
+  
+  .brand_features_grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  
+  .brand_feature_card {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .brand_feature_card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .brand_feature_content {
+    padding: 1.5rem;
+  }
+  
+  .brand_feature_title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 0.75rem;
+  }
+  
+  .brand_feature_description {
+    font-size: 1rem;
+    color: #4b5563;
+    line-height: 1.5;
+  }
+  
+  .brand_feature_image_container {
+    position: relative;
+    width: 100%;
+  }
+  
+  .brand_feature_image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .brand_image_caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    text-align: center;
+  }
+  
+  /* Responsive styles */
+  @media (min-width: 768px) {
+    .brand_features_grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .brand_features_grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  
+    .brand_heading {
+      font-size: 3rem;
+    }
+  }
+  
+  /* For when it sits next to hero section */
+  @media (min-width: 1280px) {
+    .brand_features_section {
+      padding: 6rem 0;
+    }
+  
+    .brand_container {
+      padding: 0 2rem;
+    }
+  }
+  
+
+  
+
+
+
+  /* rotatebrand styles */
+
+
+  .imageBrandContainer {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 0.5rem;
+  }
+  
+  .imageBrandSlider {
+    display: flex;
+    transition: transform 500ms ease-out;
+    height: 300px;
+  }
+  
+  @media (min-width: 768px) {
+    .imageBrandSlider {
+      height: 400px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .imageBrandSlider {
+      height: 500px;
+    }
+  }
+  
+  .imageBrandSlide {
+    width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+    position: relative;
+  }
+  
+  .imageBrandImage {
+    object-fit: cover;
+  }
+  
+  .imageBrandArrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: background-color 0.2s;
+  }
+  
+  .imageBrandArrow:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .imageBrandArrowLeft {
+    left: 10px;
+  }
+  
+  .imageBrandArrowRight {
+    right: 10px;
+  }
+  
+  .imageBrandIndicators {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+  }
+  
+  .imageBrandIndicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .imageBrandIndicator:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+  }
+  
+  .imageBrandIndicatorActive {
+    background-color: white;
+    width: 20px;
+    border-radius: 10px;
+  }
+  
+  .imageBrandEmpty {
+    width: 100%;
+    height: 256px;
+    background-color: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+  }
+  
+  .imageBrandEmptyText {
+    color: #6b7280;
+  }
+  
+  

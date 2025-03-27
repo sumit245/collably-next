@@ -133,7 +133,11 @@ export const creators = [
         { name: 'Neha Diwan', image: '/images/image29.webp' },
       ]
 
-    export const items = [
+    export const items = {
+      titleBadge: "Key Features",
+  mainTitle: "Empowering Creators with",
+  highlightedText: "Innovative Tools",
+  features: [
         {
           title: 'Brand Collaborations',
           description: 'Connect with brands for exciting partnerships and sponsorships.',
@@ -164,8 +168,35 @@ export const creators = [
           description: 'Find and book studios for your content creation needs.',
           image: '/images/keyftr1.png',
         },
-       
-      ];
+      ]
+    };
+
+    export const itemsCreator = {
+      titleBadge: "Key Features",
+      mainTitle: "Empowering Creators with",
+      highlightedText: "Innovative Tools",
+      features: [
+        {
+          title: "Instant Affiliate Links",
+          description:
+            "Generate custom links, share & earn per sale",
+          image: "/images/keyftr1.png",
+        },
+    
+        {
+          title: "Shoppable Content",
+          description:
+            "Tag products in posts—your & ours audience buys instantly!",
+          image: "/images/keyftr1.png",
+        },
+    
+        {
+          title: "Brand Collections",
+          description: "Get invites from partner brands for exclusive collaborations",
+          image: "/images/keyftr1.png",
+        },
+      ],
+    };
 
     export const images = [
         "/images/bannerScreen2.png", 
@@ -413,12 +444,108 @@ export  const creatorsFeed = [
         }
       ]
 
-      export const heroData = {
-        bannerTexts: [
-          "Explore Brand Collaborations",
-          "Shop from your Favourite Creator",
-          "Create Smart Affiliate Links",
+      export const quickEasyData = {
+        badge: "Quick & Easy",
+        title: "How it Works?",
+        steps: [
+          {
+            iconName: "FaPlus",
+            title: "✅ Swipe through creator content & find trending products.",
+            description: " ",
+            step: "01",
+          },
+          {
+            iconName: "FaLink",
+            title: "✅ Instantly shop products tagged in reels & posts",
+            description: " ",
+            step: "02",
+          },
+          {
+            iconName: "FaStore",
+            title: "✅ Unlock cashback & rewards on every purchase",
+            description: " ",
+            step: "03",
+          },
         ],
+        cta: {
+          text: "Get started now",
+          href: "#",
+        },
+      }
+      
+
+      export const quickEasyDataCreator = {
+        badge: "Quick & Easy",
+        title: "Start earning in 3 steps",
+        steps: [
+          {
+            iconName: "FaPlus",
+            title: "Sign up & Create an Account",
+            description:
+              "Login with OTP & complete the process to create your Collably account",
+            step: "01",
+          },
+          {
+            iconName: "FaLink",
+            title: "Discover Brands & Create Links",
+            description:
+              "Discover partnered brands, create custom affiliate links of homepage or products",
+            step: "02",
+          },
+          {
+            iconName: "TbMoneybag",
+            title: "Share & Start Earning",
+            description:
+              "Share links & content with your audience & ours also, and start earning",
+            step: "03",
+          },
+        ],
+        cta: {
+          text: "Get Started Now",
+          href: "#",
+        },
+      };
+
+      export const quickEasyDataBrand = {
+        badge: "Quick & Easy",
+        title: "Partner with us in 3 steps",
+        steps: [
+          {
+            iconName: "FaPlus",
+            title: "Sign up on Collably",
+            description: "Login with OTP & complete the process to create your collably account",
+            step: "01",
+          },
+          {
+            iconName: "FaLink",
+            title: "Discover Brand Dashboard & Create Affiliate Program ",
+            description: "Discover dashboard & start creating affiliate campaigns",
+            step: "02",
+          },
+          {
+            iconName: "FaStore",
+            title: "Integrate with our Brand API for seamless integration",
+            description: "Create content, share links, and watch your earnings grow",
+            step: "03",
+          },
+        ],
+        cta: {
+          text: "Get started now",
+          href: "#",
+        },
+      }
+      
+
+      export const heroData = {
+        title: "Collably is the future of shopping",
+        description: "Browse viral products, shop seamlessly, and unlock exclusive deals—all powered by creators you love",
+        bannerTexts: [
+          "Shop from your favorite creators",
+          "Browse Viral Products",
+          "Shop Seamlessly from content",
+        ],
+        primbutton:"Join Now for Free",
+        secbutton: "Browse Trending Products",
         appImages: [
           { src: "/images/banavt1.png", alt: "image 1", width: 80, height: 80 },
           { src: "/images/banavt2.png", alt: "image 2", width: 80, height: 80 },
@@ -439,11 +566,122 @@ export  const creatorsFeed = [
             }
           },
         ],
+        appTagline: "That 'One App' for Creator Economy",
+        appDescription: "Collably makes the creator\nlife simpler, smarter,\nand more rewarding.",
         heroImages: [
           { className: "mobile-hero", src: "/images/iphonescren.png", alt: "iPhone screen", width: 300, height: 600 },
           { className: "hero-bg-image", src: "/images/bannerScreen2.png", alt: "", width: 600, height: 583 },
         ],
       };
+
+      export const heroDataCreator = {
+        title: "Power Up Your Creator Game",
+        description:
+        "Why wait for brand deals? Monetize every post, reel & recommendation effortlessly!",
+        bannerTexts: [
+          "Explore Brand Collaborations",
+          "Shop from your Favourite Creator",
+          "Create Smart Affiliate Links",
+        ],
+        primbutton: "Get Started",
+        secbutton: "Special Message",
+        appImages: [
+          { src: "/images/banavt1.png", alt: "image 1", width: 80, height: 80 },
+          { src: "/images/banavt2.png", alt: "image 2", width: 80, height: 80 },
+          { src: "/images/banavt3.png", alt: "image 3", width: 80, height: 80 },
+          {
+            src: "/images/play.png",
+            alt: "play image",
+            width: 80,
+            height: 80,
+            isLink: true,
+            linkProps: {
+              href: "#",
+              className: "popup-youtube play-button",
+              "data-url":
+                "https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&amp;mute=1",
+              "data-toggle": "modal",
+              "data-target": "#myModal",
+              title: "XJj2PbenIsU",
+            },
+          },
+        ],
+        appTagline: "That 'One App' for Creator Economy",
+        appDescription:
+          "Exclusive perks for early \ncreators only",
+        heroImages: [
+          {
+            className: "mobile-hero",
+            src: "/images/iphonescren.png",
+            alt: "iPhone screen",
+            width: 300,
+            height: 600,
+          },
+          {
+            className: "hero-bg-image",
+            src: "/images/bannerScreen2.png",
+            alt: "",
+            width: 600,
+            height: 583,
+          },
+        ],
+      };
+
+    export  const imageBrand = [
+        {
+          src: "/placeholder.svg?height=500&width=800",
+          alt: "Brand image 1",
+        },
+        {
+          src: "/placeholder.svg?height=500&width=800",
+          alt: "Brand image 2",
+        },
+        {
+          src: "/placeholder.svg?height=500&width=800",
+          alt: "Brand image 3",
+        },
+        {
+          src: "/placeholder.svg?height=500&width=800",
+          alt: "Brand image 4",
+        },
+      ]
+      export const heroDataBrand = {
+        title: "Upgrade your sales channels & game",
+        description: "Create your custom affiliate program & turn creators into sales channels",
+        bannerTexts: [
+          "The smartest way to sell is here",
+          "Creator Driven Shopping",
+        ],
+        primbutton:"Get Started",
+        secbutton: "Special Message",
+        appImages: [
+          { src: "/images/banavt1.png", alt: "image 1", width: 80, height: 80 },
+          { src: "/images/banavt2.png", alt: "image 2", width: 80, height: 80 },
+          { src: "/images/banavt3.png", alt: "image 3", width: 80, height: 80 },
+          { 
+            src: "/images/play.png", 
+            alt: "play image", 
+            width: 80, 
+            height: 80, 
+            isLink: true,
+            linkProps: {
+              href: "#",
+              className: "popup-youtube play-button",
+              "data-url": "https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&amp;mute=1",
+              "data-toggle": "modal",
+              "data-target": "#myModal",
+              title: "XJj2PbenIsU",
+            }
+          },
+        ],
+        appTagline: "That 'One App' for Creator Economy",
+        appDescription: "Exclusive perks for early brands",
+        heroImages: [
+          { className: "mobile-hero", src: "/images/iphonescren.png", alt: "iPhone screen", width: 300, height: 600 },
+          { className: "hero-bg-image", src: "/images/bannerScreen2.png", alt: "", width: 600, height: 583 },
+        ],
+      };
+      
       export const scrollerData = {
         text: "Why Choose Our App?",
         starImage: {
@@ -452,18 +690,22 @@ export  const creatorsFeed = [
           className: "star absolute top-0 left-1/2 transform -translate-x-1/2",
         },
         brandList: [
-          { text: "Multiple Campaigns", isDot: false },
           { text: "●", isDot: true },
-          { text: "Top Brands & Deals", isDot: false },
+          { text: "Top Brands", isDot: false },
           { text: "●", isDot: true },
-          { text: "User-Friendly", isDot: false },
+          { text: "Top Creators", isDot: false },
           { text: "●", isDot: true },
-          { text: "24/7 Support", isDot: false },
+          { text: "Binge & Shop", isDot: false },
           { text: "●", isDot: true },
-          { text: "Real-time tracking", isDot: false },
+          { text: "Fast Delivery", isDot: false },
           { text: "●", isDot: true },
-          { text: "Easy withdrawals", isDot: false },
+          { text: "Top Brands", isDot: false },
           { text: "●", isDot: true },
+          { text: "Top Creators", isDot: false },
+          { text: "●", isDot: true },
+          { text: "Binge & Shop", isDot: false },
+          { text: "●", isDot: true },
+          { text: "Fast Delivery", isDot: false },
         ],
       };
 
@@ -475,22 +717,50 @@ export  const creatorsFeed = [
           className: "star absolute top-0 left-1/2 transform -translate-x-1/2",
         },
         brandList: [
-          { text: "Get Started", isDot: false },
+          { text: "Flexible payments", isDot: false },
           { text: "●", isDot: true },
-          { text: "Get Started", isDot: false },
+          { text: "Cashbacks & Rewards", isDot: false },
           { text: "●", isDot: true },
-          { text: "Get Started", isDot: false },
+          { text: "Trending Products", isDot: false },
           { text: "●", isDot: true },
-          { text: "Get Started", isDot: false },
+          { text: "Viral Products", isDot: false },
+          { text: "Flexible payments", isDot: false },
           { text: "●", isDot: true },
-          { text: "Get Started", isDot: false },
+          { text: "Cashbacks & Rewards", isDot: false },
           { text: "●", isDot: true },
-          { text: "Get Started", isDot: false },
+          { text: "Trending Products", isDot: false },
+          { text: "●", isDot: true },
+          { text: "Viral Products", isDot: false },
           { text: "●", isDot: true },
         ],
       };
             
-
+      export const scrollerData3 = {
+        text: "Why choose our App",
+        starImage: {
+          src: "/images/bigstar_dark.png",
+          alt: "Star",
+          className: "star absolute top-0 left-1/2 transform -translate-x-1/2",
+        },
+        brandList: [
+          { text: "Performance based model", isDot: false },
+          { text: "●", isDot: true },
+          { text: "Affiliate & Creator Marketing", isDot: false },
+          { text: "●", isDot: true },
+          { text: "Shoppable Platform", isDot: false },
+          { text: "●", isDot: true },
+          { text: "Early Access for Early Partners", isDot: false },
+          { text: "●", isDot: true },
+          { text: "Performance based model", isDot: false },
+          { text: "●", isDot: true },
+          { text: "Affiliate & Creator Marketing", isDot: false },
+          { text: "●", isDot: true },
+          { text: "Shoppable Platform", isDot: false },
+          { text: "●", isDot: true },
+          { text: "Early Access for Early Partners", isDot: false },
+          { text: "●", isDot: true },
+        ],
+      };
     export  const categoryData = [
         {
           src: "/images/animate1.webp",
