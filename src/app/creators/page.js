@@ -13,7 +13,7 @@ import CommunitySectionComponent from '../components/CommunitySectionComponent'
 import FooterComponent from '../components/FooterComponent'
 import BottomNavComponent from '../components/BottomNavComponent'
 import LoginComponent from '../components/LoginComponent';
-import {heroDataCreator, scrollerData, faqs, itemsCreator, clientLogosCreator} from '../utils.faker'
+import {heroDataCreator, scrollerData, faqs, itemsCreator,} from '../utils.faker'
 import {scrollerData2} from '../utils.faker'
 import {quickEasyDataCreator} from '../utils.faker'
 // import {heroData} from '../app/utils.faker'
@@ -33,7 +33,7 @@ export default function HomePage() {
         <ImageRotationComponent />
         {/* <ReviewSectionComponent /> */}
         <SliderSectionComponent />
-        <ClientSectionComponent images={clientLogosCreator}/>
+        <ClientSectionComponent />
         <ScrollerComponent scrollerData={scrollerData2} />
         <FAQSectionComponent faqs={faqs}/>
         <CommunitySectionComponent />
@@ -43,4 +43,3 @@ export default function HomePage() {
     </>
   )
 }
-

@@ -89,6 +89,7 @@ export default function ProfilePage() {
           <div className={styles.moneySection}>
             <h3>Profile</h3>
             <div className={styles.container}>
+            <Link href="/userProfile">
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
@@ -98,6 +99,7 @@ export default function ProfilePage() {
                 </div>
                 <ChevronRight className={styles.chevron} />
               </div>
+              </Link>
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
@@ -119,7 +121,8 @@ export default function ProfilePage() {
                   <ChevronRight className={styles.chevron} />
                 </div>
               </Link>
-
+              
+              <Link href="/userId">
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
@@ -129,6 +132,7 @@ export default function ProfilePage() {
                 </div>
                 <ChevronRight className={styles.chevron} />
               </div>
+              </Link>
             </div>
           </div>
 
@@ -136,7 +140,7 @@ export default function ProfilePage() {
           <div className={styles.reportsSection}>
             <h3>Analytics</h3>
             <div className={styles.container}>
-              <Link href="/myLinks">
+              <Link href="/myLinksCreator">
                 <div className={styles.item}>
                   <div className={styles.itemData}>
                     <div className={styles.iconContainer}>
@@ -152,6 +156,7 @@ export default function ProfilePage() {
                   <ChevronRight className={styles.chevron} />
                 </div>
               </Link>
+              <Link href="/CreatorAnalytics">
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
@@ -166,6 +171,7 @@ export default function ProfilePage() {
                 </div>
                 <ChevronRight className={styles.chevron} />
               </div>
+              </Link>
             </div>
           </div>
 
@@ -317,6 +323,7 @@ export default function ProfilePage() {
           <div className={styles.exclusiveToolsSection}>
             <h3>More</h3>
             <div className={styles.container}>
+            <Link href="/updateUser">
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
@@ -326,6 +333,8 @@ export default function ProfilePage() {
                 </div>
                 <ChevronRight className={styles.chevron} />
               </div>
+              </Link>
+              <Link href="/termsCreator">
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
@@ -335,6 +344,8 @@ export default function ProfilePage() {
                 </div>
                 <ChevronRight className={styles.chevron} />
               </div>
+              </Link>
+              <Link href="/privacyCreator">
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
@@ -344,7 +355,7 @@ export default function ProfilePage() {
                 </div>
                 <ChevronRight className={styles.chevron} />
               </div>
-              
+              </Link>
             </div>
           </div>
 

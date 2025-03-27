@@ -13,8 +13,8 @@ import styles from "../CreatorShop/styles.creatorShop.module.css";
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import stylesShop from "../shop/StyleShop.module.css";
-import Footer from "../components/FooterShop";
-import Header from "../components/HeaderShop"
+import FooterCreator from "../components/FooterCreator";
+import CreatorHome from "../components/CreatorHome"
 
 export default function SingleProductLinksTab() {
   const router = useRouter();
@@ -23,6 +23,7 @@ export default function SingleProductLinksTab() {
   const referrals = useSelector((state) => state.brands?.referrals || []);
   console.log(referrals);
   useEffect(() => {
+
     if (userId) {
       dispatch(fetchReferralsByUserId(userId));
     }
@@ -65,7 +66,7 @@ export default function SingleProductLinksTab() {
     
     <div className={stylesShop.bodyShop}>
       <div className={stylesShop.smartphoneContainer}>
-        <Header />
+        <CreatorHome />
         <button className={styles.addButton} onClick={handleAddLinkClick}>
           Add Links <ArrowRight size={20} />
         </button>
@@ -91,7 +92,7 @@ export default function SingleProductLinksTab() {
             );
           })}
         </div>
-        <Footer />
+        <FooterCreator />
       </div>
     </div>
   );

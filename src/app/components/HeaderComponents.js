@@ -10,7 +10,7 @@ const HeaderComponent = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const dispatch = useDispatch()
   const user = useSelector((state) => state.auth.user)
-
+console.log(user)
   const handleLogout = () => {
     dispatch(logout())
   }
@@ -90,7 +90,7 @@ const HeaderComponent = () => {
         )}
       </div>
       <nav className={`nav-items ${isMenuOpen ? "active" : ""}`}>
-      <Link href="/">Home</Link>
+        <Link href="/">Home</Link>
         <Link href="/creators">Creators</Link>
         <Link href="/brand">Brands</Link>
         <Link href="/shop">Shop</Link>
