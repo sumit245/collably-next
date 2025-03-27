@@ -94,7 +94,7 @@ const LoginComponent = () => {
 
         <div className="headings">
           <img src="/images/c-official-logo.png" alt="Collably Logo" className="logo-form"/>
-          <h2>Login with OTP</h2>
+          <h2>Login with WhatsApp</h2>
         </div>
 
         {error && <div className="error-message">{error}</div>}

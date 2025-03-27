@@ -2,15 +2,15 @@
 
 import styles from "../termsCreator/page.module.css"
 import stylesShop from "../shop/StyleShop.module.css";
-import FooterCreator from "../components/FooterCreator";
-import CreatorHome from "../components/CreatorHome";
+import FooterShop from "../components/FooterShop";
+import Header from "../components/HeaderShop"
 
 export default function PrivacyPolicy() {
   return (
- 
+    
         <div className={stylesShop.bodyShop}>
         <div className={stylesShop.smartphoneContainer}>
-             <CreatorHome />
+             <Header />
       <h1 className={styles.title}>Privacy Policy</h1>
 
       <div>
@@ -115,10 +115,10 @@ export default function PrivacyPolicy() {
           <p>Last updated: March 26, 2025</p>
         </section>
       </div>
-       <FooterCreator />
+       <FooterShop />
             </div>
             </div>
-    
+   
   )
 }
 

@@ -58,7 +58,7 @@ export default function FooterComponent() {
           <div className="footer-item">
             <div className='fi-2'>
             <div className="left-text">
-              <p>Powered by Dashandots Technology</p>
+              <p>Powered by NextMillion Technology Private Limited</p>
             </div>
             <div className="right-text">
                      <p> Terms & Conditions</p>

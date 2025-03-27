@@ -338,7 +338,7 @@ export default function ProfilePage() {
                 <ChevronRight className={styles.chevron} />
               </div>
               </Link>
-              <Link href="/termsCreator">
+              <Link href="/termShop">
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
@@ -349,7 +349,7 @@ export default function ProfilePage() {
                 <ChevronRight className={styles.chevron} />
               </div>
               </Link>
-              <Link href="/privacyCreator">
+              <Link href="/privacyShop">
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
