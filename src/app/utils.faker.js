@@ -510,7 +510,7 @@ export const FINDS_DATA = [
         ],
         cta: {
           text: "Get started now",
-          href: "#",
+          href: "/shop",
         },
       }
       
@@ -543,7 +543,7 @@ export const FINDS_DATA = [
         ],
         cta: {
           text: "Get Started Now",
-          href: "#",
+          href: "/creatorDashboardEntry",
         },
       };
 
@@ -578,6 +578,8 @@ export const FINDS_DATA = [
       
 
       export const heroData = {
+        primlink:"/registration",
+        seclink:"/shop",
         title: "Collably is the future of shopping",
         description: "Browse viral products, shop seamlessly, and unlock exclusive deals—all powered by creators you love",
         bannerTexts: [
@@ -624,6 +626,8 @@ export const FINDS_DATA = [
           "Shop from your Favourite Creator",
           "Create Smart Affiliate Links",
         ],
+        primlink:"/creatorDashboardEntry",
+        seclink:"",
         primbutton: "Get Started",
         secbutton: "Special Message",
         appImages: [
