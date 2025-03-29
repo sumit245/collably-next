@@ -13,13 +13,22 @@ import {
   ChevronLeft,
   ChevronRight,
   IndianRupee,
+  Loader,
+  HelpCircle,
   LinkIcon,
+  Lightbulb,
+  BookOpen,
+  MessageCircle,
+  QuestionCircle,
+  Mail,
+  Phone,
+  Info,
   Instagram,
   Youtube,
-  Phone,
-  Settings, 
+  Settings,
   UserRoundCog,
   Store,
+  Shield,
   FileText,
   Share2,
   Users,
@@ -89,16 +98,16 @@ export default function ProfilePage() {
           <div className={styles.moneySection}>
             <h3>Profile</h3>
             <div className={styles.container}>
-            <Link href="/userProfile">
-              <div className={styles.item}>
-                <div className={styles.itemData}>
-                  <div className={styles.iconContainer}>
-                    <UserRound size={18} />
+              <Link href="/userProfile">
+                <div className={styles.item}>
+                  <div className={styles.itemData}>
+                    <div className={styles.iconContainer}>
+                      <UserRound size={18} />
+                    </div>
+                    <span>My Profile</span>
                   </div>
-                  <span>My Profile</span>
+                  <ChevronRight className={styles.chevron} />
                 </div>
-                <ChevronRight className={styles.chevron} />
-              </div>
               </Link>
               <div className={styles.item}>
                 <div className={styles.itemData}>
@@ -121,17 +130,17 @@ export default function ProfilePage() {
                   <ChevronRight className={styles.chevron} />
                 </div>
               </Link>
-              
+
               <Link href="/userId">
-              <div className={styles.item}>
-                <div className={styles.itemData}>
-                  <div className={styles.iconContainer}>
-                    <UserRoundCog size={18} />
+                <div className={styles.item}>
+                  <div className={styles.itemData}>
+                    <div className={styles.iconContainer}>
+                      <UserRoundCog size={18} />
+                    </div>
+                    <span>My User ID</span>
                   </div>
-                  <span>My User ID</span>
+                  <ChevronRight className={styles.chevron} />
                 </div>
-                <ChevronRight className={styles.chevron} />
-              </div>
               </Link>
             </div>
           </div>
@@ -157,20 +166,20 @@ export default function ProfilePage() {
                 </div>
               </Link>
               <Link href="/CreatorAnalytics">
-              <div className={styles.item}>
-                <div className={styles.itemData}>
-                  <div className={styles.iconContainer}>
-                    <FileText size={18} />
-                  </div>
-                  <div>
-                    <span>My Reports</span>
-                  </div>
-                  {/* <span className={styles.subText}>
+                <div className={styles.item}>
+                  <div className={styles.itemData}>
+                    <div className={styles.iconContainer}>
+                      <FileText size={18} />
+                    </div>
+                    <div>
+                      <span>My Reports</span>
+                    </div>
+                    {/* <span className={styles.subText}>
                     New
                   </span> */}
+                  </div>
+                  <ChevronRight className={styles.chevron} />
                 </div>
-                <ChevronRight className={styles.chevron} />
-              </div>
               </Link>
             </div>
           </div>
@@ -232,7 +241,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Share2 size={18} /> */}
+                    <BookOpen size={18} />
                   </div>
                   <span>Learn How Collably Works</span>
                 </div>
@@ -241,7 +250,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Users size={18} /> */}
+                    <FileText size={18} />
                   </div>
                   <span>Latest Blogs & Articles</span>
                 </div>
@@ -250,7 +259,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Users size={18} /> */}
+                    <Lightbulb size={18} />
                   </div>
                   <span>Quick Tips</span>
                 </div>
@@ -263,58 +272,57 @@ export default function ProfilePage() {
           <div className={styles.exclusiveToolsSection}>
             <h3>Get Help</h3>
             <div className={styles.container}>
-           
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Share2 size={18} /> */}
+                    <Info size={18} />
                   </div>
                   <span>FAQ's</span>
                 </div>
                 <ChevronRight className={styles.chevron} />
               </div>
-            
-             <div className={styles.item}>
+
+              <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Users size={18} /> */}
+                    <HelpCircle size={24} />
                   </div>
                   <span>Raise a Ticket</span>
                 </div>
                 <ChevronRight className={styles.chevron} />
               </div>
               <Link href="/contact-us">
-              <div className={styles.item}>
-                <div className={styles.itemData}>
-                  <div className={styles.iconContainer}>
-                    {/* <Users size={18} /> */}
+                <div className={styles.item}>
+                  <div className={styles.itemData}>
+                    <div className={styles.iconContainer}>
+                      <MessageCircle size={18} />
+                    </div>
+                    <span>Chat with us</span>
                   </div>
-                  <span>Chat with us</span>
+                  <ChevronRight className={styles.chevron} />
                 </div>
-                <ChevronRight className={styles.chevron} />
-              </div>
               </Link>
               <Link href="/contact-us">
-              <div className={styles.item}>
-                <div className={styles.itemData}>
-                  <div className={styles.iconContainer}>
-                    {/* <Users size={18} /> */}
+                <div className={styles.item}>
+                  <div className={styles.itemData}>
+                    <div className={styles.iconContainer}>
+                      <Mail size={18} />
+                    </div>
+                    <span>Email us</span>
                   </div>
-                  <span>Email us</span>
+                  <ChevronRight className={styles.chevron} />
                 </div>
-                <ChevronRight className={styles.chevron} />
-              </div>
               </Link>
               <Link href="/contact-us">
-              <div className={styles.item}>
-                <div className={styles.itemData}>
-                  <div className={styles.iconContainer}>
-                    {/* <Users size={18} /> */}
+                <div className={styles.item}>
+                  <div className={styles.itemData}>
+                    <div className={styles.iconContainer}>
+                      <Phone size={18} />
+                    </div>
+                    <span>Call us</span>
                   </div>
-                  <span>Call us</span>
+                  <ChevronRight className={styles.chevron} />
                 </div>
-                <ChevronRight className={styles.chevron} />
-              </div>
               </Link>
             </div>
           </div>
@@ -323,38 +331,38 @@ export default function ProfilePage() {
           <div className={styles.exclusiveToolsSection}>
             <h3>More</h3>
             <div className={styles.container}>
-            <Link href="/updateUser">
-              <div className={styles.item}>
-                <div className={styles.itemData}>
-                  <div className={styles.iconContainer}>
-                    <Settings  size={18} />
+              <Link href="/updateUser">
+                <div className={styles.item}>
+                  <div className={styles.itemData}>
+                    <div className={styles.iconContainer}>
+                      <Settings size={18} />
+                    </div>
+                    <span>Account Settings</span>
                   </div>
-                  <span>Account Settings</span>
+                  <ChevronRight className={styles.chevron} />
                 </div>
-                <ChevronRight className={styles.chevron} />
-              </div>
               </Link>
               <Link href="/termsCreator">
-              <div className={styles.item}>
-                <div className={styles.itemData}>
-                  <div className={styles.iconContainer}>
-                    {/* <Users size={18} /> */}
+                <div className={styles.item}>
+                  <div className={styles.itemData}>
+                    <div className={styles.iconContainer}>
+                      <FileText size={18} />
+                    </div>
+                    <span>Terms & Conditions</span>
                   </div>
-                  <span>Terms & Conditions</span>
+                  <ChevronRight className={styles.chevron} />
                 </div>
-                <ChevronRight className={styles.chevron} />
-              </div>
               </Link>
               <Link href="/privacyCreator">
-              <div className={styles.item}>
-                <div className={styles.itemData}>
-                  <div className={styles.iconContainer}>
-                    {/* <Users size={18} /> */}
+                <div className={styles.item}>
+                  <div className={styles.itemData}>
+                    <div className={styles.iconContainer}>
+                      <Shield size={18} />
+                    </div>
+                    <span>Privacy Policy</span>
                   </div>
-                  <span>Privacy Policy</span>
+                  <ChevronRight className={styles.chevron} />
                 </div>
-                <ChevronRight className={styles.chevron} />
-              </div>
               </Link>
             </div>
           </div>
@@ -366,7 +374,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Share2 size={18} /> */}
+                    <Loader size={18} />
                   </div>
                   <span>Coming soon</span>
                 </div>
@@ -382,7 +390,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Share2 size={18} /> */}
+                    <Loader size={18} />
                   </div>
                   <span>Coming soon</span>
                 </div>
@@ -398,7 +406,7 @@ export default function ProfilePage() {
               <div className={styles.item}>
                 <div className={styles.itemData}>
                   <div className={styles.iconContainer}>
-                    {/* <Share2 size={18} /> */}
+                    <Loader size={18} />
                   </div>
                   <span>Coming soon</span>
                 </div>
