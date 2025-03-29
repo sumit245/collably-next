@@ -27,7 +27,9 @@ export default function HomePage() {
          <main>
           {/* <TopBrands /> */}
           {/* <SuggestedActions /> */}
+          <div className={stylesShop.banner}>
           <BannerCarousel />
+          </div>
           <StripBanner
             text="Make your content shoppable for more users"
             buttonText="Setup Feed"
