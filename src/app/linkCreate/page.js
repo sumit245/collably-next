@@ -87,7 +87,7 @@ export default function LinksPage() {
             </div>
 
             <button className={styles.createButton} onClick={handlePasteClick}>
-              {inputText ? "Generate My Link" : "PASTE LINK"} 
+              {inputText ? "MAKE PROFIT LINK" : "PASTE LINK"} 
             </button>
           </div>
 
