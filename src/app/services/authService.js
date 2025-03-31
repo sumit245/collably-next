@@ -1,5 +1,17 @@
 import api from "./api"
 
+export const generateOTP = (contactNumber) =>
+  api.fetch("/generate_otp", {
+    method: "POST",
+    body: JSON.stringify({ contactNumber }),
+  })
+
+export const verifyOTP = (contactNumber, otp) =>
+  api.fetch("/verify_otp", {
+    method: "POST",
+    body: JSON.stringify({ contactNumber, otp }),
+  })
+
 export const loginWithPhone = (contactNumber) =>
   api.fetch("/login", {
     method: "POST",
