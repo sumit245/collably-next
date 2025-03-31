@@ -4,28 +4,16 @@ import { useState, useEffect } from "react"
 import Link from "next/link"
 import { useDispatch, useSelector } from "react-redux"
 import { useRouter, useSearchParams } from "next/navigation"
-import { loginWithPhone, loginWithGoogle, handleGoogleRedirect } from "../actions/auth"
-import { initializeApp } from "firebase/app"
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth"
-
-const auth = getAuth(initializeApp({
-  apiKey: "AIzaSyAzTdXEp_VqvfmCbUrINKl-R_BXX-Ufk-E",
-  authDomain: "authbyotp-99212.firebaseapp.com",
-  projectId: "authbyotp-99212",
-  storageBucket: "authbyotp-99212.appspot.com",
-  messagingSenderId: "267382277495",
-  appId: "1:267382277495:web:23d06c38ea00722b4fcd72",
-  measurementId: "G-T9LTBM6ZE0",
-}))
+import { handleGoogleRedirect, generateOTP, verifyOTP } from "../actions/auth"
 
 const LoginComponent = () => {
   const [contact, setContact] = useState("")
   const [otp, setOtp] = useState("")
   const [sent, setSent] = useState(false)
-  const [confirmation, setConfirmation] = useState(null)
-  const [isSendingOTP, setIsSendingOTP] = useState(false) 
-  
-  const { isLoading, error } = useSelector(({ auth }) => auth)
+  const [timeLeft, setTimeLeft] = useState(60)
+  const [canResend, setCanResend] = useState(false)
+
+  const { isLoading, otpSent, error } = useSelector(({ auth }) => auth)
   const dispatch = useDispatch()
   const router = useRouter()
   const redirect = useSearchParams()?.get("redirect") || "/"
@@ -36,92 +24,139 @@ const LoginComponent = () => {
     }
   }, [dispatch, router, redirect])
 
-  const handleOTP = async (e) => {
+  // Set sent state based on Redux state
+  useEffect(() => {
+    setSent(otpSent)
+  }, [otpSent])
+
+  // Countdown timer for resend OTP
+  useEffect(() => {
+    let timer
+    if (sent && timeLeft > 0) {
+      timer = setTimeout(() => {
+        setTimeLeft(timeLeft - 1)
+      }, 1000)
+    } else if (timeLeft === 0) {
+      setCanResend(true)
+    }
+
+    return () => {
+      if (timer) clearTimeout(timer)
+    }
+  }, [sent, timeLeft])
+
+  const handleSendOTP = async (e) => {
     e.preventDefault()
-    if (isSendingOTP) return 
-
     if (!sent) {
-      setIsSendingOTP(true)
-      try {
-       
-        if (window.recaptchaVerifier) {
-          window.recaptchaVerifier.clear()
-          window.recaptchaVerifier = null
-        }
-
-        const recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
-          size: "invisible",
-          callback: () => console.log("reCAPTCHA solved"),
-          "expired-callback": () => console.error("reCAPTCHA expired"),
-        })
-
-        window.recaptchaVerifier = recaptchaVerifier
-
-        const phoneNumber = contact.startsWith("+") ? contact : `+91${contact}`
-        const result = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier)
-        
-        setConfirmation(result)
-        setSent(true)
-        dispatch({ type: "CLEAR_ERROR" }) 
-      } catch (err) {
-        console.error("Error sending OTP:", err.message)
-        dispatch({ type: "SET_ERROR", payload: "Failed to send OTP. Try again." })
-        setSent(false)
-        setConfirmation(null)
-      } finally {
-        setIsSendingOTP(false)
+      const phoneNumber = contact.startsWith("+") ? contact : `${contact}`
+      const result = await dispatch(generateOTP(phoneNumber))
+      if (result.success) {
+        setTimeLeft(60)
+        setCanResend(false)
       }
     } else {
-      if (!confirmation) return dispatch({ type: "SET_ERROR", payload: "No OTP confirmation found" })
-      try {
-        await confirmation.confirm(otp)
-        const result = await dispatch(loginWithPhone(contact))
-        if (result.success) router.push(redirect)
-      } catch (err) {
-        console.error("Error verifying OTP:", err.message)
-        dispatch({ type: "SET_ERROR", payload: "Invalid OTP" })
+      const phoneNumber = contact.startsWith("+") ? contact : `${contact}`
+      const result = await dispatch(verifyOTP(phoneNumber, otp))
+      if (result.success) {
+        router.push(redirect)
+      }
+    }
+  }
+
+  const handleResendOTP = async () => {
+    if (canResend) {
+      const phoneNumber = contact.startsWith("+") ? contact : `${contact}`
+      const result = await dispatch(generateOTP(phoneNumber))
+      if (result.success) {
+        setTimeLeft(60)
+        setCanResend(false)
       }
     }
   }
 
   return (
     <div className="login-container">
-      <form className="form" onSubmit={handleOTP}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" 
-          strokeWidth="2" onClick={() => router.back()} style={{ cursor: "pointer", position: "relative", left: 20, top: 20 }}>
-          <polyline points="15 18 9 12 15 6"/>
+      <form className="form" onSubmit={handleSendOTP}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          onClick={() => router.back()}
+          style={{ cursor: "pointer", position: "relative", left: 20, top: 20 }}
+        >
+          <polyline points="15 18 9 12 15 6" />
         </svg>
 
         <div className="headings">
-          <img src="/images/c-official-logo.png" alt="Collably Logo" className="logo-form"/>
+          <img src="/images/c-official-logo.png" alt="Collably Logo" className="logo-form" />
           <h2>Login with WhatsApp</h2>
         </div>
 
         {error && <div className="error-message">{error}</div>}
 
         <div className="inputForm">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          <input placeholder="Enter your Phone Number" className="input" type="tel" value={contact} onChange={e => setContact(e.target.value)} required/>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+          </svg>
+          <input
+            placeholder="Enter your Phone Number"
+            className="input"
+            type="tel"
+            value={contact}
+            onChange={(e) => setContact(e.target.value)}
+            disabled={sent && !canResend}
+            required
+          />
         </div>
 
-        {sent && <>
-          <div className="inputForm">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <input placeholder="Enter OTP" className="input" type="text" value={otp} onChange={e => setOtp(e.target.value)} required/>
-          </div>
-        </>}
+        {sent && (
+          <>
+            <div className="inputForm">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" />
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+              </svg>
+              <input
+                placeholder="Enter OTP"
+                className="input"
+                type="text"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                required
+              />
+            </div>
 
-        <button 
-          className="button-submit" 
-          type="submit" 
-          disabled={isLoading || isSendingOTP} 
-        >
-          {isLoading || isSendingOTP 
-            ? (sent ? "Signing In..." : "Sending OTP...") 
-            : (sent ? "Sign In" : "Send OTP")}
-        </button>
+            {!canResend && <div className="resend-timer">Resend OTP in {timeLeft} seconds</div>}
+          </>
+        )}
 
-        <p className="p">Don't have an account? <Link href="/registration" className="span" style={{ cursor: "pointer" }}>Sign Up</Link></p>
+        <div className="button-container">
+          <button className="button-submit" type="submit" disabled={isLoading}>
+            {isLoading ? (sent ? "Signing In..." : "Sending OTP...") : sent ? "Sign In" : "Send OTP"}
+          </button>
+
+          {sent && (
+            <button
+              type="button"
+              className={`button-resend ${canResend ? "active" : "disabled"}`}
+              onClick={handleResendOTP}
+              disabled={!canResend || isLoading}
+            >
+              {isLoading && canResend ? "Resending..." : "Resend OTP"}
+            </button>
+          )}
+        </div>
+
+        <p className="p">
+          Don't have an account?{" "}
+          <Link href="/registration" className="span" style={{ cursor: "pointer" }}>
+            Sign Up
+          </Link>
+        </p>
 
         {/* <div className="flex-row">
           <button className="btn google" type="button" onClick={() => dispatch(loginWithGoogle())} disabled={isLoading}>
@@ -184,9 +219,9 @@ const LoginComponent = () => {
           </button>
         </div> */}
       </form>
-      <div id="recaptcha-container"></div>
     </div>
   )
 }
 
 export default LoginComponent
+
