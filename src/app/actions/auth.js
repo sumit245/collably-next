@@ -12,19 +12,14 @@ import {
 
 export const loginWithPhone = (contactNumber) => async (dispatch) => {
   try {
-    
     const result = await dispatch(loginWithPhoneAsync({ contactNumber }));
   
-
     if (loginWithPhoneAsync.fulfilled.match(result)) {
-   
       return { success: true, user: result.payload };
     } else {
-      
       return { success: false, error: result.error.message };
     }
   } catch (error) {
-  
     return {
       success: false,
       error: error.message || "An unexpected error occurred during login.",
@@ -32,12 +27,11 @@ export const loginWithPhone = (contactNumber) => async (dispatch) => {
   }
 };
 
-
 export const generateOTP = (contactNumber) => async (dispatch) => {
   try {
     const result = await dispatch(generateOTPAsync({ contactNumber }))
     if (generateOTPAsync.fulfilled.match(result)) {
-      return { success: true }
+      return { success: true, userExists: result.payload.userExists }
     } else {
       return { success: false, error: result.error.message }
     }
@@ -53,14 +47,22 @@ export const generateOTP = (contactNumber) => async (dispatch) => {
 export const verifyOTP = (contactNumber, otp) => async (dispatch) => {
   try {
     const result = await dispatch(verifyOTPAsync({ contactNumber, otp }))
+    
     if (verifyOTPAsync.fulfilled.match(result)) {
-      const loginResult = await dispatch(loginWithPhoneAsync({ contactNumber }))
-      if (loginWithPhoneAsync.fulfilled.match(loginResult)) {
-        return { success: true, user: loginResult.payload }
-      } else {
-        return { success: false, error: loginResult.error.message }
+      // Check if user is registered based on the response
+      if (result.payload.isRegistered === false) {
+        // OTP is valid but user is not registered
+        return { 
+          success: false, 
+          error: "Contact number is not registered. Please register.",
+          otpVerified: true 
+        }
       }
+      
+      // User is registered and logged in
+      return { success: true, user: result.payload.user }
     } else {
+      // OTP verification failed
       return { success: false, error: result.error.message }
     }
   } catch (error) {
@@ -144,4 +146,3 @@ export const updateUser = (userData) => async (dispatch) => {
     return { success: false, error }
   }
 }
-
