@@ -17,7 +17,8 @@ const LoginComponent = () => {
   const { isLoading, otpSent, error } = useSelector(({ auth }) => auth)
   const dispatch = useDispatch()
   const router = useRouter()
-  const redirect = useSearchParams()?.get("redirect") || "/"
+  const searchParams = useSearchParams()
+  const redirect = searchParams?.get("redirect") || "/"
 
   useEffect(() => {
     if (location.search.includes("code=")) {
@@ -81,18 +82,14 @@ const LoginComponent = () => {
       if (result.success) {
         // User exists and is logged in
         router.push(redirect)
+      } else if (result.otpVerified) {
+        // User verified OTP but is not registered
+        // Store the verified number in localStorage instead of URL
+        localStorage.setItem("verifiedPhoneNumber", result.verifiedNumber || phoneNumber)
+        router.push("/registration")
       } else if (result.error) {
-        // Check if error indicates user not registered
-        if (result.error.includes("Contact number is not registered")) {
-          // User verified OTP but is not registered, redirect to registration
-          router.push(`/registration?phone=${encodeURIComponent(phoneNumber)}`)
-        } else if (result.error.includes("Invalid OTP")) {
-          // Invalid OTP error
-          setErrorMessage("Invalid OTP. Please try again.")
-        } else {
-          // Other errors
-          setErrorMessage(result.error)
-        }
+        // Display the error message from the API
+        setErrorMessage(result.error)
       }
     }
   }

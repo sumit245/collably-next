@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { register } from "../actions/auth";
@@ -12,8 +12,23 @@ const RegistrationForm = () => {
   const [email, setEmail] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [password, setPassword] = useState("");
+  const [isVerifiedNumber, setIsVerifiedNumber] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
+
+  // Get phone number from localStorage if available
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const verifiedNumber = localStorage.getItem("verifiedPhoneNumber");
+      if (verifiedNumber) {
+        setContactNumber(verifiedNumber);
+        setIsVerifiedNumber(true);
+        // Clear the stored number after using it
+        // This prevents it from being used again if the user navigates away and comes back
+        localStorage.removeItem("verifiedPhoneNumber");
+      }
+    }
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -102,7 +117,12 @@ const RegistrationForm = () => {
             onChange={(e) => setContactNumber(e.target.value)}
             required
             className={styles.input}
+            readOnly={isVerifiedNumber}
+            style={isVerifiedNumber ? { backgroundColor: "#f0f0f0" } : {}}
           />
+          {isVerifiedNumber && (
+            <small className={styles.verifiedText}>Verified number</small>
+          )}
         </div>
       </div>
 
