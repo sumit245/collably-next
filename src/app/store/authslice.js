@@ -15,15 +15,14 @@ export const generateOTPAsync = createAsyncThunk(
   async ({ contactNumber }, { rejectWithValue }) => {
     try {
       const response = await authService.generateOTP(contactNumber);
-      console.log("OTP API Response:", response); // ✅ Console log to check response
+      console.log("OTP API Response:", response); // Console log to check response
       return response;
     } catch (error) {
-      console.error("OTP API Error:", error.message); // ✅ Console log for errors
+      console.error("OTP API Error:", error.message); // Console log for errors
       return rejectWithValue(error.message);
     }
   }
 );
-
 
 export const verifyOTPAsync = createAsyncThunk(
   "auth/verifyOTP",
@@ -164,10 +163,17 @@ const authSlice = createSlice({
         state.isLoading = true
         state.error = null
       })
-      .addCase(verifyOTPAsync.fulfilled, (state) => {
+      .addCase(verifyOTPAsync.fulfilled, (state, action) => {
         state.isLoading = false
         state.otpVerified = true
         state.error = null
+        
+        // If user is registered and logged in, update user state
+        if (action.payload.isRegistered && action.payload.user) {
+          state.user = action.payload.user
+          localStorage.setItem("accessToken", action.payload.access_token)
+          localStorage.setItem("user", JSON.stringify(action.payload.user))
+        }
       })
       .addCase(verifyOTPAsync.rejected, (state, action) => {
         state.isLoading = false
@@ -268,4 +274,3 @@ const authSlice = createSlice({
 
 export const { clearError } = authSlice.actions
 export default authSlice.reducer
-
