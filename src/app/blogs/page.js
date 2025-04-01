@@ -16,7 +16,13 @@ import CreateBlogModal from "../components/CreateBlogModal";
 export default function BlogPage() {
   const dispatch = useDispatch();
   const { blogs, loading, error } = useSelector((state) => state.blogs);
-  const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.auth.user);
+  const isAuthenticated = !!user;
+//   console.log("User State:", user);
+//   console.log("Authenticated:", isAuthenticated);
+//   const authState = useSelector((state) => state.auth);
+// console.log("Auth State:", authState);
+
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   useEffect(() => {
@@ -60,6 +66,18 @@ export default function BlogPage() {
       <div className={styles.main}>
         {/* Main Content */}
         <main className="container">
+
+              {/* Create Blog Button (only shown if authenticated) */}
+      {isAuthenticated && (
+        <button 
+          className={pageStyles.createButton}
+          onClick={() => setShowCreateModal(true)}
+          aria-label="Create new blog post"
+        >
+          <Plus />
+        </button>
+      )}
+
           {/* Featured Post */}
           {featuredPost && (
             <section className={styles.featuredPost}>
@@ -131,18 +149,14 @@ export default function BlogPage() {
           </section>
         </main>
       </div>
-
-      {/* Create Blog Button (only shown if authenticated) */}
-      {isAuthenticated && (
-        <button 
+      {/* <button 
           className={pageStyles.createButton}
           onClick={() => setShowCreateModal(true)}
           aria-label="Create new blog post"
         >
           <Plus />
-        </button>
-      )}
-
+        </button> */}
+    
       {/* Create Blog Modal */}
       {showCreateModal && <CreateBlogModal onClose={handleCreateModalClose} />}
 
