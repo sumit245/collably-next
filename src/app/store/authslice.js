@@ -134,6 +134,7 @@ const authSlice = createSlice({
     error: null,
     otpSent: false,
     otpVerified: false,
+    isAuthenticated: false,
   },
   reducers: {
     clearError: (state) => {

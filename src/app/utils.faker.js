@@ -627,7 +627,7 @@ export const FINDS_DATA = [
           "Create Smart Affiliate Links",
         ],
         primlink:"/creatorDashboardEntry",
-        seclink:"",
+        seclink:"/shop",
         primbutton: "Get Started",
         secbutton: "Special Message",
         appImages: [

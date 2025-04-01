@@ -102,4 +102,3 @@ console.log(user)
 }
 
 export default HeaderComponent
-
