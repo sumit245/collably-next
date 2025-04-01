@@ -12,6 +12,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@reduxjs/toolkit": "^2.5.0",
+    "clsx": "^2.1.1",
     "firebase": "^11.2.0",
     "india-pincode-lookup": "^1.0.3",
     "jsdom": "^26.0.0",
@@ -22,6 +23,7 @@
     "react-hot-toast": "^2.5.1",
     "react-icons": "^5.4.0",
     "react-redux": "^9.2.0",
+    "tailwind-merge": "^3.1.0",
     "typed.js": "^2.1.0"
   },
   "devDependencies": {

@@ -94,6 +94,7 @@ console.log(user)
         <Link href="/creators">Creators</Link>
         <Link href="/brand">Brands</Link>
         <Link href="/shop">Shop</Link>
+        <Link href="/blogs">Blogs</Link>
         <Link href="/contact-us">Contact</Link>
       </nav>
     </header>
