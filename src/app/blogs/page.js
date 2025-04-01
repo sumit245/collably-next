@@ -2,7 +2,7 @@ import Link from "next/link";
 import HeaderComponent from "../components/HeaderComponents";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
 import { Button } from "../components/Cards/button";
-import { Input } from "../components/Cards/Input";
+import { Input } from "../components/Cards/input";
 import styles from "./BlogPage.module.css"; // Import the CSS Module
 import FooterComponent from "../components/FooterComponent";
 import BottomNavComponent from "../components/BottomNavComponent";
