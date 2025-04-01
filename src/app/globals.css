@@ -2948,3 +2948,110 @@ display: none;
   background-color: white;
   cursor: pointer;
  }
+
+
+ .error-message {
+  background-color: #f8d7da; 
+  color: #721c24;  
+  border: 1px solid #f5c6cb; 
+  padding: 10px;
+  border-radius: 5px;  
+  margin-top: 10px;
+  font-size: 14px;  
+  margin-bottom: 10px;
+}
+
+.button-submit:disabled {
+  background-color: #ccc;  
+  cursor: not-allowed; 
+}
+
+.button-resend.disabled {
+  background-color: #ddd; 
+  cursor: not-allowed;  
+}
+
+
+/* Styling for the countdown timer */
+.resend-timer {
+  font-size: 16px;
+  color: #888;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 7px;
+}
+
+.timer-text {
+  color: #333;
+  margin-right: 5px;
+}
+
+.timer-number {
+  color: #ff0055; /* Bold orange color for the timer */
+  font-weight: bold;
+}
+
+/* Styling for the resend OTP button */
+.button-resend.active {
+  background-color: #ff0055; /* Green when active */
+  color: white;
+}
+
+.button-resend.disabled {
+  background-color: #ccc; /* Grey when disabled */
+  color: #666;
+  cursor: not-allowed;
+}
+
+.button-resend {
+  margin-top: 15px;
+  padding: 8px 15px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.button-resend.active:hover {
+  background-color: #de004a; /* Darker green when hovered */
+}
+
+/* Optional: Style for the form's error messages */
+.error-message {
+  color: #ff0055;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.p {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.input {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  width: 100%;
+}
+
+.button-submit {
+  padding: 10px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.button-submit:disabled {
+  background-color: #7f8c8d;
+}
+
+.button-submit:hover:not(:disabled) {
+  background-color: #de004a;
+}
