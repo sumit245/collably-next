@@ -18,7 +18,8 @@ const LoginComponent = () => {
   const { isLoading, otpSent, error } = useSelector(({ auth }) => auth);
   const dispatch = useDispatch();
   const router = useRouter();
-  const redirect = useSearchParams()?.get("redirect") || "/";
+  const searchParams = useSearchParams();
+  const redirect = searchParams?.get("redirect") || "/";
 
   useEffect(() => {
     if (location.search.includes("code=")) {
@@ -98,7 +99,9 @@ const LoginComponent = () => {
         router.push(redirect);
       } else if (result.error) {
         if (result.error.includes("Contact number is not registered")) {
-          router.push(`/registration?phone=${encodeURIComponent(phoneNumber)}`);
+          // Store the verified phone number in localStorage instead of URL
+          localStorage.setItem("verifiedPhoneNumber", phoneNumber);
+          router.push("/registration");
         } else if (result.error.includes("Invalid OTP")) {
           setErrorMessage("Invalid OTP. Please try again.");
         } else if (result.error.includes("OTP expired")) {
@@ -106,6 +109,10 @@ const LoginComponent = () => {
         } else {
           setErrorMessage(result.error); // For other types of errors
         }
+      } else if (result.otpVerified) {
+        // If OTP is verified but user is not registered
+        localStorage.setItem("verifiedPhoneNumber", result.verifiedNumber || phoneNumber);
+        router.push("/registration");
       }
     }
   };
