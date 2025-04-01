@@ -1,4 +1,3 @@
-
 :root {
   /* Colors */
   --brand-section-text: #ffffff;
@@ -464,7 +463,7 @@ i {
 }
 
 .nav-items {
-  margin-left: 33rem;
+  margin-left: 30rem;
   margin-top: -3rem;
   width: 300px;
   display: flex;
@@ -519,6 +518,10 @@ i {
 .section_title {
   text-align: center;
   margin-bottom: 50px;
+}
+
+.banner-slider{
+  /* height: 95vh; */
 }
 
 .title_badge {
@@ -624,28 +627,38 @@ i {
   box-sizing: border-box;
 }
 
+
+element.style {
+  color: transparent;
+}
 .hand-item {
   box-sizing: border-box;
   position: relative;
   z-index: 10;
-  top: -360px;
+  top: -426px;
   left: 435px;
   width: 488px;
-  height: 550px;
+  height: 598px;
 }
 
 .image-item img {
   width: 100%;
   position: relative;
-  top: 43px;
+  top: 44.5px;
   left: -3px;
-  height: 394px;
-  object-fit: cover;
+  height: 480px;
+  object-fit: none;
   border-radius: 40px;
 }
 
 
-
+@media screen and (width <= 1024px) {
+  .slider_frame {
+      /* left: 54px;
+      top: 99px; */
+      
+  }
+}
 
 
 
@@ -2319,9 +2332,14 @@ html, body {
   }
 
   .hero-bg-image {
-    left: 0;
-    width: 100%;
-    height: auto;
+    left: -11px;
+    height: 442px;
+    position: relative;
+    top: -457px;
+    width: 239px;
+  }
+  .image-rotation-section{
+    display: none;
   }
 
 }
@@ -2411,6 +2429,9 @@ html, body {
     max-width: 85%;
     border-radius: 3rem;
   }
+
+ 
+
   .container6 {
     max-width: 380px;
     position: relative;
@@ -3040,9 +3061,144 @@ display: none;
 }
 }
 
-
 .password-toggle{
   border: none;
   background-color: white;
   cursor: pointer;
  }
+
+
+ .error-message {
+  background-color: #f8d7da; 
+  color: #721c24;  
+  border: 1px solid #f5c6cb; 
+  padding: 10px;
+  border-radius: 5px;  
+  margin-top: 10px;
+  font-size: 14px;  
+  margin-bottom: 10px;
+}
+
+.button-submit:disabled {
+  background-color: #ccc;  
+  cursor: not-allowed; 
+}
+
+.button-resend.disabled {
+  background-color: #ddd; 
+  cursor: not-allowed;  
+}
+
+
+/* Styling for the countdown timer */
+.resend-timer {
+  font-size: 16px;
+  color: #888;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 7px;
+}
+
+.timer-text {
+  color: #333;
+  margin-right: 5px;
+}
+
+.timer-number {
+  color: #ff0055; /* Bold orange color for the timer */
+  font-weight: bold;
+}
+
+/* Styling for the resend OTP button */
+.button-resend.active {
+  background-color: #ff0055; /* Green when active */
+  color: white;
+}
+
+.button-resend.disabled {
+  background-color: #ccc; /* Grey when disabled */
+  color: #666;
+  cursor: not-allowed;
+}
+
+.button-resend {
+  margin-top: 15px;
+  padding: 8px 15px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.button-resend.active:hover {
+  background-color: #de004a; /* Darker green when hovered */
+}
+
+/* Optional: Style for the form's error messages */
+.error-message {
+  color: #ff0055;
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.p {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.input {
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  width: 100%;
+}
+
+.button-submit {
+  padding: 10px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.button-submit:disabled {
+  background-color: #7f8c8d;
+}
+
+.button-submit:hover:not(:disabled) {
+  background-color: #de004a;
+}
+
+@media screen and (width: 1024px) {
+  .hamburger {
+    display: flex;
+  }
+  .top-navbar {
+    display: none;
+  }
+  .nav-items.active {
+    display: flex;
+    text-align: start;
+    position: relative;
+    top: 61px;
+    left: -374px;
+    width: 82%;
+  }
+  .nav-items {
+    display: none;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: var(--body-bg);
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+}

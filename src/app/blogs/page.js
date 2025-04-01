@@ -70,7 +70,7 @@ export default function BlogPage() {
           onClick={() => setShowCreateModal(true)}
           aria-label="Create new blog post"
         >
-          <Plus />Add a new Blog..
+          <Plus />Create new Blog..
         </button>
       )}
 
