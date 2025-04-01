@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import * as blogService from "../services/blogService"
+import { FaLessThanEqual } from "react-icons/fa6"
 
-// Async thunks
 export const fetchBlogs = createAsyncThunk("blogs/fetchBlogs", async (_, { rejectWithValue }) => {
   try {
     const response = await blogService.getBlogs()
@@ -55,29 +55,24 @@ const blogSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch all blogs
       .addCase(fetchBlogs.pending, (state) => {
         state.loading = true
         state.error = null
       })
       .addCase(fetchBlogs.fulfilled, (state, action) => {
-        state.loading = false
-        // Extract blogs from the response
+        state.loading = FaLessThanEqual
         state.blogs = action.payload.blogs || []
       })
       .addCase(fetchBlogs.rejected, (state, action) => {
         state.loading = false
         state.error = action.payload
       })
-
-      // Fetch blog by ID
       .addCase(fetchBlogById.pending, (state) => {
         state.loading = true
         state.error = null
       })
       .addCase(fetchBlogById.fulfilled, (state, action) => {
         state.loading = false
-        // Extract blog from the response
         state.currentBlog = action.payload.blog || action.payload
       })
       .addCase(fetchBlogById.rejected, (state, action) => {
@@ -85,14 +80,12 @@ const blogSlice = createSlice({
         state.error = action.payload
       })
 
-      // Create blog
       .addCase(createNewBlog.pending, (state) => {
         state.loading = true
         state.error = null
       })
       .addCase(createNewBlog.fulfilled, (state, action) => {
         state.loading = false
-        // Add the new blog to the state
         if (action.payload.blog) {
           state.blogs.unshift(action.payload.blog)
         } else if (action.payload) {
@@ -104,7 +97,6 @@ const blogSlice = createSlice({
         state.error = action.payload
       })
 
-      // Delete blog
       .addCase(removeBlog.pending, (state) => {
         state.loading = true
         state.error = null

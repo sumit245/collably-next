@@ -9,6 +9,7 @@ import { ArrowRight, Calendar, Clock, Plus } from 'lucide-react';
 import { Button } from "../components/Cards/button";
 import styles from "./page.module.css";
 import pageStyles from "../blogs/page.module.css";
+import stylesBlog from "../blogs/blogmodal.module.css";
 import FooterComponent from "../components/FooterComponent";
 import BottomNavComponent from "../components/BottomNavComponent";
 import CreateBlogModal from "../components/CreateBlogModal";
@@ -18,10 +19,7 @@ export default function BlogPage() {
   const { blogs, loading, error } = useSelector((state) => state.blogs);
   const user = useSelector((state) => state.auth.user);
   const isAuthenticated = !!user;
-//   console.log("User State:", user);
-//   console.log("Authenticated:", isAuthenticated);
-//   const authState = useSelector((state) => state.auth);
-// console.log("Auth State:", authState);
+
 
   const [showCreateModal, setShowCreateModal] = useState(false);
 
@@ -29,7 +27,6 @@ export default function BlogPage() {
     dispatch(fetchBlogs());
   }, [dispatch]);
 
-  // Format the blogs for display
   const blogPosts = blogs && blogs.length > 0 
     ? blogs.map(blog => ({
         id: blog._id,
@@ -40,8 +37,8 @@ export default function BlogPage() {
           month: "long",
           day: "numeric",
         }),
-        readTime: `${Math.ceil(blog.content.length / 1000)} min read`, // Estimate based on content length
-        category: "Development", // Default category
+        readTime: `${Math.ceil(blog.content.length / 1000)} min read`,
+        category: "Development", 
         user: {
           name: blog.author?.fullname || blog.author?.username || "Anonymous",
           avatar: blog.author?.avatar || "/images/image29.webp",
@@ -53,7 +50,6 @@ export default function BlogPage() {
 
   const handleCreateModalClose = () => {
     setShowCreateModal(false);
-    // Refresh blogs after creating a new one
     dispatch(fetchBlogs());
   };
 
@@ -74,7 +70,7 @@ export default function BlogPage() {
           onClick={() => setShowCreateModal(true)}
           aria-label="Create new blog post"
         >
-          <Plus />
+          <Plus />Add a new Blog..
         </button>
       )}
 

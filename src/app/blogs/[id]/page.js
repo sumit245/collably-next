@@ -10,6 +10,7 @@ import HeaderComponent from "../../components/HeaderComponents"
 import FooterComponent from "../../components/FooterComponent"
 import BottomNavComponent from "../../components/BottomNavComponent"
 import styles from "../../postDetails/postDetails.module.css"
+import stylesBlog from "../blogmodal.module.css"
 
 export default function BlogDetail() {
   const { id } = useParams()
@@ -48,19 +49,19 @@ export default function BlogDetail() {
       month: "long",
       day: "numeric",
     }),
-    readTime: `${Math.ceil(currentBlog.content.length / 1000)} min read`, // Estimate based on content length
+    readTime: `${Math.ceil(currentBlog.content.length / 1000)} min read`,
     user: {
       name: currentBlog.author?.fullname || currentBlog.author?.username || "Anonymous",
       avatar: currentBlog.author?.avatar || "/images/image29.webp",
     },
   }
-
+console.log(currentBlog)
   const isAuthor = currentUser && currentBlog.author && currentUser._id === currentBlog.author._id
 
   return (
     <>
       <HeaderComponent />
-      <div className={styles.container}>
+      <div className={stylesBlog.blogbyid}>
         <div className={styles.postDetail}>
           <div className={styles.header}>
             <div className={styles.profile}>
