@@ -461,7 +461,7 @@ i {
 }
 
 .nav-items {
-  margin-left: 33rem;
+  margin-left: 30rem;
   margin-top: -3rem;
   width: 300px;
   display: flex;
@@ -518,7 +518,7 @@ i {
   margin-bottom: 50px;
 }
 
-.banner-slider {
+.banner-slider{
   /* height: 95vh; */
 }
 
@@ -623,6 +623,7 @@ i {
   box-sizing: border-box;
 }
 
+
 element.style {
   color: transparent;
 }
@@ -646,12 +647,18 @@ element.style {
   border-radius: 40px;
 }
 
+
 @media screen and (width <= 1024px) {
   .slider_frame {
-    /* left: 54px;
+      /* left: 54px;
       top: 99px; */
+      
   }
 }
+
+
+
+
 
 .scroller-center-image {
   position: relative;
@@ -2303,6 +2310,9 @@ body {
     top: -457px;
     width: 239px;
   }
+  .image-rotation-section{
+    display: none;
+  }
   .image-rotation-section {
     display: none;
   }
@@ -2393,6 +2403,8 @@ body {
     max-width: 85%;
     border-radius: 3rem;
   }
+
+ 
 
   .container6 {
     max-width: 380px;
@@ -3025,32 +3037,34 @@ body {
   }
 }
 
-.password-toggle {
+.password-toggle{
   border: none;
   background-color: white;
   cursor: pointer;
-}
+ }
 
-.error-message {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
+
+ .error-message {
+  background-color: #f8d7da; 
+  color: #721c24;  
+  border: 1px solid #f5c6cb; 
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 5px;  
   margin-top: 10px;
-  font-size: 14px;
+  font-size: 14px;  
   margin-bottom: 10px;
 }
 
 .button-submit:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+  background-color: #ccc;  
+  cursor: not-allowed; 
 }
 
 .button-resend.disabled {
-  background-color: #ddd;
-  cursor: not-allowed;
+  background-color: #ddd; 
+  cursor: not-allowed;  
 }
+
 
 /* Styling for the countdown timer */
 .resend-timer {

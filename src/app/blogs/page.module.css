@@ -1,5 +1,23 @@
 /* BlogPage.module.css */
+.createButton {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #ff0055;
+    margin-top: 3rem;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
 
+  
 /* Featured Post */
 .featuredPost {
     background-color: #f9fafb;
@@ -62,6 +80,7 @@
   .featuredPost .meta div {
     display: flex;
     gap: 0.5rem;
+    align-items: center;
   }
   
   .featuredPost .userInfo {
@@ -216,7 +235,7 @@
   }
   
   .newsletter button {
-    background-color: #0070f3;
+    background-color: #ff0055;
     color: white;
     padding: 0.75rem 2rem;
     border-radius: 25px;
@@ -227,7 +246,7 @@
   }
   
   .newsletter button:hover {
-    background-color: #005bb5;
+    background-color: #ff0055;
   }
   
   .readMore {
@@ -316,7 +335,7 @@
   }
   
   .submitButton {
-    background-color: #0070f3;
+    background-color: #ff0055;
     color: white;
   }
   
@@ -325,7 +344,7 @@
   }
   
   .submitButton:hover {
-    background-color: #0060df;
+    background-color: #ff0055;
   }
   
   .error {
