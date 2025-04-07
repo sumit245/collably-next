@@ -171,6 +171,12 @@
     color: #888;
     font-size: 0.875rem;
   }
+
+  .meta div{
+    display: flex;
+    align-items: center;
+    gap: .3rem;
+  }
   
   .latestPosts .post .readMore {
     color: #ff0055;

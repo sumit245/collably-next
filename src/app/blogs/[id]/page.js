@@ -178,6 +178,7 @@ export default function BlogDetail() {
                         <span>{post.readTime}</span>
                       </div>
                     </div>
+                    <div className={styles.blog}>
                     <div className={stylesBlog.blogRecommendationAuthor}>
                       <Image
                         src={post.user.avatar || "/placeholder.svg"}
@@ -194,6 +195,7 @@ export default function BlogDetail() {
                     >
                       Read More <ArrowRight size={16} />
                     </button>
+                    </div>
                   </div>
                 ))}
               </div>
