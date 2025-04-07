@@ -1,9 +1,9 @@
-
-
 .postDetail {
   background-color: #fff;
   border-radius: 3px;
-  padding: 8px
+  padding: 8px;
+  margin-top: 1.5rem;
+  border-radius: .5rem
 }
 
 .container {
@@ -73,6 +73,10 @@
   cursor: pointer;
   opacity: 0.7;
   transition: opacity 0.2s;
+}
+
+.mainPost{
+  padding: 20px;
 }
 
 .navButton:hover {

@@ -32,13 +32,13 @@
   --result-amount: #ff9cbe;
   --result-amount-shadow: #ff89f9;
   --result-note: #ffffff;
-  --body-bg: #faf9f6;
+  --body-bg: #ffffff;
   --text-primary: #000000;
   --footer-button-hover: #e66b00;
   --nav-tabs-bg: rgba(255, 255, 255, 0.05);
   --nav-tabs-border: rgba(255, 255, 255, 0.1);
   --result-section-bg: rgba(255, 255, 255, 0);
-  --container-bg: #faf9f6;
+  --container-bg: #ffffff;
   --category-overlay-bg: #ff0055;
   --category-title-color: white;
   --top-navbar-color: #000000;
@@ -46,7 +46,7 @@
   --content-bg: #ffffff;
   --styled-line-color: #000000;
   --navbar-button-bg: #ff0055;
-  --key-inner-bg: #f5f5f5;
+  --key-inner-bg: #ffffff;
   --section-title-color: #333;
   --section-title-span-color: #ff0048;
   --feature-box-bg: #5ccf6252;
@@ -89,7 +89,7 @@
   --card-border-color: #eee;
   --card-hover-shadow: rgba(0, 0, 0, 0.1);
   --card-content-color: #666;
-  --review-section-bg: #f8f9ff;
+  --review-section-bg: #ffffff;
   --review-badge-bg: #ff0055;
   --review-title-span: #000000;
   --review-block-bg: white;
@@ -908,6 +908,7 @@ footer h3 {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  background: #ffffff;
 }
 
 .section-title {
@@ -1558,7 +1559,7 @@ h2 {
 
 .quick-easy-section {
   padding: 5rem 0;
-  background-color: #f9fafb;
+  background-color: #ffffff;
 }
 
 .container {
