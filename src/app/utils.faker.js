@@ -590,27 +590,27 @@ export const FINDS_DATA = [
         primbutton:"Join Now for Free",
         secbutton: "Browse Trending Products",
         appImages: [
-          { src: "/images/banavt1.png", alt: "image 1", width: 80, height: 80 },
-          { src: "/images/banavt2.png", alt: "image 2", width: 80, height: 80 },
-          { src: "/images/banavt3.png", alt: "image 3", width: 80, height: 80 },
-          { 
-            src: "/images/play.png", 
-            alt: "play image", 
-            width: 80, 
-            height: 80, 
-            isLink: true,
-            linkProps: {
-              href: "#",
-              className: "popup-youtube play-button",
-              "data-url": "https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&amp;mute=1",
-              "data-toggle": "modal",
-              "data-target": "#myModal",
-              title: "XJj2PbenIsU",
-            }
-          },
+          // { src: "/images/banavt1.png", alt: "image 1", width: 80, height: 80 },
+          // { src: "/images/banavt2.png", alt: "image 2", width: 80, height: 80 },
+          // { src: "/images/banavt3.png", alt: "image 3", width: 80, height: 80 },
+          // { 
+          //   src: "/images/play.png", 
+          //   alt: "play image", 
+          //   width: 80, 
+          //   height: 80, 
+          //   isLink: true,
+          //   linkProps: {
+          //     href: "#",
+          //     className: "popup-youtube play-button",
+          //     "data-url": "https://www.youtube.com/embed/tgbNymZ7vqY?autoplay=1&amp;mute=1",
+          //     "data-toggle": "modal",
+          //     "data-target": "#myModal",
+          //     title: "XJj2PbenIsU",
+          //   }
+          // },
         ],
-        appTagline: "That 'One App' for Creator Economy",
-        appDescription: "Collably makes the creator\nlife simpler, smarter,\nand more rewarding.",
+        // appTagline: "That 'One App' for Creator Economy",
+        // appDescription: "Collably makes the creator\nlife simpler, smarter,\nand more rewarding.",
         heroImages: [
           { className: "mobile-hero", src: "/images/iphonescren.png", alt: "iPhone screen", width: 300, height: 600 },
           { className: "hero-bg-image", src: "/images/bannerScreen2.png", alt: "", width: 600, height: 583 },
@@ -691,7 +691,7 @@ export const FINDS_DATA = [
         },
       ]
       export const heroDataBrand = {
-        title: "Upgrade your sales channels & game",
+        title: "Upgrade your sales channels",
         description: "Create your custom affiliate program & turn creators into sales channels",
         bannerTexts: [
           "The smartest way to sell is here",

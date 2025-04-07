@@ -3,7 +3,7 @@
   border-radius: 3px;
   padding: 8px;
   margin-top: 1.5rem;
-  border-radius: 0.5rem;
+  border-radius: .5rem
 }
 
 .container {
@@ -75,7 +75,7 @@
   transition: opacity 0.2s;
 }
 
-.mainPost {
+.mainPost{
   padding: 20px;
 }
 

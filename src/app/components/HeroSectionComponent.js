@@ -35,7 +35,7 @@ export default function HeroSectionComponent({ heroData }) {
             <p>{heroData.description}</p>
           </div>
 
-          <div className="used_app">
+          {/* <div className="used_app">
             <ul>
               {heroData.appImages.map((img, index) => (
                 <li key={index}>
@@ -53,7 +53,7 @@ export default function HeroSectionComponent({ heroData }) {
             <pre>
               {heroData.appDescription}
             </pre>
-          </div>
+          </div> */}
 
           <ul className="app_btn">
             <li>

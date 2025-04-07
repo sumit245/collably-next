@@ -11,7 +11,7 @@
   --footer-button-bg-end: #f43f06;
   --footer-button-text: #ffffff;
   --slider-section-bg-start: #c2185b;
-  --slider-section-bg-end: #c2185b;
+  --slider-section-bg-end: #c300ffb0;
   --button-bg: #520ed1;
   --button-shadow: #b90d86;
   --tab-text: rgba(255, 255, 255, 0.7);
@@ -32,13 +32,13 @@
   --result-amount: #ff9cbe;
   --result-amount-shadow: #ff89f9;
   --result-note: #ffffff;
-  --body-bg: #faf9f6;
+  --body-bg: #ffffff;
   --text-primary: #000000;
   --footer-button-hover: #e66b00;
   --nav-tabs-bg: rgba(255, 255, 255, 0.05);
   --nav-tabs-border: rgba(255, 255, 255, 0.1);
   --result-section-bg: rgba(255, 255, 255, 0);
-  --container-bg: #faf9f6;
+  --container-bg: #ffffff;
   --category-overlay-bg: #ff0055;
   --category-title-color: white;
   --top-navbar-color: #000000;
@@ -46,7 +46,7 @@
   --content-bg: #ffffff;
   --styled-line-color: #000000;
   --navbar-button-bg: #ff0055;
-  --key-inner-bg: #f5f5f5;
+  --key-inner-bg: #ffffff;
   --section-title-color: #333;
   --section-title-span-color: #ff0048;
   --feature-box-bg: #5ccf6252;
@@ -89,7 +89,7 @@
   --card-border-color: #eee;
   --card-hover-shadow: rgba(0, 0, 0, 0.1);
   --card-content-color: #666;
-  --review-section-bg: #f8f9ff;
+  --review-section-bg: #ffffff;
   --review-badge-bg: #ff0055;
   --review-title-span: #000000;
   --review-block-bg: white;
@@ -518,7 +518,7 @@ i {
   margin-bottom: 50px;
 }
 
-.banner-slider{
+.banner-slider {
   /* height: 95vh; */
 }
 
@@ -623,7 +623,6 @@ i {
   box-sizing: border-box;
 }
 
-
 element.style {
   color: transparent;
 }
@@ -647,18 +646,12 @@ element.style {
   border-radius: 40px;
 }
 
-
 @media screen and (width <= 1024px) {
   .slider_frame {
-      /* left: 54px;
+    /* left: 54px;
       top: 99px; */
-      
   }
 }
-
-
-
-
 
 .scroller-center-image {
   position: relative;
@@ -905,6 +898,7 @@ footer h3 {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  background: #ffffff;
 }
 
 .section-title {
@@ -1070,8 +1064,8 @@ footer h3 {
 .app_btn .btn {
   text-decoration: none;
   display: inline-block;
-  padding: 22px 8px;
-  font-size: var(--font-size-app-btn);
+  padding: 10px 8px;
+  /* font-size: var(--font-size-app-btn); */
   color: var(--footer-button-text);
   background-color: var(--app-btn-bg);
   transition: background-color 0.3s ease, transform 0.2s ease;
@@ -1541,7 +1535,7 @@ h2 {
 
 .quick-easy-section {
   padding: 5rem 0;
-  background-color: #f9fafb;
+  background-color: #ffffff;
 }
 
 .container {
@@ -1635,7 +1629,7 @@ h2 {
   font-size: 1rem;
 }
 
-.sliderSectionWrapper {
+/* .sliderSectionWrapper {
   background: linear-gradient(
     to right,
     var(--slider-section-bg-start),
@@ -1645,7 +1639,10 @@ h2 {
   margin-bottom: 5rem;
   display: flex;
   justify-content: center;
-}
+  width: 75vw;
+  justify-self: center;
+  margin-top: 1rem;
+} */
 
 .earningsCalculator {
   width: 100%;
@@ -1763,6 +1760,7 @@ h2 {
   z-index: 3;
   -webkit-appearance: none;
   appearance: none;
+  color: #000;
 }
 
 .slider::-webkit-slider-thumb {
@@ -1794,6 +1792,7 @@ h2 {
   transform: translateX(-50%);
   z-index: 2;
   pointer-events: none;
+  color: black;
 }
 
 .thumbGlow {
@@ -1807,6 +1806,7 @@ h2 {
   left: 50%;
   transform: translateX(-50%);
   z-index: -1;
+  color: #000;
 }
 
 .thumbValue {
@@ -1817,7 +1817,7 @@ h2 {
   font-size: var(--font-size-md);
   font-weight: 500;
   white-space: nowrap;
-  color: var(--slider-thumb);
+  color: #000;
 }
 
 .resultSection {
@@ -1826,7 +1826,7 @@ h2 {
   background: var(--result-section-bg);
   border: 1px solid var(--result-border);
   border-radius: 2rem;
-  padding: 3rem 2rem;
+  padding: 1rem 2rem;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -2310,7 +2310,7 @@ body {
     top: -457px;
     width: 239px;
   }
-  .image-rotation-section{
+  .image-rotation-section {
     display: none;
   }
   .image-rotation-section {
@@ -2403,8 +2403,6 @@ body {
     max-width: 85%;
     border-radius: 3rem;
   }
-
- 
 
   .container6 {
     max-width: 380px;
@@ -3037,34 +3035,32 @@ body {
   }
 }
 
-.password-toggle{
+.password-toggle {
   border: none;
   background-color: white;
   cursor: pointer;
- }
+}
 
-
- .error-message {
-  background-color: #f8d7da; 
-  color: #721c24;  
-  border: 1px solid #f5c6cb; 
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
   padding: 10px;
-  border-radius: 5px;  
+  border-radius: 5px;
   margin-top: 10px;
-  font-size: 14px;  
+  font-size: 14px;
   margin-bottom: 10px;
 }
 
 .button-submit:disabled {
-  background-color: #ccc;  
-  cursor: not-allowed; 
+  background-color: #ccc;
+  cursor: not-allowed;
 }
 
 .button-resend.disabled {
-  background-color: #ddd; 
-  cursor: not-allowed;  
+  background-color: #ddd;
+  cursor: not-allowed;
 }
-
 
 /* Styling for the countdown timer */
 .resend-timer {
@@ -3176,5 +3172,239 @@ body {
     align-items: center;
     padding: 20px 0;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* General layout and background */
+.sliderSectionWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: #f6f6f6; */
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  padding: 40px;
+ 
+}
+
+.earningsCalculator {
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 1100px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #000;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #000;
+}
+
+.sliderSection {
+  margin-bottom: 30px;
+}
+
+.sliderLabel {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 20px;
+  margin-top: 2rem;
+}
+
+.sliderContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rangeValue {
+  font-size: 1.1rem;
+  color: #ff0055;
+  font-weight: 700;
+}
+
+.sliderWrapper {
+  position: relative;
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.sliderTrack {
+  width: 100%;
+  height: 25px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  position: relative;
+}
+
+.sliderTicks {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: -10px;
+  left: 0;
+  right: 0;
+}
+
+.tick {
+  width: 2px;
+  height: 28px;
+  /* background-color: #ccc; */
+}
+
+.sliderFill {
+  height: 26px;
+  background-color: #0D6EFD;
+  border-radius: 5px;
+  transition: width 0.3s ease;
+}
+
+.slider {
+  width: 100%;
+  
+  position: absolute;
+  top: -4px;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.sliderThumb {
+  width: 30px;
+  height: 45px;
+  background-color: #0d6efd;
+  border-radius: 50%;
+  position: absolute;
+  top: -11px;
+  transform: translateX(-50%);
+  box-shadow: 0 0 10px #0000001a;
+  transition: transform .3s;
+}
+
+.thumbGlow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(13, 110, 253, 0.3);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.thumbGlow:hover {
+  opacity: 1;
+}
+
+.thumbValue {
+  font-size: 0.9rem;
+  color: #000;
+  font-weight: 600;
+}
+
+.resultSection {
+  text-align: center;
+  /* margin-top: 40px; */
+}
+
+.resultLabel {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #000;
+  margin-bottom: 10px;
+}
+
+.resultAmount {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #ff0055;
+  margin: 0px;
+}
+
+.resultNote {
+  font-size: 0.9rem;
+  color: #000;
+  margin-top: 5px;
+}
+
+.button {
+  background-color: #dd044c;
+  color: white;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.button:hover {
+  background-color: #a60e41;
+}
+
+.amountBlur {
+  position: absolute;
+  color: #ff0055;
+  font-size: 5rem;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.sliderThumb:hover {
+  transform: translateX(-50%) scale(1.1);
+}
+
+@media (max-width: 768px) {
+  .sliderSectionWrapper {
+    padding: 20px;
+  }
+
+  .sliderContainer {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .sliderWrapper {
+    width: 100%;
+  }
+
+  .rangeValue {
+    font-size: 1rem;
+  }
+
+  .sliderThumb {
+    width: 25px;
+    height: 25px;
   }
 }
