@@ -51,7 +51,7 @@ export default function ContactUs() {
             </svg>
             <div>
               <h3>Email Us</h3>
-              <p>contact@example.com</p>
+              <p>hellocollably@gmail.com</p>
             </div>
           </div>
 

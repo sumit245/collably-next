@@ -13,7 +13,7 @@ import React from 'react';
              <p>We connect you with top talent to create impactful content that resonates with your audience.</p>
            </div>
            <div className={styles.reason}>
-             <div className={styles.icon}>📈</div>
+             <div className={styles.icon}>🌐</div>
              <h3>More Visibility</h3>
              <p>Boost your brand's presence with our proven strategies, reaching the right audience at the right time.</p>
            </div>

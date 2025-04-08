@@ -35,7 +35,7 @@ export default function HeroSectionComponent({ heroData }) {
             <p>{heroData.description}</p>
           </div>
 
-          <div className="used_app">
+          {/* <div className="used_app">
             <ul>
               {heroData.appImages.map((img, index) => (
                 <li key={index}>
@@ -53,7 +53,7 @@ export default function HeroSectionComponent({ heroData }) {
             <pre>
               {heroData.appDescription}
             </pre>
-          </div>
+          </div> */}
 
           <ul className="app_btn">
             <li>
@@ -65,7 +65,7 @@ export default function HeroSectionComponent({ heroData }) {
           </ul>
         </div>
         <div className="col-lg-6 col-md-12">
-          <div className="banner_slider">
+          <div className="banner-slider">
             <div className="slider_frame">
               {heroData.heroImages.map((img, index) => (
                 <Image

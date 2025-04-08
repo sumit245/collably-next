@@ -814,14 +814,14 @@ export  const creatorsFeed = [
       
 
       export const clientLogos = [
-        { src: "/images/paypal.png", alt: "Client 1" },
-        { src: "/images/spoty.png", alt: "Client 2" },
-        { src: "/images/slack.png", alt: "Client 3" },
-        { src: "/images/envato.png", alt: "Client 4" },
-        { src: "/images/jquery.png", alt: "Client 5" },
-        { src: "/images/woocommerce.png", alt: "Client 6" },
-        { src: "/images/themeforest.png", alt: "Client 7" },
-        { src: "/images/shopboat.png", alt: "Client 8" },
+        { src: "/images/amazonLogo.png", alt: "Client 1" },
+        { src: "/images/flipkartLogo.png", alt: "Client 2" },
+        { src: "/images/meeshoLogo.png", alt: "Client 3" },
+        { src: "/images/nykaaLogo.png", alt: "Client 4" },
+        { src: "/images/myntraaLogo.png", alt: "Client 5" },
+        { src: "/images/ajioLogo.png", alt: "Client 6" },
+        // { src: "/images/themeforest.png", alt: "Client 7" },
+        // { src: "/images/shopboat.png", alt: "Client 8" },
       ];
 
       export   const videoData1 = {
