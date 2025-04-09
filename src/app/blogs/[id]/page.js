@@ -54,6 +54,7 @@ export default function BlogDetail() {
       day: "numeric",
     }),
     readTime: `${Math.ceil(currentBlog.content.length / 1000)} min read`,
+    blogImage: currentBlog.image || null,
     user: {
       name: currentBlog.author?.fullname || currentBlog.author?.username || "Anonymous",
       avatar: currentBlog.author?.avatar || "/images/image29.webp",
@@ -74,6 +75,7 @@ export default function BlogDetail() {
         day: "numeric",
       }),
       readTime: `${Math.ceil(blog.content.length / 1000)} min read`,
+      image: blog.image || null,
       user: {
         name: blog.author?.fullname || blog.author?.username || "Anonymous",
         avatar: blog.author?.avatar || "/images/image29.webp",
@@ -117,7 +119,17 @@ export default function BlogDetail() {
 
             <div className={styles.mainPost}>
               <h1 className={styles.blogTitle}>{blog.title}</h1>
-
+              {currentBlog.image && (
+  <div className={styles.blogImageWrapper}>
+    <Image
+      src={currentBlog.image}
+      alt={blog.title}
+      width={800}
+      height={400}
+      className={styles.blogImage}
+    />
+  </div>
+)}
               <div className={styles.meta} style={{ marginBottom: "20px" }}>
                 <div>
                   <Calendar size={16} />
@@ -148,6 +160,17 @@ export default function BlogDetail() {
                 {recommendedBlogs.map((post) => (
                   <div key={post.id} className={stylesBlog.blogRecommendationItem}>
                     <h4 className={stylesBlog.blogRecommendationTitle}>{post.title}</h4>
+                    {post.image && (
+  <div className={styles.blogImageWrapper}>
+    <Image
+      src={post.image}
+      alt={blog.title}
+      width={800}
+      height={400}
+      className={styles.blogImage}
+    />
+  </div>
+)}
                     <p className={stylesBlog.blogRecommendationExcerpt}>{post.excerpt}</p>
                     <div className={stylesBlog.blogRecommendationMeta}>
                       <div className={stylesBlog.blogRecommendationDate}>
