@@ -64,7 +64,7 @@ export default function BlogPage() {
         <main className="container">
 
               {/* Create Blog Button (only shown if authenticated) */}
-      {isAuthenticated && (
+      {/* {isAuthenticated && (
         <button 
           className={pageStyles.createButton}
           onClick={() => setShowCreateModal(true)}
@@ -72,7 +72,7 @@ export default function BlogPage() {
         >
           <Plus />Create new Blog..
         </button>
-      )}
+      )} */}
 
           {/* Featured Post */}
           {featuredPost && (

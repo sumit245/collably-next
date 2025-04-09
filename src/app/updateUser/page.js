@@ -126,40 +126,47 @@ const UpdateUserForm = () => {
 
       {/* Avatar upload section */}
       <div className={styles.avatarContainer}>
-        <div className={styles.avatarUpload} onClick={handleAvatarClick}>
-          {avatarPreview ? (
-            <img src={avatarPreview || "/placeholder.svg"} alt="Avatar Preview" className={styles.avatarPreview} />
-          ) : (
-            <div className={styles.avatarPlaceholder}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="40"
-                height="40"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-              <span>Update Profile Photo</span>
-             
-            </div>
-          )}
-          <input
-            type="file"
-            ref={fileInputRef}
-            onChange={handleAvatarChange}
-            accept="image/*"
-            className={styles.fileInput}
-            style={{ display: "none" }}
-          />
-        </div>
-        <div className={styles.plusIcon}>+</div>
+  <div className={styles.avatarUpload} onClick={handleAvatarClick}>
+    {avatarPreview ? (
+      <img
+        src={avatarPreview || "/placeholder.svg"}
+        alt="Avatar Preview"
+        className={styles.avatarPreview}
+      />
+    ) : (
+      <div className={styles.avatarPlaceholder}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="40"
+          height="40"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span>Update Profile Photo</span>
       </div>
+    )}
+
+    {/* Plus Icon Always Renders */}
+    {/* <div className={styles.plusIcon}>+</div> */}
+
+    <input
+      type="file"
+      ref={fileInputRef}
+      onChange={handleAvatarChange}
+      accept="image/*"
+      className={styles.fileInput}
+    />
+  </div>
+  <div className={styles.plusIcon}>+</div>
+</div>
+
 
       <div className={styles.row}>
         <div className={styles.textLabel}>
