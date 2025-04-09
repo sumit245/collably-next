@@ -1,70 +1,72 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { useParams, useRouter } from "next/navigation"
-import { useDispatch, useSelector } from "react-redux"
-import { fetchBlogById, removeBlog, fetchBlogs } from "../../store/blogSlice"
-import Image from "next/image"
-import { Calendar, Clock, ArrowLeft, Trash2, ArrowRight } from 'lucide-react'
-import HeaderComponent from "../../components/HeaderComponents"
-import FooterComponent from "../../components/FooterComponent"
-import BottomNavComponent from "../../components/BottomNavComponent"
-import Modal from "../../components/modal" // Import the modal component
-import styles from "../../postDetails/postDetails.module.css"
-import stylesBlog from "../blogmodal.module.css"
+import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchBlogById, removeBlog, fetchBlogs } from "../../store/blogSlice";
+import Image from "next/image";
+import { Calendar, Clock, ArrowLeft, Trash2, ArrowRight } from "lucide-react";
+import HeaderComponent from "../../components/HeaderComponents";
+import FooterComponent from "../../components/FooterComponent";
+import BottomNavComponent from "../../components/BottomNavComponent";
+import Modal from "../../components/modal"; // Import the modal component
+import styles from "../../postDetails/postDetails.module.css";
+import stylesBlog from "../blogmodal.module.css";
 
 export default function BlogDetail() {
-  const { id } = useParams()
-  const router = useRouter()
-  const dispatch = useDispatch()
+  const { id } = useParams();
+  const router = useRouter();
+  const dispatch = useDispatch();
 
-  const { currentBlog, loading, error, blogs } = useSelector((state) => state.blogs)
-  const currentUser = useSelector((state) => state.auth.user)
+  const { currentBlog, loading, error, blogs } = useSelector(
+    (state) => state.blogs
+  );
+  const currentUser = useSelector((state) => state.auth.user);
 
-  const [isModalVisible, setIsModalVisible] = useState(false) // State for modal visibility
+  const [isModalVisible, setIsModalVisible] = useState(false); // State for modal visibility
 
   useEffect(() => {
     if (id) {
-      dispatch(fetchBlogById(id))
+      dispatch(fetchBlogById(id));
     }
     // Fetch all blogs for recommendations if not already loaded
     if (!blogs || blogs.length === 0) {
-      dispatch(fetchBlogs())
+      dispatch(fetchBlogs());
     }
-  }, [dispatch, id, blogs])
+  }, [dispatch, id, blogs]);
 
   const handleDelete = async () => {
     if (confirm("Are you sure you want to delete this blog post?")) {
       try {
-        await dispatch(removeBlog(id)).unwrap()
-        router.push("/blogs")
+        await dispatch(removeBlog(id)).unwrap();
+        router.push("/blogs");
       } catch (error) {
-        console.error("Failed to delete blog:", error)
+        console.error("Failed to delete blog:", error);
       }
     }
-  }
+  };
 
   const handleDeleteClick = () => {
-    setIsModalVisible(true);  // Show the modal when delete button is clicked
-  }
+    setIsModalVisible(true); // Show the modal when delete button is clicked
+  };
 
   const handleCancelDelete = () => {
-    setIsModalVisible(false);  // Hide the modal when cancel is clicked
-  }
+    setIsModalVisible(false); // Hide the modal when cancel is clicked
+  };
 
   const handleConfirmDelete = async () => {
-    setIsModalVisible(false);  // Close the modal
+    setIsModalVisible(false); // Close the modal
     try {
-      await dispatch(removeBlog(id)).unwrap();  // Delete the blog
+      await dispatch(removeBlog(id)).unwrap(); // Delete the blog
       router.push("/blogs");
     } catch (error) {
-      console.error("Failed to delete blog:", error)
+      console.error("Failed to delete blog:", error);
     }
-  }
+  };
 
-  if (loading && !currentBlog) return <div>Loading blog...</div>
-  if (error) return <div>Error loading blog: {error}</div>
-  if (!currentBlog) return <div>Blog not found</div>
+  if (loading && !currentBlog) return <div>Loading blog...</div>;
+  if (error) return <div>Error loading blog: {error}</div>;
+  if (!currentBlog) return <div>Blog not found</div>;
 
   const blog = {
     title: currentBlog.title,
@@ -75,11 +77,15 @@ export default function BlogDetail() {
       day: "numeric",
     }),
     readTime: `${Math.ceil(currentBlog.content.length / 1000)} min read`,
+    blogImage: currentBlog.image || null,
     user: {
-      name: currentBlog.author?.fullname || currentBlog.author?.username || "Anonymous",
+      name:
+        currentBlog.author?.fullname ||
+        currentBlog.author?.username ||
+        "Anonymous",
       avatar: currentBlog.author?.avatar || "/images/image29.webp",
     },
-  }
+  };
 
   // Ensure recommendedBlogs is defined correctly
   const recommendedBlogs = blogs
@@ -94,14 +100,19 @@ export default function BlogDetail() {
         month: "long",
         day: "numeric",
       }),
-      readTime: `${Math.ceil(blogItem.content.length / 1000)} min read`,
+      readTime: `${Math.ceil(blog.content.length / 1000)} min read`,
+      image: blog.image || null,
       user: {
-        name: blogItem.author?.fullname || blogItem.author?.username || "Anonymous",
+        name:
+          blogItem.author?.fullname || blogItem.author?.username || "Anonymous",
         avatar: blogItem.author?.avatar || "/images/image29.webp",
       },
-    }))
+    }));
 
-  const isAuthor = currentUser && currentBlog.author && currentUser._id === currentBlog.author._id
+  const isAuthor =
+    currentUser &&
+    currentBlog.author &&
+    currentUser._id === currentBlog.author._id;
 
   return (
     <>
@@ -111,7 +122,10 @@ export default function BlogDetail() {
           <div className={styles.postDetail}>
             <div className={styles.header}>
               <div className={styles.profile}>
-                <button onClick={() => router.push("/blogs")} className={styles.backButton}>
+                <button
+                  onClick={() => router.push("/blogs")}
+                  className={styles.backButton}
+                >
                   <ArrowLeft size={24} />
                 </button>
                 <div className={styles.userInfo}>
@@ -129,7 +143,13 @@ export default function BlogDetail() {
                 <button
                   onClick={handleDeleteClick}
                   className={styles.deleteButton}
-                  style={{ background: "none", border: "none", cursor: "pointer", color: "red", padding: "8px" }}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    color: "red",
+                    padding: "8px",
+                  }}
                 >
                   <Trash2 size={24} />
                 </button>
@@ -138,15 +158,25 @@ export default function BlogDetail() {
 
             <div className={styles.mainPost}>
               <h1 className={styles.blogTitle}>{blog.title}</h1>
-
+              {currentBlog.image && (
+                <div className={styles.blogImageWrapper}>
+                  <Image
+                    src={currentBlog.image}
+                    alt={blog.title}
+                    width={800}
+                    height={400}
+                    className={styles.blogImage}
+                  />
+                </div>
+              )}
               <div className={styles.meta} style={{ marginBottom: "20px" }}>
                 <div>
                   <Calendar size={16} />
-                  <span style={{ marginLeft: "5px" }}>{blog.date}</span>
+                  <span>{blog.date}</span>
                 </div>
-                <div>
+                <div className={styles.time}>
                   <Clock size={16} />
-                  <span style={{ marginLeft: "5px" }}>{blog.readTime}</span>
+                  <span>{blog.readTime}</span>
                 </div>
               </div>
 
@@ -161,13 +191,33 @@ export default function BlogDetail() {
           </div>
 
           <div className={stylesBlog.blogRecommendations}>
-            <h3 className={stylesBlog.blogRecommendationsTitle}>Recommended Posts</h3>
+            <h3 className={stylesBlog.blogRecommendationsTitle}>
+              Recommended Posts
+            </h3>
             {recommendedBlogs.length > 0 ? (
               <div className={stylesBlog.blogRecommendationsList}>
                 {recommendedBlogs.map((post) => (
-                  <div key={post.id} className={stylesBlog.blogRecommendationItem}>
-                    <h4 className={stylesBlog.blogRecommendationTitle}>{post.title}</h4>
-                    <p className={stylesBlog.blogRecommendationExcerpt}>{post.excerpt}</p>
+                  <div
+                    key={post.id}
+                    className={stylesBlog.blogRecommendationItem}
+                  >
+                    <h4 className={stylesBlog.blogRecommendationTitle}>
+                      {post.title}
+                    </h4>
+                    {post.image && (
+                      <div className={styles.blogImageWrapper}>
+                        <Image
+                          src={post.image}
+                          alt={blog.title}
+                          width={800}
+                          height={400}
+                          className={styles.blogImage}
+                        />
+                      </div>
+                    )}
+                    <p className={stylesBlog.blogRecommendationExcerpt}>
+                      {post.excerpt}
+                    </p>
                     <div className={stylesBlog.blogRecommendationMeta}>
                       <div className={stylesBlog.blogRecommendationDate}>
                         <Calendar size={14} />
@@ -179,35 +229,37 @@ export default function BlogDetail() {
                       </div>
                     </div>
                     <div className={styles.blog}>
-                    <div className={stylesBlog.blogRecommendationAuthor}>
-                      <Image
-                        src={post.user.avatar || "/placeholder.svg"}
-                        alt={post.user.name}
-                        width={24}
-                        height={24}
-                        className={stylesBlog.blogRecommendationAvatar}
-                      />
-                      <span>{post.user.name}</span>
-                    </div>
-                    <button 
-                      onClick={() => router.push(`/blogs/${post.id}`)} 
-                      className={stylesBlog.blogRecommendationReadMore}
-                    >
-                      Read More <ArrowRight size={16} />
-                    </button>
+                      <div className={stylesBlog.blogRecommendationAuthor}>
+                        <Image
+                          src={post.user.avatar || "/placeholder.svg"}
+                          alt={post.user.name}
+                          width={24}
+                          height={24}
+                          className={stylesBlog.blogRecommendationAvatar}
+                        />
+                        <span>{post.user.name}</span>
+                      </div>
+                      <button
+                        onClick={() => router.push(`/blogs/${post.id}`)}
+                        className={stylesBlog.blogRecommendationReadMore}
+                      >
+                        Read More <ArrowRight size={16} />
+                      </button>
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className={stylesBlog.blogNoRecommendations}>No recommendations available</p>
+              <p className={stylesBlog.blogNoRecommendations}>
+                No recommendations available
+              </p>
             )}
           </div>
         </div>
       </div>
 
       {/* Modal for delete confirmation */}
-      <Modal 
+      <Modal
         isVisible={isModalVisible}
         onConfirm={handleConfirmDelete}
         onCancel={handleCancelDelete}
@@ -216,5 +268,5 @@ export default function BlogDetail() {
       <FooterComponent />
       <BottomNavComponent />
     </>
-  )
+  );
 }
