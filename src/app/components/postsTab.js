@@ -43,7 +43,7 @@ console.log(posts.images)
   return (
     <Link href={`/post/${post._id}`} key={post._id} className={styles.gridItem}>
       <Image
-        src={post?.images?.[0]?.[0] || "/placeholder.svg"}
+        src={post?.images?.[0]|| "/placeholder.svg"}
         alt={`Post by ${post.user?.username || "unknown"}`}
         className={styles.gridImage}
         width={300}
