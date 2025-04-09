@@ -10,19 +10,16 @@ const loadUserFromStorage = () => {
   }
 }
 
-export const generateOTPAsync = createAsyncThunk(
-  "auth/generateOTP",
-  async ({ contactNumber }, { rejectWithValue }) => {
-    try {
-      const response = await authService.generateOTP(contactNumber);
-      console.log("OTP API Response:", response); // Console log to check response
-      return response;
-    } catch (error) {
-      console.error("OTP API Error:", error.message); // Console log for errors
-      return rejectWithValue(error.message);
-    }
+export const generateOTPAsync = createAsyncThunk("auth/generateOTP", async ({ contactNumber }, { rejectWithValue }) => {
+  try {
+    const response = await authService.generateOTP(contactNumber)
+    console.log("OTP API Response:", response) // Console log to check response
+    return response
+  } catch (error) {
+    console.error("OTP API Error:", error.message) // Console log for errors
+    return rejectWithValue(error.message)
   }
-);
+})
 
 export const verifyOTPAsync = createAsyncThunk(
   "auth/verifyOTP",
@@ -57,9 +54,9 @@ export const loginWithPhoneAsync = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
   "auth/register",
-  async ({ fullname, username, email, password, contactNumber }, { rejectWithValue }) => {
+  async ({ fullname, username, email, password, contactNumber, avatar }, { rejectWithValue }) => {
     try {
-      const response = await authService.register(fullname, username, email, password, contactNumber)
+      const response = await authService.register(fullname, username, email, password, contactNumber, avatar)
       localStorage.setItem("accessToken", response.access_token)
       localStorage.setItem("user", JSON.stringify(response.user))
       return response.user
@@ -168,7 +165,7 @@ const authSlice = createSlice({
         state.isLoading = false
         state.otpVerified = true
         state.error = null
-        
+
         // If user is registered and logged in, update user state
         if (action.payload.isRegistered && action.payload.user) {
           state.user = action.payload.user
