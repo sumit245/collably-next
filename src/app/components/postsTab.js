@@ -37,17 +37,22 @@ console.log(posts.images)
         Add Post <ArrowRight size={20} />
       </button>
     <div className={styles.gridContainer}>
-      {userPosts.map((post) => (
-        <Link href={`/post/${post._id}`} key={post._id} className={styles.gridItem}>
-          <Image
-            src={post?.images[0]?.[0] || "/placeholder.svg"}
-            alt={`Post by ${post.user?.username || "unknown"}`}
-            className={styles.gridImage}
-            width={300}
-            height={300}
-          />
-        </Link>
-      ))}
+    {userPosts.map((post) => {
+  console.log("Post Images:", post.images); // Log images to check structure
+
+  return (
+    <Link href={`/post/${post._id}`} key={post._id} className={styles.gridItem}>
+      <Image
+        src={post?.images?.[0]?.[0] || "/placeholder.svg"}
+        alt={`Post by ${post.user?.username || "unknown"}`}
+        className={styles.gridImage}
+        width={300}
+        height={300}
+      />
+    </Link>
+  );
+})}
+
       
     </div>
    

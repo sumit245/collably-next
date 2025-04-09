@@ -12,6 +12,9 @@ export default function FooterComponent() {
               <div className="footer-header-1">
                 <h2>Subscribe to our newsletter</h2>
                 <p>Stay in the loop & Signup for the Wardier <br/> newsletter</p>
+                <p>
+  Or email us at <a href="mailto:yourname@example.com">hellocollably@gmail.com</a>
+</p>
                 <div className="logo-footer">
                   <Image className='footer-logo-img' src="/images/c-logo.png" alt="Collably Logo" width={150} height={50} />
                 </div>
@@ -33,6 +36,7 @@ export default function FooterComponent() {
                 <div className="right-text">
                 <h3>Social</h3>
               <ul className="icon-btn">
+                
                 <li>
                   <Link href="#"><Image src="/images/001-facebook.png" alt="Facebook" width={24} height={24} className="icon-img" />Facebook</Link>
                 </li>
@@ -45,9 +49,13 @@ export default function FooterComponent() {
                 <li>
                   <Link href="#"><Image src="/images/004-logos.png" alt="LinkedIn" width={24} height={24} className="icon-img" />Twitter</Link>
                 </li>
+
               </ul>
+             
             </div>
+            
             </div>
+            
             </div>
          
           </div>

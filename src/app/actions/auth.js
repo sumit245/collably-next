@@ -5,18 +5,21 @@ import {
   handleGoogleRedirectAsync,
   logoutUser,
   checkAuthStatus,
+  generateOTPAsync,
+  verifyOTPAsync,
+  updateUserAsync,
 } from "../store/authslice"
 
 export const loginWithPhone = (contactNumber) => async (dispatch) => {
   try {
     const result = await dispatch(loginWithPhoneAsync({ contactNumber }))
+
     if (loginWithPhoneAsync.fulfilled.match(result)) {
       return { success: true, user: result.payload }
     } else {
       return { success: false, error: result.error.message }
     }
   } catch (error) {
-    console.error("Login error:", error)
     return {
       success: false,
       error: error.message || "An unexpected error occurred during login.",
@@ -24,9 +27,56 @@ export const loginWithPhone = (contactNumber) => async (dispatch) => {
   }
 }
 
-export const register = (fullname, username, email, password, contactNumber) => async (dispatch) => {
+export const generateOTP = (contactNumber) => async (dispatch) => {
   try {
-    const result = await dispatch(registerUser({ fullname, username, email, password, contactNumber }))
+    const result = await dispatch(generateOTPAsync({ contactNumber }))
+    if (generateOTPAsync.fulfilled.match(result)) {
+      return { success: true, userExists: result.payload.userExists }
+    } else {
+      return { success: false, error: result.error.message }
+    }
+  } catch (error) {
+    console.error("Generate OTP error:", error)
+    return {
+      success: false,
+      error: error.message || "An unexpected error occurred while sending OTP.",
+    }
+  }
+}
+
+export const verifyOTP = (contactNumber, otp) => async (dispatch) => {
+  try {
+    const result = await dispatch(verifyOTPAsync({ contactNumber, otp }))
+
+    if (verifyOTPAsync.fulfilled.match(result)) {
+      // Check if user is registered based on the response
+      if (result.payload.isRegistered === false) {
+        // OTP is valid but user is not registered
+        return {
+          success: false,
+          error: "Contact number is not registered. Please register.",
+          otpVerified: true,
+        }
+      }
+
+      // User is registered and logged in
+      return { success: true, user: result.payload.user }
+    } else {
+      // OTP verification failed
+      return { success: false, error: result.error.message }
+    }
+  } catch (error) {
+    console.error("Verify OTP error:", error)
+    return {
+      success: false,
+      error: error.message || "An unexpected error occurred while verifying OTP.",
+    }
+  }
+}
+
+export const register = (fullname, username, email, password, contactNumber, avatar) => async (dispatch) => {
+  try {
+    const result = await dispatch(registerUser({ fullname, username, email, password, contactNumber, avatar }))
     if (registerUser.fulfilled.match(result)) {
       return { success: true, username: result.payload.username }
     } else {
@@ -90,9 +140,17 @@ export const checkAuth = () => async (dispatch) => {
 
 export const updateUser = (userData) => async (dispatch) => {
   try {
-    await dispatch(updateUserAsync(userData)).unwrap()
-    return { success: true }
+    const result = await dispatch(updateUserAsync(userData))
+    if (updateUserAsync.fulfilled.match(result)) {
+      return { success: true, user: result.payload }
+    } else {
+      return { success: false, error: result.error.message || "Update failed" }
+    }
   } catch (error) {
-    return { success: false, error }
+    console.error("Update user error:", error)
+    return {
+      success: false,
+      error: error.message || "An unexpected error occurred during update.",
+    }
   }
 }

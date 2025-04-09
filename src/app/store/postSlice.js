@@ -12,7 +12,7 @@ const fetchWithToken = async (url, options = {}) => {
     headers["Authorization"] = accessToken
   }
 
-  const response = await fetch(`${BASE_URL}api${url}`, {
+  const response = await fetch(`${BASE_URL}${url}`, {
     ...options,
     headers,
   })

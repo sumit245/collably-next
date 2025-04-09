@@ -15,7 +15,7 @@ import styles from '../brand/target.module.css';
            </div>
            <div className={styles.item}>
              <div className={styles.iconWrapper}>
-               <span className={styles.icon}>📈</span>
+               <span className={styles.icon}>🛒</span>
              </div>
              <h3 className={styles.itemTitle}>Ecommerce Stores</h3>
              <p className={styles.itemDescription}>Boost your online store's visibility and sales effortlessly.</p>

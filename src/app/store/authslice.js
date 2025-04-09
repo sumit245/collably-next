@@ -10,32 +10,53 @@ const loadUserFromStorage = () => {
   }
 }
 
+export const generateOTPAsync = createAsyncThunk("auth/generateOTP", async ({ contactNumber }, { rejectWithValue }) => {
+  try {
+    const response = await authService.generateOTP(contactNumber)
+    console.log("OTP API Response:", response) // Console log to check response
+    return response
+  } catch (error) {
+    console.error("OTP API Error:", error.message) // Console log for errors
+    return rejectWithValue(error.message)
+  }
+})
+
+export const verifyOTPAsync = createAsyncThunk(
+  "auth/verifyOTP",
+  async ({ contactNumber, otp }, { rejectWithValue }) => {
+    try {
+      const response = await authService.verifyOTP(contactNumber, otp)
+      return response
+    } catch (error) {
+      return rejectWithValue(error.message)
+    }
+  },
+)
+
 export const loginWithPhoneAsync = createAsyncThunk(
   "auth/loginWithPhone",
   async ({ contactNumber }, { rejectWithValue }) => {
     try {
-      const response = await authService.loginWithPhone(contactNumber);
-
+      const response = await authService.loginWithPhone(contactNumber)
 
       if (response && response.user) {
-        localStorage.setItem("accessToken", response.access_token);
-        localStorage.setItem("user", JSON.stringify(response.user));
-        return response.user;
+        localStorage.setItem("accessToken", response.access_token)
+        localStorage.setItem("user", JSON.stringify(response.user))
+        return response.user
       } else {
-        return rejectWithValue("Invalid login response");
+        return rejectWithValue("Invalid login response")
       }
     } catch (error) {
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.message)
     }
-  }
-);
-
+  },
+)
 
 export const registerUser = createAsyncThunk(
   "auth/register",
-  async ({ fullname, username, email, password, contactNumber }, { rejectWithValue }) => {
+  async ({ fullname, username, email, password, contactNumber, avatar }, { rejectWithValue }) => {
     try {
-      const response = await authService.register(fullname, username, email, password, contactNumber)
+      const response = await authService.register(fullname, username, email, password, contactNumber, avatar)
       localStorage.setItem("accessToken", response.access_token)
       localStorage.setItem("user", JSON.stringify(response.user))
       return response.user
@@ -62,9 +83,7 @@ export const updateUserAsync = createAsyncThunk("auth/updateUser", async (userDa
 export const loginWithGoogleAsync = createAsyncThunk("auth/loginWithGoogle", async (_, { rejectWithValue }) => {
   try {
     const response = await authService.loginWithGoogle()
-    localStorage.setItem("accessToken", response.access_token)
-    localStorage.setItem("user", JSON.stringify(response.user))
-    return response.user
+    return response
   } catch (error) {
     return rejectWithValue(error.message)
   }
@@ -110,10 +129,57 @@ const authSlice = createSlice({
     user: loadUserFromStorage(),
     isLoading: false,
     error: null,
+    otpSent: false,
+    otpVerified: false,
+    isAuthenticated: false,
   },
-  reducers: {},
+  reducers: {
+    clearError: (state) => {
+      state.error = null
+    },
+  },
   extraReducers: (builder) => {
     builder
+      // Generate OTP
+      .addCase(generateOTPAsync.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(generateOTPAsync.fulfilled, (state) => {
+        state.isLoading = false
+        state.otpSent = true
+        state.error = null
+      })
+      .addCase(generateOTPAsync.rejected, (state, action) => {
+        state.isLoading = false
+        state.otpSent = false
+        state.error = action.payload
+      })
+
+      // Verify OTP
+      .addCase(verifyOTPAsync.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(verifyOTPAsync.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.otpVerified = true
+        state.error = null
+
+        // If user is registered and logged in, update user state
+        if (action.payload.isRegistered && action.payload.user) {
+          state.user = action.payload.user
+          localStorage.setItem("accessToken", action.payload.access_token)
+          localStorage.setItem("user", JSON.stringify(action.payload.user))
+        }
+      })
+      .addCase(verifyOTPAsync.rejected, (state, action) => {
+        state.isLoading = false
+        state.otpVerified = false
+        state.error = action.payload
+      })
+
+      // Login with Phone
       .addCase(loginWithPhoneAsync.pending, (state) => {
         state.isLoading = true
       })
@@ -121,11 +187,15 @@ const authSlice = createSlice({
         state.isLoading = false
         state.user = action.payload
         state.error = null
+        state.otpSent = false
+        state.otpVerified = false
       })
       .addCase(loginWithPhoneAsync.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload
       })
+
+      // Register
       .addCase(registerUser.pending, (state) => {
         state.isLoading = true
       })
@@ -138,6 +208,8 @@ const authSlice = createSlice({
         state.isLoading = false
         state.error = action.payload
       })
+
+      // Update User
       .addCase(updateUserAsync.pending, (state) => {
         state.isLoading = true
       })
@@ -150,18 +222,21 @@ const authSlice = createSlice({
         state.isLoading = false
         state.error = action.payload
       })
+
+      // Login with Google
       .addCase(loginWithGoogleAsync.pending, (state) => {
         state.isLoading = true
       })
       .addCase(loginWithGoogleAsync.fulfilled, (state, action) => {
         state.isLoading = false
-        state.user = action.payload
         state.error = null
       })
       .addCase(loginWithGoogleAsync.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload
       })
+
+      // Handle Google Redirect
       .addCase(handleGoogleRedirectAsync.pending, (state) => {
         state.isLoading = true
       })
@@ -174,10 +249,16 @@ const authSlice = createSlice({
         state.isLoading = false
         state.error = action.payload
       })
+
+      // Logout
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null
         state.error = null
+        state.otpSent = false
+        state.otpVerified = false
       })
+
+      // Check Auth Status
       .addCase(checkAuthStatus.fulfilled, (state, action) => {
         state.user = action.payload
         state.error = null
@@ -189,5 +270,5 @@ const authSlice = createSlice({
   },
 })
 
+export const { clearError } = authSlice.actions
 export default authSlice.reducer
-

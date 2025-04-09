@@ -52,7 +52,7 @@ export const trackReferralClick = createAsyncThunk(
   "brands/trackReferralClick",
   async (referralCode, { rejectWithValue }) => {
     try {
-      const response = await fetch(`${BASE_URL}api/ref/code/${referralCode}`, {
+      const response = await fetch(`${BASE_URL}/ref/code/${referralCode}`, {
         method: "GET",
       })
 

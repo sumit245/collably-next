@@ -1,0 +1,136 @@
+/* Add these styles to your existing blogmodal.module.css file */
+
+.blogContentWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+@media (min-width: 1024px) {
+  
+
+  .postDetail {
+    flex: 1;
+    max-width: 70%;
+  }
+
+  .blogRecommendations {
+    width: 30%;
+    min-width: 280px;
+  }
+}
+
+.blogRecommendations {
+  background-color: yellow;
+  border-radius: 8px;
+  padding: 20px;
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+  display: contents;
+}
+
+.blogRecommendationsTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.blogRecommendationsList {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+ 
+}
+
+.blogRecommendationItem {
+  padding: 15px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.blogRecommendationItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.blogRecommendationTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.blogRecommendationExcerpt {
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.blogRecommendationMeta {
+  display: flex;
+  gap: 12px;
+  font-size: 0.75rem;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.blogRecommendationDate,
+.blogRecommendationReadTime {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.blogRecommendationAuthor {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+  font-size: 0.75rem;
+}
+
+.blogRecommendationAvatar {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.blogRecommendationReadMore {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #0070f3;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.blogRecommendationReadMore:hover {
+  color: #0051a8;
+  text-decoration: underline;
+}
+
+.blogNoRecommendations {
+  color: #777;
+  font-style: italic;
+  text-align: center;
+  padding: 20px 0;
+}

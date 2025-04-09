@@ -17,7 +17,7 @@ import ChooseYouSection from "../components/ChooseYou"
 import { LikeProvider } from "../actions/LikeContext"
 import { videoData1, videoData2 } from "../utils.faker"
 import ReelsSec2 from "../components/reelSec2"
-import BeautyReels from "../components/BeautyReelsShop"
+import BannerCarousel from "../components/creatorherohome";
 
 export default function ShopPage() {
   const [isLoading, setIsLoading] = useState(true)
@@ -38,6 +38,7 @@ export default function ShopPage() {
             {/* <BeautyReels /> */}
             <TopBrands />
             <ReelsSec2 sectionTitle="Electronics Products" category="Electronics" />
+            <BannerCarousel />
             <ReelsSec2 sectionTitle="Beauty Products" category="Beauty" />
             <ReelsSec2 sectionTitle="Fashion Products" category="Fashion" />
             <ReelsSec2 sectionTitle="Home Products" category="Home" />

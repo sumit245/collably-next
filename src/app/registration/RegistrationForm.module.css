@@ -149,3 +149,74 @@
     gap: 19%;
   }
 }
+
+.avatarContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.avatarUpload {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+  border: 2px dashed #ccc;
+}
+.plusIcon {
+  position: absolute;
+  bottom: 31px;
+  right: 4px;
+  background-color: #ff0055;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  pointer-events: none; /* so it doesn’t block clicks */
+}
+.avatarPreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatarPlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 12px;
+  text-align: center;
+  padding: 10px;
+}
+
+.avatarPlaceholder svg {
+  margin-bottom: 5px;
+}
+
+.fileInput {
+  display: none;
+}
+
+.error {
+  color: #e53e3e;
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #fed7d7;
+  border-radius: 4px;
+  text-align: center;
+}

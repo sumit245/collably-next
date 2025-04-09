@@ -12,43 +12,43 @@ export default function BannerCarousel() {
   const banners = [
     {
       id: 0,
-      imageUrl: "/images/image14.webp",
+      imageUrl: "/images/bannercreator.jpg",
       altText: "Myntra 50-90% Off across top brands",
     
     },
     {
       id: 1,
-      imageUrl: "/images/image15.webp",
+      imageUrl: "/images/bannercreator2.jpg",
       altText: "Amazon Great Indian Sale",
     },
     {
       id: 2,
-      imageUrl: "/images/image16.webp",
+      imageUrl: "/images/bannercreator3.jpg",
       altText: "Flipkart Big Billion Days",
     },
     {
       id: 3,
-      imageUrl: "/images/image14.webp",
+      imageUrl: "/images/bannercreator.jpg",
       altText: "Ajio Fashion Sale",
     },
     {
       id: 4,
-      imageUrl: "/images/image15.webp",
+      imageUrl: "/images/bannercreator2.jpg",
       altText: "Nykaa Beauty Sale",
     },
     {
       id: 5,
-      imageUrl: "/images/image16.webp",
+      imageUrl: "/images/bannercreator3.jpg",
       altText: "Tata CLiQ Luxury Sale",
     },
     {
       id: 6,
-      imageUrl: "/images/image14.webp",
+      imageUrl: "/images/bannercreator.jpg",
       altText: "Reliance Digital Electronics Sale",
     },
     {
       id: 7,
-      imageUrl: "/images/image15.webp",
+      imageUrl: "/images/bannercreator2.jpg",
       altText: "Shoppers Stop Fashion Sale",
     }
   ];
@@ -94,7 +94,7 @@ export default function BannerCarousel() {
                 src={getImageUrl(banner) || "/placeholder.svg"}
                 alt={banner.altText}
                 width={600}
-                height={300}
+                height={500}
                 className={styles.bannerImage}
                 priority={index === currentSlide}
               />
