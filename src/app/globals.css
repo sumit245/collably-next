@@ -927,7 +927,7 @@ footer h3 {
 
 .client-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   max-width: 900px;
   margin: 0 auto;
@@ -1064,7 +1064,7 @@ footer h3 {
 .app_btn .btn {
   text-decoration: none;
   display: inline-block;
-  padding: 10px 8px;
+  /* padding: 10px 8px; */
   /* font-size: var(--font-size-app-btn); */
   color: var(--footer-button-text);
   background-color: var(--app-btn-bg);

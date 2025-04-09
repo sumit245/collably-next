@@ -19,7 +19,7 @@ export default function Header() {
   const [isMounted, setIsMounted] = useState(false)
   const [isSearchExpanded, setIsSearchExpanded] = useState(false)
   const [searchInput, setSearchInput] = useState("")
-
+console.log(user)
   useEffect(() => {
     setIsMounted(true)
   }, [])

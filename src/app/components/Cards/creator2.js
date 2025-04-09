@@ -7,7 +7,7 @@ import { useLikeContext } from "../../actions/LikeContext"
 import { addToCart, updateQuantity } from "../../store/cartSlice"
 import { toggleLikeProduct, loadLikedProducts } from "../../store/likedproductSlice"
 
-export default function Creator2({ _id, videoSrc, posterSrc, name, productname, followers, price }) {
+export default function Creator2({ _id, productPhoto, posterSrc, name, productname, followers, price }) {
   const dispatch = useDispatch()
   const cartItems = useSelector((state) => state.cart.items)
   const likedProducts = useSelector((state) => state.likedProducts.items)
@@ -35,6 +35,7 @@ export default function Creator2({ _id, videoSrc, posterSrc, name, productname, 
           _id,
           name,
           productname,
+          productPhoto,
           price,
           image: posterSrc,
           quantity: 1,
@@ -57,13 +58,16 @@ export default function Creator2({ _id, videoSrc, posterSrc, name, productname, 
     <>
       <div className={styles.creatorCard}>
         <div className={styles.videoContainer}>
-          <video className={styles.creatorVideo} playsInline loop preload="none" poster={posterSrc}>
-            <source src={videoSrc} type="video/mp4" />
-          </video>
+        <img
+    src={productPhoto}
+    alt={productname}
+    className={styles.productImage}
+  />
+
           <div className={styles.gradientOverlay}></div>
           <div className={styles.creatorInfo}>
             <div className={styles.creatorName}>{name}</div>
-            <div className={styles.followerCount}>{followers} Followers</div>
+            {/* <div className={styles.followerCount}>{followers} Followers</div> */}
           </div>
         </div>
 

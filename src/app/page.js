@@ -14,6 +14,7 @@ import FooterComponent from '../app/components/FooterComponent'
 import BottomNavComponent from '../app/components/BottomNavComponent'
 import LoginComponent from '../app/components/LoginComponent';
 import {heroData, scrollerData, faqs, items} from '../app/utils.faker'
+import MoreReasons from '../app/components/ChooseUs'
 import {scrollerData2} from '../app/utils.faker'
 import {quickEasyData} from '../app/utils.faker'
 // import {heroData} from '../app/utils.faker'
@@ -31,7 +32,8 @@ export default function HomePage() {
         <ScrollerComponent scrollerData={scrollerData} />
         <ReviewSectionComponent />
         <ClientSectionComponent />
-        <ScrollerComponent scrollerData={scrollerData2} />
+        {/* <ScrollerComponent scrollerData={scrollerData2} /> */}
+        <MoreReasons/>
         <FAQSectionComponent faqs={faqs}/>
         {/* <CategoryGridComponent /> */}
         {/* <KeyFeaturesComponent items={items} /> */}
@@ -40,7 +42,7 @@ export default function HomePage() {
        <CommunitySectionComponent />
       </main>
       <FooterComponent />
-      <BottomNavComponent />
+      {/* <BottomNavComponent /> */}
     </>
   )
 }
