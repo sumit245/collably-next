@@ -149,3 +149,67 @@
     gap: 19%;
   }
 }
+
+.avatarContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.avatarUpload {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+  border: 2px dashed #ccc;
+}
+
+.avatarPreview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatarPlaceholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 12px;
+  text-align: center;
+  padding: 10px;
+}
+
+.avatarPlaceholder svg {
+  margin-bottom: 5px;
+}
+
+.fileInput {
+  display: none;
+}
+
+.error {
+  color: #e53e3e;
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #fed7d7;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.plusIcon {
+  position: unset;
+  top: 138%;
+  left: 50%;
+  transform: translate(-147%, 70%);
+  font-size: 32px;
+  color: #ff0055;
+  font-weight: bold;
+  text-align: center;
+}

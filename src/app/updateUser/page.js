@@ -146,6 +146,7 @@ const UpdateUserForm = () => {
                 <circle cx="12" cy="7" r="4"></circle>
               </svg>
               <span>Update Profile Photo</span>
+             
             </div>
           )}
           <input
@@ -157,6 +158,7 @@ const UpdateUserForm = () => {
             style={{ display: "none" }}
           />
         </div>
+        <div className={styles.plusIcon}>+</div>
       </div>
 
       <div className={styles.row}>
