@@ -67,6 +67,7 @@
     width: 100%;
     height: auto;
     object-fit: cover;
+    border-radius: 45px 45px 0px 0px;
   }
   
   .brand_image_caption {
