@@ -572,7 +572,7 @@ i {
 }
 
 .feature_box .img img {
-  max-width: 100%;
+  width: 350px;
   height: auto;
 }
 
@@ -1116,10 +1116,10 @@ footer h3 {
 
 .hero-bg-image {
   position: relative;
-  height: 429px;
+  height: 440px;
   width: 247px;
   left: -264px;
-  top: -22px;
+  top: -15px;
   border-radius: 24px;
 }
 

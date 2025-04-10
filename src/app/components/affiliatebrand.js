@@ -16,7 +16,7 @@ const AffiliateFeatures = () => {
             </div>
             <div className={styles.brand_feature_image_container}>
               <Image
-                src="/images/bannerScreen2.png"
+                src="/images/CreScreen1.png"
                 alt="Brand dashboard affiliate program setup screen"
                 width={400}
                 height={300}
@@ -34,7 +34,7 @@ const AffiliateFeatures = () => {
             </div>
             <div className={styles.brand_feature_image_container}>
               <Image
-                src="/images/bannerScreen2.png"
+                src="/images/BrandScreen2.png"
                 alt="Commission screen"
                 width={400}
                 height={300}
@@ -52,7 +52,7 @@ const AffiliateFeatures = () => {
             </div>
             <div className={styles.brand_feature_image_container}>
               <Image
-                src="/images/bannerScreen2.png"
+                src="/images/Brandscreen3.png"
                 alt="Reel layout with tagged products screen"
                 width={400}
                 height={300}
