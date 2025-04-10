@@ -595,6 +595,7 @@ export  const creatorsFeed = [
           "Shop from your Favourite Creator",
           "Create Smart Affiliate Links",
         ],
+        
         primlink:"/creatorDashboardEntry",
         seclink:"/shop",
         primbutton: "Get Started",
