@@ -623,7 +623,7 @@ export  const creatorsFeed = [
           },
           {
             className: "hero-bg-image",
-            src: "/images/bannerScreen2.png",
+            src: "/images/ColScreen1.png",
             alt: "",
             width: 600,
             height: 583,
