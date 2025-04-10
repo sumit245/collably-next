@@ -767,22 +767,22 @@ export  const creatorsFeed = [
       };
     export  const categoryData = [
         {
-          src: "/images/animate1.webp",
+          src: "/images/1cat.png",
           alt: "Category 1",
           title: "Fashion",
         },
         {
-          src: "/images/animate2.webp",
+          src: "/images/2cat.png",
           alt: "Category 2",
           title: "Beauty",
         },
         {
-          src: "/images/animate1.webp",
+          src: "/images/3cat.png",
           alt: "Category 3",
           title: "Lifestyle",
         },
         {
-          src: "/images/animate2.webp",
+          src: "/images/4cat.png",
           alt: "Category 4",
           title: "Tech",
         },
