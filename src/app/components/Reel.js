@@ -13,6 +13,10 @@ export default function Reel({
   _id,
   video,
   images,
+  productTitle,
+  productImage,
+  productUrl,
+  productPrice,
   user,
   caption,
   likes = [],
@@ -93,7 +97,6 @@ export default function Reel({
     }
     window.location.href = caption
   }
-  
 
   const handleLikeAction = () => {
     if (!isLoggedIn) {
@@ -226,10 +229,35 @@ export default function Reel({
       </div>
 
       <div className={styles.info}>
-        <a className={styles.caption} href={caption} onClick={handleCaptionClick} rel="noopener noreferrer">
-          {caption}
-        </a>
+        {productTitle && productImage ? (
+          <a
+            className={styles.caption}
+            href={productUrl || caption}
+            onClick={handleCaptionClick}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <div className={styles.productPreview}>
+              <img src={productImage || "/placeholder.svg"} alt={productTitle} className={styles.productImage} />
+              <div className={styles.productDetails}>
+                <span className={styles.productTitle}>{productTitle}</span>
+                {productPrice && <span className={styles.productPrice}>{productPrice}</span>}
+              </div>
+            </div>
+          </a>
+        ) : (
+          <a
+            className={styles.caption}
+            href={caption}
+            onClick={handleCaptionClick}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            {caption}
+          </a>
+        )}
       </div>
+
       {isCommenting && (
         <div ref={commentSectionRef}>
           <CommentSection
