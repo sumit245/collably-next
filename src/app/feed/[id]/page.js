@@ -88,6 +88,7 @@ export default function ReelDetailPage() {
     fetchCurrentReel()
   }, [fetchCurrentReel])
 
+
   useEffect(() => {
     if (!isLoading && reelsData.length === 1) {
       fetchRelatedReels()
@@ -161,7 +162,18 @@ export default function ReelDetailPage() {
   const handleSave = (reelId) => updateReel(reelId, () => ({ isSaved: true }), api.savePost)
 
   const handleUnsave = (reelId) => updateReel(reelId, () => ({ isSaved: false }), api.unsavePost)
-
+const handleCaptionClick = async (e) => {
+    e.preventDefault()
+    const referralCode = caption?.match(/referralCode=([A-Za-z0-9]{6})/)?.[1]
+    if (referralCode) {
+      try {
+        await dispatch(trackReferralClick(referralCode)).unwrap()
+      } catch (error) {
+        console.error("Tracking failed:", error)
+      }
+    }
+    window.location.href = caption
+  }
   const handleComment = async (reelId, comment) => {
     if (!isLoggedIn) {
       setIsLoginModalOpen(true)
@@ -351,8 +363,41 @@ export default function ReelDetailPage() {
                   </div>
 
                   <div className={styles.info}>
-                    <p className={styles.caption}>{reel.caption}</p>
-                  </div>
+  {reel.product?.title && reel.product?.image ? (
+    <a
+      className={styles.caption}
+      href={reel.product?.url || reel.caption}
+      onClick={handleCaptionClick}
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      <div className={styles.productPreview}>
+        <img
+          src={reel.product?.image || "/placeholder.svg"}
+          alt={reel.product?.title}
+          className={styles.productImage}
+        />
+        <div className={styles.productDetails}>
+          <span className={styles.productTitle}>{reel.product?.title}</span>
+          {reel.product?.price && (
+            <span className={styles.productPrice}>{reel.product?.price}</span>
+          )}
+        </div>
+      </div>
+    </a>
+  ) : (
+    <a
+      className={styles.caption}
+      href={reel.caption}
+      onClick={handleCaptionClick}
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      {reel.caption}
+    </a>
+  )}
+</div>
+
 
                   {isCommenting && index === activeReel && (
                     <div ref={commentSectionRef} className={styles.commentSectionWrapper}>
