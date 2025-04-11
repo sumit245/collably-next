@@ -69,9 +69,9 @@ export default function ProfilePage() {
                   <Image
                     src={user?.avatar || "/images/banavt1.png"}
                     alt="User avatar"
-                    width={40}
-                    height={40}
-                    className={styles.avatar}
+                    width={55}
+                    height={55}
+                    className={styles.avatar2}
                   />
                 </div>
                 <div className={styles.name}>

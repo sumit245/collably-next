@@ -61,8 +61,8 @@
   background-color: #ffacc9;
   border-radius: 12px;
   padding: 16px;
-  color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
 }
 
 .profileCard .avatar {
@@ -361,4 +361,9 @@
   justify-content: center;
   margin-bottom: 55px;
   margin-inline: 5px;
+}
+
+.avatar2{
+  height: 55px;
+  border-radius: 50% ;
 }
