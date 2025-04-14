@@ -379,9 +379,9 @@ const handleCaptionClick = async (e) => {
         />
         <div className={styles.productDetails}>
           <span className={styles.productTitle}>{reel.product?.title}</span>
-          {reel.product?.price && (
+          {/* {reel.product?.price && (
             <span className={styles.productPrice}>{reel.product?.price}</span>
-          )}
+          )} */}
         </div>
       </div>
     </a>

@@ -241,7 +241,7 @@ export default function Reel({
               <img src={productImage || "/placeholder.svg"} alt={productTitle} className={styles.productImage} />
               <div className={styles.productDetails}>
                 <span className={styles.productTitle}>{productTitle}</span>
-                {productPrice && <span className={styles.productPrice}>{productPrice}</span>}
+                {/* {productPrice && <span className={styles.productPrice}>{productPrice}</span>} */}
               </div>
             </div>
           </a>
