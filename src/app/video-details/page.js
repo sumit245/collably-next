@@ -69,7 +69,7 @@ const MediaDetailsContent = () => {
       if (formData.audience) postFormData.append("audience", formData.audience)
       if (formData.ageRestriction) postFormData.append("ageRestriction", formData.ageRestriction)
 
-      const response = await fetch(`${BASE_URL}api/posts`, {
+      const response = await fetch(`${BASE_URL}/posts`, {
         method: "POST",
         headers: { Authorization: accessToken },
         body: postFormData,

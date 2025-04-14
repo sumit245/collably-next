@@ -1,19 +1,19 @@
-"use client";
+"use client"
 
-import { useState, useRef, useEffect, useCallback } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
-import Image from "next/image";
-import Link from "next/link";
-import Footer from "../../components/FooterShop";
-import ShareModal from "../../components/ShareModal";
-import LoginModal from "../../components/loginModal";
-import CommentSection from "../../components/commentSection";
-import api from "../../services/api";
-import styles from "../stylesfeed.module.css";
-import styleshop from "../../shop/StyleShop.module.css";
-import { Heart, MessageCircle, Send, Bookmark } from "lucide-react";
-import { LikeProvider } from "../../actions/LikeContext";
+import { useState, useRef, useEffect, useCallback } from "react"
+import { useParams, useRouter } from "next/navigation"
+import { useSelector } from "react-redux"
+import Image from "next/image"
+import Link from "next/link"
+import Footer from "../../components/FooterShop"
+import ShareModal from "../../components/ShareModal"
+import LoginModal from "../../components/loginModal"
+import CommentSection from "../../components/commentSection"
+import api from "../../services/api"
+import styles from "../stylesfeed.module.css"
+import styleshop from "../../shop/StyleShop.module.css"
+import { Heart, MessageCircle, Send, Bookmark } from "lucide-react"
+import { LikeProvider } from "../../actions/LikeContext"
 
 export default function ReelDetailPage() {
   const { id } = useParams()
@@ -35,11 +35,11 @@ export default function ReelDetailPage() {
 
   const fetchCurrentReel = useCallback(async () => {
     try {
-      setIsLoading(true);
-      const response = await api.getPostById(id);
+      setIsLoading(true)
+      const response = await api.getPostById(id)
       if (!response?.post) {
-        setError("Failed to load reel data.");
-        return;
+        setError("Failed to load reel data.")
+        return
       }
 
       const post = response.post
@@ -49,20 +49,20 @@ export default function ReelDetailPage() {
         isSaved: currentUser?.saved?.includes(post._id),
         likes: post.likes || [],
         comments: post.comments || [],
-      };
+      }
 
       setReelsData([formattedReel])
       setIsLoading(false)
     } catch (err) {
-      console.error("Error fetching reel:", err);
-      setError(err.message || "Failed to load the reel");
-      setIsLoading(false);
+      console.error("Error fetching reel:", err)
+      setError(err.message || "Failed to load the reel")
+      setIsLoading(false)
     }
-  }, [id, currentUserId, currentUser?.saved]);
+  }, [id, currentUserId, currentUser?.saved])
 
   const fetchRelatedReels = useCallback(async () => {
     try {
-      const { posts } = await api.getPosts();
+      const { posts } = await api.getPosts()
       if (Array.isArray(posts)) {
         const otherReels = posts
           .filter((post) => post.video && !post.images.length && post._id !== id)
@@ -74,25 +74,26 @@ export default function ReelDetailPage() {
 
         setReelsData((prevReels) => {
           if (prevReels.length > 0) {
-            return [...prevReels, ...shuffleArray(otherReels)];
+            return [...prevReels, ...shuffleArray(otherReels)]
           }
-          return shuffleArray(otherReels);
-        });
+          return shuffleArray(otherReels)
+        })
       }
     } catch (error) {
-      console.error("Error fetching related reels:", error);
+      console.error("Error fetching related reels:", error)
     }
   }, [id, currentUserId, currentUser?.saved])
 
   useEffect(() => {
-    fetchCurrentReel();
-  }, [fetchCurrentReel]);
+    fetchCurrentReel()
+  }, [fetchCurrentReel])
+
 
   useEffect(() => {
     if (!isLoading && reelsData.length === 1) {
-      fetchRelatedReels();
+      fetchRelatedReels()
     }
-  }, [isLoading, reelsData.length, fetchRelatedReels]);
+  }, [isLoading, reelsData.length, fetchRelatedReels])
 
   // Intersection Observer setup
   useEffect(() => {
@@ -161,7 +162,18 @@ export default function ReelDetailPage() {
   const handleSave = (reelId) => updateReel(reelId, () => ({ isSaved: true }), api.savePost)
 
   const handleUnsave = (reelId) => updateReel(reelId, () => ({ isSaved: false }), api.unsavePost)
-
+const handleCaptionClick = async (e) => {
+    e.preventDefault()
+    const referralCode = caption?.match(/referralCode=([A-Za-z0-9]{6})/)?.[1]
+    if (referralCode) {
+      try {
+        await dispatch(trackReferralClick(referralCode)).unwrap()
+      } catch (error) {
+        console.error("Tracking failed:", error)
+      }
+    }
+    window.location.href = caption
+  }
   const handleComment = async (reelId, comment) => {
     if (!isLoggedIn) {
       setIsLoginModalOpen(true)
@@ -194,11 +206,43 @@ export default function ReelDetailPage() {
   }
 
   if (isLoading) {
-    return <div className={styles.loading}>Loading...</div>;
+    return (
+      <div className={styleshop.bodyShop}>
+        <div className={styleshop.smartphoneContainer}>
+          <div className={styles.loadingIndicator}>Loading...</div>
+        </div>
+      </div>
+    )
   }
 
   if (error) {
-    return <div className={styles.error}>Error: {error}</div>;
+    return (
+      <div className={styleshop.bodyShop}>
+        <div className={styleshop.smartphoneContainer}>
+          <div className={styles.errorMessage}>
+            <p>{error}</p>
+            <button className={styles.backButton} onClick={() => router.back()}>
+              Go Back
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (reelsData.length === 0) {
+    return (
+      <div className={styleshop.bodyShop}>
+        <div className={styleshop.smartphoneContainer}>
+          <div className={styles.errorMessage}>
+            <p>Reel not found</p>
+            <button className={styles.backButton} onClick={() => router.back()}>
+              Go Back
+            </button>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -209,6 +253,34 @@ export default function ReelDetailPage() {
             {reelsData.map((reel, index) => (
               <div key={reel._id} className={styles.reelWrapper}>
                 <div className={styles.reelContainer}>
+                  <div className={styles.userInfo}>
+                    <Link href={`/creator/${reel.user?._id}`} className={styles.avatar}>
+                      <img src={reel.user?.avatar || "/placeholder.svg"} alt={reel.user?.fullname || "User"} />
+                    </Link>
+                    <Link href={`/creator/${reel.user?._id}`} className={styles.username}>
+                      {reel.user?.fullname || "User"}
+                    </Link>
+                    {currentUserId !== reel.user?._id && (
+                      <button
+                        className={styles.followButton}
+                        onClick={() => {
+                          if (!isLoggedIn) {
+                            setIsLoginModalOpen(true)
+                            return
+                          }
+                          const isFollowing = reel.user?.followers?.includes(currentUserId)
+                          if (isFollowing) {
+                            api.unfollowUser(reel.user._id)
+                          } else {
+                            api.followUser(reel.user._id)
+                          }
+                        }}
+                      >
+                        {reel.user?.followers?.includes(currentUserId) ? "Following" : "Follow"}
+                      </button>
+                    )}
+                  </div>
+
                   {reel.video ? (
                     <video
                       className={styles.video}
@@ -221,6 +293,15 @@ export default function ReelDetailPage() {
                     >
                       <source src={reel.video} type="video/mp4" />
                     </video>
+                  ) : reel.images?.[0] ? (
+                    <Image
+                      src={reel.images[0] || "/placeholder.svg"}
+                      alt="Post"
+                      width={400}
+                      height={400}
+                      className={styles.image}
+                      style={{ objectFit: "cover" }}
+                    />
                   ) : (
                     <div className={styles.noContentMessage}>No media available</div>
                   )}
@@ -282,8 +363,52 @@ export default function ReelDetailPage() {
                   </div>
 
                   <div className={styles.info}>
-                    <p className={styles.caption}>{reel.caption}</p>
-                  </div>
+  {reel.product?.title && reel.product?.image ? (
+    <a
+      className={styles.caption}
+      href={reel.product?.url || reel.caption}
+      onClick={handleCaptionClick}
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      <div className={styles.productPreview}>
+        <img
+          src={reel.product?.image || "/placeholder.svg"}
+          alt={reel.product?.title}
+          className={styles.productImage}
+        />
+        <div className={styles.productDetails}>
+          <span className={styles.productTitle}>{reel.product?.title}</span>
+          {/* {reel.product?.price && (
+            <span className={styles.productPrice}>{reel.product?.price}</span>
+          )} */}
+        </div>
+      </div>
+    </a>
+  ) : (
+    <a
+      className={styles.caption}
+      href={reel.caption}
+      onClick={handleCaptionClick}
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      {reel.caption}
+    </a>
+  )}
+</div>
+
+
+                  {isCommenting && index === activeReel && (
+                    <div ref={commentSectionRef} className={styles.commentSectionWrapper}>
+                      <CommentSection
+                        comments={reel.comments}
+                        onAddComment={(comment) => handleComment(reel._id, comment)}
+                        onClose={() => setIsCommenting(false)}
+                        postId={reel._id}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -294,5 +419,5 @@ export default function ReelDetailPage() {
         {isLoginModalOpen && <LoginModal onClose={() => setIsLoginModalOpen(false)} />}
       </div>
     </LikeProvider>
-  );
+  )
 }

@@ -8,12 +8,15 @@ import styles from "../feed/stylesfeed.module.css"
 import CommentSection from "./commentSection"
 import Image from "next/image"
 import Link from "next/link"
-import ProductPreview from "./ProductPreviw"
 
 export default function Reel({
   _id,
   video,
   images,
+  productTitle,
+  productImage,
+  productUrl,
+  productPrice,
   user,
   caption,
   likes = [],
@@ -39,24 +42,11 @@ export default function Reel({
   const [isSaved, setIsSaved] = useState(false)
   const commentSectionRef = useRef(null)
   const videoRef = useRef(null)
-  const [isValidProductUrl, setIsValidProductUrl] = useState(false)
 
   useEffect(() => {
     setIsLiked(propIsLiked || likes.includes(userId))
     setIsSaved(propIsSaved || currentUser?.saved?.includes(_id))
   }, [propIsLiked, propIsSaved, likes, userId, _id, currentUser?.saved])
-
-  useEffect(() => {
-    // Check if caption is a valid URL
-    if (caption && typeof caption === "string") {
-      try {
-        new URL(caption)
-        setIsValidProductUrl(true)
-      } catch (e) {
-        setIsValidProductUrl(false)
-      }
-    }
-  }, [caption])
 
   useEffect(() => {
     if (!videoRef.current) return
@@ -107,7 +97,6 @@ export default function Reel({
     }
     window.location.href = caption
   }
-  
 
   const handleLikeAction = () => {
     if (!isLoggedIn) {
@@ -186,6 +175,23 @@ export default function Reel({
           </button>
         </div>
 
+        {/* <div className={styles.actionItem}>
+          <button className={styles.actionButton} onClick={handleCommentAction}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white">
+              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+            </svg>
+            <span className={styles.actionCount}>{comments?.length || 0}</span>
+          </button>
+        </div> */}
+
+        <div className={styles.actionItem}>
+          <button className={styles.actionButton} onClick={handleSaveAction}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill={isSaved ? "white" : "none"} stroke="white">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+            </svg>
+          </button>
+        </div>
+
         <div className={styles.actionItem}>
           <button className={styles.actionButton} onClick={() => onShare({ _id, user, caption })}>
             <svg
@@ -220,30 +226,38 @@ export default function Reel({
             </svg>
           </button>
         </div>
-
-        <div className={styles.actionItem}>
-          <button className={styles.actionButton} onClick={handleSaveAction}>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill={isSaved ? "white" : "none"}
-              stroke="white"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-            </svg>
-          </button>
-        </div>
       </div>
 
       <div className={styles.info}>
-        <a className={styles.caption} href={caption} onClick={handleCaptionClick} rel="noopener noreferrer">
-          {caption}
-        </a>
+        {productTitle && productImage ? (
+          <a
+            className={styles.caption}
+            href={productUrl || caption}
+            onClick={handleCaptionClick}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <div className={styles.productPreview}>
+              <img src={productImage || "/placeholder.svg"} alt={productTitle} className={styles.productImage} />
+              <div className={styles.productDetails}>
+                <div className={styles.productTitle}>{productTitle}</div>
+                {/* {productPrice && <span className={styles.productPrice}>{productPrice}</span>} */}
+              </div>
+            </div>
+          </a>
+        ) : (
+          <a
+            className={styles.caption}
+            href={caption}
+            onClick={handleCaptionClick}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            {caption}
+          </a>
+        )}
       </div>
+
       {isCommenting && (
         <div ref={commentSectionRef}>
           <CommentSection

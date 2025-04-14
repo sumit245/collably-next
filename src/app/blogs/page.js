@@ -38,7 +38,7 @@ export default function BlogPage() {
         day: "numeric",
       }),
       readTime: `${Math.ceil(blog.content.length / 1000)} min read`,
-      category: "Development", 
+      category: blog.category || null, 
       blogImage: blog.image || null, // ✅ Add this line
       user: {
         name: blog.author?.fullname || blog.author?.username || "Anonymous",
