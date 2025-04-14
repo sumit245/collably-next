@@ -57,7 +57,7 @@ export default function HeroSectionComponent({ heroData }) {
 
           <ul className="app_btn">
             <li>
-              <Link href="#" className="btn btn-primary"> {heroData.primbutton}</Link>
+              <Link href="#" className="btn btn-primary btn-text"> {heroData.primbutton}</Link>
             </li>
             <li>
               <Link href="#" className="btn btn-secondary">{heroData.secbutton}</Link>

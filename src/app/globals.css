@@ -145,6 +145,7 @@ body {
   color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;
+  margin: 0;
 }
 
 .hero-section {
@@ -646,12 +647,6 @@ element.style {
   border-radius: 40px;
 }
 
-@media screen and (width <= 1024px) {
-  .slider_frame {
-    /* left: 54px;
-      top: 99px; */
-  }
-}
 
 .scroller-center-image {
   position: relative;
@@ -2237,12 +2232,12 @@ body {
     position: relative !important;
     left: -35px !important;
   }
-  .mobile-hero,
+  /* .mobile-hero,
   .hero-bg-image {
     width: 89% !important;
     height: 700px !important;
     left: 30px !important;
-  }
+  } */
   .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -2704,7 +2699,7 @@ body {
   }
   .hero-section {
     margin-top: 20px;
-    max-height: 1185px;
+    max-height: 1000px;
   }
   .client-grid {
     grid-template-columns: 1fr;
@@ -2876,12 +2871,12 @@ body {
 
   .mobile-hero,
   .hero-bg-image {
-    width: 100%;
-    height: 700px;
-    left: 8px;
+    /* width: 100%; */
+    height: 518px;
+    left: 68px;
   }
   .hero-bg-image {
-    top: -710px;
+    top: -528px;
   }
   /* .key_inner {
     margin-top: -48rem;
@@ -2998,7 +2993,7 @@ body {
   .col-md-12 {
     width: 380px;
     position: relative;
-    left: -27px;
+    /* left: -27px; */
   }
 
   .client-grid {
@@ -3040,6 +3035,7 @@ body {
     flex-direction: row;
     gap: 3rem;
   }
+  
 }
 
 .password-toggle {
@@ -3413,4 +3409,20 @@ body {
     width: 25px;
     height: 25px;
   }
+}
+
+
+@media screen and (width <= 1024px) {
+  .slider_frame {
+    /* left: 54px;
+      top: 99px; */
+  }
+  /* .row{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 100%;
+  } */
 }

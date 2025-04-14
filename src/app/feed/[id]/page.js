@@ -1,209 +1,230 @@
-"use client"
+"use client";
 
-import { useState, useRef, useEffect, useCallback } from "react"
-import { useParams, useRouter } from "next/navigation"
-import { useSelector } from "react-redux"
-import Image from "next/image"
-import Link from "next/link"
-import Footer from "../../components/FooterShop"
-import ShareModal from "../../components/ShareModal"
-import LoginModal from "../../components/loginModal"
-import CommentSection from "../../components/commentSection"
-import api from "../../services/api"
-import styles from "../stylesfeed.module.css"
-import styleshop from "../../shop/StyleShop.module.css"
-import { Heart, MessageCircle, Send, Bookmark } from "lucide-react"
-import { LikeProvider } from "../../actions/LikeContext"
+import { useState, useRef, useEffect, useCallback } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import Image from "next/image";
+import Link from "next/link";
+import Footer from "../../components/FooterShop";
+import ShareModal from "../../components/ShareModal";
+import LoginModal from "../../components/loginModal";
+import CommentSection from "../../components/commentSection";
+import api from "../../services/api";
+import styles from "../stylesfeed.module.css";
+import styleshop from "../../shop/StyleShop.module.css";
+import { Heart, MessageCircle, Send, Bookmark } from "lucide-react";
+import { LikeProvider } from "../../actions/LikeContext";
 
 export default function ReelDetailPage() {
-  const { id } = useParams()
-  const router = useRouter()
-  const [reelsData, setReelsData] = useState([])
-  const [activeReel, setActiveReel] = useState(0)
-  const [isShareModalOpen, setIsShareModalOpen] = useState(false)
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
-  const [currentShareReel, setCurrentShareReel] = useState(null)
-  const [isCommenting, setIsCommenting] = useState(false)
-  const videoRefs = useRef([])
-  const observer = useRef(null)
-  const commentSectionRef = useRef(null)
-  const currentUserId = useSelector((state) => state.auth.user?._id)
-  const currentUser = useSelector((state) => state.auth.user)
-  const isLoggedIn = !!currentUserId
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const { id } = useParams();
+  const router = useRouter();
+  const [reelsData, setReelsData] = useState([]);
+  const [activeReel, setActiveReel] = useState(0);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [currentShareReel, setCurrentShareReel] = useState(null);
+  const [isCommenting, setIsCommenting] = useState(false);
+  const videoRefs = useRef([]);
+  const observer = useRef(null);
+  const commentSectionRef = useRef(null);
+  const currentUserId = useSelector((state) => state.auth.user?._id);
+  const currentUser = useSelector((state) => state.auth.user);
+  const isLoggedIn = !!currentUserId;
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const fetchCurrentReel = useCallback(async () => {
     try {
-      setIsLoading(true)
-      const response = await api.getPostById(id)
+      setIsLoading(true);
+      const response = await api.getPostById(id);
       if (!response?.post) {
-        setError("Failed to load reel data.")
-        return
+        setError("Failed to load reel data.");
+        return;
       }
 
-      const post = response.post
+      const post = response.post;
       const formattedReel = {
         ...post,
         isLiked: (post.likes || []).some((like) => like._id === currentUserId),
         isSaved: currentUser?.saved?.includes(post._id),
         likes: post.likes || [],
         comments: post.comments || [],
-      }
+      };
 
-      setReelsData([formattedReel])
-      setIsLoading(false)
+      setReelsData([formattedReel]);
+      setIsLoading(false);
     } catch (err) {
-      console.error("Error fetching reel:", err)
-      setError(err.message || "Failed to load the reel")
-      setIsLoading(false)
+      console.error("Error fetching reel:", err);
+      setError(err.message || "Failed to load the reel");
+      setIsLoading(false);
     }
-  }, [id, currentUserId, currentUser?.saved])
+  }, [id, currentUserId, currentUser?.saved]);
 
   const fetchRelatedReels = useCallback(async () => {
     try {
-      const { posts } = await api.getPosts()
+      const { posts } = await api.getPosts();
       if (Array.isArray(posts)) {
         const otherReels = posts
-          .filter((post) => post.video && !post.images.length && post._id !== id)
+          .filter(
+            (post) => post.video && !post.images.length && post._id !== id
+          )
           .map((reel) => ({
             ...reel,
-            isLiked: (reel.likes || []).some((like) => like._id === currentUserId),
+            isLiked: (reel.likes || []).some(
+              (like) => like._id === currentUserId
+            ),
             isSaved: currentUser?.saved?.includes(reel._id),
-          }))
+          }));
 
         setReelsData((prevReels) => {
           if (prevReels.length > 0) {
-            return [...prevReels, ...shuffleArray(otherReels)]
+            return [...prevReels, ...shuffleArray(otherReels)];
           }
-          return shuffleArray(otherReels)
-        })
+          return shuffleArray(otherReels);
+        });
       }
     } catch (error) {
-      console.error("Error fetching related reels:", error)
+      console.error("Error fetching related reels:", error);
     }
-  }, [id, currentUserId, currentUser?.saved])
+  }, [id, currentUserId, currentUser?.saved]);
 
   useEffect(() => {
-    fetchCurrentReel()
-  }, [fetchCurrentReel])
-
+    fetchCurrentReel();
+  }, [fetchCurrentReel]);
 
   useEffect(() => {
     if (!isLoading && reelsData.length === 1) {
-      fetchRelatedReels()
+      fetchRelatedReels();
     }
-  }, [isLoading, reelsData.length, fetchRelatedReels])
+  }, [isLoading, reelsData.length, fetchRelatedReels]);
 
   // Intersection Observer setup
   useEffect(() => {
     observer.current = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const index = Number(entry.target.getAttribute("data-index"))
+          const index = Number(entry.target.getAttribute("data-index"));
           if (entry.isIntersecting) {
-            setActiveReel(index)
+            setActiveReel(index);
           }
-        })
+        });
       },
       { threshold: 0.75 }
-    )
+    );
 
     videoRefs.current.forEach((video) => {
-      if (video) observer.current.observe(video)
-    })
+      if (video) observer.current.observe(video);
+    });
 
     return () => {
-      if (observer.current) observer.current.disconnect()
-    }
-  }, [reelsData])
+      if (observer.current) observer.current.disconnect();
+    };
+  }, [reelsData]);
 
   // Video playback control
   useEffect(() => {
     videoRefs.current.forEach((video, index) => {
-      if (!video) return
+      if (!video) return;
       if (index === activeReel) {
-        video.play()
-        video.muted = false
+        video.play();
+        video.muted = false;
       } else {
-        video.pause()
-        video.muted = true
-        video.currentTime = 0
+        video.pause();
+        video.muted = true;
+        video.currentTime = 0;
       }
-    })
-  }, [activeReel])
+    });
+  }, [activeReel]);
 
   const updateReel = async (reelId, action, apiCall) => {
     if (!isLoggedIn) {
-      setIsLoginModalOpen(true)
-      return
+      setIsLoginModalOpen(true);
+      return;
     }
 
     try {
-      await apiCall(reelId)
+      await apiCall(reelId);
       setReelsData((prevReels) =>
-        prevReels.map((reel) => (reel._id === reelId ? { ...reel, ...action(reel) } : reel))
-      )
+        prevReels.map((reel) =>
+          reel._id === reelId ? { ...reel, ...action(reel) } : reel
+        )
+      );
     } catch (error) {
-      console.error(`Error updating reel:`, error)
+      console.error(`Error updating reel:`, error);
     }
-  }
+  };
 
   const handleLike = (reelId) =>
-    updateReel(reelId, (reel) => ({ isLiked: true, likes: [...(reel.likes || []), currentUserId] }), api.likePost)
+    updateReel(
+      reelId,
+      (reel) => ({
+        isLiked: true,
+        likes: [...(reel.likes || []), currentUserId],
+      }),
+      api.likePost
+    );
 
   const handleUnlike = (reelId) =>
     updateReel(
       reelId,
-      (reel) => ({ isLiked: false, likes: (reel.likes || []).filter((like) => like._id !== currentUserId) }),
+      (reel) => ({
+        isLiked: false,
+        likes: (reel.likes || []).filter((like) => like._id !== currentUserId),
+      }),
       api.unlikePost
-    )
+    );
 
-  const handleSave = (reelId) => updateReel(reelId, () => ({ isSaved: true }), api.savePost)
+  const handleSave = (reelId) =>
+    updateReel(reelId, () => ({ isSaved: true }), api.savePost);
 
-  const handleUnsave = (reelId) => updateReel(reelId, () => ({ isSaved: false }), api.unsavePost)
-const handleCaptionClick = async (e) => {
-    e.preventDefault()
-    const referralCode = caption?.match(/referralCode=([A-Za-z0-9]{6})/)?.[1]
+  const handleUnsave = (reelId) =>
+    updateReel(reelId, () => ({ isSaved: false }), api.unsavePost);
+  const handleCaptionClick = async (e) => {
+    e.preventDefault();
+    const referralCode = caption?.match(/referralCode=([A-Za-z0-9]{6})/)?.[1];
     if (referralCode) {
       try {
-        await dispatch(trackReferralClick(referralCode)).unwrap()
+        await dispatch(trackReferralClick(referralCode)).unwrap();
       } catch (error) {
-        console.error("Tracking failed:", error)
+        console.error("Tracking failed:", error);
       }
     }
-    window.location.href = caption
-  }
+    window.location.href = caption;
+  };
   const handleComment = async (reelId, comment) => {
     if (!isLoggedIn) {
-      setIsLoginModalOpen(true)
-      return
+      setIsLoginModalOpen(true);
+      return;
     }
 
     try {
-      const updatedPost = await api.commentOnPost(reelId, comment)
+      const updatedPost = await api.commentOnPost(reelId, comment);
       setReelsData((prevReels) =>
-        prevReels.map((reel) => (reel._id === reelId ? { ...reel, comments: updatedPost.comments } : reel))
-      )
-      setIsCommenting(false)
+        prevReels.map((reel) =>
+          reel._id === reelId
+            ? { ...reel, comments: updatedPost.comments }
+            : reel
+        )
+      );
+      setIsCommenting(false);
     } catch (error) {
-      console.error("Error commenting on post:", error)
+      console.error("Error commenting on post:", error);
     }
-  }
+  };
 
   const handleShare = (reel) => {
-    setCurrentShareReel(reel)
-    setIsShareModalOpen(true)
-  }
+    setCurrentShareReel(reel);
+    setIsShareModalOpen(true);
+  };
 
   const shuffleArray = (array) => {
-    const newArray = [...array]
+    const newArray = [...array];
     for (let i = newArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      ;[newArray[i], newArray[j]] = [newArray[j], newArray[i]]
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
     }
-    return newArray
-  }
+    return newArray;
+  };
 
   if (isLoading) {
     return (
@@ -212,7 +233,7 @@ const handleCaptionClick = async (e) => {
           <div className={styles.loadingIndicator}>Loading...</div>
         </div>
       </div>
-    )
+    );
   }
 
   if (error) {
@@ -227,7 +248,7 @@ const handleCaptionClick = async (e) => {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   if (reelsData.length === 0) {
@@ -242,7 +263,7 @@ const handleCaptionClick = async (e) => {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -254,10 +275,19 @@ const handleCaptionClick = async (e) => {
               <div key={reel._id} className={styles.reelWrapper}>
                 <div className={styles.reelContainer}>
                   <div className={styles.userInfo}>
-                    <Link href={`/creator/${reel.user?._id}`} className={styles.avatar}>
-                      <img src={reel.user?.avatar || "/placeholder.svg"} alt={reel.user?.fullname || "User"} />
+                    <Link
+                      href={`/creator/${reel.user?._id}`}
+                      className={styles.avatar}
+                    >
+                      <img
+                        src={reel.user?.avatar || "/placeholder.svg"}
+                        alt={reel.user?.fullname || "User"}
+                      />
                     </Link>
-                    <Link href={`/creator/${reel.user?._id}`} className={styles.username}>
+                    <Link
+                      href={`/creator/${reel.user?._id}`}
+                      className={styles.username}
+                    >
                       {reel.user?.fullname || "User"}
                     </Link>
                     {currentUserId !== reel.user?._id && (
@@ -265,18 +295,21 @@ const handleCaptionClick = async (e) => {
                         className={styles.followButton}
                         onClick={() => {
                           if (!isLoggedIn) {
-                            setIsLoginModalOpen(true)
-                            return
+                            setIsLoginModalOpen(true);
+                            return;
                           }
-                          const isFollowing = reel.user?.followers?.includes(currentUserId)
+                          const isFollowing =
+                            reel.user?.followers?.includes(currentUserId);
                           if (isFollowing) {
-                            api.unfollowUser(reel.user._id)
+                            api.unfollowUser(reel.user._id);
                           } else {
-                            api.followUser(reel.user._id)
+                            api.followUser(reel.user._id);
                           }
                         }}
                       >
-                        {reel.user?.followers?.includes(currentUserId) ? "Following" : "Follow"}
+                        {reel.user?.followers?.includes(currentUserId)
+                          ? "Following"
+                          : "Follow"}
                       </button>
                     )}
                   </div>
@@ -303,31 +336,54 @@ const handleCaptionClick = async (e) => {
                       style={{ objectFit: "cover" }}
                     />
                   ) : (
-                    <div className={styles.noContentMessage}>No media available</div>
+                    <div className={styles.noContentMessage}>
+                      No media available
+                    </div>
                   )}
 
                   <div className={styles.actions}>
                     <div className={styles.actionItem}>
                       <button
                         className={styles.actionButton}
-                        onClick={() => (reel.isLiked ? handleUnlike(reel._id) : handleLike(reel._id))}
+                        onClick={() =>
+                          reel.isLiked
+                            ? handleUnlike(reel._id)
+                            : handleLike(reel._id)
+                        }
                       >
-                        <Heart fill={reel.isLiked ? "red" : "none"} color={reel.isLiked ? "red" : "white"} size={24} />
-                        <span className={styles.actionCount}>{reel.likes?.length || 0}</span>
+                        <Heart
+                          fill={reel.isLiked ? "red" : "none"}
+                          color={reel.isLiked ? "red" : "white"}
+                          size={24}
+                        />
+                        <span className={styles.actionCount}>
+                          {reel.likes?.length || 0}
+                        </span>
                       </button>
                     </div>
 
                     <div className={styles.actionItem}>
                       <button
                         className={styles.actionButton}
-                        onClick={() => (reel.isSaved ? handleUnsave(reel._id) : handleSave(reel._id))}
+                        onClick={() =>
+                          reel.isSaved
+                            ? handleUnsave(reel._id)
+                            : handleSave(reel._id)
+                        }
                       >
-                        <Bookmark fill={reel.isSaved ? "white" : "none"} color="white" size={24} />
+                        <Bookmark
+                          fill={reel.isSaved ? "white" : "none"}
+                          color="white"
+                          size={24}
+                        />
                       </button>
                     </div>
 
                     <div className={styles.actionItem}>
-                      <button className={styles.actionButton} onClick={() => handleShare(reel)}>
+                      <button
+                        className={styles.actionButton}
+                        onClick={() => handleShare(reel)}
+                      >
                         <svg
                           height="24px"
                           width="24px"
@@ -338,7 +394,11 @@ const handleCaptionClick = async (e) => {
                           fill=""
                         >
                           <g id="SVGRepo_bgCarrier" strokeWidth="0" />
-                          <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
+                          <g
+                            id="SVGRepo_tracerCarrier"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
                           <g id="SVGRepo_iconCarrier">
                             <path
                               style={{ fill: "none" }}
@@ -363,47 +423,53 @@ const handleCaptionClick = async (e) => {
                   </div>
 
                   <div className={styles.info}>
-  {reel.product?.title && reel.product?.image ? (
-    <a
-      className={styles.caption}
-      href={reel.product?.url || reel.caption}
-      onClick={handleCaptionClick}
-      rel="noopener noreferrer"
-      target="_blank"
-    >
-      <div className={styles.productPreview}>
-        <img
-          src={reel.product?.image || "/placeholder.svg"}
-          alt={reel.product?.title}
-          className={styles.productImage}
-        />
-        <div className={styles.productDetails}>
-          <span className={styles.productTitle}>{reel.product?.title}</span>
-          {/* {reel.product?.price && (
+                    {reel.product?.title && reel.product?.image ? (
+                      <a
+                        className={styles.caption}
+                        href={reel.product?.url || reel.caption}
+                        onClick={handleCaptionClick}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        <div className={styles.productPreview}>
+                          <img
+                            src={reel.product?.image || "/placeholder.svg"}
+                            alt={reel.product?.title}
+                            className={styles.productImage}
+                          />
+                          <div className={styles.productDetails}>
+                            <div className={styles.productTitle}>
+                              {reel.product?.title}
+                            </div>
+                            {/* {reel.product?.price && (
             <span className={styles.productPrice}>{reel.product?.price}</span>
           )} */}
-        </div>
-      </div>
-    </a>
-  ) : (
-    <a
-      className={styles.caption}
-      href={reel.caption}
-      onClick={handleCaptionClick}
-      rel="noopener noreferrer"
-      target="_blank"
-    >
-      {reel.caption}
-    </a>
-  )}
-</div>
-
+                          </div>
+                        </div>
+                      </a>
+                    ) : (
+                      <a
+                        className={styles.caption}
+                        href={reel.caption}
+                        onClick={handleCaptionClick}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        {reel.caption}
+                      </a>
+                    )}
+                  </div>
 
                   {isCommenting && index === activeReel && (
-                    <div ref={commentSectionRef} className={styles.commentSectionWrapper}>
+                    <div
+                      ref={commentSectionRef}
+                      className={styles.commentSectionWrapper}
+                    >
                       <CommentSection
                         comments={reel.comments}
-                        onAddComment={(comment) => handleComment(reel._id, comment)}
+                        onAddComment={(comment) =>
+                          handleComment(reel._id, comment)
+                        }
                         onClose={() => setIsCommenting(false)}
                         postId={reel._id}
                       />
@@ -415,9 +481,16 @@ const handleCaptionClick = async (e) => {
           </div>
           <Footer />
         </div>
-        {isShareModalOpen && <ShareModal reel={currentShareReel} onClose={() => setIsShareModalOpen(false)} />}
-        {isLoginModalOpen && <LoginModal onClose={() => setIsLoginModalOpen(false)} />}
+        {isShareModalOpen && (
+          <ShareModal
+            reel={currentShareReel}
+            onClose={() => setIsShareModalOpen(false)}
+          />
+        )}
+        {isLoginModalOpen && (
+          <LoginModal onClose={() => setIsLoginModalOpen(false)} />
+        )}
       </div>
     </LikeProvider>
-  )
+  );
 }

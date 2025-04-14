@@ -107,7 +107,10 @@
 }
 
 .info {
-  padding: 20px;
+  padding-inline: 20px;
+  /* margin-bottom: 16px; */
+  position: relative;
+  bottom: 25px;
 }
 
 .productTitle{
