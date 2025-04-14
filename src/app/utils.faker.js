@@ -217,31 +217,41 @@ export const TopCreators = [
           title: "Instant Affiliate Links",
           description:
             "Generate custom links, share & earn per sale",
-          image: "/images/keyftr1.png",
+          image: "/images/CreScreen2.png",
         },
     
         {
           title: "Shoppable Content",
           description:
             "Tag products in posts—your & ours audience buys instantly!",
-          image: "/images/keyftr1.png",
+          image: "/images/CreScreen3.png",
         },
     
         {
           title: "Brand Collections",
           description: "Get invites from partner brands for exclusive collaborations",
-          image: "/images/keyftr1.png",
+          image: "/images/CreScreen4.png",
         },
       ],
     };
 
-export const images = [
-  "/images/bannerScreen2.png",
-  "/images/bannerScreen2.png",
-  "/images/bannerScreen2.png",
-  "/images/bannerScreen2.png",
-  "/images/bannerScreen2.png",
-];
+    export const images = [
+        "/images/BrandScreen4.png", 
+        "/images/BrandScreen5.png", 
+        "/images/BrandScreen6.png", 
+        "/images/BrandScreen7.png", 
+        "/images/BrandScreen8.png",
+        "/images/BrandScreen4.png", 
+        "/images/BrandScreen5.png", 
+        "/images/BrandScreen6.png", 
+        "/images/BrandScreen7.png", 
+        "/images/BrandScreen8.png",
+        "/images/BrandScreen4.png", 
+        "/images/BrandScreen5.png", 
+        "/images/BrandScreen6.png", 
+        "/images/BrandScreen7.png", 
+        "/images/BrandScreen8.png",
+      ];
 
 export const faqs = [
   {
@@ -613,7 +623,7 @@ export const FINDS_DATA = [
         // appDescription: "Collably makes the creator\nlife simpler, smarter,\nand more rewarding.",
         heroImages: [
           { className: "mobile-hero", src: "/images/iphonescren.png", alt: "iPhone screen", width: 300, height: 600 },
-          { className: "hero-bg-image", src: "/images/bannerScreen2.png", alt: "", width: 600, height: 583 },
+          { className: "hero-bg-image", src: "/images/BrandScreen1.png", alt: "", width: 600, height: 583 },
         ],
       };
 
@@ -626,6 +636,7 @@ export const FINDS_DATA = [
           "Shop from your Favourite Creator",
           "Create Smart Affiliate Links",
         ],
+        
         primlink:"/creatorDashboardEntry",
         seclink:"/shop",
         primbutton: "Get Started",
@@ -664,7 +675,7 @@ export const FINDS_DATA = [
           },
           {
             className: "hero-bg-image",
-            src: "/images/bannerScreen2.png",
+            src: "/images/CreScreen1.png",
             alt: "",
             width: 600,
             height: 583,
@@ -723,7 +734,7 @@ export const FINDS_DATA = [
         appDescription: "Exclusive perks for early brands",
         heroImages: [
           { className: "mobile-hero", src: "/images/iphonescren.png", alt: "iPhone screen", width: 300, height: 600 },
-          { className: "hero-bg-image", src: "/images/bannerScreen2.png", alt: "", width: 600, height: 583 },
+          { className: "hero-bg-image", src: "/images/BrandScreen1.png", alt: "", width: 600, height: 583 },
         ],
       };
       
@@ -808,22 +819,22 @@ export const FINDS_DATA = [
       };
     export  const categoryData = [
         {
-          src: "/images/animate1.webp",
+          src: "/images/1cat.png",
           alt: "Category 1",
           title: "Fashion",
         },
         {
-          src: "/images/animate2.webp",
+          src: "/images/2cat.png",
           alt: "Category 2",
           title: "Beauty",
         },
         {
-          src: "/images/animate1.webp",
+          src: "/images/3cat.png",
           alt: "Category 3",
           title: "Lifestyle",
         },
         {
-          src: "/images/animate2.webp",
+          src: "/images/4cat.png",
           alt: "Category 4",
           title: "Tech",
         },

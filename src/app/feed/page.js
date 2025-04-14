@@ -62,7 +62,9 @@ export default function ReelsPage() {
     } catch (error) {
       console.error("Error fetching reels:", error);
     }
-  };
+  }
+ 
+  
 
   const updateReel = async (reelId, action, apiCall) => {
     if (!isLoggedIn) {
@@ -126,9 +128,10 @@ export default function ReelsPage() {
   };
 
   const handleShare = (reel) => {
-    setCurrentShareReel(reel);
-    setIsShareModalOpen(true);
-  };
+    setCurrentShareReel(reel)
+    setIsShareModalOpen(true)
+  }
+
 
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -158,9 +161,9 @@ export default function ReelsPage() {
                 isLoggedIn={isLoggedIn}
                 onLoginRequired={() => setIsLoginModalOpen(true)}
                 productTitle={reel.product?.title}
-                productImage={reel.product?.image}
-                productUrl={reel.product?.url}
-                productPrice={reel.product?.price}
+          productImage={reel.product?.image}
+          productUrl={reel.product?.url}
+          productPrice={reel.product?.price}
               />
             </div>
           ))}
