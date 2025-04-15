@@ -5,7 +5,7 @@ import BottomNavComponent from '../components/BottomNavComponent'
 import ComingSoon from '../components/ComingSoon'
 import HeroSectionComponent from '../components/HeroSectionComponent'
 import AffiliateFeatures from '../components/affiliatebrand'
-import {heroDataBrand, scrollerData3, faqs, imageBrand} from '../utils.faker'
+import {heroDataBrand, scrollerData3, faqs, imageBrand, affiliateDataBrand} from '../utils.faker'
 import ScrollerComponent from '../components/ScrollerComponent'
 import QuickEasyComponent from '../components/QuickEasyComponent'
 import {quickEasyDataBrand} from '../utils.faker'
@@ -21,7 +21,7 @@ export default function ShopPage() {
       <Header />
       <main>
         <HeroSectionComponent heroData={heroDataBrand} />
-        <AffiliateFeatures/>
+        <AffiliateFeatures affiliateData={affiliateDataBrand} />
 <QuickEasyComponent quickEasyData={quickEasyDataBrand} />
          <ScrollerComponent scrollerData={scrollerData3} />
          <TargetSection/>
