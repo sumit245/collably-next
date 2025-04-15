@@ -2528,10 +2528,12 @@ body {
   .hero-bg-image {
     width: 50%;
     height: 400px;
-    left: 8px;
+    left: 5px;
+    top: -114px;
   }
   .hero-bg-image {
-    top: -410px;
+    top: -116px;
+    left: -171px;
   }
   /* .key_inner {
     margin-top: -16rem;
@@ -2896,6 +2898,7 @@ body {
     /* width: 100%; */
     height: 376px;
     left: 102px;
+    top: -7px;
   }
   .hero-bg-image {
     top: -5px;
