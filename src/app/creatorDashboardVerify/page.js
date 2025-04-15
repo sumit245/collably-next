@@ -66,7 +66,7 @@ export default function Page() {
             {/* <ArrowRight className={styles.arrowIconTelegram} /> */}
           </button>
         </div>
-        <Link href="/creatorSocial" className={styles.verifyLater}>
+        <Link href="/CreatorHome" className={styles.verifyLater}>
           Verify Later
         </Link>
       
