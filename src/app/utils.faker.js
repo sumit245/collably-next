@@ -177,19 +177,19 @@ export const creators = [
         {
           title: "Instant Affiliate Links",
           description: "Generate custom links, share & earn per sale",
-          imageSrc: "/images/CreScreen2.png",
+          imageSrc: "/images/CreScreen2.jpg",
           imageAlt: "Affiliate link generation screen for creators",
         },
         {
           title: "Shoppable Content",
           description: "Tag products in posts—your & ours audience buys instantly!",
-          imageSrc: "/images/CreScreen3.png",
+          imageSrc: "/images/CreScreen3.jpg",
           imageAlt: "Creator post with tagged products",
         },
         {
           title: "Brand Collections",
           description: "Get invites from partner brands for exclusive collaborations",
-          imageSrc: "/images/CreScreen4.png",
+          imageSrc: "/images/CreScreen4.jpg",
           imageAlt: "List of brand collaborations for creators",
         },
       ],
@@ -676,7 +676,7 @@ export  const creatorsFeed = [
           {
             title: "Shoppable Content Feature",
             description: "Turn influencer posts into direct sales channels",
-            imageSrc: "/images/Brandscreen3.png",
+            imageSrc: "/images/BrandScreen3.png",
             imageAlt: "Reel layout with tagged products screen"
           }
         ]
