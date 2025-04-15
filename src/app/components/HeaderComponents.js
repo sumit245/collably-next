@@ -96,6 +96,15 @@ console.log(user)
         <Link href="/shop">Shop</Link>
         <Link href="/blogs">Blogs</Link>
         <Link href="/contact-us">Contact</Link>
+        <div className="mobile-auth-only">
+    {user ? (
+      <Link href="#" onClick={handleLogout}>
+        Logout
+      </Link>
+    ) : (
+      <Link href="/login">Login/SignUp</Link>
+    )}
+  </div>
       </nav>
     </header>
   )

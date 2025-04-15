@@ -2685,6 +2685,23 @@ body {
     width: 100px;
   }
 }
+/* Hide this by default (desktop view) */
+.mobile-auth-only {
+  display: none;
+}
+
+/* Show only on smaller screens */
+@media screen and (max-width: 768px) {
+  .mobile-auth-only {
+    display: block;
+    margin-top: 10px;
+  }
+
+  .mobile-auth-only a {
+    display: block;
+    padding: 8px 0;
+  }
+}
 
 @media screen and (max-width: 480px) {
   :root {
