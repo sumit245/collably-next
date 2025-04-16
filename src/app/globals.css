@@ -509,7 +509,7 @@ i {
 }
 
 .container2 {
-  max-width: 1200px;
+  /* max-width: 1200px; */
   margin: 0 auto;
   padding: 0 15px;
 }
@@ -585,6 +585,7 @@ i {
 .feature_track {
   display: flex;
   transition: transform 0.5s ease;
+  /* gap: 1rem; */
 }
 
 .feature_item {
@@ -632,7 +633,7 @@ element.style {
   position: relative;
   z-index: 10;
   top: -426px;
-  left: 435px;
+  left: 540px;
   width: 488px;
   height: 598px;
 }
@@ -2523,7 +2524,7 @@ body {
 
   .mobile-hero,
   .hero-bg-image {
-    width: 70%;
+    width: 50%;
     height: 400px;
     left: 8px;
   }
@@ -2718,6 +2719,7 @@ body {
   }
   .row {
     flex-direction: column;
+    /* margin-bottom: 2rem; */
   }
   .scroller-heading {
     width: 180px;
@@ -2872,11 +2874,12 @@ body {
   .mobile-hero,
   .hero-bg-image {
     /* width: 100%; */
-    height: 518px;
-    left: 68px;
+    height: 376px;
+    left: 102px;
   }
   .hero-bg-image {
-    top: -528px;
+    top: -5px;
+    left: -89px;
   }
   /* .key_inner {
     margin-top: -48rem;
@@ -3035,7 +3038,12 @@ body {
     flex-direction: row;
     gap: 3rem;
   }
-  
+  .feature_box{
+    padding: 10px;
+  }
+  .container2{ 
+    padding: 0 0px;
+}
 }
 
 .password-toggle {
@@ -3425,4 +3433,30 @@ body {
     margin: 0 auto;
     width: 100%;
   } */
+}
+
+
+@media screen and (min-width: 768px) and (max-width: 768px) {
+.mobile-hero {
+      width: 55%;
+      height: 400px; 
+      left: -3px;
+  }
+  .row {
+   height: 650px;
+   margin-left: 3rem;
+}
+} 
+
+@media screen and (min-width: 1024px) and (max-width: 1024px) {
+
+.row {
+ height: 650px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 100%;
+}
 }

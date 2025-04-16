@@ -38,7 +38,7 @@ export function DropdownMenu() {
     { icon: <Trophy className={styles.menuItemIcon} />, label: 'Best Sellers', comingSoon: false},
     { icon: <Users className={styles.menuItemIcon} />, label: 'Trending Products', comingSoon: false },
     { icon: <Star className={styles.menuItemIcon} />, label: 'My Orders' , comingSoon: false  },
-    { icon: <HelpCircle className={styles.menuItemIcon} />, label: 'Creators',  comingSoon: false },
+    { icon: <HelpCircle className={styles.menuItemIcon} />, label: 'Creators', comingSoon: false, link: '/CreatorHome' },
   ];
 
   const handleClick = (e) => {
@@ -95,7 +95,7 @@ export function DropdownMenu() {
 
           <nav className={styles.menuNav}>
             {menuItems.map((item, index) => (
-              <a key={index} href="#"  className={styles.menuItem} role="menuitem" >
+              <a key={index} href={item.link}  className={styles.menuItem} role="menuitem" >
                 <div className={styles.menuItemContent}>
                   {item.icon}
                   <span className={styles.menuItemLabel}>

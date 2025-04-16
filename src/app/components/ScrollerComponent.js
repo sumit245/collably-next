@@ -18,13 +18,29 @@ export default function ScrollerComponent({ scrollerData }) {
 
     let scrollPosition = 0;
     let animationFrameId;
+    let scrollCount = 0;
 
     function moveLogos() {
       scrollPosition -= 1;
+
+      // Define scroll steps
+      const scrollSteps = [-200, -400, -600];
+
+      // Check if scrollPosition matches any step
+      const nextStep = scrollSteps.find(step => scrollPosition <= step);
+      if (nextStep !== undefined) {
+        brandList.style.transform = `translateX(${nextStep}px)`;
+      }
+
       if (Math.abs(scrollPosition) >= brandList.scrollWidth / 2) {
         scrollPosition = 0;
+        scrollCount += 1;
+        if (scrollCount >= 4) {
+          cancelAnimationFrame(animationFrameId);
+          return;
+        }
       }
-      brandList.style.transform = `translateX(${scrollPosition}px)`;
+
       animationFrameId = requestAnimationFrame(moveLogos);
     }
 
