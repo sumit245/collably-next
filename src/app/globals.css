@@ -633,8 +633,8 @@ element.style {
   position: relative;
   z-index: 10;
   top: -426px;
-  left: 540px;
-  width: 488px;
+  left: 480px;
+  width: 530px;
   height: 598px;
 }
 
@@ -2880,6 +2880,7 @@ body {
   .hero-bg-image {
     top: -8px;
     left: -88px;
+    left: -171px;
   }
   /* .key_inner {
     margin-top: -48rem;
