@@ -214,7 +214,7 @@ export const TopCreators = [
         {
           title: "Instant Affiliate Links",
           description: "Generate custom links, share & earn per sale",
-          imageSrc: "/images/LinkScreen2.jpg",
+          imageSrc: "/images/LinkScreen.jpg",
           imageAlt: "Affiliate link generation screen for creators",
         },
         {
@@ -1057,4 +1057,3 @@ export const reelsDataSource = [
     isLiked: false,
   },
 ];
-
