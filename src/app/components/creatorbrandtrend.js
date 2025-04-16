@@ -83,7 +83,7 @@ export default function TrendingBrands({ heading = "Trending Brands" }) {
   
     const shareData = {
       title: brand.brandName,
-      text: `Check out ${brand.brandName} with profit up to ${brand.profit || "10"}%!`,
+      text: `Check out ${brand.brandName} with Commision up to ${brand.profit || "10"}%!`,
       url: updatedReferralLink,
     }
   
@@ -113,7 +113,7 @@ export default function TrendingBrands({ heading = "Trending Brands" }) {
     const updatedReferralLink = await createLink(brand)
     if (!updatedReferralLink) return
   
-    const text = `Check out ${brand.brandName} with profit up to ${brand.profit || "10"}%!`
+    const text = `Check out ${brand.brandName} with Commision up to ${brand.profit || "10"}%!`
     const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(text + " " + updatedReferralLink)}`
   
     const newWindow = window.open(whatsappUrl, "_blank", "noopener,noreferrer")
