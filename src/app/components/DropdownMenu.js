@@ -38,7 +38,7 @@ export function DropdownMenu() {
     { icon: <Trophy className={styles.menuItemIcon} />, label: 'Best Sellers', comingSoon: false},
     { icon: <Users className={styles.menuItemIcon} />, label: 'Trending Products', comingSoon: false },
     { icon: <Star className={styles.menuItemIcon} />, label: 'My Orders' , comingSoon: false  },
-    { icon: <HelpCircle className={styles.menuItemIcon} />, label: 'Creators', comingSoon: false, link: '/CreatorHome' },
+    { icon: <HelpCircle className={styles.menuItemIcon} />, label: 'Creators',  comingSoon: false, link: '/creators' },
   ];
 
   const handleClick = (e) => {

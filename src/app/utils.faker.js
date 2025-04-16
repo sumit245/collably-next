@@ -208,33 +208,30 @@ export const TopCreators = [
       ]
     };
 
-    export const itemsCreator = {
-      titleBadge: "Key Features",
-      mainTitle: "Empowering Creators with",
-      highlightedText: "Innovative Tools",
+    export const affiliateDataCreator = {
+      heading: "Empowering Creators with Innovative Tools",
       features: [
         {
           title: "Instant Affiliate Links",
-          description:
-            "Generate custom links, share & earn per sale",
-          image: "/images/CreScreen2.png",
+          description: "Generate custom links, share & earn per sale",
+          imageSrc: "/images/LinkScreen2.jpg",
+          imageAlt: "Affiliate link generation screen for creators",
         },
-    
         {
           title: "Shoppable Content",
-          description:
-            "Tag products in posts—your & ours audience buys instantly!",
-          image: "/images/CreScreen3.png",
+          description: "Tag products in posts—your & ours audience buys instantly!",
+          imageSrc: "/images/ShopScreen.jpg",
+          imageAlt: "Creator post with tagged products",
         },
-    
         {
           title: "Brand Collections",
           description: "Get invites from partner brands for exclusive collaborations",
-          image: "/images/CreScreen4.png",
+          imageSrc: "/images/BrandPartner.jpg",
+          imageAlt: "List of brand collaborations for creators",
         },
       ],
     };
-
+    
     export const images = [
         "/images/BrandScreen4.png", 
         "/images/BrandScreen5.png", 
@@ -701,6 +698,31 @@ export const FINDS_DATA = [
           alt: "Brand image 4",
         },
       ]
+
+      export const affiliateDataBrand = {
+        heading: "Empowering Brands with Custom solutions",
+        features: [
+          {
+            title: "Custom affiliate program",
+            description: "Create your own custom affiliate programs for creators",
+            imageSrc: "/images/CreScreen1.png",
+            imageAlt: "Brand dashboard affiliate program setup screen"
+          },
+          {
+            title: "Performance-Based Model",
+            description: "Pay only when creators drive sales!",
+            imageSrc: "/images/BrandScreen2.png",
+            imageAlt: "Commission screen"
+          },
+          {
+            title: "Shoppable Content Feature",
+            description: "Turn influencer posts into direct sales channels",
+            imageSrc: "/images/BrandScreen3.png",
+            imageAlt: "Reel layout with tagged products screen"
+          }
+        ]
+      }
+
       export const heroDataBrand = {
         title: "Upgrade your sales channels",
         description: "Create your custom affiliate program & turn creators into sales channels",

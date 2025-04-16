@@ -33,7 +33,7 @@ export default function HomePage() {
           <StripBanner
             text="Make your content shoppable for more users"
             buttonText="Setup Feed"
-            buttonLink=""
+            buttonLink="/CreatorShop"
           />
           {/* <ExclusiveFeatures /> */}
           {/* <TopBrands /> */}

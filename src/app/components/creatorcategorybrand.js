@@ -231,7 +231,7 @@ export default function CategoryBrands({ heading, category }) {
 
               <div className={styles.trendbrandProfitContainer}>
                 <h3 className={styles.trendbrandProfit}>
-                  Upto {brand.profit || Math.floor(Math.random() * 15) + 5}% Profit
+                  Upto {brand.profit || Math.floor(Math.random() * 15) + 5}% <br></br>Commission
                 </h3>
               </div>
 

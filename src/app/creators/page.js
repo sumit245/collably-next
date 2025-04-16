@@ -13,7 +13,8 @@ import CommunitySectionComponent from '../components/CommunitySectionComponent'
 import FooterComponent from '../components/FooterComponent'
 import BottomNavComponent from '../components/BottomNavComponent'
 import LoginComponent from '../components/LoginComponent';
-import {heroDataCreator, scrollerData, faqs, itemsCreator,} from '../utils.faker'
+import AffiliateFeatures from '../components/affiliatebrand'
+import {heroDataCreator, scrollerData, faqs, affiliateDataCreator,} from '../utils.faker'
 import {scrollerData2} from '../utils.faker'
 import {quickEasyDataCreator} from '../utils.faker'
 // import {heroData} from '../app/utils.faker'
@@ -26,7 +27,8 @@ export default function HomePage() {
       <HeaderComponent />
       <main>
         <HeroSectionComponent heroData={heroDataCreator} />
-        <KeyFeaturesComponent items ={itemsCreator}/>
+        {/* <KeyFeaturesComponent items ={itemsCreator}/> */}
+        <AffiliateFeatures affiliateData={affiliateDataCreator} />
         <QuickEasyComponent quickEasyData={quickEasyDataCreator} />
         <ScrollerComponent scrollerData={scrollerData} />
         <CategoryGridComponent />
