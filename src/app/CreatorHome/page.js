@@ -1,43 +1,78 @@
-import Header from '../components/HeaderComponents'
-import CommunitySectionComponent from '../components/CommunitySectionComponent'
-import FooterComponent from '../components/FooterComponent'
-import BottomNavComponent from '../components/BottomNavComponent'
-import ComingSoon from '../components/ComingSoon'
-import HeroSectionComponent from '../components/HeroSectionComponent'
-import AffiliateFeatures from '../components/affiliatebrand'
-import {heroDataBrand, scrollerData3, faqs, imageBrand, affiliateDataBrand} from '../utils.faker'
-import ScrollerComponent from '../components/ScrollerComponent'
-import QuickEasyComponent from '../components/QuickEasyComponent'
-import {quickEasyDataBrand} from '../utils.faker'
-import FAQSectionComponent from '../components/FaqSectionComponent'
-import ClientSectionComponent from '../components/ClientSectionComponent'
-import RotatingImageSection from '../components/rotateBrands'
-import MoreReasons from '../components/ChooseUs'
- import ExclusivePerks from '../components/ExclusivePerks'
- import TargetSection from '../components/TargetSection'
-export default function ShopPage() {
+import stylesShop from "../shop/StyleShop.module.css";
+import FooterCreator from "../components/FooterCreator";
+import CreatorHome from "../components/CreatorHome";
+// import SuggestedActions from '../components/CreatorHomeSuggested'
+import BannerCarousel from "../components/creatorherohome";
+import StripBanner from "../components/stripBanner";
+import ExclusiveFeatures from "../components/CreatorHomeExclusive";
+import TopBrands from "../components/CreatorHomeBrand";
+import SaleCalendar from "../components/CreatorHomeCalender";
+import FindsOfTheDay from "../components/CreatorHomeFInds";
+import ToDo from "../components/CreatorHomeToDo";
+import PoweredByFooter from "../components/CreatorBottomFooter";
+import CreateWith from "../components/CreateWith";
+import TopCreators from "../components/TopCreatorShop";
+import FeaturedCategories from "../components/CategoriesCreatorHome";
+import ReferralProgram from "../components/ReferralProgram";
+import TopPerformers from "../components/TopPerformers";
+import TrendingBrands from "../components/CreatorTrendingBrands";
+import TrendingBrandsCreator from "../components/creatorbrandtrend";
+import CategoryBrands from "../components/creatorcategorybrand";
+import LocalBrands from "../components/localBrands";
+export default function HomePage() {
   return (
-    <div>
-      <Header />
-      <main>
-        <HeroSectionComponent heroData={heroDataBrand} />
-        <AffiliateFeatures affiliateData={affiliateDataBrand} />
-<QuickEasyComponent quickEasyData={quickEasyDataBrand} />
-         <ScrollerComponent scrollerData={scrollerData3} />
-         <TargetSection/>
-         <RotatingImageSection  />
-         <ExclusivePerks/>
-         <ClientSectionComponent />
-           <MoreReasons/>
-         
-        
-        
-    {/* <ComingSoon /> */}
-     <FAQSectionComponent faqs={faqs}/>
-       <CommunitySectionComponent />
-            </main>
-            <FooterComponent />
-            <BottomNavComponent />
+    <div className={stylesShop.bodyShop}>
+      <div className={stylesShop.smartphoneContainer}>
+        <CreatorHome />
+         <main>
+          {/* <TopBrands /> */}
+          {/* <SuggestedActions /> */}
+          <div className={stylesShop.banner}>
+          <BannerCarousel />
+          </div>
+          <StripBanner
+            text="Make your content shoppable for more users"
+            buttonText="Setup Feed"
+            buttonLink=""
+          />
+          {/* <ExclusiveFeatures /> */}
+          {/* <TopBrands /> */}
+          {/* <ExclusiveFeatures /> */}
+          <TopBrands heading="Top sellers " />
+          {/* <SaleCalendar /> */}
+          <TrendingBrands />
+          <FeaturedCategories />
+
+          <TrendingBrandsCreator />
+          <CategoryBrands heading="Best in Fashion " category="Fashion" />
+          <CategoryBrands
+            heading="Best in Health & Beauty "
+            category="Beauty"
+          />
+          <CategoryBrands heading="New on Collably " category="Home" />
+          <StripBanner
+            text="Join Collably’s Referall Program and earn 15% of the earnings your friends make - FOREVER!"
+            buttonText="Generate Link "
+            buttonLink=""
+          />
+          <CategoryBrands
+            heading="Best in Electronics "
+            category="Electronics"
+          />
+          {/* <TopCreators /> */}
+
+          {/* <FindsOfTheDay /> */}
+          <TopBrands heading="Explore All Brands " />
+          {/* <ReferralProgram /> */}
+          {/* <TopCreators /> */}
+          {/* <TopPerformers /> */}
+          {/* <ToDo /> */}
+          {/* <LocalBrands /> */}
+          <BannerCarousel />
+          <PoweredByFooter />
+        </main>
+        <FooterCreator />
+      </div>
     </div>
   );
 }
