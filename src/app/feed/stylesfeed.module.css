@@ -108,9 +108,9 @@
 
 .info {
   padding-inline: 20px;
-  /* margin-bottom: 16px; */
+  width: 275px;
   position: relative;
-  bottom: 50px;
+  /* bottom: 50px;*/
 }
 
 .productTitle{
