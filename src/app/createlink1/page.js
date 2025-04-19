@@ -36,7 +36,7 @@ export default function BrandViewer() {
   const copyUrl = () => {
     if (currentUrl) {
       navigator.clipboard.writeText(currentUrl);
-      alert("Copied URL: " + currentUrl);
+
     } else {
       alert("No active website to copy URL from.");
     }

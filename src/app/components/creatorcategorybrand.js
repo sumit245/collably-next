@@ -94,10 +94,10 @@ export default function CategoryBrands({ heading, category }) {
     }
   
     // Debugging - Show if Web Share API is supported
-    alert(`Share API supported: ${navigator.share ? "Yes" : "No"}`)
+
   
     // Debugging - Show the share data
-    alert(`Share Data: ${JSON.stringify(shareData)}`)
+
   
     try {
       if (navigator.share && typeof navigator.share === "function") {
@@ -107,15 +107,15 @@ export default function CategoryBrands({ heading, category }) {
         throw new Error("Web Share API not supported on this browser.")
       }
     } catch (err) {
-      alert(`Error: ${err.message}`) // Debugging
+
       toast.error("Sharing not supported. Copying link instead.")
   
       try {
         await navigator.clipboard.writeText(updatedReferralLink)
         toast.success("Link copied to clipboard!")
-        alert("Link copied to clipboard!") // Debugging
+
       } catch (clipboardErr) {
-        alert(`Clipboard fallback failed: ${clipboardErr.message}`) // Debugging
+
         toast.error("Failed to copy link. Try manually selecting and copying.")
       }
     }

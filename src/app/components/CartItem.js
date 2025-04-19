@@ -5,7 +5,7 @@ export function CartItem({ item, onUpdateQuantity, onRemove }) {
   return (
     <div className={styles.cartItem}>
       <div className={styles.itemInfo}>
-        <img src={item.image} alt={item.name} className={styles.itemImage} />
+        <img src={item.productPhoto} alt={item.name} className={styles.itemImage} />
         <div>
           <h3 className={styles.itemName}>{item.productname || item.name}</h3>
           <p className={styles.itemPrice}>₹{item?.price ? item.price.toFixed(2) : "0.00"}</p>
