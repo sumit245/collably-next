@@ -598,7 +598,7 @@ i {
   padding: 40px 0;
   background-color: var(--image-rotation-bg);
   overflow: hidden;
-  height: 550px;
+  height: 385px;
 }
 
 .image-rotation-inner {
@@ -633,19 +633,21 @@ element.style {
   position: relative;
   z-index: 10;
   top: -426px;
-  left: 480px;
-  width: 530px;
+  left: 540px;
+  width: 488px;
   height: 598px;
+  display: none;
 }
 
 .image-item img {
-  width: 100%;
-  position: relative;
-  top: 44.5px;
-  left: -3px;
-  height: 480px;
-  object-fit: none;
-  border-radius: 40px;
+  width: 80%;
+  /* position: relative; */
+  /* top: 44.5px; */
+  /* left: -3px; */
+  height: 400px;
+  /* object-fit: none; */
+  border: 5px solid black;
+  border-radius: 32px 32px 12px 12px;
 }
 
 
@@ -1108,15 +1110,17 @@ footer h3 {
   width: 250px;
   left: -16px;
   top: -8px;
+  display: none;
 }
 
 .hero-bg-image {
   position: relative;
   height: 440px;
   width: 247px;
-  left: -264px;
-  top: -15px;
+  /* left: -264px;
+  top: -15px; */
   border-radius: 24px;
+  border: 5px solid black;
 }
 
 /* Quick and Easy Section */
@@ -2304,7 +2308,7 @@ body {
     left: -11px;
     height: 442px;
     position: relative;
-    top: -457px;
+    /* top: -457px; */
     width: 239px;
   }
   .image-rotation-section {
@@ -2529,7 +2533,7 @@ body {
     left: 8px;
   }
   .hero-bg-image {
-    top: -410px;
+    top: -185px;
   }
   /* .key_inner {
     margin-top: -16rem;
@@ -2878,9 +2882,8 @@ body {
     left: 102px;
   }
   .hero-bg-image {
-    top: -8px;
-    left: -88px;
-    left: -87px;
+    top: -5px;
+    /* left: -88px; */
   }
   /* .key_inner {
     margin-top: -48rem;
@@ -3452,7 +3455,7 @@ body {
 @media screen and (min-width: 1024px) and (max-width: 1024px) {
 
 .row {
- height: 650px;
+ height: 520px;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
