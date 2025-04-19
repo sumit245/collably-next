@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import Link from "next/link"
 import styles from "../../shop/StyleShop.module.css"
 import { useLikeContext } from "../../actions/LikeContext"
 import { addToCart, updateQuantity } from "../../store/cartSlice"
@@ -14,10 +15,10 @@ export default function Creator2({ _id, productPhoto, posterSrc, name, productna
   const { cartCount, setCartCount } = useLikeContext()
   const [notification, setNotification] = useState(null)
 
-
   useEffect(() => {
     dispatch(loadLikedProducts())
   }, [dispatch])
+
   const isLiked = likedProducts.some((item) => item._id === _id)
 
   const toggleLike = () => {
@@ -53,27 +54,26 @@ export default function Creator2({ _id, productPhoto, posterSrc, name, productna
     }, 3000)
   }
 
-
   return (
     <>
       <div className={styles.creatorCard}>
-        <div className={styles.videoContainer}>
-        <img
-    src={productPhoto}
-    alt={productname}
-    className={styles.productImage}
-  />
+      <Link href={`/productDisplay/${_id}`}> <div className={styles.videoContainer}>
+          
+            <img src={productPhoto || "/placeholder.svg"} alt={productname} className={styles.productImage} />
+        
 
           <div className={styles.gradientOverlay}></div>
           <div className={styles.creatorInfo}>
             <div className={styles.creatorName}>{name}</div>
             {/* <div className={styles.followerCount}>{followers} Followers</div> */}
           </div>
-        </div>
+        </div>  </Link>
 
         <div className={styles.buttonContainer1}>
           <div className={styles.productDetails}>
-            <span className={styles.price}>{productname}</span>
+            <Link href={`/productDisplay/${_id}`} className={styles.productNameLink}>
+              <span className={styles.price}>{productname}</span>
+            </Link>
             <span className={styles.price}>₹{price}</span>
           </div>
 
@@ -106,4 +106,3 @@ export default function Creator2({ _id, productPhoto, posterSrc, name, productna
     </>
   )
 }
-
