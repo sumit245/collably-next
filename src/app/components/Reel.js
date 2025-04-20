@@ -40,6 +40,7 @@ export default function Reel({
   const [isCommenting, setIsCommenting] = useState(false)
   const [isLiked, setIsLiked] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
+  const [isPaused, setIsPaused] = useState(false)
   const commentSectionRef = useRef(null)
   const videoRef = useRef(null)
 
@@ -52,14 +53,16 @@ export default function Reel({
     if (!videoRef.current) return
 
     if (isActive) {
-      videoRef.current.play().catch((err) => console.error("Error playing video:", err))
+      if (!isPaused) {
+        videoRef.current.play().catch((err) => console.error("Error playing video:", err))
+      }
       videoRef.current.muted = false
     } else {
       videoRef.current.pause()
       videoRef.current.muted = true
       videoRef.current.currentTime = 0
     }
-  }, [isActive])
+  }, [isActive, isPaused])
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -127,6 +130,18 @@ export default function Reel({
     setIsCommenting(!isCommenting)
   }
 
+  const handleVideoClick = () => {
+    if (!videoRef.current) return
+    
+    if (isPaused) {
+      videoRef.current.play().catch(err => console.error("Error playing video:", err))
+    } else {
+      videoRef.current.pause()
+    }
+    
+    setIsPaused(!isPaused)
+  }
+
   return (
     <div className={styles.reelContainer}>
       <div className={styles.userInfo}>
@@ -143,15 +158,33 @@ export default function Reel({
         )}
       </div>
 
-      {video ? (
-        <video ref={videoRef} className={styles.video} loop playsInline>
-          <source src={video} type="video/mp4" />
-        </video>
-      ) : images?.[0] ? (
-        <Image src={images[0]?.[0] || "/placeholder.svg"} alt="Post" fill className={styles.image} objectFit="cover" />
-      ) : (
-        <Image src="/placeholder.svg" alt="Placeholder" fill objectFit="cover" />
-      )}
+      <div className={styles.videoContainer}>
+        {video ? (
+          <>
+            <video 
+              ref={videoRef} 
+              className={styles.video} 
+              loop 
+              playsInline
+              onClick={handleVideoClick}
+              controls={false}
+            >
+              <source src={video} type="video/mp4" />
+            </video>
+            {isPaused && (
+              <div className={styles.playIconOverlay} onClick={handleVideoClick}>
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="white" stroke="white" strokeWidth="1">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
+            )}
+          </>
+        ) : images?.[0] ? (
+          <Image src={images[0]?.[0] || "/placeholder.svg"} alt="Post" fill className={styles.image} objectFit="cover" />
+        ) : (
+          <Image src="/placeholder.svg" alt="Placeholder" fill objectFit="cover" />
+        )}
+      </div>
 
       <div className={styles.logo}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
@@ -174,15 +207,6 @@ export default function Reel({
             <span className={styles.actionCount}>{likes.length}</span>
           </button>
         </div>
-
-        {/* <div className={styles.actionItem}>
-          <button className={styles.actionButton} onClick={handleCommentAction}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white">
-              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-            </svg>
-            <span className={styles.actionCount}>{comments?.length || 0}</span>
-          </button>
-        </div> */}
 
         <div className={styles.actionItem}>
           <button className={styles.actionButton} onClick={handleSaveAction}>
@@ -241,7 +265,6 @@ export default function Reel({
               <img src={productImage || "/placeholder.svg"} alt={productTitle} className={styles.productImage} />
               <div className={styles.productDetails}>
                 <div className={styles.productTitle}>{productTitle}</div>
-                {/* {productPrice && <span className={styles.productPrice}>{productPrice}</span>} */}
               </div>
             </div>
           </a>
