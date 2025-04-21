@@ -223,6 +223,7 @@ export const TopCreators = [
           imageSrc: "/images/CreScreen3.jpg",
           imageAlt: "Creator post with tagged products",
         },
+        
         {
           title: "Brand Collections",
           description: "Get invites from partner brands for exclusive collaborations",
