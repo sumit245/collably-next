@@ -214,20 +214,20 @@ export const TopCreators = [
         {
           title: "Instant Affiliate Links",
           description: "Generate custom links, share & earn per sale",
-          imageSrc: "/images/LinkScreen.jpg",
+          imageSrc: "/images/CreatorDemo3.jpg",
           imageAlt: "Affiliate link generation screen for creators",
         },
         {
           title: "Shoppable Content",
           description: "Tag products in posts—your & ours audience buys instantly!",
-          imageSrc: "/images/CreScreen3.jpg",
+          imageSrc: "/images/CreatorDemo2.jpg",
           imageAlt: "Creator post with tagged products",
         },
 
         {
           title: "Brand Collections",
           description: "Get invites from partner brands for exclusive collaborations",
-          imageSrc: "/images/BrandPartner.jpg",
+          imageSrc: "/images/CreatorDemo1.jpg",
           imageAlt: "List of brand collaborations for creators",
         },
       ],
