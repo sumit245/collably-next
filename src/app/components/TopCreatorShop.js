@@ -14,7 +14,9 @@ export default function TopCreators() {
   useEffect(() => {
     dispatch(fetchCreators());
   }, [dispatch]);
-  const displayCreators = (allCreators || []).slice(0, 4);
+  const shuffledCreators = [...(allCreators || [])].sort(() => 0.5 - Math.random());
+  const displayCreators = shuffledCreators.slice(0, 4);
+  
   return (
     <section className={styles.topCreatorSection}>
       <div className={styles.sectionHeader}>
