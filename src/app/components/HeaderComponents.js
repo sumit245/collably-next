@@ -91,7 +91,7 @@ console.log(user)
       </div>
       <nav className={`nav-items ${isMenuOpen ? "active" : ""}`}>
         <Link href="/">Home</Link>
-        <Link href="/creators">Creators</Link>
+        <Link href="/creators">Creator</Link>
         <Link href="/brand">Brands</Link>
         <Link href="/shop">Shop</Link>
         <Link href="/blogs">Blogs</Link>
