@@ -8,7 +8,7 @@ import { useLikeContext } from "../../actions/LikeContext"
 import { addToCart, updateQuantity } from "../../store/cartSlice"
 import { toggleLikeProduct, loadLikedProducts } from "../../store/likedproductSlice"
 
-export default function Creator2({ _id, productPhoto, posterSrc, name, productname, followers, price }) {
+export default function Creator2({ _id, productPhoto, productPhotos, posterSrc, name, productname, followers, price }) {
   const dispatch = useDispatch()
   const cartItems = useSelector((state) => state.cart.items)
   const likedProducts = useSelector((state) => state.likedProducts.items)
@@ -59,7 +59,7 @@ export default function Creator2({ _id, productPhoto, posterSrc, name, productna
       <div className={styles.creatorCard}>
       <Link href={`/productDisplay/${_id}`}> <div className={styles.videoContainer}>
           
-            <img src={productPhoto || "/placeholder.svg"} alt={productname} className={styles.productImage} />
+            <img src={productPhoto || productPhotos[0] || "/placeholder.svg"} alt={productname} className={styles.productImage} />
         
 
           <div className={styles.gradientOverlay}></div>
