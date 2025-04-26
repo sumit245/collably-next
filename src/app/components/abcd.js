@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import api from "../services/api"
 import { trackReferralClick } from "../store/brandSlice"
-import styles from "../feed/reel.module.css"
+import styles from "../feed/stylesfeed.module.css"
 import CommentSection from "./commentSection"
 import Image from "next/image"
 import Link from "next/link"
@@ -121,25 +121,54 @@ export default function Reel({
     setIsSaved(!isSaved)
   }
 
+  const handleCommentAction = () => {
+    if (!isLoggedIn) {
+      onLoginRequired()
+      return
+    }
+
+    setIsCommenting(!isCommenting)
+  }
+
   const handleVideoClick = () => {
     if (!videoRef.current) return
-
+    
     if (isPaused) {
-      videoRef.current.play().catch((err) => console.error("Error playing video:", err))
+      videoRef.current.play().catch(err => console.error("Error playing video:", err))
     } else {
       videoRef.current.pause()
     }
-
+    
     setIsPaused(!isPaused)
   }
 
   return (
     <div className={styles.reelContainer}>
+      <div className={styles.userInfo}>
+        <Link href={`/creator/${user?._id}`} className={styles.avatar}>
+          <img src={user?.avatar || "/placeholder.svg"} alt={user?.fullname} />
+        </Link>
+        <Link href={`/creator/${user?._id}`} className={styles.username}>
+          {user?.fullname}
+        </Link>
+        {userId !== user?._id && (
+          <button className={styles.followButton} onClick={handleFollowToggle}>
+            {isFollowing ? "Following" : "Follow"}
+          </button>
+        )}
+      </div>
 
       <div className={styles.videoContainer}>
         {video ? (
           <>
-            <video ref={videoRef} className={styles.video} loop playsInline onClick={handleVideoClick} controls={false}>
+            <video 
+              ref={videoRef} 
+              className={styles.video} 
+              loop 
+              playsInline
+              onClick={handleVideoClick}
+              controls={false}
+            >
               <source src={video} type="video/mp4" />
             </video>
             {isPaused && (
@@ -151,22 +180,22 @@ export default function Reel({
             )}
           </>
         ) : images?.[0] ? (
-          <Image
-            src={images[0]?.[0] || "/placeholder.svg"}
-            alt="Post"
-            fill
-            className={styles.image}
-            objectFit="cover"
-          />
+          <Image src={images[0]?.[0] || "/placeholder.svg"} alt="Post" fill className={styles.image} objectFit="cover" />
         ) : (
           <Image src="/placeholder.svg" alt="Placeholder" fill objectFit="cover" />
         )}
       </div>
 
+      <div className={styles.logo}>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+          <path d="M12 2C14.717 2 17.157 2.004 18.878 2.058C20.488 2.109 21.905 2.419 23.004 3.518C24.103 4.617 24.413 6.034 24.464 7.644C24.518 9.365 24.522 11.805 24.522 14.522C24.522 17.239 24.518 19.679 24.464 21.4C24.413 23.01 24.103 24.427 23.004 25.526C21.905 26.625 20.488 26.935 18.878 26.986C17.157 27.04 14.717 27.044 12 27.044C9.283 27.044 6.843 27.04 5.122 26.986C3.512 26.935 2.095 26.625 0.996 25.526C-0.103 24.427 -0.413 23.01 -0.464 21.4C-0.518 19.679 -0.522 17.239 -0.522 14.522C-0.522 11.805 -0.518 9.365 -0.464 7.644C-0.413 6.034 -0.103 4.617 0.996 3.518C2.095 2.419 3.512 2.109 5.122 2.058C6.843 2.004 9.283 2 12 2Z" />
+        </svg>
+      </div>
+
       <div className={styles.actions}>
         <div className={styles.actionItem}>
           <button className={styles.actionButton} onClick={handleLikeAction}>
-          <svg
+            <svg
               width="24"
               height="24"
               viewBox="0 0 24 24"
@@ -175,14 +204,21 @@ export default function Reel({
             >
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
             </svg>
-
             <span className={styles.actionCount}>{likes.length}</span>
           </button>
         </div>
 
         <div className={styles.actionItem}>
+          <button className={styles.actionButton} onClick={handleSaveAction}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill={isSaved ? "white" : "none"} stroke="white">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+            </svg>
+          </button>
+        </div>
+
+        <div className={styles.actionItem}>
           <button className={styles.actionButton} onClick={() => onShare({ _id, user, caption })}>
-          <svg
+            <svg
               height="24px"
               width="24px"
               version="1.1"
@@ -212,61 +248,27 @@ export default function Reel({
                 />
               </g>
             </svg>
-
           </button>
-        </div>
-
-        <div className={styles.actionItem}>
-          <button className={styles.actionButton} onClick={handleSaveAction}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill={isSaved ? "white" : "none"} stroke="white">
-              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-            </svg>
-          </button>
-        </div>
-
-      </div>
-
-      <div className={styles.userProfile}>
-        <div className={styles.profileContainer}>
-          <Link href={`/creator/${user?._id}`}>
-            <img src={user?.avatar || "/placeholder.svg"} alt={user?.fullname} className={styles.profileImage} />
-          </Link>
-          <div className={styles.profileInfo}>
-            <Link href={`/creator/${user?._id}`} className={styles.profileName}>{user?.fullname}</Link>
-            {userId !== user?._id && (
-              <button className={styles.followButton} onClick={handleFollowToggle}>
-                {isFollowing ? "Following" : "Follow"}
-              </button>
-            )}
-          </div>
         </div>
       </div>
 
-      <div className={styles.productRow}>
-        {productTitle && productImage && (
-          <div className={styles.productCard}>
-            <a
-              href={productUrl || caption}
-              onClick={handleCaptionClick}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <div className={styles.productImage}>
-                <img src={productImage || "/placeholder.svg"} alt={productTitle} />
+      <div className={styles.info}>
+        {productTitle && productImage ? (
+          <a
+            className={styles.caption}
+            href={productUrl || caption}
+            onClick={handleCaptionClick}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <div className={styles.productPreview}>
+              <img src={productImage || "/placeholder.svg"} alt={productTitle} className={styles.productImage} />
+              <div className={styles.productDetails}>
+                <span className={styles.productTitle}>{productTitle}</span>
               </div>
-              <div className={styles.productBrand}>{productTitle}</div>
-              {productPrice && (
-                <div className={styles.productPrice}>
-                  {/* <span className={styles.discountedPrice}>{productPrice}</span> */}
-                </div>
-              )}
-            </a>
-          </div>
-        )}
-      </div>
-
-      {caption && !productUrl && (
-        <div className={styles.captionContainer}>
+            </div>
+          </a>
+        ) : (
           <a
             className={styles.caption}
             href={caption}
@@ -276,8 +278,8 @@ export default function Reel({
           >
             {caption}
           </a>
-        </div>
-      )}
+        )}
+      </div>
 
       {isCommenting && (
         <div ref={commentSectionRef}>
