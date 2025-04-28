@@ -221,7 +221,7 @@ const UpdateUserForm = () => {
           />
         </div>
       </div>
-
+{/* 
       <div className={styles.textLabel}>
         <div className={styles.passwordHeader}>
           <label htmlFor="password" className={styles.label}>
@@ -246,7 +246,7 @@ const UpdateUserForm = () => {
           className={styles.input}
           placeholder={isPasswordUpdate ? "Enter new password" : "Password will not be updated"}
         />
-      </div>
+      </div> */}
 
       <button type="submit" className={styles.button} disabled={isSubmitting}>
         {isSubmitting ? "Updating..." : "Update Profile"}
