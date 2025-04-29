@@ -1,5 +1,90 @@
 import { TbMoneybag } from "react-icons/tb";
 
+export const shopBanners = [
+  {
+    id: 0,
+    imageUrl: "/images/ShopBanner1.png",
+    altText: "Myntra 50-90% Off across top brands",
+  },
+  {
+    id: 1,
+    imageUrl: "/images/ShopBanner2.png",
+    altText: "Amazon Great Indian Sale",
+  },
+  {
+    id: 2,
+    imageUrl: "/images/ShopBanner3.png",
+    altText: "Flipkart Big Billion Days",
+  },
+  {
+    id: 3,
+    imageUrl: "/images/ShopBanner4.png",
+    altText: "Ajio Fashion Sale",
+  },
+  {
+    id: 4,
+    imageUrl: "/images/ShopBanner5.png",
+    altText: "Nykaa Beauty Sale",
+  },
+  {
+    id: 5,
+    imageUrl: "/images/ShopBanner6.png",
+    altText: "Tata CLiQ Luxury Sale",
+  },
+  {
+    id: 6,
+    imageUrl: "/images/ShopBanner7.png",
+    altText: "Reliance Digital Electronics Sale",
+  },
+  {
+    id: 7,
+    imageUrl: "/images/ShopBanner8.png",
+    altText: "Shoppers Stop Fashion Sale",
+  },
+];
+
+export const creatorBanners = [
+  {
+    id: 0,
+    imageUrl: "/images/CreatorBanner1.png",
+    altText: "Myntra 50-90% Off across top brands",
+  },
+  {
+    id: 1,
+    imageUrl: "/images/CreatorBanner2.png",
+    altText: "Amazon Great Indian Sale",
+  },
+  {
+    id: 2,
+    imageUrl: "/images/CreatorBanner3.png",
+    altText: "Flipkart Big Billion Days",
+  },
+  {
+    id: 3,
+    imageUrl: "/images/CreatorBanner1.png",
+    altText: "Ajio Fashion Sale",
+  },
+  {
+    id: 4,
+    imageUrl: "/images/CreatorBanner2.png",
+    altText: "Nykaa Beauty Sale",
+  },
+  {
+    id: 5,
+    imageUrl: "/images/CreatorBanner3.png",
+    altText: "Tata CLiQ Luxury Sale",
+  },
+  {
+    id: 6,
+    imageUrl: "/images/CreatorBanner1.png",
+    altText: "Reliance Digital Electronics Sale",
+  },
+  {
+    id: 7,
+    imageUrl: "/images/CreatorBanner2.png",
+    altText: "Shoppers Stop Fashion Sale",
+  },
+];
 
 export const creators = [
   {

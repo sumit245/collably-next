@@ -19,6 +19,7 @@ import TrendingBrands from "../components/CreatorTrendingBrands";
 import TrendingBrandsCreator from "../components/creatorbrandtrend";
 import CategoryBrands from "../components/creatorcategorybrand";
 import LocalBrands from "../components/localBrands";
+import {creatorBanners}  from "../utils.faker"
 export default function HomePage() {
   return (
     <div className={stylesShop.bodyShop}>
@@ -28,7 +29,8 @@ export default function HomePage() {
           {/* <TopBrands /> */}
           {/* <SuggestedActions /> */}
           <div className={stylesShop.banner}>
-          <BannerCarousel />
+          <BannerCarousel banners={creatorBanners} />
+
           </div>
           <StripBanner
             text="Make your content shoppable for more users"
