@@ -58,8 +58,6 @@ export default function ReelsPage() {
       console.error("Error fetching reels:", error)
     }
   }
- 
-  
 
   const updateReel = async (reelId, action, apiCall) => {
     if (!isLoggedIn) {
@@ -110,7 +108,6 @@ export default function ReelsPage() {
     setIsShareModalOpen(true)
   }
 
-
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
@@ -138,10 +135,6 @@ export default function ReelsPage() {
                 currentUserId={currentUserId}
                 isLoggedIn={isLoggedIn}
                 onLoginRequired={() => setIsLoginModalOpen(true)}
-                productTitle={reel.product?.title}
-          productImage={reel.product?.image}
-          productUrl={reel.product?.url}
-          productPrice={reel.product?.price}
               />
             </div>
           ))}
@@ -153,4 +146,3 @@ export default function ReelsPage() {
     </div>
   )
 }
-

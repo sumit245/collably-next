@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux"
 import styles from "./page.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import FooterCreator from "../components/FooterCreator"
-import { Package, Eye, Users, ArrowLeft } from "lucide-react"
+import { Package, Tag, Users, ArrowLeft } from 'lucide-react'
 import Link from "next/link"
 import { clearCurrentMedia, clearFormData } from "../store/mediaSlice"
 import { BASE_URL } from "../services/api"
@@ -51,7 +51,7 @@ const MediaDetailsContent = () => {
   }
 
   const handleSubmit = async () => {
-    if (!formData.product || !formData.visibility || !formData.audience) return
+    if (!formData.product || !formData.category || !formData.audience) return
 
     try {
       setIsLoading(true)
@@ -65,7 +65,23 @@ const MediaDetailsContent = () => {
       if (!mediaFile) throw new Error("Failed to create file from media source")
 
       postFormData.append("media", mediaFile)
+
+      // Handle multiple links (product is now a comma-separated string)
+      if (formData.product) {
+        // Split the comma-separated string into an array and trim each link
+        const links = formData.product.split(",").map((link) => link.trim())
+        // Append each link to the form data
+        postFormData.append("links", JSON.stringify(links))
+      }
+
+      // Keep the original product field for backward compatibility
       postFormData.append("caption", formData.product)
+      
+      // Add category as a tag
+      if (formData.category) {
+        postFormData.append("tags", formData.category)
+      }
+
       if (formData.audience) postFormData.append("audience", formData.audience)
       if (formData.ageRestriction) postFormData.append("ageRestriction", formData.ageRestriction)
 
@@ -84,7 +100,6 @@ const MediaDetailsContent = () => {
       router.refresh()
       router.push("/upload-success")
     } catch (err) {
-      
       console.error("Upload error:", err.message)
       router.push("/upload-error")
     } finally {
@@ -118,11 +133,12 @@ const MediaDetailsContent = () => {
             <div className={styles.username}>{user?.username || "Username"}</div>
 
             <button className={styles.optionButton} onClick={() => router.push("/set-product")}>
-              <Package size={20} /> Add Link: {formData.product || "Not selected"}
+              <Package size={20} /> Add Links:{" "}
+              {formData.product ? `${formData.product.split(",").length} links added` : "Not selected"}
             </button>
 
             <button className={styles.optionButton} onClick={() => router.push("/set-visibility")}>
-              <Eye size={20} /> Visibility: {formData.visibility || "Not set"}
+              <Tag size={20} /> Category: {formData.category || "Not set"}
             </button>
 
             <button className={styles.optionButton} onClick={() => router.push("/select-audience")}>
@@ -134,9 +150,9 @@ const MediaDetailsContent = () => {
             </button>
 
             <button
-              className={`${styles.doneButton} ${!(formData.product && formData.visibility && formData.audience) || isLoading ? styles.disabledButton : ""}`}
+              className={`${styles.doneButton} ${!(formData.product && formData.category && formData.audience) || isLoading ? styles.disabledButton : ""}`}
               onClick={handleSubmit}
-              disabled={!(formData.product && formData.visibility && formData.audience) || isLoading}
+              disabled={!(formData.product && formData.category && formData.audience) || isLoading}
             >
               {isLoading ? "Uploading..." : "Done"}
             </button>
@@ -151,4 +167,3 @@ const MediaDetailsContent = () => {
 export default function MediaDetails() {
   return <MediaDetailsContent />
 }
-
