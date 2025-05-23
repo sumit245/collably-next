@@ -273,7 +273,7 @@ export default function SearchSection() {
             )}
           </div>
 
-          <button className={styles.filterButton}>All Filters</button>
+          {/* <button className={styles.filterButton}>All Filters</button> */}
 
           <div className={styles.customSelect}>
             <select
