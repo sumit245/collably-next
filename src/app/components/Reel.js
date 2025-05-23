@@ -13,10 +13,7 @@ export default function Reel({
   _id,
   video,
   images,
-  productTitle,
-  productImage,
-  productUrl,
-  productPrice,
+  products = [],
   user,
   caption,
   likes = [],
@@ -32,6 +29,11 @@ export default function Reel({
   isActive,
   isLoggedIn,
   onLoginRequired,
+  // Legacy props for backward compatibility
+  productTitle,
+  productImage,
+  productUrl,
+  productPrice,
 }) {
   const dispatch = useDispatch()
   const userId = useSelector((state) => state.auth.user?._id) || currentUserId
@@ -42,9 +44,11 @@ export default function Reel({
   const [isSaved, setIsSaved] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
   const [showProductModal, setShowProductModal] = useState(false)
+  const [scrollPosition, setScrollPosition] = useState(0)
 
   const commentSectionRef = useRef(null)
   const videoRef = useRef(null)
+  const productsRowRef = useRef(null)
 
   useEffect(() => {
     setIsLiked(propIsLiked || likes.includes(userId))
@@ -144,6 +148,43 @@ export default function Reel({
     setIsPaused(!isPaused)
   }
 
+  const handleProductClick = (url) => {
+    const referralCode = url?.match(/referralCode=([A-Za-z0-9]{6})/)?.[1]
+    if (referralCode) {
+      try {
+        dispatch(trackReferralClick(referralCode)).unwrap()
+      } catch (error) {
+        console.error("Tracking failed:", error)
+      }
+    }
+    window.location.href = url
+  }
+
+  const scrollProducts = (direction) => {
+    if (!productsRowRef.current) return
+
+    const scrollAmount = 150
+    const newPosition =
+      direction === "left" ? Math.max(0, scrollPosition - scrollAmount) : scrollPosition + scrollAmount
+
+    productsRowRef.current.scrollTo({
+      left: newPosition,
+      behavior: "smooth",
+    })
+
+    setScrollPosition(newPosition)
+  }
+
+  // Check if we have products from the new API structure or fallback to the old structure
+  const productsList =
+    products && products.length > 0
+      ? products
+      : productTitle && productImage && productUrl
+        ? [{ title: productTitle, image: productImage, url: productUrl, price: productPrice }]
+        : []
+
+  const hasProducts = productsList.length > 0
+
   return (
     <div className={styles.reelContainer}>
       <div className={styles.videoContainer}>
@@ -214,44 +255,73 @@ export default function Reel({
             <img src={user?.avatar || "/placeholder.svg"} alt={user?.fullname} className={styles.profileImage} />
           </Link>
           <div className={styles.profileInfo}>
-            <Link href={`/creator/${user?._id}`} className={styles.profileName}>{user?.fullname}</Link>
+            <Link href={`/creator/${user?._id}`} className={styles.profileName}>
+              {user?.fullname}
+            </Link>
             {userId !== user?._id && (
               <button className={styles.followButton} onClick={handleFollowToggle}>
                 {isFollowing ? "Following" : "Follow"}
               </button>
             )}
+
           </div>
         </div>
-      </div>
-
-      {/* Product Row */}
-      <div className={styles.productRow}>
-        {productTitle && productImage && (
-          <div className={styles.productCard}>
-            <a
-              href={productUrl || caption}
-              onClick={handleCaptionClick}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              <div className={styles.productImage}>
-                <img src={productImage || "/placeholder.svg"} alt={productTitle} />
-              </div>
-              <div className={styles.productBrand}>{productTitle}</div>
-            </a>
-          </div>
-        )}
-      </div>
-
-      {/* View Product Button */}
-      {productTitle && productImage && (
+        {/* View Product Button - Now above the products row */}
+      {hasProducts && (
         <div className={styles.viewProductWrapper}>
-          <button
-            className={styles.viewProductButton}
-            onClick={() => setShowProductModal(true)}
-          >
-            View Product
+          <button className={styles.viewProductButton} onClick={() => setShowProductModal(true)}>
+            Shop Products ({productsList.length})
           </button>
+        </div>
+      )}
+      </div>
+
+      
+
+      {/* Products Row */}
+      {hasProducts && (
+        <div className={styles.productsContainer}>
+          {productsList.length > 3 && (
+            <button
+              className={`${styles.scrollButton} ${styles.scrollButtonLeft}`}
+              onClick={() => scrollProducts("left")}
+            >
+              ‹
+            </button>
+          )}
+
+          <div className={styles.productsRow} ref={productsRowRef}>
+            {productsList.map((product, index) => (
+              <div key={index} className={styles.productCard}>
+                <a
+                  href={product.url}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    handleProductClick(product.url)
+                  }}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  <div className={styles.productImage}>
+                    <img src={product.image || "/placeholder.svg"} alt={product.title} />
+                  </div>
+                  <div className={styles.productInfo}>
+                    <div className={styles.productBrand}>{product.title?.substring(0, 20)}...</div>
+                    {product.price && <div className={styles.productPrice}>{product.price}</div>}
+                  </div>
+                </a>
+              </div>
+            ))}
+          </div>
+
+          {productsList.length > 3 && (
+            <button
+              className={`${styles.scrollButton} ${styles.scrollButtonRight}`}
+              onClick={() => scrollProducts("right")}
+            >
+              ›
+            </button>
+          )}
         </div>
       )}
 
@@ -260,23 +330,43 @@ export default function Reel({
         <div className={styles.productModalOverlay} onClick={() => setShowProductModal(false)}>
           <div className={styles.productModal} onClick={(e) => e.stopPropagation()}>
             <div className={styles.modalHeader}>
-              <h3>{productTitle}</h3>
-              <button className={styles.closeButton} onClick={() => setShowProductModal(false)}>×</button>
+              <h3>Shop Products ({productsList.length})</h3>
+              <button className={styles.closeButton} onClick={() => setShowProductModal(false)}>
+                ×
+              </button>
             </div>
             <div className={styles.modalContent}>
-              <img src={productImage || "/placeholder.svg"} alt={productTitle} />
-              {/* <p>{productPrice && Price: ${productPrice}}</p> */}
-              {productUrl && (
-                <a href={productUrl || caption} target="_blank" rel="noopener noreferrer" className={styles.productLink}>
-                  Visit Product Page
-                </a>
-              )}
+              <div className={styles.productsGrid}>
+                {productsList.map((product, index) => (
+                  <div key={index} className={styles.productGridItem}>
+                    <div className={styles.productGridImage}>
+                      <img src={product.image || "/placeholder.svg"} alt={product.title} />
+                    </div>
+                    <div className={styles.productGridInfo}>
+                      <div className={styles.productGridTitle}>{product.title}</div>
+                      {/* {product.price && <div className={styles.productGridPrice}>{product.price}</div>} */}
+                      <a
+                        href={product.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={styles.productGridLink}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          handleProductClick(product.url)
+                        }}
+                      >
+                        Visit Product
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       )}
 
-      {caption && !productUrl && (
+      {caption && !productsList.length && (
         <div className={styles.captionContainer}>
           <a
             className={styles.caption}
