@@ -59,7 +59,7 @@ export default function Creator2({ _id, productPhoto, productPhotos, posterSrc, 
       <div className={styles.creatorCard}>
       <Link href={`/productDisplay/${_id}`}> <div className={styles.videoContainer}>
           
-            <img src={productPhoto || productPhotos[0] || "/placeholder.svg"} alt={productname} className={styles.productImage} />
+            <img src={productPhotos[0] || "/placeholder.svg"} alt={productname} className={styles.productImage} />
         
 
           <div className={styles.gradientOverlay}></div>
