@@ -12,6 +12,7 @@ import postReducer from "./postSlice"
 import mediaReducer from './mediaSlice'
 import creatorReducer from "./creatorSlice"; 
 import blogReducer from "./blogSlice"; 
+import shopifyProductsReducer from "./shopifySlice"; 
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     media: mediaReducer,
     creators: creatorReducer,
     blogs: blogReducer,
+      shopifyProducts: shopifyProductsReducer,
   },
 })
 

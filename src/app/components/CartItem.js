@@ -8,7 +8,10 @@ export function CartItem({ item, onUpdateQuantity, onRemove }) {
         <img src={item.productPhoto} alt={item.name} className={styles.itemImage} />
         <div>
           <h3 className={styles.itemName}>{item.productname || item.name}</h3>
-          <p className={styles.itemPrice}>₹{item?.price ? item.price.toFixed(2) : "0.00"}</p>
+          <p className={styles.itemPrice}>
+  ₹{!isNaN(item?.price) ? Number(item.price).toFixed(2) : "0.00"}
+</p>
+
         </div>
       </div>
       <div className={styles.itemActions}>
