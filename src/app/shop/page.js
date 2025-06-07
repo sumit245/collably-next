@@ -39,7 +39,7 @@ export default function ShopPage() {
             <TopBrands />
             <ReelsSec2 sectionTitle="Electronics Products" category="Electronics" />
             <BannerCarousel banners={shopBanners} />
-<ReelsSec2Shopify sectionTitle="Shopify Products" />
+{/* <ReelsSec2Shopify sectionTitle="Shopify Products" /> */}
             <ReelsSec2 sectionTitle="Beauty Products" category="Beauty" />
             <ReelsSec2 sectionTitle="Fashion Products" category="Fashion" />
             <ReelsSec2 sectionTitle="Home Products" category="Home" />
