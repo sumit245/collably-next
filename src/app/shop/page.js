@@ -18,7 +18,7 @@ import { LikeProvider } from "../actions/LikeContext"
 import { shopBanners, videoData1, videoData2 } from "../utils.faker"
 import ReelsSec2 from "../components/reelSec2"
 import BannerCarousel from "../components/creatorherohome";
-
+import ReelsSec2Shopify from "../components/reelSec2Shopify"
 export default function ShopPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [creators, setCreators] = useState([])
@@ -39,7 +39,7 @@ export default function ShopPage() {
             <TopBrands />
             <ReelsSec2 sectionTitle="Electronics Products" category="Electronics" />
             <BannerCarousel banners={shopBanners} />
-
+<ReelsSec2Shopify sectionTitle="Shopify Products" />
             <ReelsSec2 sectionTitle="Beauty Products" category="Beauty" />
             <ReelsSec2 sectionTitle="Fashion Products" category="Fashion" />
             <ReelsSec2 sectionTitle="Home Products" category="Home" />

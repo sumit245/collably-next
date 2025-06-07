@@ -27,7 +27,7 @@ export default function HomePage() {
       <HeaderComponent />
       <main>
         <HeroSectionComponent heroData={heroData} />
-        <ImageRotationComponent />
+        {/* <ImageRotationComponent /> */}
         <QuickEasyComponent quickEasyData={quickEasyData} />
         <ScrollerComponent scrollerData={scrollerData} />
         <ReviewSectionComponent />
