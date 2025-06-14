@@ -1,12 +1,21 @@
 import api from "./api"
 
-export const createOrder = async (orderData) => {
+export const getRazorpayConfig = async () => {
+  try {
+    // This will get the Razorpay configuration from your api.js
+    // You can add the key_id and key_secret there
+    return await api.getRazorpayConfig()
+  } catch (error) {
+    console.error("Error in orderService.getRazorpayConfig:", error)
+    throw error
+  }
+}
 
+export const createOrder = async (orderData) => {
   try {
     const data = await api.fetch("/order", {
       method: "POST",
       body: JSON.stringify(orderData),
-      
     })
     return data
   } catch (error) {
@@ -56,3 +65,14 @@ export const cancelOrder = async (id) => {
   }
 }
 
+export const verifyPayment = async (paymentData) => {
+  try {
+    return await api.fetch("/payment/verify", {
+      method: "POST",
+      body: JSON.stringify(paymentData),
+    })
+  } catch (error) {
+    console.error("Error in orderService.verifyPayment:", error)
+    throw error
+  }
+}
