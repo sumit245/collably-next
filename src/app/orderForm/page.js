@@ -1,7 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import { useSelector, useDispatch } from "react-redux"
 import { ArrowLeft } from "lucide-react"
 import styles from "./stylesform.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
@@ -9,6 +10,8 @@ import { LikeProvider } from "../actions/LikeContext"
 import Header from "../components/HeaderShop"
 import Footer from "../components/FooterShop"
 import PincodeLookup from "india-pincode-lookup"
+import { processRazorpayPayment } from "../store/orderSlice"
+import { clearCart } from "../store/cartSlice"
 
 export default function AddressForm() {
   const [formData, setFormData] = useState({
@@ -24,7 +27,22 @@ export default function AddressForm() {
   })
 
   const [cityStateReadOnly, setCityStateReadOnly] = useState(false)
+
   const router = useRouter()
+  const dispatch = useDispatch()
+  const { items, total } = useSelector((state) => state.cart)
+  const user = useSelector((state) => state.auth.user)
+  const { isLoading, error } = useSelector((state) => state.orders)
+
+  useEffect(() => {
+    if (!user) {
+      router.push(`/login?redirect=${encodeURIComponent("/CreatorHome")}`)
+    }
+
+    if (!items || items.length === 0) {
+      router.push("/cart")
+    }
+  }, [user, items, router])
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -54,10 +72,55 @@ export default function AddressForm() {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    localStorage.setItem("userInfo", JSON.stringify(formData))
-    router.push("/payment")
+
+    // Validate form
+    if (
+      !formData.name ||
+      !formData.phone ||
+      !formData.address ||
+      !formData.pincode ||
+      !formData.city ||
+      !formData.state
+    ) {
+      alert("Please fill in all required fields")
+      return
+    }
+
+    const orderItems = items.map((item) => ({
+      product: item._id,
+      quantity: item.quantity,
+      price: item.price,
+    }))
+
+    const shippingAddress = `${formData.name}, ${formData.address}, ${formData.locality}, ${formData.city}, ${formData.state}, ${formData.pincode}`
+
+    const paymentData = {
+      orderItems,
+      shippingAddress,
+      totalAmount: total,
+      name: formData.name,
+      phone: formData.phone,
+      userEmail: user?.email || "",
+      userInfo: formData,
+    }
+
+    try {
+      const result = await dispatch(processRazorpayPayment(paymentData)).unwrap()
+
+      if (result.success) {
+        // Clear cart and navigate to confirmation
+        dispatch(clearCart())
+        router.push("/order")
+      }
+    } catch (error) {
+      console.error("Payment processing failed:", error)
+    }
+  }
+
+  if (!user || !items || items.length === 0) {
+    return null
   }
 
   return (
@@ -72,6 +135,8 @@ export default function AddressForm() {
             </button>
             <h1 className={styles.title}>ADD NEW ADDRESS</h1>
           </header>
+
+          {error && <div className={styles.errorMessage}>{error}</div>}
 
           <form className={styles.form} onSubmit={handleSubmit}>
             <section className={styles.section}>
@@ -90,24 +155,20 @@ export default function AddressForm() {
                 <input
                   type="tel"
                   name="phone"
-                  value={
-                    formData.phone.startsWith("+91")
-                      ? formData.phone
-                      : "+91" + formData.phone
-                  }
+                  value={formData.phone.startsWith("+91") ? formData.phone : "+91" + formData.phone}
                   onChange={(e) => {
-                    let value = e.target.value;
+                    let value = e.target.value
                     if (value.startsWith("+91")) {
-                      value = value.slice(3);
+                      value = value.slice(3)
                     }
-                   
-                    value = value.replace(/[^0-9]/g, "");
+
+                    value = value.replace(/[^0-9]/g, "")
                     if (value.length > 10) {
-                      value = value.slice(0, 10);
+                      value = value.slice(0, 10)
                     }
                     handleChange({
                       target: { name: "phone", value: "+91" + value },
-                    });
+                    })
                   }}
                   placeholder="Mobile No*"
                   className={styles.input}
@@ -124,11 +185,11 @@ export default function AddressForm() {
                   name="pincode"
                   value={formData.pincode}
                   onChange={(e) => {
-                    const value = e.target.value.replace(/[^0-9]/g, "");
+                    const value = e.target.value.replace(/[^0-9]/g, "")
                     if (value.length <= 6) {
                       handleChange({
                         target: { name: "pincode", value: value },
-                      });
+                      })
                     }
                   }}
                   placeholder="Pin Code*"
@@ -183,23 +244,15 @@ export default function AddressForm() {
               <div className={styles.addressTypeGroup}>
                 <button
                   type="button"
-                  className={`${styles.addressTypeButton} ${
-                    formData.addressType === "home" ? styles.active : ""
-                  }`}
-                  onClick={() =>
-                    setFormData((prev) => ({ ...prev, addressType: "home" }))
-                  }
+                  className={`${styles.addressTypeButton} ${formData.addressType === "home" ? styles.active : ""}`}
+                  onClick={() => setFormData((prev) => ({ ...prev, addressType: "home" }))}
                 >
                   Home
                 </button>
                 <button
                   type="button"
-                  className={`${styles.addressTypeButton} ${
-                    formData.addressType === "work" ? styles.active : ""
-                  }`}
-                  onClick={() =>
-                    setFormData((prev) => ({ ...prev, addressType: "work" }))
-                  }
+                  className={`${styles.addressTypeButton} ${formData.addressType === "work" ? styles.active : ""}`}
+                  onClick={() => setFormData((prev) => ({ ...prev, addressType: "work" }))}
                 >
                   Work
                 </button>
@@ -207,17 +260,35 @@ export default function AddressForm() {
             </section>
 
             <label className={styles.defaultCheckbox}>
-              <input
-                type="checkbox"
-                name="isDefault"
-                checked={formData.isDefault}
-                onChange={handleChange}
-              />
+              <input type="checkbox" name="isDefault" checked={formData.isDefault} onChange={handleChange} />
               Make this my default address
             </label>
 
-            <button type="submit" className={styles.submitButton}>
-              ADD ADDRESS
+            {/* Order Summary */}
+            <div className={styles.orderSummary}>
+              <h3 className={styles.summaryTitle}>Order Summary</h3>
+              <div className={styles.summaryContent}>
+                <div className={styles.summaryRow}>
+                  <span>Items ({items.length})</span>
+                  <span>₹{total.toFixed(2)}</span>
+                </div>
+                <div className={styles.summaryRow}>
+                  <span>Delivery</span>
+                  <span>Free</span>
+                </div>
+                <div className={styles.summaryRow + " " + styles.totalRow}>
+                  <span>
+                    <strong>Total Amount</strong>
+                  </span>
+                  <span>
+                    <strong>₹{total.toFixed(2)}</strong>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" className={styles.submitButton} disabled={isLoading}>
+              {isLoading ? "Processing Payment..." : "PROCEED TO PAY"}
             </button>
           </form>
 
@@ -225,5 +296,5 @@ export default function AddressForm() {
         </div>
       </div>
     </LikeProvider>
-  );
+  )
 }

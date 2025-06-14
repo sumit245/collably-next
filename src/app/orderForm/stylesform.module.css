@@ -142,4 +142,39 @@
     background: #ff527b;
   }
   
-  
+  .orderSummary {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #e9ecef;
+}
+
+.summaryTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.summaryContent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  color: #666;
+}
+
+.totalRow {
+  border-top: 1px solid #dee2e6;
+  padding-top: 15px;
+  margin-top: 10px;
+  color: #333;
+  font-size: 16px;
+}
