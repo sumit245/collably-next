@@ -1,4 +1,4 @@
-export const BASE_URL = "https://newapp.collably.in/api"
+export const BASE_URL = "https://collably.in/api"
 
 const api = {
 
