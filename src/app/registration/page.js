@@ -199,7 +199,7 @@ const RegistrationForm = () => {
         </div>
       </div>
 
-      <div className={styles.password}>
+      {/* <div className={styles.password}>
         <label htmlFor="password" className={styles.label}>
           Password
         </label>
@@ -212,7 +212,7 @@ const RegistrationForm = () => {
           minLength={6}
           className={styles.input}
         />
-      </div>
+      </div> */}
 
       <button type="submit" className={styles.button} disabled={isSubmitting}>
         {isSubmitting ? "Registering..." : "Register"}

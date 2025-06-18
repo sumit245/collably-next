@@ -162,7 +162,7 @@
   .actions {
     position: absolute;
     right: 15px;
-    bottom: 210px;
+    bottom: 315px;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -193,7 +193,7 @@
   
   .userProfile {
     position: absolute;
-    bottom: 160px;
+    bottom: 255px;
     left: 10px;
     right: 10px;
     z-index: 10;
@@ -263,13 +263,13 @@
   
   .productRow {
     position: absolute;
-    bottom: 60px;
+    bottom: 133px;
     left: 0;
     right: 0;
     display: flex;
     overflow-x: auto;
     gap: 10px;
-    padding: 0 10px;
+    padding: 0 20px;
     z-index: 10;
     scrollbar-width: none;
   }
@@ -279,12 +279,14 @@
   }
   
   .productCard {
-    min-width: 120px;
+    /* min-width: 120px; */
     background: white;
     border-radius: 8px;
     overflow: hidden;
     color: black;
-    width:120px;
+    width:95px;
+    height: 115px;
+    border: 3px solid white;
   }
   
   .productImage {
@@ -296,14 +298,13 @@
   .productImage img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
   }
   
   .productBrand {
-    padding: 5px;
-    font-size: 12px;
+    padding: 2px;
+    font-size: 10px;
     font-weight: 500;
-    width: 100px;
+    width: 90px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -394,11 +395,9 @@
   }
   
   .productImage {
-    width: 55px;
-    height: 70px;
-    border-radius: 4px;
+    width: 95px;
+    height: 95px;
     overflow: hidden;
-    margin-left: 2rem;
   }
   
   .productDetails {
@@ -410,6 +409,152 @@
     font-weight: 500;
   }
   
+
+
+
+/* ===== Video Container ===== */
+.videoContainer {
+  position: relative;
+}
+
+/* ===== View Product Button ===== */
+.viewProductWrapper {
+  position: absolute;
+  bottom: 225px;
+  right: 10px;
+  z-index: 999;
+}
+
+.viewProductButton {
+  display: inline-block;
+  background-color: #ff0055;
+  color: #fff;
+  border: 1px solid #8998a9;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.viewProductButton:hover {
+  background-color: #ce0548;
+}
+
+/* ===== Modal Overlay ===== */
+.productModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color:transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* ===== Modal Box ===== */
+.productModal {
+  background-color: #fff;
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* ===== Modal Header ===== */
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.modalHeader h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+/* ===== Close Button ===== */
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* ===== Modal Content ===== */
+.modalContent img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 10px 0;
+}
+
+.productLink {
+  display: inline-block;
+  margin-top: 10px;
+  background-color: #000;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* ===== Scrollbar (optional) ===== */
+.productModal::-webkit-scrollbar {
+  width: 6px;
+}
+.productModal::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+/* ===== Responsive Tweaks ===== */
+@media (max-width: 480px) {
+  .productModal {
+    padding: 16px;
+  }
+
+  .productLink {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .modalHeader h3 {
+    font-size: 16px;
+  }
+
+  .closeButton {
+    font-size: 20px;
+  }
+}
+
+
+
+
+.reelsContainer {
+  height: 100vh;
+  overflow-y: auto; 
+  scroll-snap-type: y mandatory;
+}
+.reelContainer {
+  height: 100vh; 
+  scroll-snap-align: start;
+}
+
 
 
 
