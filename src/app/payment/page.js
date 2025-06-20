@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useSelector, useDispatch } from "react-redux"
-import { ArrowLeft, CreditCard, Wallet, Building2, Smartphone } from "lucide-react"
+import { CreditCard, Wallet, Building2, Smartphone } from "lucide-react"
 import styles from "./stylespayment.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import { LikeProvider } from "../actions/LikeContext"
@@ -21,10 +21,10 @@ export default function Payment() {
   const { error, isLoading } = useSelector((state) => state.orders)
   const [localError, setLocalError] = useState(null)
   const [formData, setFormData] = useState({})
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false)
 
   useEffect(() => {
     if (!user) {
-      
       router.push(`/login?redirect=${encodeURIComponent("/CreatorHome")}`)
     }
 
@@ -32,20 +32,24 @@ export default function Payment() {
     if (data) {
       setFormData(JSON.parse(data))
     }
+
+    // Load Razorpay script
+    const script = document.createElement("script")
+    script.src = "https://checkout.razorpay.com/v1/checkout.js"
+    script.async = true
+    document.body.appendChild(script)
+
     return () => {
       dispatch(clearOrderError())
+      // Clean up script
+      const existingScript = document.querySelector('script[src="https://checkout.razorpay.com/v1/checkout.js"]')
+      if (existingScript) {
+        document.body.removeChild(existingScript)
+      }
     }
   }, [dispatch, user, router])
 
-  const handlePaymentSubmit = async (e) => {
-    e.preventDefault()
-    setLocalError(null)
-
-    if (!user) {
-      
-      router.push(`/login?redirect=${encodeURIComponent("/CreatorHome")}`)
-    }
-
+  const createOrderInBackend = async (paymentData = null) => {
     const orderItems = items.map((item) => ({
       product: item._id,
       quantity: item.quantity,
@@ -58,23 +62,111 @@ export default function Payment() {
       items: orderItems,
       shippingAddress: shippingAddress,
       totalAmount: total,
-      paymentStatus: "pending",
+      paymentStatus: paymentData ? "completed" : "pending",
       paymentMethod: selectedPayment,
       name: formData.name,
       phone: formData.phone,
+      ...(paymentData && {
+        razorpayPaymentId: paymentData.razorpay_payment_id,
+        razorpayOrderId: paymentData.razorpay_order_id,
+        razorpaySignature: paymentData.razorpay_signature,
+      }),
     }
 
-    try {
-   
-      const result = await dispatch(createOrder(order)).unwrap()
-   
+    const result = await dispatch(createOrder(order)).unwrap()
+    return result
+  }
 
-      // Store order data before clearing cart
+  const handleRazorpayPayment = () => {
+    setIsProcessingPayment(true)
+    setLocalError(null)
+
+    const options = {
+      key: "rzp_test_Zs6ix1Ja70U0kB", // Your Razorpay key ID
+      amount: Math.round(total * 100), // Amount in paise
+      currency: "INR",
+      name: "Your Store Name",
+      description: "Purchase from Your Store",
+      image: "/logo.png", // Your logo URL
+      handler: async (response) => {
+        try {
+          // Payment successful, create order
+          const orderResult = await createOrderInBackend(response)
+
+          // Store order data with actual order ID
+          localStorage.setItem(
+            "orderData",
+            JSON.stringify({
+              name: formData.name,
+              shippingAddress: `${formData.name}, ${formData.address}, ${formData.locality}, ${formData.city}, ${formData.state}, ${formData.pincode}`,
+              phone: formData.phone,
+              paymentMethod: selectedPayment,
+              totalAmount: total,
+              orderId: orderResult.order.orderId, // Use actual order ID from API
+              _id: orderResult.order._id,
+              paymentId: response.razorpay_payment_id,
+            }),
+          )
+
+          dispatch(clearCart())
+          localStorage.removeItem("userInfo")
+          setIsProcessingPayment(false)
+          router.push("/order")
+        } catch (error) {
+          console.error("Failed to create order after payment:", error)
+          setLocalError("Payment successful but order creation failed. Please contact support.")
+          setIsProcessingPayment(false)
+        }
+      },
+      prefill: {
+        name: formData.name,
+        email: user?.email || "",
+        contact: formData.phone?.replace("+91", "") || "",
+      },
+      notes: {
+        address: `${formData.address}, ${formData.locality}, ${formData.city}, ${formData.state}, ${formData.pincode}`,
+      },
+      theme: {
+        color: "#3399cc",
+      },
+      modal: {
+        ondismiss: () => {
+          setIsProcessingPayment(false)
+          setLocalError("Payment cancelled by user")
+        },
+      },
+    }
+
+    if (window.Razorpay) {
+      const rzp = new window.Razorpay(options)
+      rzp.on("payment.failed", (response) => {
+        setIsProcessingPayment(false)
+        setLocalError(`Payment failed: ${response.error.description}`)
+      })
+      rzp.open()
+    } else {
+      setIsProcessingPayment(false)
+      setLocalError("Razorpay SDK not loaded. Please refresh and try again.")
+    }
+  }
+
+  const handleCashOnDelivery = async () => {
+    setLocalError(null)
+
+    try {
+      const orderResult = await createOrderInBackend()
+
+      // Store order data with actual order ID
       localStorage.setItem(
         "orderData",
         JSON.stringify({
-          ...order,
-          orderId: result._id || Math.random().toString(36).substr(2, 9),
+          name: formData.name,
+          shippingAddress: `${formData.name}, ${formData.address}, ${formData.locality}, ${formData.city}, ${formData.state}, ${formData.pincode}`,
+          phone: formData.phone,
+          paymentMethod: selectedPayment,
+          totalAmount: total,
+          orderId: orderResult.order.orderId, // Use actual order ID from API
+          _id: orderResult.order._id,
         }),
       )
 
@@ -87,8 +179,29 @@ export default function Payment() {
     }
   }
 
+  const handlePaymentSubmit = async (e) => {
+    e.preventDefault()
+
+    if (!user) {
+      router.push(`/login?redirect=${encodeURIComponent("/CreatorHome")}`)
+      return
+    }
+
+    if (items.length === 0) {
+      setLocalError("Your cart is empty")
+      return
+    }
+
+    if (selectedPayment === "cash") {
+      await handleCashOnDelivery()
+    } else {
+      // Handle online payments via Razorpay
+      handleRazorpayPayment()
+    }
+  }
+
   if (!user) {
-    return null 
+    return null
   }
 
   return (
@@ -205,8 +318,8 @@ export default function Payment() {
                   VIEW DETAILS
                 </button>
               </div>
-              <button type="submit" className={styles.payNowButton} disabled={isLoading}>
-                {isLoading ? "Processing..." : "PAY NOW"}
+              <button type="submit" className={styles.payNowButton} disabled={isLoading || isProcessingPayment}>
+                {isLoading || isProcessingPayment ? "Processing..." : "PAY NOW"}
               </button>
             </div>
           </form>
@@ -217,4 +330,3 @@ export default function Payment() {
     </LikeProvider>
   )
 }
-

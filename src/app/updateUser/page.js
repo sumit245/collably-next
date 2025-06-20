@@ -199,6 +199,32 @@ const UpdateUserForm = () => {
           />
         </div>
       </div>
+{/* 
+      <div className={styles.textLabel}>
+        <div className={styles.passwordHeader}>
+          <label htmlFor="password" className={styles.label}>
+            Password
+          </label>
+          <label className={styles.checkboxLabel}>
+            <input
+              type="checkbox"
+              checked={isPasswordUpdate}
+              onChange={(e) => setIsPasswordUpdate(e.target.checked)}
+              className={styles.checkbox}
+            />
+            Update Password
+          </label>
+        </div>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          disabled={!isPasswordUpdate}
+          className={styles.input}
+          placeholder={isPasswordUpdate ? "Enter new password" : "Password will not be updated"}
+        />
+      </div> */}
 
       <button type="submit" className={styles.button} disabled={isSubmitting}>
         {isSubmitting ? "Updating..." : "Update Profile"}

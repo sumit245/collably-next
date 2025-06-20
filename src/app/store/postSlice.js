@@ -37,6 +37,25 @@ export const fetchSavedPosts = createAsyncThunk("posts/fetchSavedPosts", async (
   return fetchWithToken("/getSavePosts")
 })
 
+// New search posts thunk
+// Update the searchPosts thunk in your postSlice.js file
+
+
+export const searchPosts = createAsyncThunk(
+  "posts/searchPosts",
+  async ({ q = '', category = '', sort = 'newest' }) => {
+    const queryParams = new URLSearchParams();
+
+    if (q.trim()) queryParams.append('q', q.trim());
+    if (category && category !== 'All Categories') queryParams.append('category', category);
+    queryParams.append('sort', sort); // Always include sort parameter
+
+    const queryString = queryParams.toString();
+    return fetchWithToken(`/searchPosts${queryString ? `?${queryString}` : ''}`);
+  }
+);
+
+
 export const likePost = createAsyncThunk("posts/likePost", async (postId) => {
   return fetchWithToken(`/post/${postId}/like`, { method: "PATCH" })
 })
@@ -65,12 +84,19 @@ const postSlice = createSlice({
   initialState: {
     posts: [],
     savedPosts: [],
+    searchResults: [],
     currentPost: null,
     status: "idle",
     savedPostsStatus: "idle",
+    searchStatus: "idle",
     error: null,
   },
-  reducers: {},
+  reducers: {
+    clearSearchResults: (state) => {
+      state.searchResults = [];
+      state.searchStatus = "idle";
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchPosts.pending, (state) => {
@@ -91,10 +117,22 @@ const postSlice = createSlice({
         state.savedPostsStatus = "succeeded"; 
         state.savedPosts = action.payload.savedPosts || []; 
       })
-      
       .addCase(fetchSavedPosts.rejected, (state, action) => {
         state.savedPostsStatus = "failed"
         state.error = action.error.message
+      })
+      // Add search posts cases
+      .addCase(searchPosts.pending, (state) => {
+        state.searchStatus = "loading"
+      })
+      .addCase(searchPosts.fulfilled, (state, action) => {
+        state.searchStatus = "succeeded"
+        state.searchResults = action.payload.posts || []
+      })
+      .addCase(searchPosts.rejected, (state, action) => {
+        state.searchStatus = "failed"
+        state.error = action.error.message
+        state.searchResults = []
       })
       .addCase(fetchPostById.fulfilled, (state, action) => {
         state.currentPost = action.payload.post
@@ -117,7 +155,6 @@ const postSlice = createSlice({
   },
 })
 
-
 const updatePost = (state, updatedPost) => {
   if (state.currentPost && state.currentPost._id === updatedPost._id) {
     state.currentPost = updatedPost
@@ -130,6 +167,12 @@ const updatePost = (state, updatedPost) => {
       post._id === updatedPost._id ? updatedPost : post
     )
   }
+  if (state.searchResults.length > 0) {
+    state.searchResults = state.searchResults.map(post => 
+      post._id === updatedPost._id ? updatedPost : post
+    )
+  }
 }
 
+export const { clearSearchResults } = postSlice.actions
 export default postSlice.reducer

@@ -1,7 +1,6 @@
 "use client"
 
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { updateFormData } from "../store/mediaSlice"
 import styles from "./page.module.css"
@@ -10,13 +9,13 @@ import FooterCreator from "../components/FooterCreator"
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 
-export default function SetVisibility() {
+export default function SetCategory() {
   const router = useRouter()
   const dispatch = useDispatch()
-  const selectedVisibility = useSelector((state) => state.media.formData.visibility)
+  const selectedCategory = useSelector((state) => state.media.formData.category)
 
-  const handleSelect = (visibility) => {
-    dispatch(updateFormData({ visibility }))
+  const handleSelect = (category) => {
+    dispatch(updateFormData({ category }))
     router.back()
   }
 
@@ -30,39 +29,50 @@ export default function SetVisibility() {
                 <ArrowLeft size={24} color="white" />
               </button>
             </Link>
-            <h1 className={styles.title}>Set visibility</h1>
+            <h1 className={styles.title}>Select Category</h1>
           </div>
           <div className={styles.options}>
             <button
-              className={`${styles.option} ${selectedVisibility === "Public" ? styles.selected : ""}`}
-              onClick={() => handleSelect("Public")}
+              className={`${styles.option} ${selectedCategory === "Fashion" ? styles.selected : ""}`}
+              onClick={() => handleSelect("Fashion")}
             >
               <div className={styles.radio} />
               <div className={styles.optionContent}>
-                <h3>Public</h3>
-                <p>Anyone can search for and view</p>
+                <h3>Fashion</h3>
+                <p>Clothing, accessories, and style items</p>
               </div>
             </button>
 
             <button
-              className={`${styles.option} ${selectedVisibility === "Unlisted" ? styles.selected : ""}`}
-              onClick={() => handleSelect("Unlisted")}
+              className={`${styles.option} ${selectedCategory === "Electronics" ? styles.selected : ""}`}
+              onClick={() => handleSelect("Electronics")}
             >
               <div className={styles.radio} />
               <div className={styles.optionContent}>
-                <h3>Unlisted</h3>
-                <p>Anyone with the link can view</p>
+                <h3>Electronics</h3>
+                <p>Gadgets, devices, and tech products</p>
               </div>
             </button>
 
             <button
-              className={`${styles.option} ${selectedVisibility === "Private" ? styles.selected : ""}`}
-              onClick={() => handleSelect("Private")}
+              className={`${styles.option} ${selectedCategory === "Home" ? styles.selected : ""}`}
+              onClick={() => handleSelect("Home")}
             >
               <div className={styles.radio} />
               <div className={styles.optionContent}>
-                <h3>Private</h3>
-                <p>Only people you choose can view</p>
+                <h3>Home</h3>
+                <p>Furniture, decor, and household items</p>
+              </div>
+            </button>
+            
+            <button
+              className={`${styles.option} ${selectedCategory === "Beauty" ? styles.selected : ""}`}
+              onClick={() => handleSelect("Beauty")}
+            >
+              <div className={styles.radio} />
+              <div className={styles.optionContent}>
+                <h3>Beauty</h3>
+                <p>Cosmetics, skincare, and personal care</p>
               </div>
             </button>
           </div>

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useDispatch, useSelector } from "react-redux"
-import { ChevronDown, ChevronUp, ArrowLeft, Search } from 'lucide-react'
+import { ChevronDown, ChevronUp, ArrowLeft, Search, Plus, X } from 'lucide-react'
 import styles from "./page.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import FooterCreator from "../components/FooterCreator"
@@ -16,8 +16,10 @@ export default function SetProductClient() {
   const router = useRouter()
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
+  const [selectedLinks, setSelectedLinks] = useState([])
+  const [currentSelection, setCurrentSelection] = useState("")
   const referrals = useSelector((state) => state.brands.referrals || [])
-  const selectedLink = useSelector((state) => state.media.formData.product)
+  const formData = useSelector((state) => state.media.formData)
 
   const userId = useSelector((state) => state.auth.user?._id)
 
@@ -27,17 +29,45 @@ export default function SetProductClient() {
     }
   }, [dispatch, userId])
 
+  // Initialize selected links from formData if available
+  useEffect(() => {
+    if (formData.product) {
+      const links = Array.isArray(formData.product) 
+        ? formData.product 
+        : formData.product.split(',').map(link => link.trim())
+      setSelectedLinks(links)
+    }
+  }, [formData.product])
+
   const filteredReferrals = (referrals || []).filter((referral) =>
     referral.referralLink.toLowerCase().includes(searchTerm.toLowerCase()),
   )
 
   const handleDone = () => {
+    if (selectedLinks.length > 0) {
+      dispatch(updateFormData({ product: selectedLinks.join(', ') }))
+    }
     router.push('/video-details')
   }
 
   const handleSelectLink = (link) => {
-    dispatch(updateFormData({ product: link }))
+    setCurrentSelection(link)
     setIsDropdownOpen(false)
+  }
+
+  const handleAddLink = () => {
+    if (!currentSelection || selectedLinks.includes(currentSelection) || selectedLinks.length >= 8) return
+    
+    const newLinks = [...selectedLinks, currentSelection]
+    setSelectedLinks(newLinks)
+    dispatch(updateFormData({ product: newLinks.join(', ') }))
+    setCurrentSelection("")
+  }
+
+  const handleRemoveLink = (index) => {
+    const newLinks = selectedLinks.filter((_, i) => i !== index)
+    setSelectedLinks(newLinks)
+    dispatch(updateFormData({ product: newLinks.join(', ') }))
   }
 
   return (
@@ -49,12 +79,13 @@ export default function SetProductClient() {
               <ArrowLeft size={24} color="white" />
             </button>
           </Link>
-          <h1 className={styles.title}>Add Link</h1>
+          <h1 className={styles.title}>Add Links (Max 8)</h1>
+          
           <div className={styles.dropdownContainer}>
             <div className={styles.customDropdown}>
-              <label htmlFor="link">Add Link</label>
+              <label htmlFor="link">Select Link</label>
               <div className={styles.dropdownHeader} onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-                <span className={styles.placeholder}>{selectedLink || "Select a link"}</span>
+                <span className={styles.placeholder}>{currentSelection || "Select a link"}</span>
                 {isDropdownOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
               </div>
               {isDropdownOpen && (
@@ -81,8 +112,42 @@ export default function SetProductClient() {
                 </div>
               )}
             </div>
+            
+            <div className={styles.addLinkContainer}>
+              <button 
+                className={`${styles.addButton} ${!currentSelection || selectedLinks.includes(currentSelection) || selectedLinks.length >= 8 ? styles.disabledButton : ''}`}
+                onClick={handleAddLink}
+                disabled={!currentSelection || selectedLinks.includes(currentSelection) || selectedLinks.length >= 8}
+              >
+                <Plus size={16} /> Add Link
+              </button>
+            </div>
+            
+            {selectedLinks.length > 0 && (
+              <div className={styles.selectedLinksContainer}>
+                <h3 className={styles.selectedLinksTitle}>Selected Links ({selectedLinks.length}/8)</h3>
+                <div className={styles.linksList}>
+                  {selectedLinks.map((link, index) => (
+                    <div key={index} className={styles.linkItem}>
+                      <span className={styles.linkText}>{link}</span>
+                      <button 
+                        className={styles.removeButton}
+                        onClick={() => handleRemoveLink(index)}
+                      >
+                        <X size={16} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-          <button className={styles.doneButton} onClick={handleDone}>
+          
+          <button 
+            className={`${styles.doneButton} ${selectedLinks.length === 0 ? styles.disabledButton : ''}`}
+            onClick={handleDone}
+            disabled={selectedLinks.length === 0}
+          >
             Done
           </button>
         </div>

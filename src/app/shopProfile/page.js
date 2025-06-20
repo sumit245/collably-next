@@ -360,6 +360,28 @@ export default function ProfilePage() {
                 <ChevronRight className={styles.chevron} />
               </div>
               </Link>
+               <Link href="/termsofUse">
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Users size={18} />
+                  </div>
+                  <span>Terms of Use</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+              </Link>
+               <Link href="/cancelRefundPolicy">
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Users size={18} />
+                  </div>
+                  <span>Cancellation and Refund Policy</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+              </Link>
             </div>
           </div>
 

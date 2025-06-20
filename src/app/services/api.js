@@ -1,6 +1,13 @@
-export const BASE_URL = "https://newapp.collably.in/api"
+export const BASE_URL = "https://collably.in/api"
 
 const api = {
+
+getRazorpayConfig() {
+  return {
+    key_id: "rzp_test_Zs6ix1Ja70U0kB",
+    key_secret: "fGpPsEv7kr30PrKu8um2uIa6", 
+  }
+},
   fetch: async (url, options = {}) => {
     const accessToken = localStorage.getItem("accessToken")
     const headers = {

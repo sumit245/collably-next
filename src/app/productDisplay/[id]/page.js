@@ -67,9 +67,7 @@ function ProductDetailContent({ product }) {
   // Prepare images array for carousel
   const getImages = () => {
     const images = []
-    if (product.productPhoto) {
-      images.push(product.productPhoto)
-    }
+  
 
     if (product.productPhotos && Array.isArray(product.productPhotos)) {
       images.push(...product.productPhotos)
@@ -96,7 +94,7 @@ function ProductDetailContent({ product }) {
           _id: product._id,
           name: product.brandId,
           productname: product.productname,
-          productPhoto: product.productPhoto,
+          productPhoto: product.productPhotos[0],
           price: product.price,
           quantity: 1,
         })
@@ -124,10 +122,10 @@ function ProductDetailContent({ product }) {
         name: product.brandId,
         productname: product.productname,
         price: product.price,
-        image: product.productPhoto,
-      })
-    );
-  };
+        image: product.productPhotos[0],
+      }),
+    )
+  }
 
   // Handle image carousel navigation
   const goToImage = (index) => {

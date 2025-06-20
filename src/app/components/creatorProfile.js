@@ -144,16 +144,21 @@ export default function CreatorProfile() {
                 </span>
                 </div>
                 <div className={styles.stats}>
-                  {[
-                    ["posts", filteredPosts.length],
-                    ["followers", creator?.followers?.length || 0],
-                    ["following", creator?.following?.length || 0],
-                  ].map(([label, value]) => (
-                    <div key={label} className={styles.statItem}>
-                      <span className={styles.statNumber}>{value}</span>
-                      <span className={styles.statLabel}>{label}</span>
-                    </div>
-                  ))}
+                {(() => {
+  const totalPostsCount = posts.filter((post) => post.user?._id === creatorId).length
+
+  return [
+    ["posts", totalPostsCount],
+    ["followers", creator?.followers?.length || 0],
+    ["following", creator?.following?.length || 0],
+  ].map(([label, value]) => (
+    <div key={label} className={styles.statItem}>
+      <span className={styles.statNumber}>{value}</span>
+      <span className={styles.statLabel}>{label}</span>
+    </div>
+  ))
+})()}
+
                 </div>
               </div>
 

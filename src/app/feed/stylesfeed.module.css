@@ -1,3 +1,4 @@
+
 .reelsContainer {
   width: 100%; 
   max-width: 450px; 
@@ -893,7 +894,7 @@
 } */
 
 /* @media screen and (width <= 320px) {
-  .stylesfeed-module__IgEhza__video {
+  .stylesfeed-module_IgEhza_video {
       margin-bottom: -5rem;
   }
 }
