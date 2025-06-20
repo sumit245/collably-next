@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -69,9 +68,9 @@ export default function ProfilePage() {
                   <Image
                     src={user?.avatar || "/images/banavt1.png"}
                     alt="User avatar"
-                    width={40}
-                    height={40}
-                    className={styles.avatar}
+                    width={55}
+                    height={55}
+                    className={styles.avatar2}
                   />
                 </div>
                 <div className={styles.name}>
@@ -356,6 +355,28 @@ export default function ProfilePage() {
                     <Users size={18} />
                   </div>
                   <span>Privacy Policy</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+              </Link>
+               <Link href="/termsofUse">
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Users size={18} />
+                  </div>
+                  <span>Terms of Use</span>
+                </div>
+                <ChevronRight className={styles.chevron} />
+              </div>
+              </Link>
+               <Link href="/cancelRefundPolicy">
+              <div className={styles.item}>
+                <div className={styles.itemData}>
+                  <div className={styles.iconContainer}>
+                    <Users size={18} />
+                  </div>
+                  <span>Cancellation and Refund Policy</span>
                 </div>
                 <ChevronRight className={styles.chevron} />
               </div>

@@ -13,7 +13,7 @@
   max-width: 450px;
   height: 100vh;
   overflow-y: auto;
-  background: #fff0f0;
+  background: #fff;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   position: relative;
   scrollbar-width: none;
@@ -70,7 +70,7 @@
   position: absolute;
   top: -5px;
   right: -5px;
-  background: #ff0055e0;
+  background: #fb24a7;
   color: white;
   font-size: 0.75rem;
   padding: 2px 6px;
@@ -329,7 +329,7 @@
 }
 
 .activeShop {
-  color: #ff689b;
+  color: #fb24a7;
 }
 
 .main {
@@ -344,7 +344,7 @@
 .sectionTitleShop {
   margin-top: 1rem;
   font-weight: 700;
-  color: #e61f93;
+  color: #fb24a7;
   font-size: 1.3rem;
   padding-left: 5px;
 }
@@ -398,7 +398,7 @@
   height: 100%;
   width: 100%;
   border-radius: 0.5rem;
-  box-shadow: inset 0 -65px 37px -38px #e61f93;
+  box-shadow: inset 0 -65px 37px -38px #fb24a7;
 }
 
 .creatorInfo {
@@ -426,7 +426,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 4px;
-  background-color: #e61f93;
+  background-color: #fb24a7;
   padding: 0 0.25rem;
   cursor: pointer;
   border: none;
@@ -847,7 +847,7 @@
 .h4 {
   text-align: center;
   font-size: 1.7rem;
-  color: #e61f93;
+  color: #fb24a7;
   margin: 0;
 }
 
@@ -861,7 +861,7 @@
 .h5 {
   text-align: center;
   margin-bottom: 1rem;
-  color: #e61f93;
+  color: #fb24a7;
 }
 
 .imgBorder1 {
@@ -1039,7 +1039,7 @@
 .title {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #ec4899;
+  color: #fb24a7;
   margin-bottom: 0.2rem;
   line-height: 1.2;
 }
@@ -1301,7 +1301,7 @@
   border: none;
   display: flex;
   align-items: center;
-  background-color: #ff0055;
+  background-color: #fb24a7;
   color: #fff;
   border-radius: .2rem;
   cursor: pointer;

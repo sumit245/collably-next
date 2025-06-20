@@ -59,9 +59,9 @@ export default function HeroSectionComponent({ heroData }) {
             <li>
               <Link href="#" className="btn btn-primary"> {heroData.primbutton}</Link>
             </li>
-            <li>
+            {/* <li>
               <Link href="#" className="btn btn-secondary">{heroData.secbutton}</Link>
-            </li>
+            </li> */}
           </ul>
         </div>
         <div className="col-lg-6 col-md-12">

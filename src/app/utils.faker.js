@@ -673,7 +673,7 @@ export const FINDS_DATA = [
       export const heroData = {
         primlink:"/registration",
         seclink:"/shop",
-        title: "Collably is the future of shopping",
+        title: "Creator led-shopping",
         description: "Browse viral products, shop seamlessly, and unlock exclusive deals—all powered by creators you love",
         bannerTexts: [
           "Shop from your favorite creators",
@@ -706,7 +706,7 @@ export const FINDS_DATA = [
         // appDescription: "Collably makes the creator\nlife simpler, smarter,\nand more rewarding.",
         heroImages: [
           { className: "mobile-hero", src: "/images/iphonescren.png", alt: "iPhone screen", width: 300, height: 600 },
-          { className: "hero-bg-image", src: "/images/BrandScreen1.png", alt: "", width: 600, height: 583 },
+          { className: "hero-bg-image", src: "/images/brand_open_image.png", alt: "", width: 600, height: 583 },
         ],
       };
 
@@ -751,14 +751,14 @@ export const FINDS_DATA = [
         heroImages: [
           {
             className: "mobile-hero",
-            src: "/images/iphonescren.png",
+            src: "/images/",
             alt: "iPhone screen",
             width: 300,
             height: 600,
           },
           {
             className: "hero-bg-image",
-            src: "/images/CreScreen1.png",
+            src: "/images/creator_image_open.png",
             alt: "",
             width: 600,
             height: 583,
@@ -842,7 +842,7 @@ export const FINDS_DATA = [
         appDescription: "Exclusive perks for early brands",
         heroImages: [
           { className: "mobile-hero", src: "/images/iphonescren.png", alt: "iPhone screen", width: 300, height: 600 },
-          { className: "hero-bg-image", src: "/images/BrandScreen1.png", alt: "", width: 600, height: 583 },
+          { className: "hero-bg-image", src: "/images/shop_open_image.png", alt: "", width: 600, height: 583 },
         ],
       };
       

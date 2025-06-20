@@ -32,7 +32,7 @@ export default function HomePage() {
         <QuickEasyComponent quickEasyData={quickEasyDataCreator} />
         <ScrollerComponent scrollerData={scrollerData} />
         <CategoryGridComponent />
-        <ImageRotationComponent />
+        {/* <ImageRotationComponent /> */}
         {/* <ReviewSectionComponent /> */}
         <SliderSectionComponent />
         <ClientSectionComponent />
