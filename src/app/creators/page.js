@@ -14,9 +14,10 @@ import FooterComponent from '../components/FooterComponent'
 import BottomNavComponent from '../components/BottomNavComponent'
 import LoginComponent from '../components/LoginComponent';
 import AffiliateFeatures from '../components/affiliatebrand'
-import {heroDataCreator, scrollerData, faqs, affiliateDataCreator,} from '../utils.faker'
-import {scrollerData2} from '../utils.faker'
+import {heroDataCreator, scrollerData, faqsCreator, affiliateDataCreator,} from '../utils.faker'
+import {scrollerData2, fakeItemsCreator} from '../utils.faker'
 import {quickEasyDataCreator} from '../utils.faker'
+import TargetSection from "../components/TargetSection";
 // import {heroData} from '../app/utils.faker'
 const handleLoginSuccess = (userData) => {
   setUser(userData);
@@ -37,7 +38,8 @@ export default function HomePage() {
         <SliderSectionComponent />
         <ClientSectionComponent />
         <ScrollerComponent scrollerData={scrollerData2} />
-        <FAQSectionComponent faqs={faqs}/>
+        <FAQSectionComponent faqs={faqsCreator}/>
+        <TargetSection targetData = { fakeItemsCreator}/>
         <CommunitySectionComponent />
       </main>
       <FooterComponent />
