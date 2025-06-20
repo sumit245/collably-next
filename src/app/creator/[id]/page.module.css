@@ -1,6 +1,6 @@
 .container {
-    background-color: #000;
-    color: #fff;
+    background-color: #ffffff;
+    color: #000000;
     height: 90.99vh;
     position: relative;
     max-width: 480px;
@@ -347,7 +347,7 @@
   }
   
   .tab:hover {
-    color: #fff;
+    color: #e0c2c2;
   }
   .tabsContainer{
     display: flex;
@@ -386,7 +386,7 @@
   }
   
   .profileName{
-   color: white;
+   color: rgb(0, 0, 0);
    font-size: 1rem;
   }
   
@@ -399,8 +399,8 @@
   .followButton{
     background: none;
     border: none;
-    color: white;
-    border: 1px solid white;
+    color: rgb(0, 0, 0);
+    border: 1px solid rgb(0, 0, 0);
     padding: 5px 30px;
     border-radius: .5rem;
     cursor: pointer;
