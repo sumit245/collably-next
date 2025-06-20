@@ -56,7 +56,7 @@ export default function Page() {
         </div>
 
         <div className={styles.section}>
-          <h3 className={styles.sectionTitle}>Comming Soon</h3>
+          <h3 className={styles.sectionTitle}>Coming Soon</h3>
           <button className={styles.buttonTelegram}>
             <div className={styles.buttonContent}>
             <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 48 48">

@@ -1116,10 +1116,12 @@ footer h3 {
 
 .hero-bg-image {
   position: relative;
-  height: 440px;
-  width: 215px;
+ height: 373px;
+    width: 377px;
+  /* left: -264px;
+  top: -15px; */
   border-radius: 24px;
-  border: 5px solid black;
+  /* border: 5px solid black; */
 }
 
 /* Quick and Easy Section */
@@ -2305,10 +2307,10 @@ body {
 
   .hero-bg-image {
     left: -11px;
-    height: 442px;
+    height: 399px;
     position: relative;
+    width: 391px;
     /* top: -457px; */
-    width: 239px;
   }
   .image-rotation-section {
     display: none;
@@ -2527,9 +2529,9 @@ body {
 
   .mobile-hero,
   .hero-bg-image {
-    width: 50%;
-    height: 400px;
-    left: 8px;
+    width: 100%;
+        height: 400px;
+        left: -30px;
   }
   .hero-bg-image {
     top: -185px;
@@ -2877,8 +2879,9 @@ body {
   .mobile-hero,
   .hero-bg-image {
     /* width: 100%; */
-    height: 320px;
-    left: 102px;
+            height: 320px;
+        width: 300px;
+        left: 45px;
   }
   .hero-bg-image {
     top: -5px;

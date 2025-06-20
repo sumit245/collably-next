@@ -359,6 +359,64 @@ export const faqs = [
   },
 ];
 
+export const faqsCreator = [
+  {
+    question: "What is Collably?",
+    answer:
+      "Collably is a content-driven shopping platform where creators can curate their own storefronts, tag products directly in their content, and earn from every sale they inspire — all in one place.",
+  },
+  {
+    question: "How is Collably different from link-in-bio tools or affiliate apps?",
+    answer:
+      "Unlike redirect tools, Collably lets creators integrate shopping directly into their content — no lost traffic, no confusing user journeys. It’s like shopping while scrolling Reels.",
+  },
+  {
+    question: "Who can use Collably?",
+    answer:
+      "Collably is for fashion, beauty, lifestyle, and niche creators who want to monetize their influence authentically, and for brands looking to collaborate with creators in a more seamless, performance-driven way.",
+  },
+  {
+    question: "How do creators earn on Collably?",
+    answer:
+      "Creators earn a commission (5–10%) on every sale made through their content or personal storefront. The more content they create, the more they earn — without upfront costs.",
+  },
+  {
+    question: "Is there a fee to join Collably?",
+    answer:
+      "No, it’s free for creators to join. Brands can choose between basic and premium subscription plans depending on the features they need.",
+  },
+];
+
+export const faqsBrand = [
+  {
+    question: "How can Collably help my brand grow?",
+    answer:
+      "Collably connects your products directly to creators who inspire purchase decisions. Get featured in authentic content and drive real sales—no ads, just influence that converts.",
+  },
+  {
+    question: "How do I get my products listed on Collably?",
+    answer:
+      "Simply share your product links, offers, and branding assets. Our team will help onboard your brand and match you with relevant creators.",
+  },
+  {
+    question: "What kind of brands is Collably ideal for?",
+    answer:
+      "Collably is perfect for fashion, beauty, wellness, lifestyle, and D2C brands that want to reach Gen Z and millennial audiences through creator-led content.",
+  },
+  {
+    question: "How do I track performance and sales?",
+    answer:
+      "You’ll get access to a dashboard with sales insights, creator performance, and customer engagement—all tied to the content that drives conversions.",
+  },
+  {
+    question: "What’s the pricing model for brands?",
+    answer:
+      "We offer a free basic plan and a premium subscription with extra visibility, analytics, and priority creator collaborations. You only pay commission on actual sales.",
+  },
+];
+
+
+
 export const stories = [
   {
     username: "Arcane by Mayuri Isame",
@@ -673,7 +731,7 @@ export const FINDS_DATA = [
       export const heroData = {
         primlink:"/registration",
         seclink:"/shop",
-        title: "Collably is the future of shopping",
+        title: "Creator led-shopping",
         description: "Browse viral products, shop seamlessly, and unlock exclusive deals—all powered by creators you love",
         bannerTexts: [
           "Shop from your favorite creators",
@@ -706,7 +764,7 @@ export const FINDS_DATA = [
         // appDescription: "Collably makes the creator\nlife simpler, smarter,\nand more rewarding.",
         heroImages: [
           { className: "mobile-hero", src: "/images/iphonescren.png", alt: "iPhone screen", width: 300, height: 600 },
-          { className: "hero-bg-image", src: "/images/BrandScreen1.png", alt: "", width: 600, height: 583 },
+          { className: "hero-bg-image", src: "/images/brand_open_image.png", alt: "", width: 600, height: 583 },
         ],
       };
 
@@ -751,14 +809,14 @@ export const FINDS_DATA = [
         heroImages: [
           {
             className: "mobile-hero",
-            src: "/images/iphonescren.png",
+            src: "/images/",
             alt: "iPhone screen",
             width: 300,
             height: 600,
           },
           {
             className: "hero-bg-image",
-            src: "/images/CreScreen1.png",
+            src: "/images/creator_image_open.png",
             alt: "",
             width: 600,
             height: 583,
@@ -842,7 +900,7 @@ export const FINDS_DATA = [
         appDescription: "Exclusive perks for early brands",
         heroImages: [
           { className: "mobile-hero", src: "/images/iphonescren.png", alt: "iPhone screen", width: 300, height: 600 },
-          { className: "hero-bg-image", src: "/images/BrandScreen1.png", alt: "", width: 600, height: 583 },
+          { className: "hero-bg-image", src: "/images/shop_open_image.png", alt: "", width: 600, height: 583 },
         ],
       };
       
@@ -1143,3 +1201,56 @@ export const reelsDataSource = [
     isLiked: false,
   },
 ];
+
+
+export const fakeItems = {
+  heading: "Perfect For:",
+  items: [
+    {
+      icon: '🌟',
+      title: "D2C Brands",
+      description: "Take control of your brand and sell directly to customers.",
+    },
+    {
+      icon: '🚀',
+      title: "Ecommerce Stores",
+      description:"Boost your online store's visibility and sales effortlessly.",
+    },
+    {
+      icon: '🛒',
+      title:"Local Businesses" ,
+      description: "Grow your community presence with easy-to-manage digital tools.",
+    },
+    {
+      icon: '🏪',
+      title: "Startups",
+      description:"Scale your startup with innovative strategies and technology.",
+    },
+  ],
+};
+
+export const fakeItemsCreator = {
+  heading: "Perfect For Creators Who…",
+  items: [
+    {
+      icon: '💰',
+      title: "Want to earn from everyday content",
+      description: "No more waiting for campaigns — start earning from your everyday content.",
+    },
+    {
+      icon: '🛍️',
+      title: "Love curating & sharing products",
+      description: "Turn your favorite finds into a personal storefront your followers can shop.",
+    },
+    {
+      icon: '🔗',
+      title: "Hate losing sales to link-in-bio drop-offs",
+      description: "No more redirects — your audience can scroll, click, and shop instantly.",
+    },
+    {
+      icon: '💄',
+      title: "Are building a fashion, beauty, or lifestyle brand",
+      description: "Whether you’re a micro-influencer or rising star, Collably empowers you to grow with impact.",
+    },
+  ],
+};

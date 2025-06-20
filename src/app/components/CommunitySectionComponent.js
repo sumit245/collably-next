@@ -10,7 +10,7 @@ export default function CommunitySectionComponent() {
           <h2>Connect with <span className="gradient-text">Fellow Creators</span></h2>
         </div>
         <div className="cards">
-          <Link href="#" className="card">
+          <Link href="https://whatsapp.com/channel/0029VaVAlirGehESFCRQKM2r" className="card">
             <div className="icon3 whatsapp">
               <i className="fab fa-whatsapp"></i>
             </div>
@@ -28,7 +28,7 @@ export default function CommunitySectionComponent() {
               <p>Engage in our Discord discussions</p>
             </div>
           </Link>
-          <Link href="#" className="card">
+          <Link href="https://www.instagram.com/collably.in/" className="card">
             <div className="icon3 instagram">
               <i className="fab fa-instagram"></i>
             </div>
