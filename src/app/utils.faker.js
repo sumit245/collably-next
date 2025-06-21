@@ -665,13 +665,13 @@ export const FINDS_DATA = [
         ],
         cta: {
           text: "Get started now",
-          href: "#",
+          href: "http://collably.onepage.me/brands",
         },
       }
       
 
       export const heroData = {
-        primlink:"/registration",
+        primlink:"/shop",
         seclink:"/shop",
         title: "Creator led-shopping",
         description: "Browse viral products, shop seamlessly, and unlock exclusive deals—all powered by creators you love",
@@ -810,6 +810,8 @@ export const FINDS_DATA = [
       }
 
       export const heroDataBrand = {
+         primlink:"http://collably.onepage.me/brands",
+        seclink:"/shop",
         title: "Upgrade your sales channels",
         description: "Create your custom affiliate program & turn creators into sales channels",
         bannerTexts: [
