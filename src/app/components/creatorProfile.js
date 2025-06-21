@@ -3,10 +3,12 @@
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchPosts, fetchSavedPosts } from "../store/postSlice"
+import { fetchReferralsByUserId, trackReferralClick } from "../store/brandSlice"
 import { useRouter, useParams } from "next/navigation"
 import styles from "../creator/[id]/page.module.css"
 import stylesShop from "../shop/StyleShop.module.css"
 import stylesSearch from "../search/SearchSection.module.css"
+import stylesCreatorShop from "../CreatorShop/styles.creatorShop.module.css"
 import Image from "next/image"
 import Link from "next/link"
 import Footer from "../components/FooterShop"
@@ -20,6 +22,7 @@ export default function CreatorProfile() {
   const creatorId = params?.id
   const dispatch = useDispatch()
   const { posts, savedPosts = [], status, savedPostsStatus, error } = useSelector((state) => state.posts)
+  const referrals = useSelector((state) => state.brands?.referrals || [])
   const [activeTab, setActiveTab] = useState("posts")
   const [collectionSubTab, setCollectionSubTab] = useState("Videos")
   const [creator, setCreator] = useState(null)
@@ -43,6 +46,12 @@ export default function CreatorProfile() {
       dispatch(fetchSavedPosts())
     }
   }, [activeTab, savedPostsStatus, dispatch])
+
+  useEffect(() => {
+    if (activeTab === "links" && creatorId) {
+      dispatch(fetchReferralsByUserId(creatorId))
+    }
+  }, [activeTab, creatorId, dispatch])
 
   useEffect(() => {
     const fetchCreatorData = async () => {
@@ -87,10 +96,28 @@ export default function CreatorProfile() {
     }
   }
 
+  const extractReferralCode = (url) => {
+    const match = url.match(/referralCode=([A-Za-z0-9]{6})/)
+    return match ? match[1] : null
+  }
+
+  const handleLinkClick = async (referralCode, referralLink, e) => {
+    e.preventDefault()
+
+    try {
+      await dispatch(trackReferralClick(referralCode)).unwrap()
+      window.location.href = referralLink
+    } catch (error) {
+      console.error("Failed to track click:", error)
+      window.location.href = referralLink
+    }
+  }
+
   const tabs = [
     { id: "posts", label: "Posts" },
     { id: "reels", label: "Reels" },
     { id: "collections", label: "Collections" },
+    { id: "links", label: "Links" },
   ]
 
   const getFilteredContent = () => {
@@ -100,6 +127,9 @@ export default function CreatorProfile() {
         if (!post) return false
         return collectionSubTab === "Videos" ? post.video : post.images?.length > 0
       })
+    } else if (activeTab === "links") {
+      // Filter referrals to show only those from this creator
+      return referrals.filter((referral) => referral.userId === creatorId)
     } else {
       // Regular posts and reels filtering for the specific creator
       return posts.filter(
@@ -218,19 +248,50 @@ export default function CreatorProfile() {
             <div className={styles.contentGrid}>
               {status === "loading" || (activeTab === "collections" && savedPostsStatus === "loading") ? (
                 <div className={activeTab === "collections" ? stylesSearch.loadingState : ""}>
-                  Loading {activeTab === "collections" ? "saved posts" : "posts"}...
+                  Loading {activeTab === "collections" ? "saved posts" : activeTab === "links" ? "links" : "posts"}...
                 </div>
               ) : status === "failed" || savedPostsStatus === "failed" ? (
                 <div className={activeTab === "collections" ? stylesSearch.errorState : ""}>Error: {error}</div>
               ) : (
-                <div className={activeTab === "collections" ? stylesSearch.gridContainer : styles.gridContainer}>
+                <div
+                  className={
+                    activeTab === "collections"
+                      ? stylesSearch.gridContainer
+                      : activeTab === "links"
+                        ? stylesCreatorShop.linksContainer
+                        : styles.gridContainer
+                  }
+                >
                   {filteredPosts.length === 0 ? (
                     <div className={activeTab === "collections" ? stylesSearch.emptyState : styles.noContent}>
                       {activeTab === "collections"
                         ? `No saved ${collectionSubTab.toLowerCase()}`
-                        : `No ${activeTab} to display`}
+                        : activeTab === "links"
+                          ? "No product links from this creator"
+                          : `No ${activeTab} to display`}
                     </div>
+                  ) : activeTab === "links" ? (
+                    // Render links
+                    filteredPosts.map((link) => {
+                      const referralCode = extractReferralCode(link.referralLink)
+                      return (
+                        <div
+                          key={link._id}
+                          className={stylesCreatorShop.linkCard}
+                          onClick={(e) => handleLinkClick(referralCode, link.referralLink, e)}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <div className={stylesCreatorShop.linkInfo}>
+                            <div className={stylesCreatorShop.linkUrl}>{link.referralLink}</div>
+                            <div className={stylesCreatorShop.linkStats}>
+                              <span>Clicks: {link.clicks || 0}</span>
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    })
                   ) : (
+                    // Render posts/reels/collections
                     filteredPosts.map((post) => {
                       const isVideo =
                         activeTab === "reels" || (activeTab === "collections" && collectionSubTab === "Videos")
