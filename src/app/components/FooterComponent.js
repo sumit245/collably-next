@@ -57,14 +57,14 @@ export default function FooterComponent() {
                   </div>
                 </div>
 
-              <div className="footer-column">
+              {/* <div className="footer-column">
                 <h3>Legal</h3>
                 <ul>
                   <li><Link href="/privacyShop">Privacy Policy</Link></li>
                   <li><Link href="/termsofUse">Terms of Use</Link></li>
                   <li><Link href="/cancelRefundPolicy">Cancellation & Refund Policy</Link></li>
                 </ul>
-              </div>
+              </div> */}
 
                 <div className="right-text">
                   <h3>Social</h3>
