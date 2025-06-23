@@ -1,101 +1,102 @@
 :root {
-  /* Colors */
-  --brand-section-text: #ffffff;
-  --scroller-section-bg-start: #11062e;
-  --scroller-section-bg-end: #740b66;
-  --scroller-heading-bg-start: #ff0055;
-  --scroller-heading-bg-end: #741a38;
-  --bottom-nav-bg: #ca1c0c;
-  --bottom-nav-text: #ffffff;
-  --footer-button-bg-start: #e69419;
-  --footer-button-bg-end: #f43f06;
-  --footer-button-text: #ffffff;
-  --slider-section-bg-start: #c2185b;
-  --slider-section-bg-end: #c300ffb0;
-  --button-bg: #520ed1;
-  --button-shadow: #b90d86;
-  --tab-text: rgba(255, 255, 255, 0.7);
-  --tab-text-active: white;
-  --slider-label: #ffffff;
-  --range-value: #ffffff;
-  --slider-track-bg: rgb(255, 255, 255);
-  --slider-tick: rgba(255, 255, 255, 0.5);
-  --followers-fill-start: #ff1b6b;
-  --followers-fill-mid: #ff5b94;
-  --followers-fill-end: #45caff;
-  --content-fill-start: #45caff;
-  --content-fill-mid: #616fff;
-  --content-fill-end: #8b3dff;
-  --slider-thumb: white;
-  --result-border: white;
-  --result-label: #ffffff;
-  --result-amount: #ff9cbe;
-  --result-amount-shadow: #ff89f9;
-  --result-note: #ffffff;
-  --body-bg: #ffffff;
-  --text-primary: #000000;
-  --footer-button-hover: #e66b00;
-  --nav-tabs-bg: rgba(255, 255, 255, 0.05);
-  --nav-tabs-border: rgba(255, 255, 255, 0.1);
-  --result-section-bg: rgba(255, 255, 255, 0);
-  --container-bg: #ffffff;
-  --category-overlay-bg: #ff0055;
-  --category-title-color: white;
-  --top-navbar-color: #000000;
-  --nav-item-hover: red;
-  --content-bg: #ffffff;
-  --styled-line-color: #000000;
-  --navbar-button-bg: #ff0055;
-  --key-inner-bg: #ffffff;
-  --section-title-color: #333;
-  --section-title-span-color: #ff0048;
-  --feature-box-bg: #5ccf6252;
-  --feature-box-shadow: rgba(0, 0, 0, 0.1);
-  --feature-box-title-color: #333;
-  --feature-box-text-color: #000000;
-  --image-rotation-bg: #ffffff;
-  --dropdown-bg: #fff;
-  --dropdown-shadow: rgba(0, 0, 0, 0.1);
-  --dropdown-button-bg: #ff0055e0;
-  --dropdown-button-hover: #ff0055e0;
-  --dropdown-content-bg: #f0ceba;
-  --footer-bg: #f8f4eb;
-  --footer-border: black;
-  --footer-link-color: black;
-  --footer-hover-color: #520ed1;
-  --client-section-bg: #f8f9ff;
-  --client-title-color: #333;
-  --client-logo-bg: #ffffff;
-  --client-logo-shadow: rgba(0, 0, 0, 0.05);
-  --client-logo-hover-shadow: rgba(0, 0, 0, 0.1);
-  --banner-title-color: #222;
-  --banner-text-color: #666;
-  --used-app-title-color: #333;
-  --used-app-text-color: #666;
-  --app-btn-bg: black;
-  --app-btn-hover: #fa4582;
-  --quick-easy-bg: #fff;
-  --quick-easy-title-bg: #ff0055;
-  --quick-easy-text-color: #ffffff;
-  --quick-easy-text-title-color: #000000;
-  --step-border-color: black;
-  --step-text-color: rgb(255, 255, 255);
-  --step-icon-bg: #ff0055;
-  --get-started-btn-bg: #ff0055;
-  --btn-bottom-border: black;
-  --community-subtitle-bg: rgba(130, 71, 255, 0.1);
-  --community-subtitle-color: #ff0055;
-  --community-title-color: #000;
-  --card-border-color: #eee;
-  --card-hover-shadow: rgba(0, 0, 0, 0.1);
-  --card-content-color: #666;
-  --review-section-bg: #ffffff;
-  --review-badge-bg: #ff0055;
-  --review-title-span: #000000;
-  --review-block-bg: white;
-  --review-block-shadow: rgba(0, 0, 0, 0.05);
-  --review-text-color: #666;
-  --review-content-color: #444;
+/* Colors */
+--brand-section-text: #ffffff;
+--scroller-section-bg-start: #11062e;
+--scroller-section-bg-end: #740b66;
+--scroller-heading-bg-start: #fb24a7;
+--scroller-heading-bg-end: #741a38;
+--bottom-nav-bg: #fb24a7;
+--bottom-nav-text: #ffffff;
+--footer-button-bg-start: #e69419;
+--footer-button-bg-end: #f43f06;
+--footer-button-text: #ffffff;
+--slider-section-bg-start: #fb24a7;
+--slider-section-bg-end: #fb24a7;
+--button-bg: #520ed1;
+--button-shadow: #fb24a7;
+--tab-text: rgba(255, 255, 255, 0.7);
+--tab-text-active: white;
+--slider-label: #ffffff;
+--range-value: #ffffff;
+--slider-track-bg: rgb(255, 255, 255);
+--slider-tick: rgba(255, 255, 255, 0.5);
+--followers-fill-start: #fb24a7;
+--followers-fill-mid: #fb24a7;
+--followers-fill-end: #45caff;
+--content-fill-start: #45caff;
+--content-fill-mid: #616fff;
+--content-fill-end: #8b3dff;
+--slider-thumb: white;
+--result-border: white;
+--result-label: #ffffff;
+--result-amount: #fb24a7;
+--result-amount-shadow: #fb24a7;
+--result-note: #ffffff;
+--body-bg: #ffffff;
+--text-primary: #000000;
+--footer-button-hover: #e66b00;
+--nav-tabs-bg: rgba(255, 255, 255, 0.05);
+--nav-tabs-border: rgba(255, 255, 255, 0.1);
+--result-section-bg: rgba(255, 255, 255, 0);
+--container-bg: #ffffff;
+--category-overlay-bg: #fb24a7;
+--category-title-color: white;
+--top-navbar-color: #000000;
+--nav-item-hover: red;
+--content-bg: #ffffff;
+--styled-line-color: #000000;
+--navbar-button-bg: #fb24a7;
+--key-inner-bg: #ffffff;
+--section-title-color: #333;
+--section-title-span-color: #fb24a7;
+--feature-box-bg: #5ccf6252;
+--feature-box-shadow: rgba(0, 0, 0, 0.1);
+--feature-box-title-color: #333;
+--feature-box-text-color: #000000;
+--image-rotation-bg: #ffffff;
+--dropdown-bg: #fff;
+--dropdown-shadow: rgba(0, 0, 0, 0.1);
+--dropdown-button-bg: #fb24a7;
+--dropdown-button-hover: #fb24a7;
+--dropdown-content-bg: #f0ceba;
+--footer-bg: #f8f4eb;
+--footer-border: black;
+--footer-link-color: black;
+--footer-hover-color: #520ed1;
+--client-section-bg: #f8f9ff;
+--client-title-color: #333;
+--client-logo-bg: #ffffff;
+--client-logo-shadow: rgba(0, 0, 0, 0.05);
+--client-logo-hover-shadow: rgba(0, 0, 0, 0.1);
+--banner-title-color: #222;
+--banner-text-color: #666;
+--used-app-title-color: #333;
+--used-app-text-color: #666;
+--app-btn-bg: black;
+--app-btn-hover: #fb24a7;
+--quick-easy-bg: #fff;
+--quick-easy-title-bg: #fb24a7;
+--quick-easy-text-color: #ffffff;
+--quick-easy-text-title-color: #000000;
+--step-border-color: black;
+--step-text-color: rgb(255, 255, 255);
+--step-icon-bg: #fb24a7;
+--get-started-btn-bg: #fb24a7;
+--btn-bottom-border: black;
+--community-subtitle-bg: rgba(130, 71, 255, 0.1);
+--community-subtitle-color: #fb24a7;
+--community-title-color: #000;
+--card-border-color: #eee;
+--card-hover-shadow: rgba(0, 0, 0, 0.1);
+--card-content-color: #666;
+--review-section-bg: #ffffff;
+--review-badge-bg: #fb24a7;
+--review-title-span: #000000;
+--review-block-bg: white;
+--review-block-shadow: rgba(0, 0, 0, 0.05);
+--review-text-color: #666;
+--review-content-color: #444;
+
 
   /* Font Sizes */
   --font-size-xs: 0.875rem;
@@ -1553,7 +1554,7 @@ h2 {
 
 .badge {
   display: inline-block;
-  background-color: #ff0055;
+  background-color: #fb24a7;
   color: white;
   font-weight: 600;
   font-size: 0.875rem;
@@ -1583,7 +1584,7 @@ h2 {
 }
 
 .icon {
-  color: #ff0055;
+  color: #fb24a7;
   font-size: 2rem;
   margin-bottom: 1rem;
   display: flex;
@@ -1604,7 +1605,7 @@ h2 {
   position: absolute;
   top: 0;
   right: 0;
-  background-color: #ff0055;
+  background-color: #fb24a7;
   color: white;
   font-size: 1rem;
   font-weight: bold;
@@ -1622,7 +1623,7 @@ h2 {
 }
 
 .cta-button {
-  background-color: #ff0055;
+  background-color: #fb24a7;
   color: white;
   padding: 0.75rem 2rem;
   border-radius: 9999px;
@@ -1953,13 +1954,13 @@ h2 {
 }
 
 .timer-number {
-  color: #ff0055; /* Bold orange color for the timer */
+  color: #fb24a7; /* Bold orange color for the timer */
   font-weight: bold;
 }
 
 /* Styling for the resend OTP button */
 .button-resend.active {
-  background-color: #ff0055; /* Green when active */
+  background-color: #fb24a7; /* Green when active */
   color: white;
 }
 
@@ -1985,7 +1986,7 @@ h2 {
 
 /* Optional: Style for the form's error messages */
 .error-message {
-  color: #ff0055;
+  color: #fb24a7;
   font-size: 14px;
   margin-top: 10px;
   text-align: center;
@@ -2087,7 +2088,7 @@ h2 {
 
 .login-container .button-submit {
   width: 100%;
-  background-color: #ff0055;
+  background-color: #fb24a7;
   color: #fff;
   border: none;
   margin-bottom: 10px;
@@ -2125,7 +2126,7 @@ h2 {
 }
 
 .login-container .button-submit:hover {
-  background-color: #ff0055;
+  background-color: #fb24a7;
   transform: translateY(-2px);
 }
 
@@ -3095,13 +3096,13 @@ body {
 }
 
 .timer-number {
-  color: #ff0055; /* Bold orange color for the timer */
+  color: #fb24a7; /* Bold orange color for the timer */
   font-weight: bold;
 }
 
 /* Styling for the resend OTP button */
 .button-resend.active {
-  background-color: #ff0055; /* Green when active */
+  background-color: #fb24a7; /* Green when active */
   color: white;
 }
 
@@ -3127,7 +3128,7 @@ body {
 
 /* Optional: Style for the form's error messages */
 .error-message {
-  color: #ff0055;
+  color: #fb24a7;
   font-size: 14px;
   margin-top: 10px;
   text-align: center;
@@ -3264,7 +3265,7 @@ body {
 
 .rangeValue {
   font-size: 1.1rem;
-  color: #ff0055;
+  color: #fb24a7;
   font-weight: 700;
 }
 
@@ -3363,7 +3364,7 @@ body {
 .resultAmount {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #ff0055;
+  color: #fb24a7;
   margin: 0px;
 }
 
@@ -3390,7 +3391,7 @@ body {
 
 .amountBlur {
   position: absolute;
-  color: #ff0055;
+  color: #fb24a7;
   font-size: 5rem;
   top: -60px;
   left: 50%;

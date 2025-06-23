@@ -294,29 +294,26 @@ export const TopCreators = [
     };
 
     export const affiliateDataCreator = {
-      heading: "Empowering Creators with Innovative Tools",
-      features: [
-        {
-          title: "Instant Affiliate Links",
-          description: "Generate custom links, share & earn per sale",
-          imageSrc: "/images/CreatorDemo3.jpg",
-          imageAlt: "Affiliate link generation screen for creators",
-        },
-        {
-          title: "Shoppable Content",
-          description: "Tag products in posts—your & ours audience buys instantly!",
-          imageSrc: "/images/CreatorDemo2.jpg",
-          imageAlt: "Creator post with tagged products",
-        },
+  heading: "Empowering Creators with Innovative Tools",
+  features: [
+    {
+      title: "Instant Affiliate Links",
+      description: "Generate custom links, share & earn per sale",
+      icon: "🖇️",
+    },
+    {
+      title: "Shoppable Content",
+      description: "Tag products in posts—your & ours audience buys instantly!",
+      icon: "💸",
+    },
+    {
+      title: "Brand Collections",
+      description: "Get invites from partner brands for exclusive collaborations",
+      icon: "🛍️",
+    },
+  ]
+};
 
-        {
-          title: "Brand Collections",
-          description: "Get invites from partner brands for exclusive collaborations",
-          imageSrc: "/images/CreatorDemo1.jpg",
-          imageAlt: "List of brand collaborations for creators",
-        },
-      ],
-    };
     
     export const images = [
         "/images/BrandScreen4.png", 
@@ -785,29 +782,51 @@ export const FINDS_DATA = [
         },
       ]
 
+      // export const affiliateDataBrand = {
+      //   heading: "Empowering Brands with Custom solutions",
+      //   features: [
+      //     {
+      //       title: "Custom affiliate program",
+      //       description: "Create your own custom affiliate programs for creators",
+      //       imageSrc: "/images/CreScreen1.png",
+      //       imageAlt: "Brand dashboard affiliate program setup screen"
+      //     },
+      //     {
+      //       title: "Performance-Based Model",
+      //       description: "Pay only when creators drive sales!",
+      //       imageSrc: "/images/BrandScreen2.png",
+      //       imageAlt: "Commission screen"
+      //     },
+      //     {
+      //       title: "Shoppable Content Feature",
+      //       description: "Turn influencer posts into direct sales channels",
+      //       imageSrc: "/images/BrandScreen3.png",
+      //       imageAlt: "Reel layout with tagged products screen"
+      //     }
+      //   ]
+      // }
+
       export const affiliateDataBrand = {
-        heading: "Empowering Brands with Custom solutions",
-        features: [
-          {
-            title: "Custom affiliate program",
-            description: "Create your own custom affiliate programs for creators",
-            imageSrc: "/images/CreScreen1.png",
-            imageAlt: "Brand dashboard affiliate program setup screen"
-          },
-          {
-            title: "Performance-Based Model",
-            description: "Pay only when creators drive sales!",
-            imageSrc: "/images/BrandScreen2.png",
-            imageAlt: "Commission screen"
-          },
-          {
-            title: "Shoppable Content Feature",
-            description: "Turn influencer posts into direct sales channels",
-            imageSrc: "/images/BrandScreen3.png",
-            imageAlt: "Reel layout with tagged products screen"
-          }
-        ]
-      }
+  heading: "Empowering Brands with Custom Solutions",
+  features: [
+    {
+      title: "Custom Affiliate Program",
+      description: "Create your own custom affiliate programs for creators",
+      icon: "🧩"
+    },
+    {
+      title: "Performance-Based Model",
+      description: "Pay only when creators drive sales!",
+      icon: "📊"
+    },
+    {
+      title: "Shoppable Content Feature",
+      description: "Turn influencer posts into direct sales channels",
+      icon: "🛒"
+    }
+  ]
+};
+
 
       export const heroDataBrand = {
          primlink:"http://collably.onepage.me/brands",

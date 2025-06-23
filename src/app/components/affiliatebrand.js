@@ -36,45 +36,26 @@
 
 
 import styles from '../brand/target.module.css';
- 
- const TargetSection = () => {
-   return (
-     <section className={styles.targetSection}>
-       <div className={styles.container}>
-         <h2 className={styles.title}>Empowering Creators with Innovative Tools</h2>
-         <div className={styles.items}>
-           <div className={styles.item}>
-             <div className={styles.iconWrapper}>
-               <span className={styles.icon}>🖇️</span>
-             </div>
-             <h3 className={styles.itemTitle}>Instant Affiliate Links</h3>
-             <p className={styles.itemDescription}>Generate custom links, share & earn per sale</p>
-           </div>
-           <div className={styles.item}>
-             <div className={styles.iconWrapper}>
-               <span className={styles.icon}>💸</span>
-             </div>
-             <h3 className={styles.itemTitle}>Shoppable Content</h3>
-             <p className={styles.itemDescription}>Tag products in posts—your & ours audience buys instantly!</p>
-           </div>
-           <div className={styles.item}>
-             <div className={styles.iconWrapper}>
-               <span className={styles.icon}>🛍️</span>
-             </div>
-             <h3 className={styles.itemTitle}>Brand Collections</h3>
-             <p className={styles.itemDescription}>Get invites from partner brands for exclusive collaborations</p>
-           </div>
-           {/* <div className={styles.item}>
-             <div className={styles.iconWrapper}>
-               <span className={styles.icon}>🚀</span>
-             </div>
-             <h3 className={styles.itemTitle}>Startups</h3>
-             <p className={styles.itemDescription}>Scale your startup with innovative strategies and technology.</p>
-           </div> */}
-         </div>
-       </div>
-     </section>
-   );
- };
- 
- export default TargetSection;
+
+const TargetSection = ({ affiliateData }) => {
+  return (
+    <section className={styles.targetSection}>
+      <div className={styles.container}>
+        <h2 className={styles.title}>{affiliateData.heading}</h2>
+        <div className={styles.items}>
+          {affiliateData.features.map((feature, index) => (
+            <div key={index} className={styles.item}>
+              <div className={styles.iconWrapper}>
+                <span className={styles.icon}>{feature.icon}</span>
+              </div>
+              <h3 className={styles.itemTitle}>{feature.title}</h3>
+              <p className={styles.itemDescription}>{feature.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default TargetSection;
