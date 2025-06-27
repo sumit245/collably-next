@@ -3,13 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import {reviewData} from '../utils.faker'
 
-
-export default function ReviewSectionComponent() {
+export default function ReviewSectionComponent({ reviewData }) {
   const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
   const [isScrolling, setIsScrolling] = useState(false);
-  
   const reviewBlocks = React.useRef([]);
 
   function isInViewport(element) {
@@ -22,7 +19,7 @@ export default function ReviewSectionComponent() {
 
   function activateNextReview() {
     if (currentReviewIndex < reviewBlocks.current.length - 1) {
-      setCurrentReviewIndex(prevIndex => prevIndex + 1); 
+      setCurrentReviewIndex(prevIndex => prevIndex + 1);
     }
   }
 
@@ -33,7 +30,7 @@ export default function ReviewSectionComponent() {
           reviewBlocks.current.forEach((review, index) => {
             if (isInViewport(review) && index === currentReviewIndex) {
               review.classList.add('active');
-              activateNextReview(); 
+              activateNextReview();
             }
           });
           setIsScrolling(false);
@@ -57,11 +54,7 @@ export default function ReviewSectionComponent() {
             </div>
             <div className="google_rating">
               <div className="star2">
-                <span>⭐</span>
-                <span>⭐</span>
-                <span>⭐</span>
-                <span>⭐</span>
-                <span>⭐</span>
+                <span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span><span>⭐</span>
               </div>
               <p>
                 <strong>4.9</strong> out of 5 based on <strong>3,000+</strong> reviews

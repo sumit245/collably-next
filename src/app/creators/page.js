@@ -14,7 +14,7 @@ import FooterComponent from '../components/FooterComponent'
 import BottomNavComponent from '../components/BottomNavComponent'
 import LoginComponent from '../components/LoginComponent';
 import AffiliateFeatures from '../components/affiliatebrand'
-import {heroDataCreator, scrollerData, faqsCreator, affiliateDataCreator,} from '../utils.faker'
+import {heroDataCreator, scrollerData, faqsCreator, affiliateDataCreator, reviewDataCreator} from '../utils.faker'
 import {scrollerData2, fakeItemsCreator} from '../utils.faker'
 import {quickEasyDataCreator} from '../utils.faker'
 import TargetSection from "../components/TargetSection";
@@ -34,7 +34,7 @@ export default function HomePage() {
         <ScrollerComponent scrollerData={scrollerData} />
         <CategoryGridComponent />
         {/* <ImageRotationComponent /> */}
-        {/* <ReviewSectionComponent /> */}
+        <ReviewSectionComponent reviewData={reviewDataCreator}/>
         <SliderSectionComponent />
         <ClientSectionComponent />
         <ScrollerComponent scrollerData={scrollerData2} />

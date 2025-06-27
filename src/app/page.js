@@ -13,7 +13,7 @@ import CommunitySectionComponent from '../app/components/CommunitySectionCompone
 import FooterComponent from '../app/components/FooterComponent'
 import BottomNavComponent from '../app/components/BottomNavComponent'
 import LoginComponent from '../app/components/LoginComponent';
-import {heroData, scrollerData, faqs, items} from '../app/utils.faker'
+import {heroData, scrollerData, faqs, items, reviewData} from '../app/utils.faker'
 import MoreReasons from '../app/components/ChooseUs'
 import {scrollerData2} from '../app/utils.faker'
 import {quickEasyData} from '../app/utils.faker'
@@ -30,7 +30,7 @@ export default function HomePage() {
         {/* <ImageRotationComponent /> */}
         <QuickEasyComponent quickEasyData={quickEasyData} />
         <ScrollerComponent scrollerData={scrollerData} />
-        <ReviewSectionComponent />
+        <ReviewSectionComponent reviewData={reviewData}/>
         <ClientSectionComponent />
         {/* <ScrollerComponent scrollerData={scrollerData2} /> */}
         <MoreReasons/>

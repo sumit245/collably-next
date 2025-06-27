@@ -972,29 +972,58 @@ export const FINDS_DATA = [
 export const reviewData = [
   {
     avatar: "/images/banavt1.png",
-    name: "John Doe",
-    role: "Fashion Influencer",
+    name: "Riya M.",
+    role: "Fashion Shopper",
     review:
-      "Collably has revolutionized the way I collaborate with brands. It's user-friendly and efficient!",
+      "I saw a reel, tapped the outfit, and bought it in seconds. No app switching, no confusion. Love how smooth shopping is on Collably!",
     rating: 5,
   },
   {
     avatar: "/images/banavt2.png",
-    name: "Jane Smith",
-    role: "Beauty Vlogger",
+    name: "Nikita J.",
+    role: "Creator Fan",
     review:
-      "The affiliate link feature has significantly boosted my earnings. Highly recommended for all creators!",
+      "Finally, I can shop exactly what my favorite creators wear — all in one place. It feels like curated shopping from people I actually trust.",
     rating: 5,
   },
   {
     avatar: "/images/banavt3.png",
-    name: "Maria",
-    role: "Company Inc",
+    name: "Pooja S.",
+    role: "Insta Shopper",
     review:
-      "The affiliate link feature has significantly boosted my earnings. Highly recommended for all creators!",
-    rating: 4.5,
+      "It’s like window shopping on Instagram, but better — because I can buy the look right there. Super addictive and super easy!",
+    rating: 5,
   },
 ];
+
+
+export const reviewDataCreator = [
+  {
+    avatar: "/images/banavt3.png",
+    name: "Tanya Mittal",
+    role: "Video Creator",
+    review:
+      "Main bas apna content banati hoon, aur Collably usse shopping mein badal deta hai. Pehli baar laga ki main apne videos se actual paisa kama rahi hoon.",
+    rating: 5,
+  },
+  {
+    avatar: "/images/banavt2.png",
+    name: "Ritika Jain",
+    role: "Reel Influencer",
+    review:
+      "Pehle reels daalti thi, par sale ka kuch pata hi nahi chalta tha. Ab Collably se sab track hota hai — aur sale bhi aata hai!",
+    rating: 5,
+  },
+  {
+    avatar: "/images/banavt1.png",
+    name: "Meghna Arora",
+    role: "Lifestyle Creator",
+    review:
+      "Mujhe brand deal ka wait nahi karna padta. Jo cheezein main waise bhi use karti hoon, unse ab kama bhi sakti hoon.",
+    rating: 5,
+  },
+];
+
 
       export const clientLogos = [
         { src: "/images/amazonLogo.png", alt: "Client 1" },
@@ -1270,3 +1299,5 @@ export const faqsBrand = [
       "We offer a free basic plan and a premium subscription with extra visibility, analytics, and priority creator collaborations. You only pay commission on actual sales.",
   },
 ];
+
+
