@@ -82,7 +82,7 @@ export default function FooterComponent() {
                       </Link>
                     </li>
                     <li>
-                      <Link href="#">
+                      <Link href="https://www.instagram.com/collably.in/">
                         <Image
                           src="/images/002-instagram.png"
                           alt="Twitter"
