@@ -50,7 +50,7 @@ export function DropdownMenu() {
 
   const handleLogout = () => {
     dispatch(logout());
-    setIsOpen(false); // Close the menu after logout
+    setIsOpen(false); 
   };
 
   useEffect(() => {
@@ -132,7 +132,7 @@ export function DropdownMenu() {
                 <LogOut className={styles.logoutIcon} />
               </button>
             ) : (
-              <button className={styles.logoutButton}  onClick={() => router.push('/login')} >
+              <button className={styles.logoutButton}  onClick={() => router.push(`/login?redirect=${encodeURIComponent("/shop")}`)} >
                 <span>Login</span>
               </button>
             )}
@@ -141,4 +141,4 @@ export function DropdownMenu() {
       )}
     </div>
   );
-}
+} 
