@@ -30,12 +30,25 @@ export default function TopCreators() {
           <Link href={`/creator/${creator._id}`} key={creator._id} className={styles.creatorLink}>
             <div className={styles.fImg1}>
               <div className={styles.imgBorder}>
-                <Image 
-                  src={creator.avatar || "/placeholder.svg"}
-                  alt={creator.fullname} 
-                  width={85} 
-                  height={85} 
-                />
+                {creator.avatar ? (
+  <Image
+    src={creator.avatar}
+    alt={creator.fullname}
+    width={85}
+    height={85}
+    className={styles.creatorImage}
+  />
+) : (
+  <div className={styles.initialsPlaceholder}>
+    {creator.fullname
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .slice(0, 2)
+      .toUpperCase()}
+  </div>
+)}
+
               </div>
               <span className={styles.imgText2}>{creator.fullname.split(" ")[0]}</span>
             </div>

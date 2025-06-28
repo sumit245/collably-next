@@ -51,12 +51,25 @@ export default function AllCreators() {
               {filteredCreators.map((creator) => (
                 <Link href={`/creator/${creator._id}`} key={creator._id} className={styles.creatorCard}>
                   <div className={styles.creatorAvatar}>
-                    <Image 
-                      src={creator.avatar || "/placeholder.svg"} 
-                      alt={creator.fullname} 
-                      width={100} 
-                      height={100} 
-                    />
+                    {creator.avatar ? (
+  <Image
+    src={creator.avatar}
+    alt={creator.fullname}
+    width={85}
+    height={85}
+    className={styles.creatorImage}
+  />
+) : (
+  <div className={styleshop.initialsPlaceholder}>
+    {creator.fullname
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .slice(0, 2)
+      .toUpperCase()}
+  </div>
+)}
+
                   </div>
                   <h2 className={styles.creatorName}>{creator.fullname}</h2>
                 </Link>

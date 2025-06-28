@@ -23,6 +23,19 @@
 .smartphoneContainer::-webkit-scrollbar {
   display: none;
 }
+.initialsPlaceholder {
+     width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    background-color: #910058;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 35px;
+    text-transform: uppercase;
+}
 
 .logo {
   font-family: "Arial", sans-serif;

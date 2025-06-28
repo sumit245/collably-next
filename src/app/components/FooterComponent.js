@@ -132,7 +132,7 @@ export default function FooterComponent() {
                 <p>Powered by NextMillion Technology Private Limited</p>
               </div>
               <div className="right-text">
-                <p> Terms & Conditions </p>
+                <p > Terms & Conditions </p>
               </div>
             </div>
           </div>

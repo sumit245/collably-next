@@ -42,7 +42,7 @@
 .creatorsGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(20px, 1fr));
-
+padding-bottom: 40px;
   gap: 24px;
 }
 
@@ -67,6 +67,7 @@
   width: 100px;
   height: 100px;
   border-radius: 50%;
+  justify-items: center;
   overflow: hidden;
   margin-bottom: 12px;
 }

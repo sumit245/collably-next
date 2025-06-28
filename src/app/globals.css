@@ -736,6 +736,9 @@ element.style {
   margin-top: 2rem;
   background-color: var(--footer-bg);
 }
+.right-text p {
+  white-space: nowrap;
+}
 
 .footer-item {
   display: flex;

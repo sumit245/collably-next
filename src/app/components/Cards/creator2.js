@@ -21,31 +21,33 @@ export default function Creator2({ _id, productPhoto, productPhotos, posterSrc, 
 
   const isLiked = likedProducts.some((item) => item._id === _id)
 
-  const toggleLike = () => {
-    dispatch(toggleLikeProduct({ _id, name, productname, price, image: posterSrc }))
+ const toggleLike = () => {
+  dispatch(toggleLikeProduct({ _id, name, productname, price, image: productPhotos[0] }))
+  console.log(productPhotos[0])
+}
+
+const handleAddToCart = () => {
+  const existingItem = cartItems.find((item) => item._id === _id)
+
+  if (existingItem) {
+    dispatch(updateQuantity({ _id, quantity: existingItem.quantity + 1 }))
+  } else {
+    dispatch(
+      addToCart({
+        _id,
+        name,
+        productname,
+        price,
+        productPhoto: productPhotos[0], 
+        quantity: 1,
+      }),
+    )
   }
 
-  const handleAddToCart = () => {
-    const existingItem = cartItems.find((item) => item._id === _id)
+  setCartCount(cartCount + 1)
+  showNotification()
+}
 
-    if (existingItem) {
-      dispatch(updateQuantity({ _id, quantity: existingItem.quantity + 1 }))
-    } else {
-      dispatch(
-        addToCart({
-          _id,
-          name,
-          productname,
-          productPhoto,
-          price,
-          image: posterSrc,
-          quantity: 1,
-        }),
-      )
-    }
-    setCartCount(cartCount + 1)
-    showNotification()
-  }
 
   const showNotification = () => {
     setNotification(true)
